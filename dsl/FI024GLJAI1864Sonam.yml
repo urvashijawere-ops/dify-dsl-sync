@@ -1,0 +1,1018 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: FI-024-GLJAI-1864-Sonam
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 881d9f02-20f5-4f23-94d2-8672cb306777
+    name: step_counter
+    selector:
+    - conversation
+    - step_counter
+    value: 0
+    value_type: integer
+  - description: ''
+    id: eeebc201-4ea6-4ffc-8840-800024c66621
+    name: user_consent
+    selector:
+    - conversation
+    - user_consent
+    value: ''
+    value_type: string
+  - description: ''
+    id: 90fa588a-44a0-437a-b146-e44c3379b710
+    name: currency_rate
+    selector:
+    - conversation
+    - currency_rate
+    value: ''
+    value_type: string
+  - description: ''
+    id: 742333e2-ba04-4ba5-883e-75e235e3ac74
+    name: extracted_doc
+    selector:
+    - conversation
+    - extracted_doc
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: template-transform
+      id: 1771851581214-source-1771851897990-target
+      source: '1771851581214'
+      sourceHandle: source
+      target: '1771851897990'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: assigner
+      id: 1771851897990-source-1771851955724-target
+      source: '1771851897990'
+      sourceHandle: source
+      target: '1771851955724'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1771851561833-source-1771852223758-target
+      source: '1771851561833'
+      sourceHandle: source
+      target: '1771852223758'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1771852223758-false-1771851581214-target
+      source: '1771852223758'
+      sourceHandle: 'false'
+      target: '1771851581214'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771852223758-4339b810-985d-4422-b876-fb869b8db877-17718540107770-target
+      selected: false
+      source: '1771852223758'
+      sourceHandle: 4339b810-985d-4422-b876-fb869b8db877
+      target: '17718540107770'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 1771851995979-source-1771854405606-target
+      source: '1771851995979'
+      sourceHandle: source
+      target: '1771854405606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 17718540107770-source-1771854488304-target
+      source: '17718540107770'
+      sourceHandle: source
+      target: '1771854488304'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771855194116-source-17718548374930-target
+      source: '1771855194116'
+      sourceHandle: source
+      target: '17718548374930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1771852223758-3892cc5b-1387-4673-9f7b-50c9ea4b75e8-1771855805057-target
+      source: '1771852223758'
+      sourceHandle: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+      target: '1771855805057'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1771855805057-source-1771855194116-target
+      source: '1771855805057'
+      sourceHandle: source
+      target: '1771855194116'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1771851955724-source-1771856983531-target
+      source: '1771851955724'
+      sourceHandle: source
+      target: '1771856983531'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1771856983531-source-1771851995979-target
+      source: '1771856983531'
+      sourceHandle: source
+      target: '1771851995979'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: llm
+      id: 17718548374930-source-llm-target
+      source: '17718548374930'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-source-answer-target
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: answer-source-1771857861577-target
+      source: answer
+      sourceHandle: source
+      target: '1771857861577'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: bu_report
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: bu_report
+      height: 90
+      id: '1771851561833'
+      position:
+        x: -93
+        y: 282
+      positionAbsolute:
+        x: -93
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#conversation.currency_rate#}}
+
+            {{#conversation.extracted_doc#}}
+
+            {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 5bc7317c-60cc-4376-b8a4-e9c0086c9afc
+          role: system
+          text: 'Role: You are a high-precision data processing engine. Your task
+            is string-replacement and currency calculation only.
+
+            Data Source: {{#conversation.extracted_doc#}}
+
+            Objective: Scan the provided document {{#conversation.extracted_doc#}}
+            for Japanese Yen (JPY/¥) and replace them with US Dollars (USD/$) use
+            {{#conversation.currency_rate#}} for all the conversion.
+
+            Mandatory Workflow:
+
+
+            Literal Replication: You must perform a character-for-character replication
+            of the original text.
+
+            The "No-Change" Rule: * Do NOT summarize.
+
+            Do NOT fix grammar or typos in the original text.
+
+            Do NOT omit headers, footers, or citations.
+
+            Do NOT change the layout or paragraph structure.
+
+            The Conversion Rule: When you find a JPY value, calculate the USD equivalent
+            using the rate provided in {{#conversation.currency_rate#}}. Replace the
+            JPY text with the USD result.
+
+            Example: "The cost was ¥1,500" becomes "The cost was $10.25 USD" (assuming
+            the rate).
+
+            Verification Step: After generating the response, perform a "self-audit"
+            to ensure the word count and structure match the original perfectly.'
+        selected: false
+        title: Doc Regenerator with currency rate
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 1530.474774092956
+        y: 756.1635631451562
+      positionAbsolute:
+        x: 1530.474774092956
+        y: 756.1635631451562
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: Regenerated document
+        type: answer
+        variables: []
+      height: 105
+      id: answer
+      position:
+        x: 1849.625860634119
+        y: 756.1635631451562
+      positionAbsolute:
+        x: 1849.625860634119
+        y: 756.1635631451562
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1771851561833'
+        - bu_report
+      height: 94
+      id: '1771851581214'
+      position:
+        x: 502.76009333096
+        y: 282
+      positionAbsolute:
+        x: 502.76009333096
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        selected: false
+        template: '{{ arg1 }}'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1771851581214'
+          - text
+          value_type: array[string]
+          variable: arg1
+      height: 54
+      id: '1771851897990'
+      position:
+        x: 792.7564660979167
+        y: 282
+      positionAbsolute:
+        x: 792.7564660979167
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1771851897990'
+          - output
+          variable_selector:
+          - conversation
+          - extracted_doc
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771851955724'
+      position:
+        x: 1096.7564660979167
+        y: 282
+      positionAbsolute:
+        x: 1096.7564660979167
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Multiple currencies detected. Do you wants to convert?
+        desc: ''
+        selected: false
+        title: Multi-currency detection
+        type: answer
+        variables: []
+      height: 118
+      id: '1771851995979'
+      position:
+        x: 1700.7564660979167
+        y: 282
+      positionAbsolute:
+        x: 1700.7564660979167
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 4339b810-985d-4422-b876-fb869b8db877
+          conditions:
+          - comparison_operator: empty
+            id: a8e4101e-655a-4b15-89a9-d3bb3a099248
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - currency_rate
+          - comparison_operator: not empty
+            id: ba89e0e9-1dd3-4b17-b8df-0cf523d7cf91
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - extracted_doc
+          - comparison_operator: '='
+            id: d238d22f-51e5-491e-a105-72cb974815f6
+            value: '1'
+            varType: number
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 4339b810-985d-4422-b876-fb869b8db877
+          logical_operator: and
+        - case_id: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+          conditions:
+          - comparison_operator: '='
+            id: 680f8255-a24d-4ac1-af80-5523c1e85f94
+            value: '2'
+            varType: number
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 226
+      id: '1771852223758'
+      position:
+        x: 202.76009333096
+        y: 282
+      positionAbsolute:
+        x: 202.76009333096
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Please enter the currency conversion rate, if 1JPY = 0.065USD enter
+          0.0065
+        desc: ''
+        selected: false
+        title: Ask for Currency rate
+        type: answer
+        variables: []
+      height: 134
+      id: '17718540107770'
+      position:
+        x: 502.76009333096
+        y: 578.9135210615862
+      positionAbsolute:
+        x: 502.76009333096
+        y: 578.9135210615862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: 1
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 4
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771854405606'
+      position:
+        x: 2004.7564660979167
+        y: 282
+      positionAbsolute:
+        x: 2004.7564660979167
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: 2
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 5
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771854488304'
+      position:
+        x: 806.76009333096
+        y: 578.9135210615862
+      positionAbsolute:
+        x: 806.76009333096
+        y: 578.9135210615862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Conversion rate has been set as per input {{#conversation.currency_rate#}}
+        desc: ''
+        selected: false
+        title: Conversion Rate confirmation
+        type: answer
+        variables: []
+      height: 122
+      id: '17718548374930'
+      position:
+        x: 1254.8589795343435
+        y: 751.9135210615862
+      positionAbsolute:
+        x: 1254.8589795343435
+        y: 751.9135210615862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1771855805057'
+          - result
+          variable_selector:
+          - conversation
+          - currency_rate
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 6
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771855194116'
+      position:
+        x: 863.2363630580635
+        y: 751.9135210615862
+      positionAbsolute:
+        x: 863.2363630580635
+        y: 751.9135210615862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    return {\n        \"result\": arg1,\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '1771855805057'
+      position:
+        x: 502.76009333096
+        y: 751.9135210615862
+      positionAbsolute:
+        x: 502.76009333096
+        y: 751.9135210615862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 4b62fc17-5aa5-409d-a1f9-a664b9ae2494
+          role: system
+          text: 'Data Source: {{#conversation.extracted_doc#}}
+
+
+            Role: High-Precision Currency Processor.
+
+            Task 1 (Document Analysis): Scan the provided PDF for Japanese Yen (JPY/¥).
+
+            Rules: Ignore dates (2024, 2026), quantities, or plain numbers without
+            symbols.
+
+            Output: If JPY is found, output NEED_CONFIRMATION. Otherwise, output CLEAN.
+
+            Task 2 (Confirmation): If the user is responding to a previous prompt
+            about converting JPY:
+
+            Rules: If the user says "Yes" or expresses agreement, output ASK_FOR_RATE.
+
+            Task 3 (Rate Extraction): If the user provides a numerical value (e.g.,
+            0.0065):
+
+            Output: Extract and output ONLY the raw numerical value.
+
+            Mandatory Rule: Output exactly one keyword (NEED_CONFIRMATION, CLEAN,
+            ASK_FOR_RATE) or one number. No prose.'
+        - id: 00163ee8-08b9-415d-8234-6d2145b901bf
+          role: user
+          text: '{{#conversation.extracted_doc#}}'
+        selected: false
+        title: Currency Detector
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 90
+      id: '1771856983531'
+      position:
+        x: 1400.7564660979167
+        y: 282
+      positionAbsolute:
+        x: 1400.7564660979167
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: 0
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - currency_rate
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - extracted_doc
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 5
+        type: assigner
+        version: '2'
+      height: 138
+      id: '1771857861577'
+      position:
+        x: 2153.625860634119
+        y: 756.1635631451562
+      positionAbsolute:
+        x: 2153.625860634119
+        y: 756.1635631451562
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Revisit
+          this node and add regex ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1771859917106'
+      position:
+        x: 513.0318127725441
+        y: 839.73246798491
+      positionAbsolute:
+        x: 513.0318127725441
+        y: 839.73246798491
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 135
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Revisit
+          this node and even if i say No it is working - recheck, This text is coming
+          even before LLM processing is completed need to handle it ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 248
+      height: 135
+      id: '17718599318230'
+      position:
+        x: 1719.6350645748498
+        y: 451.24365269270464
+      positionAbsolute:
+        x: 1719.6350645748498
+        y: 451.24365269270464
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 248
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 135
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Revisit
+          this node once E2E is integrated, need to store the converted text content
+          for future use","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: '  (2)'
+        type: ''
+        width: 248
+      height: 135
+      id: '17718600263980'
+      position:
+        x: 1539.066361504498
+        y: 899.1884180688576
+      positionAbsolute:
+        x: 1539.066361504498
+        y: 899.1884180688576
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 248
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 135
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Resetting
+          all variables back once this flow is completed","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: '  (3)'
+        type: ''
+        width: 248
+      height: 135
+      id: '17718600691310'
+      position:
+        x: 2162.5354787432534
+        y: 908.1163767882668
+      positionAbsolute:
+        x: 2162.5354787432534
+        y: 908.1163767882668
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 248
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Revisit
+          step_counter may become readability issue once flow grows","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ' (1)'
+        type: ''
+        width: 240
+      height: 88
+      id: '17718601136300'
+      position:
+        x: 203.08838729539445
+        y: 557.6609947115718
+      positionAbsolute:
+        x: 203.08838729539445
+        y: 557.6609947115718
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 116
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Accepting
+          consnt from user to convert is yet to be implemented","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: '  (2)'
+        type: ''
+        width: 246
+      height: 116
+      id: '17718601534950'
+      position:
+        x: 2028.661682395663
+        y: 451.24365269270464
+      positionAbsolute:
+        x: 2028.661682395663
+        y: 451.24365269270464
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 246
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 187
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"step_counter:","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"0
+          = document extraction and detecting the USD currency","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"1
+          = Ask user for currency conversion rate","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"2
+          = Doc regeneration based on user input of consent with yes or no for conversion
+          and currency rate","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 322
+      height: 187
+      id: '1771860287500'
+      position:
+        x: 76.04454055608323
+        y: -111.45912801206785
+      positionAbsolute:
+        x: 76.04454055608323
+        y: -111.45912801206785
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 322
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 101
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Try
+          to replace Doc Extractor with LLM Node and ignore images, blank pages and
+          summarize the table in words with actual headings and numbers  ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 542
+      height: 101
+      id: '1771913327571'
+      position:
+        x: 496.80877290123817
+        y: 110.06306664230362
+      positionAbsolute:
+        x: 496.80877290123817
+        y: 110.06306664230362
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 542
+    viewport:
+      x: 79.14713337377361
+      y: 33.08844875929765
+      zoom: 0.4911172040433237
