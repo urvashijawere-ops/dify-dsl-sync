@@ -1,0 +1,1472 @@
+app:
+  description: Customer information and contact information search workflow
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: M3_Final HBIL001 Workflow_Mohit
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1771334697244-source-1771334709634-target
+      source: '1771334697244'
+      sourceHandle: source
+      target: '1771334709634'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1771334709634-source-1771334863584-target
+      source: '1771334709634'
+      sourceHandle: source
+      target: '1771334863584'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771334863584-false-1771334934701-target
+      source: '1771334863584'
+      sourceHandle: 'false'
+      target: '1771334934701'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1771334863584-true-1771335003656-target
+      source: '1771334863584'
+      sourceHandle: 'true'
+      target: '1771335003656'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1771334934701-source-1771335003656-target
+      source: '1771334934701'
+      sourceHandle: source
+      target: '1771335003656'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1771335003656-source-1771402225922-target
+      source: '1771335003656'
+      sourceHandle: source
+      target: '1771402225922'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        sourceType: iteration-start
+        targetType: code
+      id: 1771402225922start-source-1771402257040-target
+      source: 1771402225922start
+      sourceHandle: source
+      target: '1771402257040'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        sourceType: code
+        targetType: knowledge-retrieval
+      id: 1771402257040-source-1771402334776-target
+      source: '1771402257040'
+      sourceHandle: source
+      target: '1771402334776'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1771402334776-source-1771402994696-target
+      source: '1771402334776'
+      sourceHandle: source
+      target: '1771402994696'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: code
+      id: 1771402225922-source-1771403078465-target
+      source: '1771402225922'
+      sourceHandle: source
+      target: '1771403078465'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1771403078465-source-1771403404805-target
+      source: '1771403078465'
+      sourceHandle: source
+      target: '1771403404805'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1771403404805-source-1771403641102-target
+      source: '1771403404805'
+      sourceHandle: source
+      target: '1771403641102'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771403641102'
+        sourceType: iteration-start
+        targetType: knowledge-retrieval
+      id: 1771403641102start-source-1771403679920-target
+      source: 1771403641102start
+      sourceHandle: source
+      target: '1771403679920'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771403641102'
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1771403679920-source-1771403719722-target
+      source: '1771403679920'
+      sourceHandle: source
+      target: '1771403719722'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: code
+      id: 1771403641102-source-1771403833859-target
+      source: '1771403641102'
+      sourceHandle: source
+      target: '1771403833859'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: iteration
+      id: 1771403833859-source-1771407459545-target
+      source: '1771403833859'
+      sourceHandle: source
+      target: '1771407459545'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771407459545'
+        sourceType: iteration-start
+        targetType: knowledge-retrieval
+      id: 1771407459545start-source-1771407533822-target
+      source: 1771407459545start
+      sourceHandle: source
+      target: '1771407533822'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771407459545'
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 1771407533822-source-1771407589309-target
+      source: '1771407533822'
+      sourceHandle: source
+      target: '1771407589309'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: iteration
+        targetType: code
+      id: 1771407459545-source-1771407984030-target
+      source: '1771407459545'
+      sourceHandle: source
+      target: '1771407984030'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1771407984030-source-1772107724107-target
+      source: '1771407984030'
+      sourceHandle: source
+      target: '1772107724107'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1772107724107-source-1771408182603-target
+      source: '1772107724107'
+      sourceHandle: source
+      target: '1771408182603'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: user_query
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: user_query
+      height: 90
+      id: '1771334697244'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\n\ndef main(user_query: str) -> dict:\n    and_op = \"no\"\
+          \n    only_numbers = \"true\"\n\n    inputs = user_query.split()\n\n   \
+          \ has_or = any(word.lower() == \"or\" for word in inputs)\n\n    if len(inputs)\
+          \ > 1:\n        if has_or:\n            and_op = \"false\"\n           \
+          \ inputs = [w for w in inputs if w.lower() != \"or\"]\n        else:\n \
+          \           and_op = \"true\"\n    \n    for input in inputs:\n        if\
+          \ not input.isdigit():\n            only_numbers = \"false\"\n\n    return\
+          \ {\n        \"result\": inputs,\n        \"and_op\": and_op,\n        \"\
+          only_numbers\": only_numbers\n    }"
+        code_language: python3
+        desc: Splits the multiple inputs separated by space into an array of inputs
+        outputs:
+          and_op:
+            children: null
+            type: string
+          only_numbers:
+            children: null
+            type: string
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Input Split Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771334697244'
+          - user_query
+          value_type: string
+          variable: user_query
+      height: 98
+      id: '1771334709634'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: b21123f9-9ed4-4610-aa4b-38d4dd5913fd
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '1771334709634'
+            - only_numbers
+          id: 'true'
+          logical_operator: and
+        desc: Determines if the input contains only digits so that the flow could
+          skip LLM node which generates combinations
+        selected: false
+        title: If Only Numbers present Decider
+        type: if-else
+      height: 186
+      id: '1771334863584'
+      position:
+        x: 686
+        y: 282
+      positionAbsolute:
+        x: 686
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Generates Hiragana, Katakana, Kanji and different format combinations
+          for all the inputs available
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-3-pro-preview
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: c3aa6854-dc2a-478a-ac4d-d61ed195bcd3
+          role: system
+          text: "You are a Japanese Text Normalization Engine.\nYour task is to analyze\
+            \ the provided inputs: {{#1771334709634.result#}}\nProvide output for\
+            \ all the available inputs.\nand produce ALL possible Japanese script\
+            \ variations (Romaji, Hiragana, Katakana, Kanji, Mixed Forms) when applicable.\n\
+            If the query is NOT Japanese and cannot be interpreted as a Japanese word,\
+            \ return it unchanged.\n===========================\n1. LANGUAGE DETECTION\
+            \ RULE (Script / Romaji / English Matching)\n===========================\n\
+            Treat the input as JAPANESE if it fits ANY of the following:\n(A) Contains\
+            \ Japanese characters:\nHiragana (U+3040–U+309F)\nKatakana (U+30A0–U+30FF)\n\
+            Kanji (U+4E00–U+9FAF)\nJapanese punctuation (、 。 ・ ー etc.)\n(B) Is valid\
+            \ Japanese Romaji\nRomaji that matches Japanese phonetic rules (ka/ki/ku...,\
+            \ sha/shu/sho, kyo, tsu, toukyou, etc.)\n(C) English input that maps to\
+            \ Japanese concepts\n(Sushi, Tokyo, karate, ramen, kimono, etc.)\nIf the\
+            \ English phrase is recognizable as a Japanese term → treat as Japanese.\n\
+            (D) NON-JAPANESE input\nIf the input cannot be interpreted as Japanese\
+            \ → treat as non-Japanese.\n===========================\n2. IF INPUT IS\
+            \ JAPANESE → PERFORM FULL NORMALIZATION\n===========================\n\
+            Do all conversions:\nromaji\nhiragana\nkatakana\nkanji_candidates\nmixed_forms\n\
+            standard_form\n===========================\n3. IF INPUT IS NON-JAPANESE\
+            \ → RETURN UNCHANGED\n===========================\nAll transformation\
+            \ fields → null\nOnly original_input filled.\n===========================\n\
+            4. OUTPUT FORMAT (MANDATORY)\n===========================\nThe output\
+            \ must ALWAYS be an array of objects in this EXACT structure:\n{\n\"original_input\"\
+            : \"<user_input>\",\n\"romaji\": \"<romaji_form_or_null>\",\n\"hiragana\"\
+            : \"<hiragana_form_or_null>\",\n\"katakana\": \"<katakana_form_or_null>\"\
+            ,\n\"kanji_candidates\": [\"<kanji1>\", \"<kanji2>\", ...],\n\"mixed_forms\"\
+            : {\n\"kanji_katakana\": \"<string_or_null>\",\n\"hiragana_katakana\"\
+            : \"<string_or_null>\",\n\"katakana_kanji\": \"<string_or_null>\"\n},\n\
+            \"standard_form\": \"<best_normalized_form_or_original>\",\n\"address\"\
+            : [\"<address_format_1>\", \"<address_format_2>\", ...]\n}\nIf no address\
+            \ detected → \"address\": null\n===========================\n5. ADDRESS\
+            \ NORMALIZATION ENGINE \n===========================\nBefore script normalization,\
+            \ detect whether input represents a Japanese address.\n(A) Recognizing\
+            \ addresses\nAddress-like inputs include:\nPrefectures (東京都, 大阪府, 北海道,\
+            \ etc.)\n区 / 市 / 町 / 村\n丁目 / 番地 / 号\nPostal-style numbers (6-10-1)\nBuilding\
+            \ names\n(B) Correct the formatting and expand ALL equivalent formats\n\
+            For any detected address, generate all possible normalized address variations,\
+            \ such as:\nKanji numeric vs Arabic numeric\n→ 2丁目 = 二丁目\nMulti-separator\
+            \ variations:\n→ 4丁目14番1号\n→ 4丁目14-1\n→ 4-14-1\nVariations based on:\n\
+            -丁目\n-番\n-号\nArabic numerals\nKanji numerals\nHyphens vs 番/号 combinations\n\
+            Example of required output:\nInput: 東京都中央区京橋二丁目４番１２号\nReturn in \"address\"\
+            :\n[\n\"東京都中央区京橋2丁目4-12\",\n\"東京都中央区京橋二丁目4番12号\",\n\"東京都中央区京橋2-4-12\"\
+            ,\n\"東京都中央区京橋二丁目4-12\",\n\"東京都中央区京橋2丁目4番12号\"\n]\n(This is only an example\
+            \ set; the actual variations must be generated.)\n(C) Mixed-script correction\n\
+            Convert things like:\n京橋二丁目 → 京橋2丁目\n東京都みなとく → 東京都港区\n(D) Building name\
+            \ normalization\nIf a building name appears and if the name is a foreign\
+            \ first name and last name word, break it using '・' exactly how Japanese\
+            \ separate foreign first and last name(e.g., ドンキホーテ):\nNormalize ALL possible\
+            \ forms:\nドンキホーテ\nドン・キホーテ\nどんきほーて\nドンキホーテビル → ドン・キホーテビル\nWhen detected,\
+            \ generate:\ncanonical building name\nalternative spellings\n\nImportant\
+            \ - While generating any fields especially kanji candidates never omit\
+            \ important data from the input for e.g. If the input contains street\
+            \ number, never omit those numbers. In the input if there is a number\
+            \ present never omit those numbers. \nFor e.g. 桜の町６丁目１２－３８\nAny possible\
+            \ combinations of these inputs should contain the numbers semantically\
+            \ in correct position. \n\n5.2 Symbol & Separator Handling (NEW SCENARIO\
+            \ ADDED)\n\nWhen the input contains a building name or any Katakana phrase:\n\
+            If user enters input without separator 「・」\nAutomatically generate:\n\
+            version with 「・」\nversion without 「・」\nIf user enters input with 「・」\n\
+            Automatically generate:\nnormalized form without 「・」\ncanonical form with\
+            \ 「・」\nExample\nInput: ドンキホーテ\nStore & Output:\nドン・キホーテ\nドンキホーテ\nInput:\
+            \ ドン・キホーテ\nStore & Output:\nドン・キホーテ\nドンキホーテ\nAdd these variations into\
+            \ a new field (must be included in output JSON):\n\"separator_variants\"\
+            : [\"<with_dot>\", \"<without_dot>\"]\n\nThis ensures the KB can search\
+            \ using either form.\n===========================\n6. FINAL INSTRUCTION\n\
+            ===========================\nFor every input:\nCheck if Japanese\nIf English\
+            \ but maps to Japanese → treat as Japanese\nCheck if input is an ADDRESS\n\
+            If address → normalize, correct, AND generate ALL alternate formats into\
+            \ an array\nGenerate separator variants (if applicable)\nThen perform\
+            \ script normalization\nOutput EXACT JSON with the \"address\" field as\
+            \ an ARRAY\nIf not a Japanese word → return unchanged\n\n-> Always understand\
+            \ each input entirely.\n-> Never omit any important data like names, numbers,\
+            \ etc. in any combination. Some particles like \"no\", \"wa\", etc. maybe\
+            \ omitted.\n-> While generating kanji combinations understand the input\
+            \ properly, based on the sematic meaning of the word generate kanji combinations,\
+            \ since one small part of the input can have multiple kanji possibilities\
+            \  generate most combinations and most probable kanjis based on the meaning\
+            \ of the word.\n-> While generating any combinations never add or remove\
+            \ any data from the input, every combination should contain the entire\
+            \ input word no more no less. For e.g. if the input is \"ダイアパレス西葛西Ⅱ\"\
+            \  then the combination should never be \"第二\", all combinations should\
+            \ contain the entire input.\n-> If there is a clear spelling mistake and\
+            \ by changing one or two alphabet the input becomes a meaningful building\
+            \ name, address, etc. Add it into a possible combination.\n\nALWAYS output\
+            \ JSON only."
+        - id: e18fcbc3-4748-428c-8b4e-d9bda6b60de9
+          role: user
+          text: '{{#1771334709634.result#}}'
+        selected: false
+        title: Combination generator fuzzy search
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 150
+      id: '1771334934701'
+      position:
+        x: 1017.8
+        y: 441.59999999999997
+      positionAbsolute:
+        x: 1017.8
+        y: 441.59999999999997
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\nimport re\nfrom typing import List, Dict\n\n\ndef main(llm_json:\
+          \ str, inputs: list[str], only_numbers: str) -> Dict[str, List[str]]:\n\n\
+          \    result_list: List[str] = []\n    seen = set()\n    \n    if only_numbers\
+          \ == \"true\":\n        for input in inputs:\n            result_list.append(f\"\
+          original_input:{input}\")\n            \n        return{\n            \"\
+          result\": result_list\n        }\n        \n    if not llm_json:\n     \
+          \   return {\"result\": []}\n\n    # Remove ```json blocks safely\n    cleaned_text\
+          \ = re.sub(r\"```json\\s*|\\s*```\", \"\", llm_json).strip()\n\n    try:\n\
+          \        data = json.loads(cleaned_text)\n    except Exception:\n      \
+          \  return {\"result\": []}\n\n    # Ensure always list\n    if isinstance(data,\
+          \ dict):\n        data = [data]\n    elif not isinstance(data, list):\n\
+          \        return {\"result\": []}\n \n\n    # helper to safely add values\n\
+          \    def add_value(val):\n        if val:\n            val = str(val).strip()\n\
+          \            val_to_check = val\n            if val.startswith(\"original_input:\"\
+          ):\n                val_to_check = val[15:]\n\n            if val_to_check\
+          \ and val_to_check not in seen:\n                result_list.append(val)\n\
+          \                seen.add(val_to_check)  \n\n    for item in data:\n   \
+          \     if not isinstance(item, dict):\n            continue\n\n        #\
+          \ original_input (start of new group)\n        original_input = str(item.get(\"\
+          original_input\", \"\")).strip()\n        if original_input:\n         \
+          \   marker = f\"original_input:{original_input}\"\n            if marker\
+          \ not in seen:\n                add_value(marker)\n\n        # simple fields\n\
+          \        for key in [\"romaji\", \"hiragana\", \"katakana\", \"standard_form\"\
+          ]:\n            add_value(item.get(key))\n\n        # kanji_candidates\n\
+          \        kanji_candidates = item.get(\"kanji_candidates\", [])\n       \
+          \ if isinstance(kanji_candidates, list):\n            for val in kanji_candidates:\n\
+          \                add_value(val)\n\n        # mixed_forms\n        mixed_forms\
+          \ = item.get(\"mixed_forms\", {})\n        if isinstance(mixed_forms, dict):\n\
+          \            for key in [\"kanji_katakana\", \"hiragana_katakana\", \"katakana_kanji\"\
+          ]:\n                add_value(mixed_forms.get(key))\n\n        # address\n\
+          \        address_list = item.get(\"address\")\n        if isinstance(address_list,\
+          \ list):\n            for addr in address_list:\n                add_value(addr)\n\
+          \n        # separator_variants\n        sep_variants = item.get(\"separator_variants\"\
+          )\n        if isinstance(sep_variants, list):\n            for sv in sep_variants:\n\
+          \                add_value(sv)\n\n    return {\"result\": result_list}"
+        code_language: python3
+        desc: Flattens the combinations of input into one array for the Kokyaku iteration
+          node
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Combinations Flattening
+        type: code
+        variables:
+        - value_selector:
+          - '1771334934701'
+          - text
+          value_type: string
+          variable: llm_json
+        - value_selector:
+          - '1771334709634'
+          - result
+          value_type: array[string]
+          variable: inputs
+        - value_selector:
+          - '1771334709634'
+          - only_numbers
+          value_type: string
+          variable: only_numbers
+      height: 114
+      id: '1771335003656'
+      position:
+        x: 1349
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 1349
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Iterates over all the input keywords and matches each keyword in the
+          Knowledge Base separately.
+        error_handle_mode: terminated
+        height: 207
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1771335003656'
+        - result
+        output_selector:
+        - '1771402994696'
+        - result
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1771402225922start
+        title: Kokyaku table Iteration
+        type: iteration
+        width: 993
+      height: 207
+      id: '1771402225922'
+      position:
+        x: 1647.2000000000003
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 1647.2000000000003
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 993
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1771402225922start
+      parentId: '1771402225922'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1671.2000000000003
+        y: 381.99999999999983
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        code: "\ndef main(input: str) -> dict:\n    if input.strip().startswith(\"\
+          original_input\"):\n        search_field = input[15:].strip()\n    else:\n\
+          \        search_field = input.strip()\n    return {\n        \"result\"\
+          : search_field,\n    }"
+        code_language: python3
+        desc: Extracts the current item of iteration
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Search Field Extractor for Kokyaku
+        type: code
+        variables:
+        - value_selector:
+          - '1771402225922'
+          - item
+          value_type: string
+          variable: input
+      height: 82
+      id: '1771402257040'
+      parentId: '1771402225922'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 1775.2000000000003
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        dataset_ids:
+        - xoNZ+n4wHnhleNIbEPpLbQub9BcnBT0683kszl2bB3XhIOmQZ1B7JKuVua+o9kvX
+        desc: Extracts Customer/kokyaku information
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1771402257040'
+        - result
+        retrieval_mode: multiple
+        selected: false
+        title: Customer Information Retrieval
+        type: knowledge-retrieval
+      height: 120
+      id: '1771402334776'
+      parentId: '1771402225922'
+      position:
+        x: 431
+        y: 68
+      positionAbsolute:
+        x: 2078.2000000000003
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "import unicodedata\n\n\ndef normalize_japanese(text: str) -> str:\n\
+          \    if not text:\n        return \"\"\n\n    text = unicodedata.normalize(\"\
+          NFKC\", text)\n\n    result = []\n    for ch in text:\n        code = ord(ch)\n\
+          \n        # hiragana range → katakana\n        if 0x3041 <= code <= 0x3096:\n\
+          \            ch = chr(code + 0x60)\n\n        result.append(ch)\n\n    text\
+          \ = \"\".join(result)\n\n    text = text.lower()\n\n    text = text.replace(\"\
+          \ \", \"\").replace(\"　\", \"\")\n\n    return text\n\ndef main(customer_data:\
+          \ list[dict], input: str) -> dict:\n    if input.startswith(\"original_input:\"\
+          ):\n        input = input[15:]\n\n    normalized_input = normalize_japanese(input)\n\
+          \n    kb_records = []\n    for data in customer_data:\n        content =\
+          \ data.get(\"content\", \"\")\n\n        normalized_content = normalize_japanese(content)\n\
+          \n        if normalized_input in normalized_content:\n            contents\
+          \ = normalized_content.split(';')\n            is_deleted = False\n    \
+          \        for cont in contents:\n                if not cont or ':' not in\
+          \ cont:\n                    continue\n        \n                key, value\
+          \ = cont.split(':', 1)\n                if key.strip() == \"sakujo_sumi_shokusei_furagu\"\
+          \ and value.strip() == \"1\":\n                    is_deleted = True\n \
+          \           \n            if not is_deleted:\n                kb_records.append(content)\n\
+          \n    return {\n        \"result\": kb_records\n    }\n\n\n\n\n"
+        code_language: python3
+        desc: Filters the duplicate records and formats the output
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771402225922'
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Format Output Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771402334776'
+          - result
+          value_type: array[object]
+          variable: customer_data
+        - value_selector:
+          - '1771402257040'
+          - result
+          value_type: string
+          variable: input
+      height: 98
+      id: '1771402994696'
+      parentId: '1771402225922'
+      position:
+        x: 734
+        y: 68
+      positionAbsolute:
+        x: 2381.2000000000003
+        y: 381.99999999999983
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def parse_record_to_dict(record: str) -> dict:\n    \"\"\"Convert 'k:v;k:v'\
+          \ string record to dictionary\"\"\"\n    result = {}\n    fields = record.split(';')\n\
+          \    for field in fields:\n        if ':' in field:\n            key, value\
+          \ = field.split(':', 1)\n            result[key.strip()] = value.strip()\n\
+          \    return result\n\n\ndef main(combinations: list[str], records_iteration:\
+          \ list[str], and_op: str) -> dict:\n\n    records = []\n    duplicates =\
+          \ set()\n\n    #Remove duplicate and deleted flagged records\n    for record\
+          \ in records_iteration:\n        record_dict = parse_record_to_dict(record)\n\
+          \n        cust_no = record_dict.get(\"okyaku-sama_bangou\")\n        delete_flag\
+          \ = record_dict.get(\"sakujo_sumi_shokusei_furagu\")\n\n        if not cust_no:\n\
+          \            continue\n\n        if cust_no in duplicates:\n           \
+          \ continue\n\n        if delete_flag == \"1\":\n            continue\n\n\
+          \        duplicates.add(cust_no)\n        records.append(record)\n\n   \
+          \ # OR logic\n    if and_op != \"true\":\n        return {\n           \
+          \ \"result\": [parse_record_to_dict(r) for r in records]\n        }\n\n\
+          \    # AND logic\n    result = []\n\n    # First input combinations extraction\n\
+          \    first_input_combinations = []\n    \n    first_input_combinations.append(combinations[0][15:])\n\
+          \    idx = 1\n\n    while idx < len(combinations):\n        if combinations[idx].startswith(\"\
+          original_input:\"):\n            combinations[idx] = combinations[idx][15:]\n\
+          \            break\n        first_input_combinations.append(combinations[idx])\n\
+          \        idx += 1\n\n    second_input_combinations = combinations[idx:]\n\
+          \n    # filtering\n    for record in records:\n        first_contains =\
+          \ any(f in record for f in first_input_combinations)\n        second_contains\
+          \ = any(s in record for s in second_input_combinations)\n\n        if first_contains\
+          \ and second_contains:\n            result.append(record)\n\n    return\
+          \ {\n        \"result\": [parse_record_to_dict(r) for r in result]\n   \
+          \ }"
+        code_language: python3
+        desc: Filters the Data retrieved from kokyaku K.B.
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: Kokyaku data filter
+        type: code
+        variables:
+        - value_selector:
+          - '1771335003656'
+          - result
+          value_type: array[string]
+          variable: combinations
+        - value_selector:
+          - '1771402225922'
+          - output
+          value_type: array[string]
+          variable: records_iteration
+        - value_selector:
+          - '1771334709634'
+          - and_op
+          value_type: string
+          variable: and_op
+      height: 98
+      id: '1771403078465'
+      position:
+        x: 2700.2000000000003
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 2700.2000000000003
+        y: 313.99999999999983
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(kokykau_data: list[dict]) -> dict:\n    output = []\n\n  \
+          \  # Loop through each customer record\n    for item in kokykau_data:\n\
+          \        KYAKU_NO = int(item.get(\"okyaku-sama_bangou\", \"\"))\n      \
+          \  JIGYOSYO_CO = int(item.get(\"Jigyousho_koudo\", \"\"))\n\n        # Append\
+          \ as a combined string\n        output.append(f\"JIGYOUSHO_KOUDO: {JIGYOSYO_CO},\
+          \ KYAKU_NO: {KYAKU_NO}\")\n\n    return {\n        \"result\": output\n\
+          \    }\n"
+        code_language: python3
+        desc: Extracts Kanri_No & Jigyou_Unique_Cd from the output
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Kokyaku Fields Extractor
+        type: code
+        variables:
+        - value_selector:
+          - '1771403078465'
+          - result
+          value_type: array[object]
+          variable: kokykau_data
+      height: 98
+      id: '1771403404805'
+      position:
+        x: 3003.2000000000003
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 3003.2000000000003
+        y: 313.99999999999983
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Iterates over an array of Kanri_No & Jigyou_Unique_Cd to get Product
+          name and machine type
+        error_handle_mode: terminated
+        height: 223
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1771403404805'
+        - result
+        output_selector:
+        - '1771403719722'
+        - result
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1771403641102start
+        title: Order & Contract Iteration
+        type: iteration
+        width: 690
+      height: 223
+      id: '1771403641102'
+      position:
+        x: 3306.2000000000003
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 3306.2000000000003
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 690
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1771403641102start
+      parentId: '1771403641102'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 3330.2000000000003
+        y: 381.99999999999983
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        dataset_ids:
+        - GgFpHy1OOPodmB2d3gIaPEABl4IbSRUxp+KmfIpMB9rejzkV7lpjp7HRAG9yB/cH
+        desc: Retrieves records from Order & Contract Information KB based on the
+          input
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771403641102'
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0
+        query_variable_selector:
+        - '1771403641102'
+        - item
+        retrieval_mode: multiple
+        selected: false
+        title: Order & Contract Information Retrieval
+        type: knowledge-retrieval
+      height: 152
+      id: '1771403679920'
+      parentId: '1771403641102'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 3434.2000000000003
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(order_info: list[dict], current_item: str):\n    result =\
+          \ []\n    items = current_item.split(',')\n    jigyousho_koudo = items[0].split(':')[1].strip()\n\
+          \    kyaku_no = items[1].split(':')[1].strip()\n\n    for order in order_info:\n\
+          \        jigyou_matched = False\n        kyaku_matched = False\n       \
+          \ content = order.get(\"content\", \"\")\n        contents = content.split(';')\n\
+          \        for con in contents:\n            if con.startswith(\"JIGYOUSHO_KOUDO:\"\
+          ) and int(con.split(':')[1].strip()) == int(jigyousho_koudo):\n        \
+          \        jigyou_matched = True\n            if con.startswith(\"KYAKU_NO:\"\
+          ) and int(con.split(':')[1].strip()) == int(kyaku_no):\n               \
+          \ kyaku_matched = True\n            if kyaku_matched and jigyou_matched:\n\
+          \                result.append(content)\n                break\n\n    return\
+          \ {\n        \"result\": result\n    }\n\n\n"
+        code_language: python3
+        desc: Extracts only the required content and formats the output
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771403641102'
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Format Order Contract Output Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771403679920'
+          - result
+          value_type: array[object]
+          variable: order_info
+        - value_selector:
+          - '1771403641102'
+          - item
+          value_type: string
+          variable: current_item
+      height: 98
+      id: '1771403719722'
+      parentId: '1771403641102'
+      position:
+        x: 431
+        y: 68
+      positionAbsolute:
+        x: 3737.2000000000003
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(order_content: list[dict]) -> dict:\n    output = []\n\n \
+          \   # arg1 is a list of knowledge results\n    for item in order_content:\n\
+          \        KYAKU_NO = \"\"\n        JIGYOSYO_C = \"\"\n        SEI_NO = \"\
+          \"\n\n        fields = item.split(';')\n        for field in fields:\n \
+          \           if field.startswith(\"JIGYOUSHO_KOUDO:\"):\n               \
+          \ JIGYOSYO_C = int(field.split(':')[1].strip())\n            if field.startswith(\"\
+          KYAKU_NO:\"):\n                KYAKU_NO = int(field.split(':')[1].strip())\n\
+          \            if field.startswith(\"SEI_NO:\"):\n                SEI_NO =\
+          \ field.split(':')[1].strip()\n        \n        output.append(\n      \
+          \      f\"Business office: {JIGYOSYO_C}, Monitoring Section #: {SEI_NO},\
+          \ Customer number: {KYAKU_NO}\"\n        )\n\n    return {\n        \"result\"\
+          : output\n    }"
+        code_language: python3
+        desc: Extracts Kanri_No, Jigyou_Unique_Cd & SEI_No from the output
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Order & Contract Field Extractor
+        type: code
+        variables:
+        - value_selector:
+          - '1771403641102'
+          - output
+          value_type: array[string]
+          variable: order_content
+      height: 98
+      id: '1771403833859'
+      position:
+        x: 4056.2000000000003
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 4056.2000000000003
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Iterates over an array of Kanri_No, Jigyou_Unique_Cd and Sei_No to get
+          Building Code
+        error_handle_mode: terminated
+        height: 223
+        is_parallel: false
+        iterator_input_type: array[string]
+        iterator_selector:
+        - '1771403833859'
+        - result
+        output_selector:
+        - '1771407589309'
+        - result
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1771407459545start
+        title: Monitoring Master Iteration
+        type: iteration
+        width: 690
+      height: 223
+      id: '1771407459545'
+      position:
+        x: 4359.200000000001
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 4359.200000000001
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 690
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1771407459545start
+      parentId: '1771407459545'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 4383.200000000001
+        y: 381.99999999999983
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        dataset_ids:
+        - U6MmuTPg8ZrVUqSQudbh750/6oPzQ+Zddoq22pbzKVz21mTlURWv7EyO5ZPLGkcM
+        desc: Retrieves records from Monitoring Master KB based on the input
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771407459545'
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 10
+          weights:
+            keyword_setting:
+              keyword_weight: 1
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0
+        query_variable_selector:
+        - '1771407459545'
+        - item
+        retrieval_mode: multiple
+        selected: false
+        title: Monitoring Master Retrieval
+        type: knowledge-retrieval
+      height: 136
+      id: '1771407533822'
+      parentId: '1771407459545'
+      position:
+        x: 128
+        y: 68
+      positionAbsolute:
+        x: 4487.200000000001
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "def main(monitoring_info: list[dict], current_item: str):\n    result\
+          \ = []\n    items = current_item.split(',')\n    jigyousho_koudo = items[0].split(':')[1].strip()\n\
+          \    sei_no = items[1].split(':')[1].strip()\n    kyaku_no = items[2].split(':')[1].strip()\n\
+          \n    for item in monitoring_info:\n        jigyou_matched = False\n   \
+          \     sei_matched = False\n        kyaku_matched = False\n        content\
+          \ = item.get(\"content\", \"\")\n        contents = content.split(';')\n\
+          \        for con in contents:\n            if con.startswith(\"Business\
+          \ office:\") and int(con.split(':')[1].strip()) == int(jigyousho_koudo):\n\
+          \                jigyou_matched = True\n            if con.startswith(\"\
+          Monitoring Section #:\") and con.split(':')[1].strip() == sei_no:\n    \
+          \            sei_matched = True\n            if con.startswith(\"Customer\
+          \ number:\") and int(con.split(':')[1].strip()) == int(kyaku_no):\n    \
+          \            kyaku_matched = True\n            if kyaku_matched and jigyou_matched\
+          \ and sei_matched:\n                result.append(content)\n           \
+          \     break\n\n    return {\n        \"result\": result\n    }\n\n"
+        code_language: python3
+        desc: Extracts only the required content and formats the output
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1771407459545'
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: Format Monitoring Master Output
+        type: code
+        variables:
+        - value_selector:
+          - '1771407533822'
+          - result
+          value_type: array[object]
+          variable: monitoring_info
+        - value_selector:
+          - '1771407459545'
+          - item
+          value_type: string
+          variable: current_item
+      height: 98
+      id: '1771407589309'
+      parentId: '1771407459545'
+      position:
+        x: 431
+        y: 68
+      positionAbsolute:
+        x: 4790.200000000001
+        y: 381.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        code: "import json\n\ndef parse_kv_string(record: str):\n    data = {}\n \
+          \   for part in record.split(\";\"):\n        if \":\" in part:\n      \
+          \      k, v = part.split(\":\", 1)\n            data[k.strip()] = v.strip()\n\
+          \    return data\n\n\ndef main(customer_data, order_data, monitoring_data):\n\
+          \    result = []\n    orders = [parse_kv_string(o) for o in order_data]\n\
+          \    monitorings = [parse_kv_string(m) for m in monitoring_data]\n\n   \
+          \ # Group orders by customer\n    order_map = {}\n    for o in orders:\n\
+          \        key = (\n            int(o.get(\"KYAKU_NO\")),\n            int(o.get(\"\
+          JIGYOUSHO_KOUDO\"))\n        )\n        order_map.setdefault(key, []).append(o)\n\
+          \n    # Group monitoring by customer\n    monitoring_map = {}\n    for m\
+          \ in monitorings:\n        key = (\n            int(m.get(\"Customer number\"\
+          )),\n            int(m.get(\"Business office\"))\n        )\n        monitoring_map.setdefault(key,\
+          \ []).append(m)\n\n    # Drive from customer\n    for c in customer_data:\n\
+          \        customer_no = int(c.get(\"okyaku-sama_bangou\"))\n        branch_code\
+          \ = int(c.get(\"Jigyousho_koudo\"))\n\n        cust_orders = order_map.get((customer_no,\
+          \ branch_code), [])\n        cust_monitorings = monitoring_map.get((customer_no,\
+          \ branch_code), [])\n\n        # Case 1: monitoring exists\n        if cust_monitorings:\n\
+          \            if cust_orders:\n                # Build monitoring map by\
+          \ SECTION NO\n                mon_by_sei = {}\n                for m in\
+          \ cust_monitorings:\n                    sei = str(m.get(\"Monitoring Section\
+          \ #\", \"\")).strip()\n                    if sei:\n                   \
+          \     mon_by_sei.setdefault(sei, []).append(m)\n\n                used_monitoring\
+          \ = set()\n\n                # First: process all orders\n             \
+          \   for o in cust_orders:\n                    sei_no = str(o.get(\"SEI_NO\"\
+          , \"\")).strip()\n                    matched_monitors = mon_by_sei.get(sei_no,\
+          \ [])\n\n                    if matched_monitors:\n                    \
+          \    for m in matched_monitors:\n                            used_monitoring.add(id(m))\n\
+          \n                            result.append({\n                        \
+          \        \"CustomerNumber\": c.get(\"okyaku-sama_bangou\"),\n          \
+          \                      \"BranchCode\": c.get(\"Jigyousho_koudo\"),\n   \
+          \                             \"BuildingName\": c.get(\"biru-mei\"),\n \
+          \                               \"BuildingNameKatakana\": c.get(\"biru-mei_kana\"\
+          ),\n                                \"Address\": c.get(\"biru_juusho\"),\n\
+          \                                \"AddressKatakana\": c.get(\"biru_juusho_kana\"\
+          ),\n                                \"ContractDetails\": c.get(\"ContractDetails\"\
+          ),\n                                \"TelephoneNumberDay\": c.get(\"TelephoneNumberDay\"\
+          ),\n                                \"TelephoneNumberNight\": c.get(\"TelephoneNumberNight\"\
+          ),\n                                \"BuildingCode\": m.get(\"Building Code\"\
+          ),\n                                \"ProductNumber\": o.get(\"SEI_NO\"\
+          ),\n                                \"ProductName\": o.get(\"KYAK_SYOHIN_NAME\"\
+          ),\n                                \"MachineType\": o.get(\"SETUBI_SYURUI_NAME\"\
+          )\n                            })\n                    else:\n         \
+          \               # order exists but no monitoring match\n               \
+          \         result.append({\n                            \"CustomerNumber\"\
+          : c.get(\"okyaku-sama_bangou\"),\n                            \"BranchCode\"\
+          : c.get(\"Jigyousho_koudo\"),\n                            \"BuildingName\"\
+          : c.get(\"biru-mei\"),\n                            \"BuildingNameKatakana\"\
+          : c.get(\"biru-mei_kana\"),\n                            \"Address\": c.get(\"\
+          biru_juusho\"),\n                            \"AddressKatakana\": c.get(\"\
+          biru_juusho_kana\"),\n                            \"ContractDetails\": c.get(\"\
+          ContractDetails\"),\n                            \"TelephoneNumberDay\"\
+          : c.get(\"TelephoneNumberDay\"),\n                            \"TelephoneNumberNight\"\
+          : c.get(\"TelephoneNumberNight\"),\n                            \"BuildingCode\"\
+          : \"\",\n                            \"ProductNumber\": o.get(\"SEI_NO\"\
+          ),\n                            \"ProductName\": o.get(\"KYAK_SYOHIN_NAME\"\
+          ),\n                            \"MachineType\": o.get(\"SETUBI_SYURUI_NAME\"\
+          )\n                        })\n\n                # Second: remaining monitoring\
+          \ (no orders)\n                for m in cust_monitorings:\n            \
+          \        if id(m) in used_monitoring:\n                        continue\n\
+          \n                    result.append({\n                        \"CustomerNumber\"\
+          : c.get(\"okyaku-sama_bangou\"),\n                        \"BranchCode\"\
+          : c.get(\"Jigyousho_koudo\"),\n                        \"BuildingName\"\
+          : c.get(\"biru-mei\"),\n                        \"BuildingNameKatakana\"\
+          : c.get(\"biru-mei_kana\"),\n                        \"Address\": c.get(\"\
+          biru_juusho\"),\n                        \"AddressKatakana\": c.get(\"biru_juusho_kana\"\
+          ),\n                        \"ContractDetails\": c.get(\"ContractDetails\"\
+          ),\n                        \"TelephoneNumberDay\": c.get(\"TelephoneNumberDay\"\
+          ),\n                        \"TelephoneNumberNight\": c.get(\"TelephoneNumberNight\"\
+          ),\n                        \"BuildingCode\": m.get(\"Building Code\"),\n\
+          \                        \"ProductNumber\": \"\",\n                    \
+          \    \"ProductName\": \"\",\n                        \"MachineType\": \"\
+          \"\n                    })\n\n            else:\n                # monitoring-only\n\
+          \                for m in cust_monitorings:\n                    result.append({\n\
+          \                        \"CustomerNumber\": c.get(\"okyaku-sama_bangou\"\
+          ),\n                        \"BranchCode\": c.get(\"Jigyousho_koudo\"),\n\
+          \                        \"BuildingName\": c.get(\"biru-mei\"),\n      \
+          \                  \"BuildingNameKatakana\": c.get(\"biru-mei_kana\"),\n\
+          \                        \"Address\": c.get(\"biru_juusho\"),\n        \
+          \                \"AddressKatakana\": c.get(\"biru_juusho_kana\"),\n   \
+          \                     \"ContractDetails\": c.get(\"ContractDetails\"),\n\
+          \                        \"TelephoneNumberDay\": c.get(\"TelephoneNumberDay\"\
+          ),\n                        \"TelephoneNumberNight\": c.get(\"TelephoneNumberNight\"\
+          ),\n                        \"BuildingCode\": m.get(\"Building Code\"),\n\
+          \                        \"ProductNumber\": \"\",\n                    \
+          \    \"ProductName\": \"\",\n                        \"MachineType\": \"\
+          \"\n                    })\n\n        # Case 2: no monitoring\n        else:\n\
+          \            if cust_orders:\n                # order-only\n           \
+          \     for o in cust_orders:\n                    result.append({\n     \
+          \                   \"CustomerNumber\": c.get(\"okyaku-sama_bangou\"),\n\
+          \                        \"BranchCode\": c.get(\"Jigyousho_koudo\"),\n \
+          \                       \"BuildingName\": c.get(\"biru-mei\"),\n       \
+          \                 \"BuildingNameKatakana\": c.get(\"biru-mei_kana\"),\n\
+          \                        \"Address\": c.get(\"biru_juusho\"),\n        \
+          \                \"AddressKatakana\": c.get(\"biru_juusho_kana\"),\n   \
+          \                     \"ContractDetails\": c.get(\"ContractDetails\"),\n\
+          \                        \"TelephoneNumberDay\": c.get(\"TelephoneNumberDay\"\
+          ),\n                        \"TelephoneNumberNight\": c.get(\"TelephoneNumberNight\"\
+          ),\n                        \"BuildingCode\": \"\",\n                  \
+          \      \"ProductNumber\": o.get(\"SEI_NO\"),\n                        \"\
+          ProductName\": o.get(\"KYAK_SYOHIN_NAME\"),\n                        \"\
+          MachineType\": o.get(\"SETUBI_SYURUI_NAME\")\n                    })\n \
+          \           else:\n                # customer-only\n                result.append({\n\
+          \                    \"CustomerNumber\": c.get(\"okyaku-sama_bangou\"),\n\
+          \                    \"BranchCode\": c.get(\"Jigyousho_koudo\"),\n     \
+          \               \"BuildingName\": c.get(\"biru-mei\"),\n               \
+          \     \"BuildingNameKatakana\": c.get(\"biru-mei_kana\"),\n            \
+          \        \"Address\": c.get(\"biru_juusho\"),\n                    \"AddressKatakana\"\
+          : c.get(\"biru_juusho_kana\"),\n                    \"ContractDetails\"\
+          : c.get(\"ContractDetails\"),\n                    \"TelephoneNumberDay\"\
+          : c.get(\"TelephoneNumberDay\"),\n                    \"TelephoneNumberNight\"\
+          : c.get(\"TelephoneNumberNight\"),\n                    \"BuildingCode\"\
+          : \"\",\n                    \"ProductNumber\": \"\",\n                \
+          \    \"ProductName\": \"\",\n                    \"MachineType\": \"\"\n\
+          \                })\n\n    return {\n        \"result\": result\n    }"
+        code_language: python3
+        desc: Merges the output from Kokyaku table, order & contract information &
+          Monitoring Master table
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: false
+        title: Merge Output Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771403078465'
+          - result
+          value_type: array[object]
+          variable: customer_data
+        - value_selector:
+          - '1771403641102'
+          - output
+          value_type: array[string]
+          variable: order_data
+        - value_selector:
+          - '1771407459545'
+          - output
+          value_type: array[string]
+          variable: monitoring_data
+      height: 114
+      id: '1771407984030'
+      position:
+        x: 5109.200000000001
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 5109.200000000001
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1771407984030'
+          - result
+          value_type: array[object]
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1771408182603'
+      position:
+        x: 5712.200000000001
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 5712.200000000001
+        y: 313.99999999999983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: 'def main(result: str) -> dict:'
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Structured Output Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771407984030'
+          - result
+          value_type: array[object]
+          variable: result
+      height: 54
+      id: '1772107724107'
+      position:
+        x: 5412.200000000001
+        y: 313.99999999999983
+      positionAbsolute:
+        x: 5412.200000000001
+        y: 313.99999999999983
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -5130.381453324935
+      y: -59.24331282728417
+      zoom: 1.0629822331697065
