@@ -1,0 +1,304 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 'Sprint5: Generate Hearing Questions '
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1772444228962-source-1772442299104-target
+      selected: false
+      source: '1772444228962'
+      sourceHandle: source
+      target: '1772442299104'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1772440045044-source-1772538177110-target
+      selected: false
+      source: '1772440045044'
+      sourceHandle: source
+      target: '1772538177110'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1772538177110-source-1772444228962-target
+      source: '1772538177110'
+      sourceHandle: source
+      target: '1772444228962'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Current Month PDF
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: current_month_pdf
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Variance Table
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: variance_table_csv
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Previous Month PDF
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: previous_month_pdf
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Number Table
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: number_table_csv
+        - label: Hearing Questions
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: query_type
+      height: 193
+      id: '1772440045044'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1772444228962'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1772442299104'
+      position:
+        x: 699
+        y: 407
+      positionAbsolute:
+        x: 699
+        y: 407
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1772538177110'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: d771b0d6-8b2b-4831-b760-237537e2b74e
+          role: system
+          text: "Role: You are an Advanced Financial Intelligence Analyst. Your task\
+            \ is to perform a detailed cross-document audit to generate 30 high-impact\
+            \ Hearing Questions for a Business Unit (BU) meeting.\n\nDynamic Data\
+            \ Inputs:\nCurrent Period Narrative (PDF): {{{#1772440045044.current_month_pdf#}}}}\n\
+            Comparative Period Reference (PDF): {{{#1772440045044.previous_month_pdf#}}}}\n\
+            Financial Baseline (CSV): {{{#1772440045044.number_table_csv#}}}}\nVariance\
+            \ Analytics (CSV): {{{#1772440045044.variance_table_csv#}}}}\nReference\
+            \ Style (Knowledge Base): {{#context#}}\n\nAnalysis Instructions:\nContext\
+            \ Detection: Automatically detect the reporting period (Month/Quarter/FY)\
+            \ from the metadata and content of the inputs. Do not use hardcoded months.\n\
+            Cross-Referencing & Gaps: Compare the numerical deltas in the CSVs against\
+            \ the qualitative explanations in the Current PDF. If a variance >5% or\
+            \ >1B JPY exists without an explanation, generate a question.\nData Consistency\
+            \ Check: Compare every figure in the Financial Baseline (CSV) and Variance\
+            \ Analytics (CSV) against the Current PDF. If the CSV shows a number that\
+            \ is missing or different in the PDF, you MUST create a question about\
+            \ it and cite the CSV as the primary source.\nMandatory Source Tagging:\
+            \ In the \"Source\" column, you must explicitly list the CSV filename\
+            \ if the numerical data for the question was pulled from that file. Do\
+            \ not just cite the PDF page if the data also exists in the CSV.\nStyle\
+            \ Alignment: Mimic the professional logic and tone found in the retrieved\
+            \ {{#context#}}.\n\nOutput Requirements:\n| S.No | Category | Source |\
+            \ Hearing Question | Expected Answer (Optional) | \n| :--- | :--- | :---\
+            \ | :--- | :--- |\n\nStrategic Risk Summary: \nAfter the table, identify\
+            \ the Top 3 High-Exposure Issues with:\nImpact: Estimated financial risk.\n\
+            Urgency: Why this must be addressed now."
+        - id: 4dc8c974-4136-4dff-bbcb-3bddb038100c
+          role: user
+          text: ''
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 89
+      id: '1772444228962'
+      position:
+        x: 693.5
+        y: 282
+      positionAbsolute:
+        x: 693.5
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - /aiWmApo+Ttt4TlP+G+tDFatx3zXldNg89YW0BK+56ByYkCO4y1m4e9HhKFIXOSN
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 1
+        query_variable_selector:
+        - '1772440045044'
+        - query_type
+        retrieval_mode: multiple
+        selected: false
+        title: Knowledge Retrieval
+        type: knowledge-retrieval
+      height: 91
+      id: '1772538177110'
+      position:
+        x: 397.5
+        y: 282
+      positionAbsolute:
+        x: 397.5
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -20.659999999999968
+      y: -154.91999999999996
+      zoom: 0.96
