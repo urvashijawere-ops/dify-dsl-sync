@@ -1,1 +1,209 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: workflow\n  name: ocr_test_workfolow_ashish\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - remote_url\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: tool\n      id: 1777023891519-source-1777289001619-target\n      source: '1777023891519'\n      sourceHandle: source\n      target: '1777289001619'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: tool\n        targetType: end\n      id: 1777289001619-source-1777023972720-target\n      source: '1777289001619'\n      sourceHandle: source\n      target: '1777023972720'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions: []\n          allowed_file_types:\n          - image\n          - document\n          allowed_file_upload_methods:\n          - local_file\n          - remote_url\n          label: input_doc\n          max_length: 48\n          options: []\n          required: true\n          type: file\n          variable: input_doc\n      height: 89\n      id: '1777023891519'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777289001619'\n          - text\n          value_type: string\n          variable: summary\n        selected: false\n        title: End\n        type: end\n      height: 90\n      id: '1777023972720'\n      position:\n        x: 686\n        y: 282\n      positionAbsolute:\n        x: 686\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    - data:\n        desc: ''\n        is_team_authorization: true\n        output_schema: null\n        paramSchemas:\n        - auto_generate: null\n          default: null\n          form: llm\n          human_description:\n            en_US: Upload file\n            ja_JP: Upload file\n            pt_BR: Upload file\n            zh_Hans: Upload file\n          label:\n            en_US: select_file\n            ja_JP: select_file\n            pt_BR: select_file\n            zh_Hans: select_file\n          llm_description: Upload file\n          max: null\n          min: null\n          name: select_file\n          options: []\n          placeholder:\n            en_US: ''\n            ja_JP: ''\n            pt_BR: ''\n            zh_Hans: ''\n          precision: null\n          required: true\n          scope: null\n          template: null\n          type: files\n        params:\n          select_file: ''\n        provider_id: 2a48d915-5f63-4cae-bf06-298eb218edc6\n        provider_name: OCR Summarizer\n        provider_type: workflow\n        selected: false\n        title: OCR Summarizer\n        tool_configurations: {}\n        tool_description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,\n          DOC/DOCX, CSV. English and Japanese. File validation: empty, zip disguised,\n          compressed formats blocked.'\n        tool_label: OCR Summarizer\n        tool_name: ocr_wf\n        tool_node_version: '2'\n        tool_parameters:\n          select_file:\n            type: variable\n            value:\n            - '1777023891519'\n            - input_doc\n        type: tool\n      height: 53\n      id: '1777289001619'\n      position:\n        x: 383\n        y: 282\n      positionAbsolute:\n        x: 383\n        y: 282\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    viewport:\n      x: 506.6092851983689\n      y: 245.995469739736\n      zoom: 1.0810519619457504\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: ocr_test_workfolow_ashish
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: tool
+      id: 1777023891519-source-1777289001619-target
+      source: '1777023891519'
+      sourceHandle: source
+      target: '1777289001619'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1777289001619-source-1777023972720-target
+      source: '1777289001619'
+      sourceHandle: source
+      target: '1777023972720'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: input_doc
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: input_doc
+      height: 89
+      id: '1777023891519'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777289001619'
+          - text
+          value_type: string
+          variable: summary
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1777023972720'
+      position:
+        x: 686
+        y: 282
+      positionAbsolute:
+        x: 686
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Upload file
+            ja_JP: Upload file
+            pt_BR: Upload file
+            zh_Hans: Upload file
+          label:
+            en_US: select_file
+            ja_JP: select_file
+            pt_BR: select_file
+            zh_Hans: select_file
+          llm_description: Upload file
+          max: null
+          min: null
+          name: select_file
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: files
+        params:
+          select_file: ''
+        provider_id: 2a48d915-5f63-4cae-bf06-298eb218edc6
+        provider_name: OCR Summarizer
+        provider_type: workflow
+        selected: false
+        title: OCR Summarizer
+        tool_configurations: {}
+        tool_description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,
+          DOC/DOCX, CSV. English and Japanese. File validation: empty, zip disguised,
+          compressed formats blocked.'
+        tool_label: OCR Summarizer
+        tool_name: ocr_wf
+        tool_node_version: '2'
+        tool_parameters:
+          select_file:
+            type: variable
+            value:
+            - '1777023891519'
+            - input_doc
+        type: tool
+      height: 53
+      id: '1777289001619'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 506.6092851983689
+      y: 245.995469739736
+      zoom: 1.0810519619457504
