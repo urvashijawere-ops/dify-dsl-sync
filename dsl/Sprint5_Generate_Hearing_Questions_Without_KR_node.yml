@@ -1,0 +1,772 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 'Sprint5: Generate Hearing Questions Without KR node'
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1772444228962-source-1772442299104-target
+      selected: false
+      source: '1772444228962'
+      sourceHandle: source
+      target: '1772442299104'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1772440045044-source-1773045675872-target
+      source: '1772440045044'
+      sourceHandle: source
+      target: '1773045675872'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1773045675872-source-1772444228962-target
+      source: '1773045675872'
+      sourceHandle: source
+      target: '1772444228962'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Current Month PDF
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: current_month_pdf
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Variance Table
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: variance_table_csv
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Previous Month PDF
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: previous_month_pdf
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Number Table
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: number_table_csv
+      height: 167
+      id: '1772440045044'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1772444228962'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1772442299104'
+      position:
+        x: 699
+        y: 407
+      positionAbsolute:
+        x: 699
+        y: 407
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1773045675872'
+          - reference_set
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: d771b0d6-8b2b-4831-b760-237537e2b74e
+          role: system
+          text: 'Role: You are a Senior Financial Intelligence Analyst. Your objective
+            is to perform a high-fidelity cross-document audit to identify financial
+            risks, reporting gaps, and narrative inconsistencies.
+
+
+            Data Input Definitions:
+
+            Current Period Narrative (PDF): {{{#1772440045044.current_month_pdf#}}}}
+            — The primary qualitative explanation for the current month''s performance.
+
+            Comparative Period Reference (PDF): {{{#1772440045044.previous_month_pdf#}}}}
+            — Used to identify recurring risks or shifts in strategy.
+
+            Financial Baseline (CSV): {{{#1772440045044.number_table_csv#}}}} — The
+            "Source of Truth" for core financial figures (Revenue, EBITA, FCF).
+
+            Variance Analytics (CSV): {{{#1772440045044.variance_table_csv#}}}} —
+            Detailed breakdown of numerical deltas versus budget and previous forecasts.
+
+            Expert Logic Library: {{{#1773045675872.reference_set#}}}} — A comprehensive
+            repository of historical reference questions to guide your analytical
+            depth and professional tone.
+
+
+            Autonomous Analysis Instructions:
+
+            Context & Unit Detection: Detect reporting periods and currency units
+            (Millions vs. 100 Millions JPY) from headers. Crucial: Normalize units
+            before comparing CSVs.
+
+            Numerical Anomaly Detection: Identify significant deviations in Revenue,
+            Adj. EBITA, or FCF between the Baseline and Variance CSVs.
+
+            Narrative Verification: Cross-reference these anomalies against the Current
+            Period PDF.
+
+            Gap Identification: Formulate a Hearing Question if the CSV data contradicts
+            the PDF, if a variance is unexplained, or if a past risk (from Comparative
+            PDF) has escalated.
+
+            Strict Style & Reference Mapping: * Hearing Question: Mimic the professional
+            skepticism and technical depth of the Expert Logic Library.
+
+            Expected Answer: Cross-reference your finding against the question fields
+            in the Expert Logic Library.
+
+            IF a direct match or highly similar logic exists: Provide the exact expected_answer
+            from the JSON.
+
+            IF no match exists: Leave the "Expected Answer" cell BLANK.
+
+            STRICT PROHIBITION: Do not generate, summarize, or hallucinate a new "Expected
+            Answer" from the PDF text.
+
+            Output Requirements: Produce the audit results in a Markdown table: |
+            S.No | Category | Source | Hearing Question | Expected Answer | | :---
+            | :--- | :--- | :--- | :--- |
+
+            Strategic Risk Summary: Conclude with a "Risk Exposure Map" (Impact/Urgency)
+            for the top financial threats discovered.'
+        - id: 4dc8c974-4136-4dff-bbcb-3bddb038100c
+          role: user
+          text: ''
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 89
+      id: '1772444228962'
+      position:
+        x: 693.5
+        y: 282
+      positionAbsolute:
+        x: 693.5
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main() -> dict:\n    json_data = \"\"\"\n      {\n\
+          \    \"id\": 1,\n    \"question\": \"Is the PL of DSS as a whole likely\
+          \ to land on the current forecast?\",\n    \"expected_answer\": \"CFO Sales\
+          \ ± 200 billion yen and Adj.EBITA ± 20~30 billion yen but we believe that\
+          \ forecast can be achieved by further improvement of SI BU BU.\"\n  },\n\
+          \  {\n    \"id\": 2,\n    \"question\": \"25 Fiscal year (DEAI) Adj.EBITA-109\
+          \ billion yen appears to be covered by (DSS) overall improvement incorporation,\
+          \ but does it recognise?\",      \n    \"expected_answer\": \"As you know.\
+          \ In addition to the cost reductions (40 billion yen that have been realized\
+          \ since the budget for the entire (DSS), the expect\nation for further improvement\
+          \ of each BU has been incorporated Fiscal year remain unchanged. Currently,\
+          \ Adj. EBITA Necessary Improvement is 5 billion billion yen.\"\n  },\n \
+          \ {\n    \"id\": 3,\n    \"question\": \"Is the overall deterioration in\
+          \ CF in the Financial Information Systems Division without the previous\
+          \ deviation of each company due to the need for improvement?\",\n    \"\
+          expected_answer\": \"In the front part, we plan to explain the actual deviation\
+          \ of each company, but it is assumed that it will worsen at the Gr company.\"\
+          \    \n  },\n  {\n    \"id\": 4,\n    \"question\": \"Is it correct to understand\
+          \ that the year-on-year deterioration in (DEAI) does not match the company's\
+          \ total is due to the fact that the need for improvement in (DEAI) as a\
+          \ whole has been incorporated in the past?\",\n    \"expected_answer\":\
+          \ \"Yes\"\n  },\n  {\n    \"id\": 5,\n    \"question\": \"GL HV: Is the\
+          \ Fiscal year forecast the same as the forecast of the Growth Strategy Council?\
+          \ Also, is it correct to recognize that GL has not factored in new acquisitions\
+          \ in its forecast?\",\n    \"expected_answer\": \"The forecast remains unchanged.\
+          \ We are also on the same page about acquisitions.\"\n  },\n  {\n    \"\
+          id\": 6,\n    \"question\": \"Please tell us about the risk of deterioration\
+          \ Versus. HVs in Q2 forecast by product type and region.\",\n    \"expected_answer\"\
+          : \"CFO North America is at risk of a deterioration in sales, but EMEA is\
+          \ on a recovery trend, including orders received in Q3. The product Gross\
+          \ margin % was 34.9% in Q2 and is on a recovery trend.\"\n  },\n  {\n  \
+          \  \"id\": 7,\n    \"question\": \"Are there any distinctive customer verticals\
+          \ in EMEA?\",\n    \"expected_answer\": \"There is no specific industry.\
+          \ Overall, it is expected to be on a recovery trend.\"\n  },\n  {\n    \"\
+          id\": 8,\n    \"question\": \"Are there any delays or challenges in the\
+          \ status of HV cost and personnel optimization?\",\n    \"expected_answer\"\
+          : \"CFO Europe needs to be refined, but so far there is no delay in the\
+          \ plan.\"\n  },\n  {\n    \"id\": 9,\n    \"question\": \"The Target is\
+          \ to reduce the ratio of GL T&M from the current 80% to 60%, but is it a\
+          \ Target value calculated by GL or a Target value that reflects market trends?\"\
+          ,\n    \"expected_answer\": \"Target value calculated as GL should be recognized.\
+          \ Target of reducing it to 75% by 2025 and 60% by 2026. It is an ambitious\
+          \ target, but we will implement it together with organic and in organic.\"\
+          \n  },\n  {\n    \"id\": 10,\n    \"question\": \"In terms of GL's gross\
+          \ margin by region, Europe is trending downward, but is it a specific industry\
+          \ such as Auto or Medical?\\nQ2: Does there have any recovery potential?\"\
+          ,\n    \"expected_answer\": \"FX rate change impact is struggling with the\
+          \ appreciation of the USD Versus. against the European currency and the\
+          \ decline in the utilization rate, and is not on a recovery trend.\"\n \
+          \ },\n  {\n    \"id\": 11,\n    \"question\": \"I would like to confirm\
+          \ the performance of the front business in the Q2. In light of the deterioration\
+          \ of the Q1, the Financial Information Syst\nems Division seems to have\
+          \ Necessary Improvement outside the business unit, but Versus., and the\
+          \ SI BU seems to be accumulating improvements outside the business unit\
+          \ based on the strong Q1, but does it match the reality?\",\n    \"expected_answer\"\
+          : \"Although it is generally recognized, the Financial Information Systems\
+          \ Division has accumulated considerable stretch in each business unit, and\
+          \ there is a possibility that it will worsen.\"\n  },\n  {\n    \"id\":\
+          \ 12,\n    \"question\": \"It looks like (DEAI) needs to keep a close eye\
+          \ on Vantara's deterioration in Q2, but does (DSS) include any risk contingency\
+          \ as a whole?\",      \n    \"expected_answer\": \"The risk of 50 M$ has\
+          \ already been factored in. We see a risk that Vantara will deteriorate\
+          \ to the 0% level of profitability.\"\n  },\n  {\n    \"id\": 13,\n    \"\
+          question\": \"What is the status of structural reforms at HCS and Vantara?\"\
+          ,\n    \"expected_answer\": \"nan\"\n  },\n  {\n    \"id\": 14,\n    \"\
+          question\": \"Is Hitachi Digital's $20 expenditure posted as part of the\
+          \ performance Versus. policy a good understanding of the Fiscal year?\"\
+          ,\n    \"expected_answer\": \"As you may have guessed. Amount for the Fiscal\
+          \ year.\"\n  },\n  {\n    \"id\": 15,\n    \"question\": \"I understand\
+          \ that risks and Versus. measures are factored into GL's Q1Q2 forecast.\
+          \ Versus, why is profit increasing year-on-year while profit is decreasing?\"\
+          ,\n    \"expected_answer\": \"This was due to a decline in sales for customers\
+          \ in the high-margin finance and healthcare sectors.\"\n  },\n  {\n    \"\
+          id\": 16,\n    \"question\": \"Are Versus. measures for sales recovery factored\
+          \ into GL's forecast?\",\n    \"expected_answer\": \"Although not included\
+          \ in Q1Q2, In Organic (Target value of 30-50M$) is included in Q4 and will\
+          \ be promoted toward the Target value of FY26 and FY27.\"\n  },\n  {\n \
+          \   \"id\": 17,\n    \"question\": \"In terms of HVs, Q1 saw a decline in\
+          \ the Versus. budget and Versus. year-on-year, while Q2 forecast in line\
+          \ with the budget. Q2Are there any risks or concerns?\",\n    \"expected_answer\"\
+          : \"Versus. measures such as bringing forward from Q3 will be implemented,\
+          \ but the accumulation of orders is weak. In addition, due to the impact\
+          \ of IT outages, we are concerned that the same trend as Q1 may continue.\"\
+          \n  },\n  {\n    \"id\": 18,\n    \"question\": \"Why are product sales\
+          \ declining in HVs?\",\n    \"expected_answer\": \"This was due to a combination\
+          \ of factors, including a decline in the market and struggles in the North\
+          \ American market.\"\n  },\n  {\n    \"id\": 19,\n    \"question\": \"I\
+          \ would like to know in detail the factors behind the decline in HVs. I\
+          \ understand that you are struggling in the North American market, but are\
+          \ there any issues with products in the high-end US dollar range in Q1Q2?\"\
+          ,\n    \"expected_answer\": \"Both high-end US dollar range products are\
+          \ the main reason for the decline in Versus. budgets, but high-end products\
+          \ are Versus. due to d\neteriorating market conditions, and the US dollar\
+          \ range is struggling with competing products.\\nWhile the overall market\
+          \ is growing by 5% year-on-year and compet\nitors are growing by 4-6%, HVs\
+          \ are down -10%.\\nThere is no problem with product evaluation, but the\
+          \ structural problem is that the Go to Makrket and Sales functions are weak.\"\
+          \n  },\n  {\n    \"id\": 20,\n    \"question\": \"The (MPS) thing is tough\
+          \ Q1. Are there any aspects that have been affected by the decline in the\
+          \ front?\",\n    \"expected_answer\": \"We are deepening our cooperation\
+          \ with the front desk to promote it, and we believe that it has been affected\
+          \ in some ways.\"\n  },\n  {\n    \"id\": 21,\n    \"question\": \"Is it\
+          \ correct to understand that the Q1 vs.Budget decreased (net sales -59 billion\
+          \ yen Japanese Yen and Adj. EBITA -10 billion yen Japanese Yen) due to common\
+          \ expenses and other expenses, but that Necessary Improvement was not allocated\
+          \ to the business?\",\n    \"expected_answer\": \"Recognize each other.\"\
+          \n  },\n  {\n    \"id\": 22,\n    \"question\": \"Both the Financial Information\
+          \ Systems Division and SI BU could be read as figures with the intention\
+          \ of adjusting the fluctuations from the Q1 \nbudget in the Q2 and protecting\
+          \ the H1 budget, but in terms of execution, will we aim to achieve the Budget\
+          \ Achieved while balancing Financial Information Systems Division and SI\
+          \ BU as in Q1?\",\n    \"expected_answer\": \"As you know. Financial Information\
+          \ Systems Division realistically believes that it will be difficult to recover\
+          \ immediately in the Q2 of \nthe deterioration of the Q1 SI BU but it is\
+          \ estimated that there is a potential improvement of 20 billion yen~30 billion\
+          \ yen in Q2. In order to achieve the H1 budget, we plan to reduce the extent\
+          \ of the deterioration in the financial information systems division and\
+          \ reap the potential in the SI BU.\"\n  },\n  {\n    \"id\": 23,\n    \"\
+          question\": \"Financial Information Systems Division (HCS) Versus. to a\
+          \ Q1 loss, and profitability is expected to improve after Q2 forecast. In\
+          \ line with the \nQ1 forecast, it seems that the effects of structural reforms\
+          \ have not been successfully manifested, but how exactly do you plan to\
+          \ achieve improvements? In particular, I was concerned about the accuracy\
+          \ of the increase in sales in the Q2.\",\n    \"expected_answer\": \"(HCS)\
+          \ considers that there are risks and that the effects of structural reforms\
+          \ have not materialized. Versus. measures will be taken in \nthe short and\
+          \ long term. In addition, regarding sales in the Q2, which you were worried\
+          \ about, the contract for the Seven-Eleven project in Thailand is simmering,\
+          \ and we plan to reap the amount of the contract.\"\n  },\n  {\n    \"id\"\
+          : 24,\n    \"question\": \"It is my understanding that orders have been\
+          \ steady Fiscal year 24, but is it correct to understand that the downward\
+          \ revision of Q1 sales has led to a decline in the momentum of orders?\"\
+          ,\n    \"expected_answer\": \"The downward revision in sales in the Q1 was\
+          \ due to the failure to realize the need for improvement, which was seen\
+          \ at the time of the bu\ndget as a way to fill the gap in special demand\
+          \ for ticket gates, and was not due to a decrease in orders. The challenge\
+          \ is that the expansion of existing businesses is not progressing.\"\n \
+          \ },\n  {\n    \"id\": 25,\n    \"question\": \"You cited the rise in personnel\
+          \ costs as a factor in the year-on-year deterioration in Financial Information\
+          \ Systems Division, but does this mean that it has become difficult to pass\
+          \ on the increase in selling prices?\",\n    \"expected_answer\": \"In addition\
+          \ to the fact that the effects of the activities to pass on the selling\
+          \ price themselves had already been realized in the same \nperiod of the\
+          \ previous year, and that the volume of the project had not been increased,\
+          \ the negotiations with the customer themselves were often conducted at\
+          \ the time of the contract of the project, so it was understood that the\
+          \ effect had not been realized due to timing issues.\"\n  },\n  {\n    \"\
+          id\": 26,\n    \"question\": \"You are doing well in the Q1, but do you\
+          \ have upside potential?\",\n    \"expected_answer\": \"Profit from sales\
+          \ is not large, but there is room for improvement in CF by about 2 billion\
+          \ billion yen.\"\n  },\n  {\n    \"id\": 27,\n    \"question\": \"Is the\
+          \ decline in global and security services Q1 Versus. year-on-year due to\
+          \ the impact of foreign exchange rates?\",\n    \"expected_answer\": \"\
+          This is expected to be due to the impact of last year's large volume in\
+          \ Japan and a decline in revenue share from HVs.\"\n  },\n  {\n    \"id\"\
+          : 28,\n    \"question\": \"Business cloud services are growing year-on-year,\
+          \ but what is the ratio of external and internal sales?\",\n    \"expected_answer\"\
+          : \"This is a year-on-year increase due to an increase due to the transfer\
+          \ of DC from (MPS).\"\n  },\n  {\n    \"id\": 29,\n    \"question\": \"\
+          If there is a change in the situation in the Japanese market, I hope it\
+          \ will be updated from the next time.\",\n    \"expected_answer\": \"nan\"\
+          \n  },\n  {\n    \"id\": 30,\n    \"question\": \"We recognized that the\
+          \ situation of DSS as a whole was quite severe in Q1.\",\n    \"expected_answer\"\
+          : \"As you are aware, there is a deteriorating trend, especially in DEAI.\
+          \ We plan to scrutinize how far it can be accumulated in the future.\"\n\
+          \  },\n  {\n    \"id\": 31,\n    \"question\": \"In particular Q2 it is\
+          \ important to carefully examine whether the slowdown in GL growth is a\
+          \ trend limited to Q1 or will continue in the future. (including progress\
+          \ on Google's investment trends)\",\n    \"expected_answer\": \"Thank you.\
+          \ Going forward, we will work to improve business performance in the Q2.\
+          \ We would like to cooperate with the plan to accelerate insourcing so that\
+          \ it can be continued as a company-wide measure.\"\n  },\n  {\n    \"id\"\
+          : 32,\n    \"question\": \"In terms of risk, what does \\\"failure to achieve\
+          \ strategic investment\\\" mean? Also, is the indirect impact of HDS and\
+          \ GL tariffs factored into the Q1 forecast?\",\n    \"expected_answer\"\
+          : \"Strategic investment refers to the risk that the amount of strategic\
+          \ investment (GL Insourcing, etc.) acquired (head office/DSS) that was\n\
+          \ factored in by each company at the time of the budget will be lower than\
+          \ the budget. Amount of tariffs shown in the materials (HDS sales -11M$,\
+          \ GL sales -25M$) \nare the Amount for the entire Fiscal Year. HDS is forecast\
+          \ to recover from the indirect impact by acquiring other projects. GL expects\
+          \ the risk of a decline in sales of automotive customer deals. (There is\
+          \ no mention of whether the forecast has already been incorporated)\"\n\
+          \  },\n  {\n    \"id\": 33,\n    \"question\": \"I understand that the HV\
+          \ forecast has not been scrutinized due to IT failures, but what is the\
+          \ status of measures to improve gross profit?\",    \n    \"expected_answer\"\
+          : \"Versus. recognizes the importance of improving gross margin in order\
+          \ to improve profitability, and has formed a task force within HV to d\n\
+          eal with it. We are promoting improvements by reducing the number of third-party\
+          \ products with low gross margins and promoting sales price control measures\
+          \ to secure appropriate gross margins.\"\n  },\n  {\n    \"id\": 34,\n \
+          \   \"question\": \"Is it correct to understand that GL's gross margin improvement\
+          \ measures, AI-based efficiency improvement of 25M$, and gross margin improvement\
+          \ of 33M are Target values for the Fiscal year?\",\n    \"expected_answer\"\
+          : \"Fiscal year figures recognize each other.\"\n  },\n  {\n    \"id\":\
+          \ 35,\n    \"question\": \"Will IT failure Versus. be completed in May,\
+          \ or are there any risks?\",\n    \"expected_answer\": \"Both HV and HDS\
+          \ are Versus. in Versus. for the May fiscal year.\"\n  },\n  {\n    \"id\"\
+          : 36,\n    \"question\": \"Versus. recovery costs and sales decline due\
+          \ to IT failures can be seen, but are there any measures to compensate for\
+          \ them?\",\n    \"expected_answer\": \"Versus. amount of impact due to the\
+          \ decline in sales and the recovery plan (whether or not including insurance\
+          \ applicability) are under scrutiny.\"\n  },\n  {\n    \"id\": 37,\n   \
+          \ \"question\": \"In (AISS), (MPS) is the main business division. What businesses\
+          \ are included in each (MPS)?\",\n    \"expected_answer\": \"The engineering\
+          \ service is SI services, and the IT services and platforms are mainly former\
+          \ software businesses such as US dollar ware.\" \n  },\n  {\n    \"id\"\
+          : 38,\n    \"question\": \"The backlog progress of (MPS) is lagging behind\
+          \ the previous year, but is there a change in momentum rather than a transient\
+          \ one?\",\n    \"expected_answer\": \"In the Q1, the large impact of the\
+          \ previous fiscal year was significant, and the expansion trend continued\
+          \ in the first half of the H1 as a whole. Fiscal year status will be closely\
+          \ examined in the future.\"\n  },\n  {\n    \"id\": 39,\n    \"question\"\
+          : \"What is the progress of the use of generative AI in the development\
+          \ process? I've heard that you've covered quite a bit of it.\",\n    \"\
+          expected_answer\": \"We are striving to expand the scope of applicable genres,\
+          \ but the reality is that it is currently limited to specific process parts.\"\
+          \    \n  },\n  {\n    \"id\": 40,\n    \"question\": \"Is it correct to\
+          \ understand that the profit margin of SIS of Social BU is low, but internal\
+          \ sales are the mainstream as a sales ratio of this company?\",\n    \"\
+          expected_answer\": \"Since 6~7% of sales are in-house sales, there is no\
+          \ problem as recognized.\"\n  },\n  {\n    \"id\": 41,\n    \"question\"\
+          : \"Regarding PL (Japan) by region, your comment about the Q2 of social\
+          \ BU is that \\\"there is an increase in the public and defense sectors,\\\
+          \" but what of these increases is in the defense field?\",\n    \"expected_answer\"\
+          : \"Increase in the size of cybersecurity projects due to increased defense\
+          \ budgets\"\n  },\n  {\n    \"id\": 42,\n    \"question\": \"Regarding PL\
+          \ (Japan) by region, you commented that the decline in railways in the Q2\
+          \ was \\\"a reaction to the decline in large-scale projects in the last\
+          \ Fiscal year,\\\" but what exactly were the projects?\",\n    \"expected_answer\"\
+          : \"Sales were due to the impact of large sales of the previous year (Tokaido\
+          \ Shinkansen (N700S) sales of 2.8 billion billion yen, etc.), and the decrease\
+          \ in profit was due to a decrease in sales scale, etc.\"\n  },\n  {\n  \
+          \  \"id\": 43,\n    \"question\": \"Regarding regional PL (EMEA), is there\
+          \ any reason why railway sales and profits increased Q2 compared to the\
+          \ previous year?\",\n    \"expected_answer\": \"Rail Combined business revenue\
+          \ increased, Vehicles business profit decreased\"\n  },\n  {\n    \"id\"\
+          : 44,\n    \"question\": \"With regard to regional PL (APAC), finance saw\
+          \ a year-on-year increase in revenue in the Q2, but what is the increase?\"\
+          ,\n    \"expected_answer\": \"Increased sales of HCS's ATMs to Thailand\
+          \ (KTB)\"\n  },\n  {\n    \"id\": 45,\n    \"question\": \"With regard to\
+          \ regional PL (India), the financial sector was almost flat in the Q2 year-on-year,\
+          \ so why is it not growing?\",\n    \"expected_answer\": \"Projects for\
+          \ SBI in India are expected to be recorded in Q3\"\n  },\n  {\n    \"id\"\
+          : 46,\n    \"question\": \"Regarding PL Chugoku Area Operation by region,\
+          \ DSS revenue decreased year-on-year in both the Q2 and Fiscal Year, but\
+          \ will it continue to decline in the next fiscal year?\",\n    \"expected_answer\"\
+          : \"SI BU HSCN is not growing and (DEAI) Vantara storage for China is falling.\
+          \ It is assumed that it will fall in the following fiscal year and beyond.\"\
+          \n  },\n  {\n    \"id\": 47,\n    \"question\": \"In terms of PL Chugoku\
+          \ Area Operation by region, PG is up Q2 +6% year-over-year, but how does\
+          \ it compare to market growth?\",\n    \"expected_answer\": \"The market\
+          \ is outperforming due to 3%~4% growth.\"\n  },\n  {\n    \"id\": 48,\n\
+          \    \"question\": \"In terms of PL Chugoku Area Operation by region, railways\
+          \ saw a Fiscal year year-on-year increase in revenue (+16%), but what will\
+          \ be the increase?\",\n    \"expected_answer\": \"Of the 68 billion yen\
+          \ Japanese Yen increase, HRJ's Taiwan High-Speed Rail (sales of approximately\
+          \ 30 billion yen Japanese Yen) increased year-on-year.\"\n  },\n  {\n  \
+          \  \"id\": 49,\n    \"question\": \"HHT NANOTECHNOLOGY IS ON THE RISE?\"\
+          ,\n    \"expected_answer\": \"Chinese customers. Samsung.\"\n  },\n  {\n\
+          \    \"id\": 50,\n    \"question\": \"What markets is Lumada growing in\
+          \ PGBU? Customers, Industries, Markets, etc.\",\n    \"expected_answer\"\
+          : \"nan\"\n  },\n  {\n    \"id\": 51,\n    \"question\": \"Regarding PL\
+          \ by region (EMEA), is the decrease in the size of the HHT healthcare business\
+          \ a sliding scale or a decrease in the size of the project?\",\n    \"expected_answer\"\
+          : \"Shipping Delay Slide\"\n  },\n  {\n    \"id\": 52,\n    \"question\"\
+          : \"For regional PL (APAC), DEAI's year-over-year figures are inconsistent\
+          \ with the description\",\n    \"expected_answer\": \"The explanation at\
+          \ the hearing (APAC was strong) was the increase in Storage revenue (+9%),\
+          \ mainly due to the increase in the High End (+\n55%). APAC products as\
+          \ a whole saw a decline in sales (-18%) due to a decline in sales of mid-range\
+          \ and third-party products, and (DEAI) APAC also saw a decline in sales\"\
+          \n  },\n  {\n    \"id\": 53,\n    \"question\": \"In terms of regional PL\
+          \ (APAC), PGBU's FY25 year-on-year increase was small at +5%. Why?\",\n\
+          \    \"expected_answer\": \"HE's APAC FY25 sales are small at $1B$ (14 million\
+          \ billion yen Japanese Yen), so the growth rate fluctuates depending on\
+          \ whether or not t\nhere are large deals.\\nLarge-scale projects in Singapore,\
+          \ Thailand, etc. in the previous year, and low growth Versus to the overall\
+          \ growth rate of HE\\nIn additio\nn, although there is a slight difference\
+          \ in the fiscal period of competitors (Siemens Energy's 25 Fiscal year results),\
+          \ the sales growth rate of Asia and Australia (including China and India)\
+          \ is just over 5%, which is the same level as (PGBU)\"\n  },\n  {\n    \"\
+          id\": 54,\n    \"question\": \"In terms of regional PL (APAC), DEAI was\
+          \ in the red. What's going on?\",\n    \"expected_answer\": \"The entire\
+          \ Vantara is undergoing structural reforms.\"\n  },\n  {\n    \"id\": 55,\n\
+          \    \"question\": \"In terms of regional PL (APAC), the HHT profit margin\
+          \ of 5% is low for HHT. Why?\",\n    \"expected_answer\": \"This is due\
+          \ to the high proportion of transactions in Southeast Asia.\"\n  },\n  {\n\
+          \    \"id\": 56,\n    \"question\": \"Region: India: Won't finance grow\
+          \ further?\",\n    \"expected_answer\": \"HPY struggled. ATM transactions\
+          \ decreased due to cashless increase.\"\n  },\n  {\n    \"id\": 57,\n  \
+          \  \"question\": \"In the description of HHT Q3 organic sales growth, which\
+          \ customers is nanotech increasing for?\",\n    \"expected_answer\": \"\
+          The number of customers in China (GTX, etc.) and Samsung also increased.\
+          \ (GTX = GTX Semiconductor。 Semiconductor foundry company in Shanghai, China)\"\
+          \n  },\n  {\n    \"id\": 58,\n    \"question\": \"Is HHT EMEA's Healthcare\
+          \ Sales Decline a Q4 Slide or a Lost Order?\",\n    \"expected_answer\"\
+          : \"Sliding to Q4 due to delays in shipping of equipment to Roche in Germany\"\
+          \n  },\n  {\n    \"id\": 59,\n    \"question\": \"Why is the 5% profit margin\
+          \ of HHT APAC low for HHT?\",\n    \"expected_answer\": \"In Southeast Asia,\
+          \ there are many transactions between industry and companies (trading business).\"\
+          \n  },\n  {\n    \"id\": 60,\n    \"question\": \"(DEAI) The year-on-year\
+          \ decline in APAC (Q3 -21 billion yen, FY25 -75 billion yen) doesn't align\
+          \ with the nuances of Vantara's explanation at yesterday's DSS hearing (APAC\
+          \ sales are strong)\",\n    \"expected_answer\": \"The explanation at the\
+          \ hearing (APAC was strong) was the increase in Storage revenue (+9%), mainly\
+          \ due to the increase in the High End (+\n55%). APAC products as a whole\
+          \ saw a decline in sales (-18%) due to a decline in sales of mid-range and\
+          \ third-party products, and (DEAI) APAC also saw a decline in sales\"\n\
+          \  },\n  {\n    \"id\": 61,\n    \"question\": \"(DEAI) Adj. in APAC. Is\
+          \ the EBITA deficit (Q3-3M$) a problem?\",\n    \"expected_answer\": \"\
+          Versus., sales declined year-on-year and fell into the red. Promoting structural\
+          \ reforms across Vantara\"\n  },\n  {\n    \"id\": 62,\n    \"question\"\
+          : \"(PGBU) APAC's FY25 growth rate is +5% y/y, which is lower than the overall\
+          \ (PGBU) growth rate (26%).\",\n    \"expected_answer\": \"HE's APAC FY25\
+          \ sales are small at $1B$ (14 million billion yen Japanese Yen), so the\
+          \ growth rate fluctuates depending on whether or not t\nhere are large deals.\
+          \ There were large projects in Singapore, Thailand, and other countries\
+          \ in the previous year, and the growth rate was low Versus. to the over\n\
+          all growth rate of HE. In addition, although there is a slight difference\
+          \ in the fiscal period of competitors (Siemens Energy's 25 Fiscal year results),\
+          \ the sales growth rate of Asia and Australia (including China and India)\
+          \ is just over 5%, which is the same level as (PGBU)\"\n  },\n  {\n    \"\
+          id\": 63,\n    \"question\": \"Financial Information Systems Division: Won't\
+          \ Finance's Grow Further?\",\n    \"expected_answer\": \"HPY is struggling.\
+          \ Cashless increase and decrease in ATM transactions\"\n  },\n  {\n    \"\
+          id\": 64,\n    \"question\": \"Why is PGGA's YoY forecast 25 Fiscal year\
+          \ revenue +6% compared to other BU?\",\n    \"expected_answer\": \"This\
+          \ is largely due to the market environment. The growth of the software market\
+          \ is not as fast as that of hardware. Another factor is th\nat the company's\
+          \ software, such as EPM and APM, is small in scale compared to the overall\
+          \ growth of the market and has not captured a sufficient market share. In\n\
+          \ addition, demand for battery energy storage solutions including EKS in\
+          \ the U.S. has temporarily stagnated. On the other hand, substation automation\
+          \ solutions have grown more than planned, and the company plans to continue\
+          \ investing in the software field in the future.\"\n  },\n  {\n    \"id\"\
+          : 65,\n    \"question\": \"What is the reason for the significant improvement\
+          \ in PGHV's profit margin? (Q2 results are 20.8%, +7.0% year-on-year, Fiscal\
+          \ year forecast is 21.1%, +6.5% year-on-year)\",\n    \"expected_answer\"\
+          : \"PGHV's 25th Fiscal Year Adj. The EBITA forecast is 21.1%, +6.5% y/y.\
+          \ Driving the improvement in the profit margin of HE as a whole. The i\n\
+          mprovement in PGHV's profit margin is due to improved selling prices and\
+          \ productivity. PGHV does not have an escalation clause, so it is necessary\
+          \ to acquire a high selling price in consideration of the risk of soaring\
+          \ material prices.\"\n  },\n  {\n    \"id\": 66,\n    \"question\": \"Q3\
+          \ sales are +33% on an HE actual rate basis (+27% on a budgeted rate basis).\
+          \ What are the factors behind the increase in sales?\",\n    \"expected_answer\"\
+          : \"Of the increase in sales excluding FX rate change impact, 50% was due\
+          \ to improvements in production and operational efficiency, 30% to increase\
+          \ production capacity, and 20% to improve selling prices.\"\n  },\n  {\n\
+          \    \"id\": 67,\n    \"question\": \"Sales tend to increase by about 200M$~300M$\
+          \ every quarter, but increase by about 500M$ from 25/Q2 to 25/Q3. What is\
+          \ the reason for the significant increase?\",\n    \"expected_answer\":\
+          \ \"Increased sales of PGHV and PGTR due to the digestion of the backlog\
+          \ of orders. In addition, there were no special factors, partly due to low\
+          \ sales in the Q2 due to the summer vacation, and partly due to the completion\
+          \ of multiple projects at PGGI in the Q3.\"\n  },\n  {\n    \"id\": 68,\n\
+          \    \"question\": \"Versus. compared to Adj. EBITA of 13.2% in 25/Q2, +0.5%\
+          \ improvement in 25/Q3 at 13.7%. What are the main factors that improve\
+          \ profit margins?\", \n    \"expected_answer\": \"Realization of unrealized\
+          \ gains on increased sales volumes, product mix and inventories. The realization\
+          \ of unrealized gains on inventories was a surprise because it was difficult\
+          \ to accurately predict as of the previous month.\"\n  },\n  {\n    \"id\"\
+          : 69,\n    \"question\": \"What are the factors that will improve PGGI profit\
+          \ margin in Q3? (Q3 results were 9.3%, +2.2% year-on-year)\",\n    \"expected_answer\"\
+          : \"This was due in combination with an increase in sales volume, an improvement\
+          \ in the profit margin on the backlog, the recording of profits from the\
+          \ completion of projects, and an improvement in risk contingency.\"\n  },\n\
+          \  {\n    \"id\": 70,\n    \"question\": \"The increase in sales is remarkable,\
+          \ but what is the trend of improving selling prices?\",\n    \"expected_answer\"\
+          : \"The current improvement in selling prices is mainly due to the mix (growth\
+          \ in high-margin areas such as data centers, EconiQ, transformer\ns, etc.),\
+          \ and the price increase is not as strong as it was 2~3 years ago (when\
+          \ the selling price improvement started). Since lead time is important for\
+          \ data cen\nter projects, it is easy to set a high selling price if Versus.\
+          \ can be met with a short delivery time. In addition to distribution transformers\
+          \ with higher margins, the margin ratio of transmission transformers is\
+          \ also on an upward trend.\"\n  },\n  {\n    \"id\": 71,\n    \"question\"\
+          : \"Data center orders are booming, but what percentage of your current\
+          \ sales are data centers?\",\n    \"expected_answer\": \"About 8% of the\
+          \ total.\"\n  },\n  {\n    \"id\": 72,\n    \"question\": \"You said that\
+          \ orders within the budget have accumulated, but is it correct to understand\
+          \ that sales will increase further in the Fiscal year in the future?\",\n\
+          \    \"expected_answer\": \"As you can see in the slide of the waterfall\
+          \ chart, a certain amount of accumulation has already been included in sales.\
+          \ It is expected t\nhat sales will increase further due to the advance of\
+          \ orders, but since not all of them will increase in the current fiscal\
+          \ year, the current fiscal year will be carefully examined and reflected\
+          \ in the forecast.\"\n  },\n  {\n    \"id\": 73,\n    \"question\": \"I\
+          \ would like to know if there is any progress on measures Versus. the Sakura\
+          \ wind power accident.\",\n    \"expected_answer\": \"The inspection was\
+          \ almost completed by September. Since then, repairs have been underway.\\\
+          nAt the same time, a third-party committee is i\nnvestigating the cause.\\\
+          nAs for the investigation of the cause, the next working group meeting is\
+          \ scheduled for December, so there may be progress there, but it is unlikely\
+          \ that the cause will be locked in there.\"\n  },\n  {\n    \"id\": 74,\n\
+          \    \"question\": \"Is there a possibility that new inspections will be\
+          \ added in the future? (Continued from No.73)\",\n    \"expected_answer\"\
+          : \"It's not zero, but it's not heard right now, and it's unlikely.\"\n\
+          \  },\n  {\n    \"id\": 75,\n    \"question\": \"Is it correct to assume\
+          \ that the Most like value has already been reflected in the forecast at\
+          \ this point? (Continued from No.73)\",\n    \"expected_answer\": \"Exactly.\"\
+          \n  },\n  {\n    \"id\": 76,\n    \"question\": \"Is it correct to recognize\
+          \ that Min and Max can be risks and opportunities? (Continued from No.73)\"\
+          ,\n    \"expected_answer\": \"Exactly.\"\n  },\n  {\n    \"id\": 77,\n \
+          \   \"question\": \"The D&S business declined year-on-year. I heard that\
+          \ the wind power business is doing well, but I would like to ask you about\
+          \ the factors behind the year-on-year decline.\",\n    \"expected_answer\"\
+          : \"Basically, there is a difference in product composition. Although sales\
+          \ are increasing, profits are Hamamichi-san.\\nThere are some areas where\
+          \ the forecast has not been fully accumulated.\"\n  },\n  {\n    \"id\"\
+          : 78,\n    \"question\": \"Does this mean that the forecast may rise in\
+          \ the future? (Continued from No.77)\",\n    \"expected_answer\": \"It is\
+          \ highly likely.\"\n  },\n  {\n    \"id\": 79,\n    \"question\": \"Regarding\
+          \ the cash forecast, you have raised the amount to the same amount as the\
+          \ profit this time, but I would like to ask if you intend to keep the amount\
+          \ the same.\",\n    \"expected_answer\": \"When I reflected the optimal\
+          \ figure, it happened to be the same amount.\"\n  },\n  {\n    \"id\": 80,\n\
+          \    \"question\": \"Will there be any impact from the revision of the Subcontract\
+          \ Act in January?\",\n    \"expected_answer\": \"I haven't seen it yet.\
+          \ However, since there are many public transactions, it is not expected\
+          \ to have much impact. Confirm in cooperation with procurement.\"\n  },\n\
+          \  {\n    \"id\": 81,\n    \"question\": \"There's a discrepancy between\
+          \ the interview materials and the hi-Tree values. 2Q actual results. Please\
+          \ confirm.\",\n    \"expected_answer\": \"I will confirm and contact you.\"\
+          \n  },\n  {\n    \"id\": 82,\n    \"question\": \"Why is the CCC 10 days\
+          \ shorter than the fiscal year budget?\",\n    \"expected_answer\": \"Sales\
+          \ increased due to the carve-out, but net working capital remained stable.\"\
+          \n  },\n  {\n    \"id\": 83,\n    \"question\": \"Why is it 14 days worse\
+          \ than last year? (Continued from No. 82)\",\n    \"expected_answer\": \"\
+          This is a rebound from the previous fiscal year. Accounts payable were concentrated\
+          \ in March.\"\n  },\n  {\n    \"id\": 84,\n    \"question\": \"Why is the\
+          \ 4Q heavily weighted?\",\n    \"expected_answer\": \"Many current-month\
+          \ orders and sales projects are being factored into the 4th quarter. We\
+          \ will review this to increase accuracy at the 3rd quarter settlement time.\"\
+          \n  },\n  {\n    \"id\": 85,\n    \"question\": \"Will the forecast be revised\
+          \ upward? (Continued from No. 84)\",\n    \"expected_answer\": \"Yes\"\n\
+          \  },\n  {\n    \"id\": 86,\n    \"question\": \"What impact will the postponement\
+          \ of the business restructuring schedule have on business performance?\"\
+          ,\n    \"expected_answer\": \"\\\"Revenues increased compared to the previous\
+          \ period and budget due to the postponement of the carve-out.\\nAdj. EBITA\
+          \ will decrease due to the inclusion of the wind power business, but as\
+          \ noted in the waterfall chart slide, we will maintain the budget by controlling\
+          \ expenses and building up each business.\\\"\"\n  },\n  {\n    \"id\":\
+          \ 87,\n    \"question\": \"The postponement has been announced, but will\
+          \ the business be scaled back? (Continued from No. 86)\",\n    \"expected_answer\"\
+          : \"In preparation for the carve-out, we will continue to not accept new\
+          \ orders. Maintenance projects are the main focus.\"\n  },\n  {\n    \"\
+          id\": 88,\n    \"question\": \"What are the plans for FY26 and beyond? (Continued\
+          \ from No. 86)\",\n    \"expected_answer\": \"Undecided at this time.\"\n\
+          \  }\n    \"\"\"\n    \n    return {\n        \"reference_set\": json_data\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          reference_set:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables: []
+      height: 53
+      id: '1773045675872'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -80.55999999999995
+      y: -30.71999999999997
+      zoom: 0.86
