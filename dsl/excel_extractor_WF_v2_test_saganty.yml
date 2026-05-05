@@ -227,7 +227,7 @@ workflow:
     nodes:
     - data:
         desc: ''
-        selected: false
+        selected: true
         title: Start
         type: start
         variables:
@@ -281,7 +281,7 @@ workflow:
       positionAbsolute:
         x: -876.6296724735505
         y: -1264.9180836792034
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -294,8 +294,6 @@ workflow:
           - result
           value_type: string
           variable: text
-        - value_selector: []
-          variable: error
         selected: false
         title: End
         type: end
@@ -460,16 +458,19 @@ workflow:
             \ extract all)\n\n### EXTRACTION RULES\n- Skip any row where ALL requested\
             \ columns are empty or \"0\".\n- Empty cells must be returned as \"\"\
             \ (empty string). Never use \"N/A\", \"None\", or any text.\n- Extract\
-            \ only the exact columns specified.\n\n### TASK\nExtract the data and\
-            \ return it strictly in this dictionary format strictly Note: no backslash,\
-            \ no markdown, only key value pairs:\nexample dictionary below i will\
-            \ pass this to python code directoy and i will use eval():\n{ \"data\"\
-            : [{\"Column Name 1\": \"value1\",\"Column Name 2\": \"value2\"}]}\n\n\
-            ### CONSTRAINTS\n- Return ONLY dictionary. No markdown, no code blocks,\
-            \ no explanations, no extra text. \n- If no data is found or File Content\
-            \ is empty, return exactly: {\"error\": \"Data Not Found\"}\n- Use exact\
-            \ column names as they appear in the header (case sensitive).\n- Respect\
-            \ the Number of Rows if specified.\n\nNow extract the data."
+            \ only the exact columns specified.\n- Must use double quotes for keys\
+            \ and values. because i will use dict() to covert.\n\n\n### TASK\nExtract\
+            \ the data and return it strictly in this dictionary format strictly Note:\
+            \ no backslash, no markdown, only key value pairs:\nexample dictionary\
+            \ below i will pass this to python code directoy and i will use eval():\n\
+            { \"data\": [{\"Column Name 1\": \"value1\",\"Column Name 2\": \"value2\"\
+            }]}\n\n### CONSTRAINTS\n- Return ONLY dictionary. No markdown, no code\
+            \ blocks, no explanations, no extra text. \n- If no data is found or File\
+            \ Content is empty, return exactly: {\"error\": \"Data Not Found\"}\n\
+            - Use exact column names as they appear in the header (case sensitive).\n\
+            - Respect the Number of Rows if specified.\n-  striclty do not use ```json\n\
+            - if date is there do not return time with in the value.\nNow extract\
+            \ the data."
         - id: 31e06cf2-129b-4b4a-a955-717535d55d6f
           role: user
           text: you are an helpful assistant
@@ -606,9 +607,7 @@ workflow:
           - '1777289909903'
           - error
           value_type: string
-          variable: result
-        - value_selector: []
-          variable: is_error
+          variable: error
         selected: false
         title: End 2
         type: end
@@ -640,15 +639,10 @@ workflow:
           \    return {\n        \"exists\": str(file_exists),\n        \"found_filename\"\
           : found_file.get(\"filename\") if found_file else fall_back_message,\n \
           \       \"file_url\": str(found_file.get(\"url\")) if found_file else \"\
-          None\",\n        \"result\":\"\",\n        \"error\" : found_file.get(\"\
-          filename\") if found_file else fall_back_message,\n        \"sheet_name\"\
-          \ : sheet_name\n    }"
+          None\"\n    }"
         code_language: python3
         desc: ''
         outputs:
-          error:
-            children: null
-            type: string
           exists:
             children: null
             type: string
@@ -656,12 +650,6 @@ workflow:
             children: null
             type: string
           found_filename:
-            children: null
-            type: string
-          result:
-            children: null
-            type: string
-          sheet_name:
             children: null
             type: string
         selected: false
@@ -721,10 +709,10 @@ workflow:
       height: 126
       id: '1776249609583'
       position:
-        x: 1284.9961123256737
+        x: 1293.691537913432
         y: -1183.9253850568507
       positionAbsolute:
-        x: 1284.9961123256737
+        x: 1293.691537913432
         y: -1183.9253850568507
       selected: false
       sourcePosition: right
@@ -738,9 +726,7 @@ workflow:
           - '1776249025771'
           - found_filename
           value_type: string
-          variable: error
-        - value_selector: []
-          variable: result
+          variable: found_filename
         selected: false
         title: End 3
         type: end
@@ -836,7 +822,7 @@ workflow:
           valid:
             children: null
             type: string
-        selected: true
+        selected: false
         title: File_name_extractor
         type: code
         variables:
@@ -873,25 +859,18 @@ workflow:
       positionAbsolute:
         x: -125.66153011456646
         y: -1264.9180836792034
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "def main(extracted_file: str,sheet_name: str) -> dict:\n    return\
-          \ {\n        \"result\": str(extracted_file.replace('\"', \"\")),\n    \
-          \    \"error\" : \"\",\n        \"sheet_name\" : sheet_name\n    }"
+        code: "def main(extracted_file: str) -> dict:\n    return {\n        \"result\"\
+          : str(extracted_file.replace('\"', \"\"))\n    }"
         code_language: python3
         desc: ''
         outputs:
-          error:
-            children: null
-            type: string
           result:
-            children: null
-            type: string
-          sheet_name:
             children: null
             type: string
         selected: false
@@ -903,11 +882,6 @@ workflow:
           - text
           value_type: string
           variable: extracted_file
-        - value_selector:
-          - '1776117453924'
-          - sheet_name
-          value_type: string
-          variable: sheet_name
       height: 54
       id: '1777361376042'
       position:
@@ -922,6 +896,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: 324.42880692888207
-      y: 1339.122137910186
-      zoom: 0.714613203520411
+      x: 697.9743246659141
+      y: 1090.0721684778193
+      zoom: 0.44709987052629724
