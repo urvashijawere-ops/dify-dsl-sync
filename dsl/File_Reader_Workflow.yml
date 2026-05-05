@@ -1,1 +1,297 @@
-{"data": "app:\n  description: Workflow wrapper around the File Reader Tool. Accepts a file input,\n    calls the File Reader Tool via its API, and returns the formatted analysis result.\n    Requires FILE_READER_API_KEY as an environment variable.\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: workflow\n  name: File Reader Workflow\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables:\n  - description: 'API key for the File Reader Tool workflow. Get it from: File Reader\n      Tool \u2192 API \u2192 API Key.'\n    id: env-file-reader-api-key\n    name: FILE_READER_API_KEY\n    selector:\n    - env\n    - FILE_READER_API_KEY\n    value: ''\n    value_type: secret\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: false\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: agent\n      id: node-start-source-1777000552531-target\n      source: node-start\n      sourceHandle: source\n      target: '1777000552531'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: agent\n        targetType: end\n      id: 1777000552531-source-node-end-target\n      source: '1777000552531'\n      sourceHandle: source\n      target: node-end\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: 'Upload one file to analyse. Supported: PDF, images, Excel, Word, TXT,\n          CSV, HTML (max 15 MB).'\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions: []\n          allowed_file_types:\n          - image\n          - document\n          allowed_file_upload_methods:\n          - local_file\n          label: select_file\n          max_length: 1\n          options: []\n          required: true\n          type: file-list\n          variable: select_file\n      height: 149\n      id: node-start\n      position:\n        x: 30\n        y: 282\n      positionAbsolute:\n        x: 30\n        y: 282\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    - data:\n        desc: Returns the analysis report produced by the File Reader Tool.\n        outputs:\n        - value_selector:\n          - node-parse\n          - result\n          value_type: string\n          variable: result\n        selected: false\n        title: End\n        type: end\n      height: 133\n      id: node-end\n      position:\n        x: 782.2222222222222\n        y: 330.8888888888889\n      positionAbsolute:\n        x: 782.2222222222222\n        y: 330.8888888888889\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    - data:\n        agent_parameters:\n          instruction:\n            type: constant\n            value: 'You are a file analysis assistant. You help users understand the\n              content of uploaded files.\n\n\n              ## When a file is uploaded\n\n              Always call the File Reader Tool immediately \u2014 do not attempt to describe\n              or analyse the file yourself without calling the tool first.\n\n\n              Pass the uploaded file to the tool and wait for the result.\n\n\n              Once you have the result, answer the user''s question based on it. If\n              the user did not ask a specific question, provide a clear summary covering:\n\n              - What type of file it is\n\n              - What it contains (key text, data, tables, images)\n\n              - Any notable findings or insights\n\n\n              ## When no file is uploaded\n\n              Politely ask the user to upload a file. Let them know the supported\n              formats:\n\n              PDF, Images (JPG, PNG, GIF, WEBP, BMP, TIFF), Excel (XLSX, XLS), Word\n              (DOCX, DOC), Plain text (TXT, MD, RTF, ODT), Web/data (HTML, CSV). Max\n              15 MB.\n\n\n              ## Response rules\n\n              - Base all answers strictly on the tool result \u2014 never invent or assume\n              file content\n\n              - Use markdown formatting (bold, bullet points, tables) where it aids\n              clarity\n\n              - Be concise and focused \u2014 avoid echoing the raw tool output verbatim\n\n              - If the tool returns an error, explain what went wrong and what the\n              user can do to fix it\n\n              - Support both English and Japanese content \u2014 preserve the original\n              language in your answers'\n          model:\n            type: constant\n            value:\n              completion_params: {}\n              mode: chat\n              model: gemini-2.5-pro\n              model_type: llm\n              provider: langgenius/gemini/google\n              type: model-selector\n          query:\n            type: constant\n            value: Upload file to analyze it.\n          tools:\n            type: constant\n            value:\n            - enabled: true\n              extra:\n                description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,\n                  DOC/DOCX, CSV. English and Japanese. File validation: empty, zip\n                  disguised, compressed formats blocked.'\n              parameters:\n                select_file:\n                  auto: 0\n                  value:\n                    type: variable\n                    value:\n                    - sys\n                    - files\n              provider_name: 2a48d915-5f63-4cae-bf06-298eb218edc6\n              provider_show_name: OCR Summarizer\n              schemas:\n              - auto_generate: null\n                default: null\n                form: llm\n                human_description:\n                  en_US: Upload file\n                  ja_JP: Upload file\n                  pt_BR: Upload file\n                  zh_Hans: Upload file\n                label:\n                  en_US: select_file\n                  ja_JP: select_file\n                  pt_BR: select_file\n                  zh_Hans: select_file\n                llm_description: Upload file\n                max: null\n                min: null\n                name: select_file\n                options: []\n                placeholder:\n                  en_US: ''\n                  ja_JP: ''\n                  pt_BR: ''\n                  zh_Hans: ''\n                precision: null\n                required: true\n                scope: null\n                template: null\n                type: files\n              settings: {}\n              tool_description: 'Multi-format file reader. PDF, OCR images, Excel,\n                TXT, DOC/DOCX, CSV. English and Japanese. File validation: empty,\n                zip disguised, compressed formats blocked.'\n              tool_label: OCR Summarizer\n              tool_name: ocr_wf\n              type: workflow\n        agent_strategy_label: FunctionCalling\n        agent_strategy_name: function_calling\n        agent_strategy_provider_name: langgenius/agent/agent\n        desc: ''\n        meta:\n          minimum_dify_version: 1.7.0\n          version: 0.0.2\n        output_schema: null\n        plugin_unique_identifier: langgenius/agent:0.0.24@0274c08e62efaa28f6327e7bdba655e16559ec28d4f41f2fa3ef553e6327c0f6\n        selected: false\n        title: Agent\n        tool_node_version: '2'\n        type: agent\n      height: 197\n      id: '1777000552531'\n      position:\n        x: 333\n        y: 282\n      positionAbsolute:\n        x: 333\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 243\n    viewport:\n      x: 50.94999999999999\n      y: -22.950000000000017\n      zoom: 0.9\n"}
+app:
+  description: Workflow wrapper around the File Reader Tool. Accepts a file input,
+    calls the File Reader Tool via its API, and returns the formatted analysis result.
+    Requires FILE_READER_API_KEY as an environment variable.
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: File Reader Workflow
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: 'API key for the File Reader Tool workflow. Get it from: File Reader
+      Tool → API → API Key.'
+    id: env-file-reader-api-key
+    name: FILE_READER_API_KEY
+    selector:
+    - env
+    - FILE_READER_API_KEY
+    value: ''
+    value_type: secret
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: node-start-source-1777000552531-target
+      source: node-start
+      sourceHandle: source
+      target: '1777000552531'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: agent
+        targetType: end
+      id: 1777000552531-source-node-end-target
+      source: '1777000552531'
+      sourceHandle: source
+      target: node-end
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 'Upload one file to analyse. Supported: PDF, images, Excel, Word, TXT,
+          CSV, HTML (max 15 MB).'
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: select_file
+          max_length: 1
+          options: []
+          required: true
+          type: file-list
+          variable: select_file
+      height: 149
+      id: node-start
+      position:
+        x: 30
+        y: 282
+      positionAbsolute:
+        x: 30
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: Returns the analysis report produced by the File Reader Tool.
+        outputs:
+        - value_selector:
+          - node-parse
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 133
+      id: node-end
+      position:
+        x: 782.2222222222222
+        y: 330.8888888888889
+      positionAbsolute:
+        x: 782.2222222222222
+        y: 330.8888888888889
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: 'You are a file analysis assistant. You help users understand the
+              content of uploaded files.
+
+
+              ## When a file is uploaded
+
+              Always call the File Reader Tool immediately — do not attempt to describe
+              or analyse the file yourself without calling the tool first.
+
+
+              Pass the uploaded file to the tool and wait for the result.
+
+
+              Once you have the result, answer the user''s question based on it. If
+              the user did not ask a specific question, provide a clear summary covering:
+
+              - What type of file it is
+
+              - What it contains (key text, data, tables, images)
+
+              - Any notable findings or insights
+
+
+              ## When no file is uploaded
+
+              Politely ask the user to upload a file. Let them know the supported
+              formats:
+
+              PDF, Images (JPG, PNG, GIF, WEBP, BMP, TIFF), Excel (XLSX, XLS), Word
+              (DOCX, DOC), Plain text (TXT, MD, RTF, ODT), Web/data (HTML, CSV). Max
+              15 MB.
+
+
+              ## Response rules
+
+              - Base all answers strictly on the tool result — never invent or assume
+              file content
+
+              - Use markdown formatting (bold, bullet points, tables) where it aids
+              clarity
+
+              - Be concise and focused — avoid echoing the raw tool output verbatim
+
+              - If the tool returns an error, explain what went wrong and what the
+              user can do to fix it
+
+              - Support both English and Japanese content — preserve the original
+              language in your answers'
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: gemini-2.5-pro
+              model_type: llm
+              provider: langgenius/gemini/google
+              type: model-selector
+          query:
+            type: constant
+            value: Upload file to analyze it.
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,
+                  DOC/DOCX, CSV. English and Japanese. File validation: empty, zip
+                  disguised, compressed formats blocked.'
+              parameters:
+                select_file:
+                  auto: 0
+                  value:
+                    type: variable
+                    value:
+                    - sys
+                    - files
+              provider_name: 2a48d915-5f63-4cae-bf06-298eb218edc6
+              provider_show_name: OCR Summarizer
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Upload file
+                  ja_JP: Upload file
+                  pt_BR: Upload file
+                  zh_Hans: Upload file
+                label:
+                  en_US: select_file
+                  ja_JP: select_file
+                  pt_BR: select_file
+                  zh_Hans: select_file
+                llm_description: Upload file
+                max: null
+                min: null
+                name: select_file
+                options: []
+                placeholder:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: files
+              settings: {}
+              tool_description: 'Multi-format file reader. PDF, OCR images, Excel,
+                TXT, DOC/DOCX, CSV. English and Japanese. File validation: empty,
+                zip disguised, compressed formats blocked.'
+              tool_label: OCR Summarizer
+              tool_name: ocr_wf
+              type: workflow
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        desc: ''
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: null
+        plugin_unique_identifier: langgenius/agent:0.0.24@0274c08e62efaa28f6327e7bdba655e16559ec28d4f41f2fa3ef553e6327c0f6
+        selected: false
+        title: Agent
+        tool_node_version: '2'
+        type: agent
+      height: 197
+      id: '1777000552531'
+      position:
+        x: 333
+        y: 282
+      positionAbsolute:
+        x: 333
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 50.94999999999999
+      y: -22.950000000000017
+      zoom: 0.9
