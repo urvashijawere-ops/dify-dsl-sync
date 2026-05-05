@@ -1,1 +1,330 @@
-{"data": "app:\n  description: This workflow address user query related to PC inspection. It takes\n    in error and retrieve the instruction from 04_annual inspection file and also\n    provide solution related to FAQ. This workflow is design for D-11 usecase.\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: workflow\n  name: wf-test\n  use_icon_as_answer_icon: false\ndependencies:\n- current_identifier: null\n  type: marketplace\n  value:\n    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables:\n  - description: ''\n    id: 7f35626b-d29d-4c2d-a85e-37dca4bde908\n    name: error_data\n    selector:\n    - conversation\n    - error_data\n    value:\n      Automation Failure: \"Verify processing results: \\n 1. Download file and verify\\\n        \\ contents. \\n 2. If addition/deletion requested, check SPO registration application\\\n        \\ form. \\n 3. If not added, store in management batch or 'User Addition/Deletion\\\n        \\ Application' folder and re-execute. Update the address field in the management\\\n        \\ table.\"\n      Checkbox Error: \"Required fields are not checked. \\n If a correction date is\\\n        \\ entered for unchecked items, it is acceptable; share with buyer and manually\\\n        \\ transfer data to management table and save the file. \\n If both checkbox\\\n        \\ and correction date are blank, request resubmission. Use the HTML draft\\\n        \\ email 'Request for Resubmission of Confidential Information Management Confirmation\\\n        \\ Form' and list deficiencies.\"\n      Date Conflict: Users may mistakenly enter correction dates as the input date.\n        If it is clear the user has confused the input date with the correction date,\n        please accept the entry as is.\n      Department Submission: Please submit one 'Confidential Information Management\n        Confirmation Form' per company. If forms are submitted by department, please\n        request that they be resubmitted as a single consolidated document covering\n        the entire company.\n      Formula Error: If an error occurs due to an incorrect formula in Question (2)\n        of the FY2025 format, change the 'FALSE' in (2) to 'TRUE'. Have the client\n        enter a checkmark (\u2713) or 'TRUE'. Power Automate will flag a checkmark as an\n        error, so verify visually and transcribe into the management sheet.\n      Inspection Request: \"Follow procedure: \\n 1. Coordinator confirms request. \\n\\\n        \\ 2. Coordinator places files in client\u2019s SPO Request folder. \\n 3. Indicate\\\n        \\ request in Remarks (Column BN) of management table. \\n 4. Move email to\\\n        \\ 'Procurement_Reception' and share. \\n 5. Notify when saved. Note: Log in\\\n        \\ with 'Procurement_Reception' ID before uploading. Send Sample Email with\\\n        \\ link to Attachment B3 and FAQ pdf.\"\n      NDA Handling: This falls outside the scope of BPO. The buyer will need to coordinate\n        directly with the business partner. Add a member of the Procurement Oversight\n        Group to the CC and convey this to the buyer.\n      NDA Protocol: Check the contract status with the Compliance Team. If no contract\n        has been signed, they may be excluded from the scope; reconfirm with the buyer\n        whether action is required.\n      Save Error: \"Manually store the file from the email body path. \\n Locations:\\\n        \\ Individual companies (Procurement Division Work Folder > 04_Confirmation\\\n        \\ Document Storage), HISOL (Documents > 04_Confirmation Document Storage),\\\n        \\ HSC (Documents > HSC Confidential Information Management > 04_Confirmation\\\n        \\ Letter Storage). \\n Naming: [Management Sheet No. (Column A)]_G&G_Confidential\\\n        \\ Information Management Compliance Confirmation Letter.xlsx.\"\n      Script Error: Failed in the Power Automate check section. Check the management\n        sheet. If results are not reflected, download the file from the submission\n        folder and store it in the '0000000001_For Management' folder. Open the file\n        to verify contents. If a correction deadline is specified, share with the\n        front-end buyer. Manually transcribe info into the management table and store\n        the file.\n      Security Verification: \"Respond as follows: \\n 1. Coordinator confirms request.\\\n        \\ \\n 2. Coordinator uploads 'Latest Version of Information Security Requirements\\\n        \\ for Procurement Partners' to SPO Request Folder. \\n 3. Move email to 'SPO\\\n        \\ Request' folder and share. \\n 4. Person in charge notifies upload completion.\\\n        \\ Note: Use 'Procurement_Reception_Business ID' to upload.\"\n      Submission Error: Check the submission folder for the relevant vendor. If the\n        required .xlsx file is stored there, it is OK. If an error occurs even though\n        the file is stored, download it and verify the matching code. If it is not\n        the vendor\u2019s matching code, request a resubmit in the correct format. If the\n        file is missing, contact the client to resubmit in .xlsx format. If stored\n        in PDF, manually transcribe and save per storage rules.\n      Transcription Procedure: \"\\n 1. Transcribe contents: Unlock source columns N-AF\\\n        \\ and copy to management table AS-BK. Enter '1' for completion flag. If source\\\n        \\ is '\u2713', change to 'TRUE'. \\n 2. Fill management table AP-AS: Client Response\\\n        \\ Date, Response Incomplete (Yes/No), Transcription Date, Storage Date. \\n\\\n        \\ 3. Manually store file location/naming rules.\"\n      Usage Error: In accordance with the client\u2019s request, send 'Procedures for Inspecting\n        Personally Owned PCs and Deleting Business Information.' Ensure the Confidentiality\n        Management Confirmation Form is submitted only after deletion is complete.\n        (2) must be submitted in its pre-deletion state; do not submit it appearing\n        as if there were no initial issues.\n      Visibility Issue: \"\\n STEP 1: Check Excel Update Status (Microsoft 365), Environment\\\n        \\ (Windows Desktop version, not Online/Mac), and Display Settings (Options\\\n        \\ > Object Display: All; Zoom 100%). \\n STEP 2: If it fails, coordinator creates\\\n        \\ a confirmation form for the version without checkboxes (G&G_Confidential\\\n        \\ Information Management Confirmation Form_2025_listbox.xlsx) and notifies\\\n        \\ the client.\"\n      Write Failure: \"Failed to copy files to the working folder. \\n If via Power\\\n        \\ Automate:Download the file from the submission folder and store it in the\\\n        \\ '0000000001_Management' folder. \\n If manual: Manually transcribe response\\\n        \\ details into the management table and store the file Manually.\"\n    value_type: object\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - document\n      allowed_file_upload_methods:\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 1\n    opening_statement: ''\n    retriever_resource:\n      enabled: false\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInLoop: false\n        sourceType: start\n        targetType: llm\n      id: 1775796563709-source-1777458432658-target\n      source: '1775796563709'\n      sourceHandle: source\n      target: '1777458432658'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: llm\n        targetType: code\n      id: 1777458432658-source-1777540653879-target\n      source: '1777458432658'\n      sourceHandle: source\n      target: '1777540653879'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: end\n      id: 1777540653879-source-1777609615889-target\n      source: '1777540653879'\n      sourceHandle: source\n      target: '1777609615889'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        selected: false\n        title: User Input\n        type: start\n        variables: []\n      height: 53\n      id: '1775796563709'\n      position:\n        x: 223.51378634586104\n        y: 759.6065669645263\n      positionAbsolute:\n        x: 223.51378634586104\n        y: 759.6065669645263\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: This LLM node takes user input, analyse it and return unique error category\n          from the list of unique error type.\n        memory:\n          query_prompt_template: '{{#sys.query#}}'\n          role_prefix:\n            assistant: ''\n            user: ''\n          window:\n            enabled: true\n            size: 76\n        model:\n          completion_params:\n            temperature: 0.4\n          mode: chat\n          name: gemini-2.5-pro\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: 1da474f7-db07-4db3-a10a-510435706d7d\n          role: system\n          text: '# Identify the error category from the list below that most accurately\n            matches the user''s query.\n\n            ## Allowed Categories:  [Submission Error, Script Error, Write Failure,\n            Save Error, Checkbox Error, Usage Error, Automation Failure, Inspection\n            Request, Security Verification, Visibility Issue, Transcription Procedure,\n            Date Conflict, Department Submission, NDA Protocol, NDA Handling, Formula\n            Error]\n\n            ## Constraints:\n\n            - Return ONLY the category name.\n\n            - Do not include any explanation, punctuation, or extra words.\n\n            - If the error does not match any category, return \"Unknown\".\n\n\n            User Error: {{#sys.query#}}\n\n            '\n        selected: false\n        structured_output_enabled: false\n        title: LLM_Error Categorizer\n        type: llm\n        variables: []\n        vision:\n          enabled: false\n      height: 149\n      id: '1777458432658'\n      position:\n        x: 521.1028460570732\n        y: 759.6065669645263\n      positionAbsolute:\n        x: 521.1028460570732\n        y: 759.6065669645263\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"def main(error_data:dict, error_cat: str):\\n    if error_cat in error_data.keys():\\n\\\n          \\        instructions = error_data.get(error_cat)\\n        return {\\n  \\\n          \\          \\\"result\\\": instructions,\\n        }\\n\"\n        code_language: python3\n        desc: ''\n        outputs:\n          result:\n            children: null\n            type: string\n        selected: false\n        title: Code_retrieve_instruction\n        type: code\n        variables:\n        - value_selector:\n          - conversation\n          - error_data\n          value_type: object\n          variable: error_data\n        - value_selector:\n          - '1777458432658'\n          - text\n          value_type: string\n          variable: error_cat\n      height: 53\n      id: '1777540653879'\n      position:\n        x: 813.9465020110908\n        y: 759.6065669645263\n      positionAbsolute:\n        x: 813.9465020110908\n        y: 759.6065669645263\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777540653879'\n          - result\n          value_type: string\n          variable: result\n        selected: false\n        title: End\n        type: end\n      height: 90\n      id: '1777609615889'\n      position:\n        x: 1117.9465020110908\n        y: 759.6065669645263\n      positionAbsolute:\n        x: 1117.9465020110908\n        y: 759.6065669645263\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 19.568170892523824\n      y: -444.4050866753987\n      zoom: 0.8609491883389057\n"}
+app:
+  description: This workflow address user query related to PC inspection. It takes
+    in error and retrieve the instruction from 04_annual inspection file and also
+    provide solution related to FAQ. This workflow is design for D-11 usecase.
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: wf-test
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 7f35626b-d29d-4c2d-a85e-37dca4bde908
+    name: error_data
+    selector:
+    - conversation
+    - error_data
+    value:
+      Automation Failure: "Verify processing results: \n 1. Download file and verify\
+        \ contents. \n 2. If addition/deletion requested, check SPO registration application\
+        \ form. \n 3. If not added, store in management batch or 'User Addition/Deletion\
+        \ Application' folder and re-execute. Update the address field in the management\
+        \ table."
+      Checkbox Error: "Required fields are not checked. \n If a correction date is\
+        \ entered for unchecked items, it is acceptable; share with buyer and manually\
+        \ transfer data to management table and save the file. \n If both checkbox\
+        \ and correction date are blank, request resubmission. Use the HTML draft\
+        \ email 'Request for Resubmission of Confidential Information Management Confirmation\
+        \ Form' and list deficiencies."
+      Date Conflict: Users may mistakenly enter correction dates as the input date.
+        If it is clear the user has confused the input date with the correction date,
+        please accept the entry as is.
+      Department Submission: Please submit one 'Confidential Information Management
+        Confirmation Form' per company. If forms are submitted by department, please
+        request that they be resubmitted as a single consolidated document covering
+        the entire company.
+      Formula Error: If an error occurs due to an incorrect formula in Question (2)
+        of the FY2025 format, change the 'FALSE' in (2) to 'TRUE'. Have the client
+        enter a checkmark (✓) or 'TRUE'. Power Automate will flag a checkmark as an
+        error, so verify visually and transcribe into the management sheet.
+      Inspection Request: "Follow procedure: \n 1. Coordinator confirms request. \n\
+        \ 2. Coordinator places files in client’s SPO Request folder. \n 3. Indicate\
+        \ request in Remarks (Column BN) of management table. \n 4. Move email to\
+        \ 'Procurement_Reception' and share. \n 5. Notify when saved. Note: Log in\
+        \ with 'Procurement_Reception' ID before uploading. Send Sample Email with\
+        \ link to Attachment B3 and FAQ pdf."
+      NDA Handling: This falls outside the scope of BPO. The buyer will need to coordinate
+        directly with the business partner. Add a member of the Procurement Oversight
+        Group to the CC and convey this to the buyer.
+      NDA Protocol: Check the contract status with the Compliance Team. If no contract
+        has been signed, they may be excluded from the scope; reconfirm with the buyer
+        whether action is required.
+      Save Error: "Manually store the file from the email body path. \n Locations:\
+        \ Individual companies (Procurement Division Work Folder > 04_Confirmation\
+        \ Document Storage), HISOL (Documents > 04_Confirmation Document Storage),\
+        \ HSC (Documents > HSC Confidential Information Management > 04_Confirmation\
+        \ Letter Storage). \n Naming: [Management Sheet No. (Column A)]_G&G_Confidential\
+        \ Information Management Compliance Confirmation Letter.xlsx."
+      Script Error: Failed in the Power Automate check section. Check the management
+        sheet. If results are not reflected, download the file from the submission
+        folder and store it in the '0000000001_For Management' folder. Open the file
+        to verify contents. If a correction deadline is specified, share with the
+        front-end buyer. Manually transcribe info into the management table and store
+        the file.
+      Security Verification: "Respond as follows: \n 1. Coordinator confirms request.\
+        \ \n 2. Coordinator uploads 'Latest Version of Information Security Requirements\
+        \ for Procurement Partners' to SPO Request Folder. \n 3. Move email to 'SPO\
+        \ Request' folder and share. \n 4. Person in charge notifies upload completion.\
+        \ Note: Use 'Procurement_Reception_Business ID' to upload."
+      Submission Error: Check the submission folder for the relevant vendor. If the
+        required .xlsx file is stored there, it is OK. If an error occurs even though
+        the file is stored, download it and verify the matching code. If it is not
+        the vendor’s matching code, request a resubmit in the correct format. If the
+        file is missing, contact the client to resubmit in .xlsx format. If stored
+        in PDF, manually transcribe and save per storage rules.
+      Transcription Procedure: "\n 1. Transcribe contents: Unlock source columns N-AF\
+        \ and copy to management table AS-BK. Enter '1' for completion flag. If source\
+        \ is '✓', change to 'TRUE'. \n 2. Fill management table AP-AS: Client Response\
+        \ Date, Response Incomplete (Yes/No), Transcription Date, Storage Date. \n\
+        \ 3. Manually store file location/naming rules."
+      Usage Error: In accordance with the client’s request, send 'Procedures for Inspecting
+        Personally Owned PCs and Deleting Business Information.' Ensure the Confidentiality
+        Management Confirmation Form is submitted only after deletion is complete.
+        (2) must be submitted in its pre-deletion state; do not submit it appearing
+        as if there were no initial issues.
+      Visibility Issue: "\n STEP 1: Check Excel Update Status (Microsoft 365), Environment\
+        \ (Windows Desktop version, not Online/Mac), and Display Settings (Options\
+        \ > Object Display: All; Zoom 100%). \n STEP 2: If it fails, coordinator creates\
+        \ a confirmation form for the version without checkboxes (G&G_Confidential\
+        \ Information Management Confirmation Form_2025_listbox.xlsx) and notifies\
+        \ the client."
+      Write Failure: "Failed to copy files to the working folder. \n If via Power\
+        \ Automate:Download the file from the submission folder and store it in the\
+        \ '0000000001_Management' folder. \n If manual: Manually transcribe response\
+        \ details into the management table and store the file Manually."
+    value_type: object
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1775796563709-source-1777458432658-target
+      source: '1775796563709'
+      sourceHandle: source
+      target: '1777458432658'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1777458432658-source-1777540653879-target
+      source: '1777458432658'
+      sourceHandle: source
+      target: '1777540653879'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1777540653879-source-1777609615889-target
+      source: '1777540653879'
+      sourceHandle: source
+      target: '1777609615889'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: User Input
+        type: start
+        variables: []
+      height: 53
+      id: '1775796563709'
+      position:
+        x: 223.51378634586104
+        y: 759.6065669645263
+      positionAbsolute:
+        x: 223.51378634586104
+        y: 759.6065669645263
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: This LLM node takes user input, analyse it and return unique error category
+          from the list of unique error type.
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 76
+        model:
+          completion_params:
+            temperature: 0.4
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 1da474f7-db07-4db3-a10a-510435706d7d
+          role: system
+          text: '# Identify the error category from the list below that most accurately
+            matches the user''s query.
+
+            ## Allowed Categories:  [Submission Error, Script Error, Write Failure,
+            Save Error, Checkbox Error, Usage Error, Automation Failure, Inspection
+            Request, Security Verification, Visibility Issue, Transcription Procedure,
+            Date Conflict, Department Submission, NDA Protocol, NDA Handling, Formula
+            Error]
+
+            ## Constraints:
+
+            - Return ONLY the category name.
+
+            - Do not include any explanation, punctuation, or extra words.
+
+            - If the error does not match any category, return "Unknown".
+
+
+            User Error: {{#sys.query#}}
+
+            '
+        selected: false
+        structured_output_enabled: false
+        title: LLM_Error Categorizer
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 149
+      id: '1777458432658'
+      position:
+        x: 521.1028460570732
+        y: 759.6065669645263
+      positionAbsolute:
+        x: 521.1028460570732
+        y: 759.6065669645263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(error_data:dict, error_cat: str):\n    if error_cat in error_data.keys():\n\
+          \        instructions = error_data.get(error_cat)\n        return {\n  \
+          \          \"result\": instructions,\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code_retrieve_instruction
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - error_data
+          value_type: object
+          variable: error_data
+        - value_selector:
+          - '1777458432658'
+          - text
+          value_type: string
+          variable: error_cat
+      height: 53
+      id: '1777540653879'
+      position:
+        x: 813.9465020110908
+        y: 759.6065669645263
+      positionAbsolute:
+        x: 813.9465020110908
+        y: 759.6065669645263
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777540653879'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1777609615889'
+      position:
+        x: 1117.9465020110908
+        y: 759.6065669645263
+      positionAbsolute:
+        x: 1117.9465020110908
+        y: 759.6065669645263
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 19.568170892523824
+      y: -444.4050866753987
+      zoom: 0.8609491883389057
