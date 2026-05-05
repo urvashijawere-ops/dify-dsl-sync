@@ -1,0 +1,239 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: FI-024 - 2. Select Session & Doc Upload Initiate
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 17718439482070-source-1771479990446-target
+      source: '17718439482070'
+      sourceHandle: source
+      target: '1771479990446'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1771479980169-source-17718439482070-target
+      source: '1771479980169'
+      sourceHandle: source
+      target: '17718439482070'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: Start
+        type: start
+        variables:
+        - label: lang
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: lang
+      height: 88
+      id: '1771479980169'
+      position:
+        x: 28.350278977657126
+        y: 271
+      positionAbsolute:
+        x: 28.350278977657126
+        y: 271
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector: []
+          value_type: string
+          variable: message
+        - value_selector: []
+          value_type: string
+          variable: selected_session
+        selected: false
+        title: End
+        type: end
+      height: 52
+      id: '1771479990446'
+      position:
+        x: 636
+        y: 271
+      positionAbsolute:
+        x: 636
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\n\ndef main(select_language: str):\n    content_map = {\n\
+          \        \"en\": {\n            \"result\": \"English\",\n            \"\
+          btn_s1\": \"Session 1\",\n            \"btn_s2\": \"Session 2\",\n     \
+          \       \"text\": (\n                \"Thanks for choosing your preferred\
+          \ language as `English`.\\n\\n***\\n\\n\"\n                \"Quick User\
+          \ Guide for Session 1 (**Pre-Hearing Preparation**):\\n\"\n            \
+          \    \"*Goal: Generate the \\\"Analysis & BU Hearing questions\\\" (Summary,\
+          \ Data, & Questions).*\\n\\n\"\n                \"1. **Upload Documents\
+          \ with ease:**\\n\"\n                \"    * **BU Docs:** Current & Previous\
+          \ month (Excel & PPT/PDF).\\n\"\n                \"    * **Financial Data:**\
+          \ Official **Hi-Tree** export (Excel).\\n\"\n                \"    * **Reference:**\
+          \ Past Hearing MOM & Question List.\\n\\n\"\n                \"2. **Unify\
+          \ Currency:**\\n\"\n                \"    * Confirm the Agent's prompt to\
+          \ convert figures (e.g., USD → JPY) using real-time rates.\\n\\n\"\n   \
+          \             \"3. **Review Outputs:**\\n\"\n                \"    * **Qualitative\
+          \ Summary:** Summary in the required template, extracted from the BU Documents.\\\
+          n\"\n                \"    * **Number Table:** Standardized financial table\
+          \ compiled from Hi-Tree/BU performance Excel.\\n\"\n                \" \
+          \   * **Draft Questions:** Generated based on data gaps & historical patterns.\\\
+          n\\n\"\n                \"***\\n\\n\"\n                \"Quick User Guide\
+          \ for Session 2 (**Post-Hearing Synthesis**):\\n\"\n                \"*Goal:\
+          \ Generate the draft for Final Report in Minutes format (MOM).*\\n\\n\"\n\
+          \                \"1. **Upload Hearing Data with BU performance inputs:**\\\
+          n\"\n                \"    * **Transcript:** Text file of the hearing conversation.\\\
+          n\"\n                \"    * **BU Docs:** Current & Previous month (Excel\
+          \ & PPT/PDF).\\n\"\n                \"    * **Financial Data:** Official\
+          \ **Hi-Tree** export (Excel).\\n\"\n                \"    * **Reference:**\
+          \ Past Hearing MOM & Question List.\\n\"\n                \"    * **Session\
+          \ 1 Outputs:** The Questions, Number Table, & Summary generated previously.\\\
+          n\\n\"\n                \"2. **Synthesize:**\\n\"\n                \"  \
+          \  * Agent extracts **Spoken Commitments**, **Future Actions**, and **Verbal\
+          \ Clarifications**.\\n\\n\"\n                \"3. **Finalize Report:**\\\
+          n\"\n                \"    * Review the **Final Report Draft** which merges\
+          \ financial tables with transcript insights.\\n\"\n                \"  \
+          \  * Use the chat to request specific text edits before closure.\\n\\n\"\
+          \n                \"***\\n\\n\"\n                \"**Now, please choose\
+          \ the session from where you want to start with.**\"\n            )\n  \
+          \      },\n        \"ja\": {\n            \"result\": \"Japanese\",\n  \
+          \          \"btn_s1\": \"セッション 1\",\n            \"btn_s2\": \"セッション 2\"\
+          ,\n            \"text\": (\n                \"希望言語として`日本語`を選択していただき、ありがとうございます。\\\
+          n\\n***\\n\\n\"\n                \"セッション 1 クイックユーザーガイド (**事前準備：ヒアリング前**):\\\
+          n\"\n                \"*目的：分析 & BUヒアリング質問を生成する。（サマリー、データ、質問）*\\n\\n\"\n\
+          \                \"1. **ドキュメントのアップロード:**\\n\"\n                \"    * **BU資料:**\
+          \ 当月・前月分 (Excel & PPT/PDF)。\\n\"\n                \"    * **財務データ:** **Hi-Tree**\
+          \ エクスポート (Excel)。\\n\"\n                \"    * **参考資料:** 過去ヒアリング会議の議事録および質問リスト。\\\
+          n\\n\"\n                \"2. **通貨の統一:**\\n\"\n                \"    * Agentのプロンプトを確認し、数値をリアルタイムレートで変換（例:\
+          \ USD → JPY）します。\\n\\n\"\n                \"3. **アウトプットの確認:**\\n\"\n   \
+          \             \"    * **定性サマリー:** BU資料から抽出し、特定テンプレートにまとめたサマリー。\\n\"\n  \
+          \              \"    * **数値表:** Hi-Tree/BU業績Excelから用意された財務表。\\n\"\n    \
+          \            \"    * **質問案:** データの不足や過去の履歴パターンに基づき生成。\\n\\n\"\n        \
+          \        \"***\\n\\n\"\n                \"セッション 2 クイックユーザーガイド (**事後整理：ヒアリング後**):\\\
+          n\"\n                \"*目的：最終報告書（議事録形式）のドラフト版を生成する。*\\n\\n\"\n         \
+          \       \"1. **ヒアリングデータのアップロード:**\\n\"\n                \"    * **文字起こし:**\
+          \ ヒアリング会話のテキストファイル。\\n\"\n                \"    * **BU資料:** 当月・前月分 (Excel\
+          \ & PPT/PDF)。\\n\"\n                \"    * **財務データ:** **Hi-Tree** エクスポート\
+          \ (Excel)。\\n\"\n                \"    * **参考資料:** 過去ヒアリングMOMおよび質問リスト。\\\
+          n\"\n                \"    * **セッション 1 のアウトプット:** 質問、数値表、サマリー。\\n\\n\"\n\
+          \                \"2. **統合・整理:**\\n\"\n                \"    * Agentが発言内容から**口頭での約束事項、補足説明**、**今後のアクション**を抽出します。\\\
+          n\\n\"\n                \"3. **最終報告書の完成:**\\n\"\n                \"    *\
+          \ 財務表とトランスクリプトの洞察を統合した**ドラフト**を確認します。\\n\"\n                \"    * 最後に、テキスト修正がありましたらチャット機能を用いて依頼してください。\\\
+          n\\n\"\n                \"***\\n\\n\"\n                \"**開始したいセッションを選択してください。**\"\
+          \n            )\n        }\n    }\n\n    lang_key = \"ja\" if select_language\
+          \ == \"日本語\" else \"en\"\n    content = content_map[lang_key]\n\n    btn_s1\
+          \ = f'<button type=\"button\" data-message=\"1\">{content[\"btn_s1\"]}</button>'\n\
+          \    btn_s2 = f'<button type=\"button\" data-message=\"2\">{content[\"btn_s2\"\
+          ]}</button>'\n\n    final_message = f\"{content['text']}\\n\\n{btn_s1} {btn_s2}\\\
+          n\\n\"\n\n    return {\n        \"selected_language\": lang_key,\n     \
+          \   \"result\": content[\"result\"],\n        \"message\": final_message\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          message:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+          selected_language:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1771479980169'
+          - lang
+          value_type: string
+          variable: select_language
+      height: 52
+      id: '17718439482070'
+      position:
+        x: 329.70055795531414
+        y: 271
+      positionAbsolute:
+        x: 329.70055795531414
+        y: 271
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 247.84336656612012
+      y: 165.74008905653733
+      zoom: 0.6925910808213812
