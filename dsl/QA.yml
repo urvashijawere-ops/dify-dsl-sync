@@ -1,1 +1,186 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: QA\n  use_icon_as_answer_icon: false\ndependencies:\n- current_identifier: null\n  type: marketplace\n  value:\n    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .yml\n      - .yaml\n      allowed_file_types:\n      - custom\n      allowed_file_upload_methods:\n      - remote_url\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        sourceType: start\n        targetType: llm\n      id: 1776921691599-llm\n      source: '1776921691599'\n      sourceHandle: source\n      target: llm\n      targetHandle: target\n      type: custom\n    - data:\n        sourceType: llm\n        targetType: answer\n      id: llm-answer\n      source: llm\n      sourceHandle: source\n      target: answer\n      targetHandle: target\n      type: custom\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables: []\n      height: 53\n      id: '1776921691599'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        memory:\n          query_prompt_template: input file {{#sys.files#}}\n          role_prefix:\n            assistant: ''\n            user: ''\n          window:\n            enabled: false\n            size: 10\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-2.5-pro\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: f781061a-7e53-452f-be2c-3b54cc0140ba\n          role: system\n          text: \"**Role:** You are a Forensic Data Analyst. Your task is to perform\\\n            \\ a literal extraction of file validation logic from the provided Dify\\\n            \\ Workflow YML. \\n\\n**Strict Extraction Rules:**\\n1.  **Literal Content\\\n            \\ Only:** Do not generate any text, categories, or examples that are not\\\n            \\ explicitly written in the YML.\\n2.  **No Placeholders:** If a specific\\\n            \\ check (like Size or Type) is not found for a file, leave the cell empty\\\n            \\ or write \\\"Not explicitly defined\\\".\\n3.  **Variable-to-Logic Mapping:**\\\n            \\ Only report a validation if you can identify the specific node or variable\\\n            \\ where the check occurs.\\n4.  **Zero Commentary:** Do not provide any\\\n            \\ \\\"Audit Notes,\\\" \\\"Recommendations\\\" type explanations. Provide only\\\n            \\ the table and the evidence list.\\n5. **Multi-Step Scan:** You must scan\\\n            \\ the logic for EVERY value. Do not stop after the first file.\\n6. **Variable\\\n            \\ Mapping:** If a Code Node refers to a variable, you MUST extract the\\\n            \\ literal values for Excel (.xlsx), PDF, and DOC from that variable's\\\n            \\ definition.\\n\\n---\\n\\n### File Validation Report\\n\\n**Workflow Name:**\\\n            \\ {Extract literal name from app -> name}\\n\\n| Upload Step / File Context\\\n            \\ | Logic Node ID | File Type/Extension Check (Literal String) | Size\\\n            \\ Limit Check (Literal Value) |\\n| :--- | :--- | :--- | :--- |\\n| {e.g.\\\n            \\ Step 1} | {ID} | {Extract string like \\\".pdf\\\"} | {Extract value} |\\n\\\n            \\n**Logic Evidence (Node-by-Node):**\\n* **Node ID [ID]:** {Copy the exact\\\n            \\ logic line or condition found in the yaml file}.\\n\\n**Error Messages\\\n            \\ found in YML:**\\n* {Extract the literal error strings found in variables\\\n            \\ or within code blocks}.\"\n        - id: f527f388-0677-4aec-bc38-a919b5b5dcf1\n          role: user\n          text: input file {{#sys.files#}}\n        selected: false\n        title: LLM\n        type: llm\n        variables: []\n        vision:\n          enabled: false\n      height: 89\n      id: llm\n      position:\n        x: 380\n        y: 282\n      positionAbsolute:\n        x: 380\n        y: 282\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#llm.text#}}'\n        desc: ''\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 104\n      id: answer\n      position:\n        x: 680\n        y: 282\n      positionAbsolute:\n        x: 680\n        y: 282\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 24.34391584278262\n      y: -95.02067743251314\n      zoom: 1.1486983549970358\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: QA
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .yml
+      - .yaml
+      allowed_file_types:
+      - custom
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1776921691599-llm
+      source: '1776921691599'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 53
+      id: '1776921691599'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: input file {{#sys.files#}}
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: f781061a-7e53-452f-be2c-3b54cc0140ba
+          role: system
+          text: "**Role:** You are a Forensic Data Analyst. Your task is to perform\
+            \ a literal extraction of file validation logic from the provided Dify\
+            \ Workflow YML. \n\n**Strict Extraction Rules:**\n1.  **Literal Content\
+            \ Only:** Do not generate any text, categories, or examples that are not\
+            \ explicitly written in the YML.\n2.  **No Placeholders:** If a specific\
+            \ check (like Size or Type) is not found for a file, leave the cell empty\
+            \ or write \"Not explicitly defined\".\n3.  **Variable-to-Logic Mapping:**\
+            \ Only report a validation if you can identify the specific node or variable\
+            \ where the check occurs.\n4.  **Zero Commentary:** Do not provide any\
+            \ \"Audit Notes,\" \"Recommendations\" type explanations. Provide only\
+            \ the table and the evidence list.\n5. **Multi-Step Scan:** You must scan\
+            \ the logic for EVERY value. Do not stop after the first file.\n6. **Variable\
+            \ Mapping:** If a Code Node refers to a variable, you MUST extract the\
+            \ literal values for Excel (.xlsx), PDF, and DOC from that variable's\
+            \ definition.\n\n---\n\n### File Validation Report\n\n**Workflow Name:**\
+            \ {Extract literal name from app -> name}\n\n| Upload Step / File Context\
+            \ | Logic Node ID | File Type/Extension Check (Literal String) | Size\
+            \ Limit Check (Literal Value) |\n| :--- | :--- | :--- | :--- |\n| {e.g.\
+            \ Step 1} | {ID} | {Extract string like \".pdf\"} | {Extract value} |\n\
+            \n**Logic Evidence (Node-by-Node):**\n* **Node ID [ID]:** {Copy the exact\
+            \ logic line or condition found in the yaml file}.\n\n**Error Messages\
+            \ found in YML:**\n* {Extract the literal error strings found in variables\
+            \ or within code blocks}."
+        - id: f527f388-0677-4aec-bc38-a919b5b5dcf1
+          role: user
+          text: input file {{#sys.files#}}
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 24.34391584278262
+      y: -95.02067743251314
+      zoom: 1.1486983549970358
