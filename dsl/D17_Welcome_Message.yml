@@ -15,32 +15,6 @@ version: 0.3.1
 workflow:
   conversation_variables:
   - description: ''
-    id: c5481630-b1b6-4847-a714-8b4b64f0146e
-    name: progress_management_sheet
-    selector:
-    - conversation
-    - progress_management_sheet
-    value: 0
-    value_type: integer
-  - description: this variable stores all static data in both language English and
-      Japanese
-    id: 6f7c13f0-e937-4f61-8ee5-770acaae6130
-    name: static_data
-    selector:
-    - conversation
-    - static_data
-    value:
-      button_template: '{index}. <button type="button" data-message="{id}">{label}</button>'
-      document_received_msg: null
-      error_message_document_received: null
-      error_message_file_missing: null
-      error_message_language: null
-      request_file_msg: null
-      select_lang_first_msg: null
-      user_guide: null
-    value_type: object
-  - description: This variable stores user's preferred language, the default one is
-      None
     id: 2dfc4ba5-d93b-4af2-a80b-791fb202b6aa
     name: user_language
     selector:
@@ -80,20 +54,14 @@ workflow:
       number_limits: 3
     opening_statement: '
 
-      Hi there, Welcome to “Unit Price Revision Agent”.
+      Welcome to “Unit Price Revision Agent”
+
+      単価改定エージェントへようこそ
 
 
-      Please select your Preferred language.
+      Please choose your preferred language / ご希望の言語を選択してください :
 
-
-      ***
-
-      こんにちは。単価改定エージェントへようこそ
-
-
-      ご希望の言語を選択してください。
-
-      ***'
+      '
     retriever_resource:
       enabled: true
     sensitive_word_avoidance:
@@ -121,6 +89,30 @@ workflow:
       targetHandle: target
       type: custom
     - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1776927870318-source-1776931562103-target
+      source: '1776927870318'
+      sourceHandle: source
+      target: '1776931562103'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1776931562103-source-1776931893743-target
+      source: '1776931562103'
+      sourceHandle: source
+      target: '1776931893743'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
         isInLoop: false
         sourceType: assigner
         targetType: llm
@@ -128,114 +120,6 @@ workflow:
       source: '1776931893743'
       sourceHandle: source
       target: llm
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: start
-        targetType: if-else
-      id: 1776927870318-source-1777014194321-target
-      source: '1776927870318'
-      sourceHandle: source
-      target: '1777014194321'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: tool
-      id: 1777014194321-true-1777014536556-target
-      source: '1777014194321'
-      sourceHandle: 'true'
-      target: '1777014536556'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: tool
-        targetType: code
-      id: 1777014536556-source-1777014652008-target
-      source: '1777014536556'
-      sourceHandle: source
-      target: '1777014652008'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: if-else
-      id: 1777014652008-source-1777014777539-target
-      source: '1777014652008'
-      sourceHandle: source
-      target: '1777014777539'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: assigner
-      id: 1777014777539-true-1777014872237-target
-      source: '1777014777539'
-      sourceHandle: 'true'
-      target: '1777014872237'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: assigner
-        targetType: code
-      id: 1777014872237-source-1777014997957-target
-      source: '1777014872237'
-      sourceHandle: source
-      target: '1777014997957'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: answer
-      id: 1777014997957-source-1777015315686-target
-      source: '1777014997957'
-      sourceHandle: source
-      target: '1777015315686'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: answer
-      id: 1777014777539-false-1777015376820-target
-      source: '1777014777539'
-      sourceHandle: 'false'
-      target: '1777015376820'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: answer
-      id: 1777014194321-false-1777015529554-target
-      source: '1777014194321'
-      sourceHandle: 'false'
-      target: '1777015529554'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -304,11 +188,11 @@ workflow:
       height: 89
       id: llm
       position:
-        x: 2112.6072237731587
-        y: 3576.7476132704896
+        x: 966.8310909735668
+        y: 272.7201705861493
       positionAbsolute:
-        x: 2112.6072237731587
-        y: 3576.7476132704896
+        x: 966.8310909735668
+        y: 272.7201705861493
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -324,11 +208,11 @@ workflow:
       height: 103
       id: answer
       position:
-        x: 2450.4790497731547
-        y: 3313.4160877090317
+        x: 1297.0781508870004
+        y: 272.7201705861493
       positionAbsolute:
-        x: 2450.4790497731547
-        y: 3313.4160877090317
+        x: 1297.0781508870004
+        y: 272.7201705861493
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -400,12 +284,12 @@ workflow:
       height: 89
       id: '1776931562103'
       position:
-        x: 1993.1561644369965
-        y: 3132.6916378939304
+        x: 360.59672031649393
+        y: 272.7201705861493
       positionAbsolute:
-        x: 1993.1561644369965
-        y: 3132.6916378939304
-      selected: false
+        x: 360.59672031649393
+        y: 272.7201705861493
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -429,347 +313,17 @@ workflow:
       height: 85
       id: '1776931893743'
       position:
-        x: 1340.4086327203922
-        y: 3376.1121579050423
+        x: 656.3786160374711
+        y: 272.7201705861493
       positionAbsolute:
-        x: 1340.4086327203922
-        y: 3376.1121579050423
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: not empty
-            id: 3e828d82-1ec6-40b3-aa90-bdc10661527d
-            value: ''
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: empty
-            id: dddb4b3d-09e0-440f-8f36-48fb6891ba4b
-            value: ''
-            varType: string
-            variable_selector:
-            - conversation
-            - user_language
-          id: 'true'
-          logical_operator: and
-        - case_id: d51817a9-c5b5-4399-bcb0-a59b8e6614ab
-          conditions:
-          - comparison_operator: not empty
-            id: 0d92b9bf-fb8d-42b9-88a2-a66bad80c240
-            value: '{{#sys.files#}}'
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: empty
-            id: a85cdabc-017a-482a-8967-c0483a6910d8
-            value: ''
-            varType: array[file]
-            variable_selector:
-            - sys
-            - files
-          - comparison_operator: not empty
-            id: f96c196c-5fd9-453c-91ad-09c8e6d2a64e
-            value: ''
-            varType: string
-            variable_selector:
-            - conversation
-            - user_language
-          id: d51817a9-c5b5-4399-bcb0-a59b8e6614ab
-          logical_operator: and
-        desc: ''
-        selected: false
-        title: Orchestrator
-        type: if-else
-      height: 251
-      id: '1777014194321'
-      position:
-        x: 384
-        y: 282
-      positionAbsolute:
-        x: 384
-        y: 282
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: This workflow validate the user input if they have selected their preferred
-          language or not and return preferred language as key such "en" for English
-          and in case no language selected, request the user to choose language first.
-        is_team_authorization: true
-        output_schema: null
-        paramSchemas:
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: this receives user's query to validate language preference
-            ja_JP: this receives user's query to validate language preference
-            pt_BR: this receives user's query to validate language preference
-            zh_Hans: this receives user's query to validate language preference
-          label:
-            en_US: User input
-            ja_JP: User input
-            pt_BR: User input
-            zh_Hans: User input
-          llm_description: this receives user's query to validate language preference
-          max: null
-          min: null
-          name: user_query
-          options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: string
-        params:
-          user_query: ''
-        provider_id: 7fb8ca4f-fc35-415e-94d5-48edc65fcf26
-        provider_name: COM_Bilingual_Workflow
-        provider_type: workflow
-        selected: false
-        title: COM_Bilingual_Workflow
-        tool_configurations: {}
-        tool_description: This workflow automate the language validation as per requirement
-          and return user's preferred language. Currently it supports English and
-          Japanese.
-        tool_label: COM_Bilingual_Workflow
-        tool_name: comBilingualWorkflow
-        tool_node_version: '2'
-        tool_parameters:
-          user_query:
-            type: mixed
-            value: '{{#sys.query#}}'
-        type: tool
-      height: 177
-      id: '1777014536556'
-      position:
-        x: 753.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 753.6371056698304
-        y: 158.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(lang_result:list):\n    lang_obj = lang_result[0]\n    return\
-          \ {\n        \"result\": lang_obj.get(\"result\", \"\")\n    }"
-        code_language: python3
-        desc: This code node format response received from bilingual workflow so that
-          downstream node can use it to display respective message related to language
-          preference.
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: code_format_response
-        type: code
-        variables:
-        - value_selector:
-          - '1777014536556'
-          - json
-          value_type: array[object]
-          variable: lang_result
-      height: 145
-      id: '1777014652008'
-      position:
-        x: 1057.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 1057.6371056698304
-        y: 158.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: is
-            id: 3de96b5d-6a35-40f8-904a-a57cc11bb9cd
-            value: en
-            varType: string
-            variable_selector:
-            - '1777014652008'
-            - result
-          - comparison_operator: is
-            id: 4ac20e4e-7a3a-48e3-9c03-fc27c1ca2efa
-            value: jp
-            varType: string
-            variable_selector:
-            - '1777014652008'
-            - result
-          id: 'true'
-          logical_operator: or
-        desc: This node checks if the user has selected their preferred language if
-          yes it will return language code like "en" else prompt the user to select
-          language first.
-        selected: false
-        title: Yes/No
-        type: if-else
-      height: 243
-      id: '1777014777539'
-      position:
-        x: 1361.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 1361.6371056698304
-        y: 158.2993008530123
-      selected: true
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: This node updates user preferred language to the variable preferred_lang
-          as en or jp
-        items:
-        - input_type: variable
-          operation: over-write
-          value:
-          - '1777014652008'
-          - result
-          variable_selector:
-          - conversation
-          - user_language
-          write_mode: over-write
-        selected: false
-        title: Update preferred language
-        type: assigner
-        version: '2'
-      height: 145
-      id: '1777014872237'
-      position:
-        x: 1665.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 1665.6371056698304
-        y: 158.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(preferred_lang: str, static_data: dict):\n    return {\n\
-          \        \"result\": static_data.get(\"user_guide\",{}).get(preferred_lang)\n\
-          \    }"
-        code_language: python3
-        desc: This code node fetch user guide based on preferred language from static
-          data and pass to next node to display the same message.
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: code_fetch_user_guide
-        type: code
-        variables:
-        - value_selector:
-          - conversation
-          - user_language
-          value_type: string
-          variable: preferred_lang
-        - value_selector:
-          - conversation
-          - static_data
-          value_type: object
-          variable: static_data
-      height: 129
-      id: '1777014997957'
-      position:
-        x: 1969.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 1969.6371056698304
-        y: 158.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1777014997957.result#}}'
-        desc: This node display the user guide based on preferred language
-        selected: false
-        title: User guide output
-        type: answer
-        variables: []
-      height: 147
-      id: '1777015315686'
-      position:
-        x: 2273.6371056698304
-        y: 158.2993008530123
-      positionAbsolute:
-        x: 2273.6371056698304
-        y: 158.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1777014652008.result#}}'
-        desc: This node request the user to enter the language if preferred language
-          is not selected.
-        selected: false
-        title: Request Language
-        type: answer
-        variables: []
-      height: 163
-      id: '1777015376820'
-      position:
-        x: 1665.6371056698304
-        y: 342.2993008530123
-      positionAbsolute:
-        x: 1665.6371056698304
-        y: 342.2993008530123
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: Thank you, we received your query
-        desc: This is placeholder for input coming from user post file upload
-        selected: false
-        title: Post_file_uploade_msg
-        type: answer
-        variables: []
-      height: 145
-      id: '1777015529554'
-      position:
-        x: 730.4379563437687
-        y: 794.7838823878803
-      positionAbsolute:
-        x: 730.4379563437687
-        y: 794.7838823878803
+        x: 656.3786160374711
+        y: 272.7201705861493
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: -517.861817381386
-      y: 248.73165683275124
-      zoom: 0.5083873366459775
+      x: 23.099101719775263
+      y: 187.51031110126308
+      zoom: 0.39611740546248336
