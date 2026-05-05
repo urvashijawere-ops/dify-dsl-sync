@@ -42,13 +42,6 @@ workflow:
       - local_file
       - remote_url
       enabled: false
-      fileUploadConfig:
-        audio_file_size_limit: 50
-        batch_count_limit: 5
-        file_size_limit: 50
-        image_file_size_limit: 10
-        video_file_size_limit: 100
-        workflow_file_upload_limit: 10
       image:
         enabled: false
         number_limits: 3
@@ -848,6 +841,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: 453.1270140553495
-      y: 699.7005220810033
-      zoom: 0.47830407904593725
+      x: -2435.7352976186844
+      y: 1619.3263680481298
+      zoom: 1.1534065671816653
