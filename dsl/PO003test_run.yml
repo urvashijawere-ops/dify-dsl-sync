@@ -1,0 +1,4195 @@
+app:
+  description: AI powered procurement navigator to reduce manual checks while preparing
+    order data
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: PO-003-test_run
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 3c4fba48-eaaa-4316-88e3-f3968bb37ac0
+    name: current_proc_system
+    selector:
+    - conversation
+    - current_proc_system
+    value: ''
+    value_type: string
+  - description: ''
+    id: accb0f97-553f-4c64-9257-96741766b294
+    name: reupload_counter
+    selector:
+    - conversation
+    - reupload_counter
+    value: 1
+    value_type: integer
+  - description: ''
+    id: cee1ca84-3fe6-4b24-b217-48948b1b9e7d
+    name: product_name
+    selector:
+    - conversation
+    - product_name
+    value: None
+    value_type: string
+  - description: japanese guide
+    id: 0238e914-25ea-4b6a-8640-21fbf236c32f
+    name: japanese_guide
+    selector:
+    - conversation
+    - japanese_guide
+    value: 'ご希望の言語が日本語に設定されました。
+
+
+      操作手順:
+
+      1. インターフェース設定 : ご希望の言語（日本語または英語）を選択し、ローカライズされたインターフェースを初期化してください。
+
+      2. 要件の入力: 自然言語チャットでの記述、または補足資料（PDF、Excel、スキャン画像）のアップロードにより、要件を送信してください。
+
+      3. ルートの推奨 : ビジネスルールに基づきAIが提案する最適な調達システム（例：e-Sourcing Mall、Soft-Partner、SOCIO）を確認してください。
+
+      4. システムの選択 : 推奨されたルートを選択、もしくは任意の別のルートを選択してください。
+
+      5. データ補完ガイド : エージェントが初期入力の不足として特定した必須項目（コストセンターや配送詳細など）を入力してください。
+
+      6. 検証と最終確認：最終レビューと提出を行う前に、リアルタイムで表示されるエラーフラグに対処し、データが「最初から正しく」入力されていることを確認してください
+
+
+      ユーザ入力の例）：ITサービス、コンサルティング支援、オーフィス材（文房具の注文）、人材派遣、ソフトウェアの開発・保守・運用
+
+      本日はどのようなご用件でしょうか？'
+    value_type: string
+  - description: english guide
+    id: dca9504f-0742-4e49-bd9a-8f52aa83ea1f
+    name: english_guide
+    selector:
+    - conversation
+    - english_guide
+    value: "Your preferred language is now English. \n\nOperating Procedure: \n1.\
+      \ Interface Configuration: Select your preferred language (Japanese or English)\
+      \ to initialize the localized interface.\n2. Requisition Input: Submit your\
+      \ requirements by describing them in the natural language chat or by uploading\
+      \ supporting documentation (PDF, Excel, or scanned images).\n3. Route Recommendation:\
+      \ Review the AI-generated suggestion for the optimal procurement system (e.g.,\
+      \ e-Sourcing Mall, Soft-Partner, or SOCIO) based on the business rules.\n4.\
+      \ System Selection: Confirm the recommended route or choose any other alternative\
+      \ route that is listed.\n5. Guided Data Completion: Provide any mandatory field\
+      \ information (such as Cost Center or delivery details) that the agent identifies\
+      \ as missing from your initial input.\n6. Validation and Finalization: Address\
+      \ any real-time error flags to ensure the data is \"first-time right\" before\
+      \ performing the final review and submission.\n\nExamples of User Input: IT\
+      \ Services, Consulting support, Office Supplies(Ordering Stationeries) Human\
+      \ Resources/Staffing, Software Development/Support/Maintenance"
+    value_type: string
+  - description: this will count the file and max can be 1
+    id: 4842caf0-a7f0-4551-91df-643fa59efd02
+    name: file_counter
+    selector:
+    - conversation
+    - file_counter
+    value: 0
+    value_type: integer
+  - description: list of procurement system
+    id: cee85465-2378-4171-945d-280af5567227
+    name: list_of_systems
+    selector:
+    - conversation
+    - list_of_systems
+    value: 'e-Sourcing Mall - PO1
+
+      e-LINKS - PO2
+
+      SOCIO - PO3
+
+      Hi-STAFF - PO4
+
+      JSOCIO - PO5
+
+      '
+    value_type: string
+  - description: static data variables
+    id: f106d0e5-7c7c-4e09-bf34-b409dc016573
+    name: static_data
+    selector:
+    - conversation
+    - static_data
+    value:
+      data_confirm_message_eng: Data confirmed. Routing to the Procurement Master
+        Agent...
+      data_confirm_message_jap: データを確認しました。調達マスターエージェントへ連携中です...
+      feedback_eng: Please provide the required information to update. <form method="post"
+        action="">   <textarea  name="updated order data"></textarea>   <button type="submit">Submit</button>
+        </form>
+      feedback_jap: 更新に必要な情報をご提供ください <form method="post" action=""> <textarea name="更新された注文データ"></textarea>   <button
+        type="submit">送信</button> </form>
+      file_rec_message_eng: Documents received. Validating now, please wait…
+      file_rec_message_jap: 書類を受領しました。確認中ですので、少々お待ちください
+      general_consultant_eng: 'Do you want to proceed?  <button      data-message="User
+        Message: YES"      data-variant="primary"      style="background-color: #28a745;
+        color: white; border-color: #28a745;">     👍 Yes  </button>  <button      data-message="User
+        Message: No, I want an update"      data-variant="primary"      style="background-color:
+        #dc3545; color: white; border-color: #dc3545;">      👎 No, I want an update
+        </button>'
+      general_consultant_jp: '進めてよろしいですか？   <button      data-message="ユーザーメッセージ:
+        はい"      data-variant="primary"      style="background-color: #28a745; color:
+        white; border-color: #28a745;">     👍 はい  </button>  <button      data-message="ユーザーメッセージ:
+        いいえ、更新したいです"      data-variant="primary"      style="background-color: #dc3545;
+        color: white; border-color: #dc3545;">      👎 いいえ、更新したいです </button>'
+      input_data_for_order_eng: Please enter your order details below or upload a
+        file. <form method="post" action="">   <textarea  name="text order data"></textarea>   <button
+        type="submit">Submit</button> </form>
+      input_data_for_order_jap: こちらにテキスト形式の注文データを入力してください。または、ファイルをアップロードすることもできます。  <form
+        method="post" action="">   <textarea name="テキスト注文データ"></textarea>   <button
+        type="submit">送信</button> </form>
+      order_data_confirmation_eng: 'Is this data correct? <button data-message="Order
+        Data Confirmation: YES" data-variant="primary">👍 Yes </button> <button data-message="Order
+        Data Confirmation: NO" data-variant="danger">👎 NO I want to change. </button>'
+      order_data_confirmation_jap: このデータは正しいですか？ <button data-message="注文データ確認：はい"
+        data-variant="primary">👍 はい</button> <button data-message="注文データ確認：いいえ" data-variant="danger">👎
+        いいえ、変更したいです。</button>
+    value_type: object
+  - description: User preferred language
+    id: eb0c08e1-e1c4-434a-999d-39335ac20562
+    name: preferred_language
+    selector:
+    - conversation
+    - preferred_language
+    value: English
+    value_type: string
+  - description: ''
+    id: a997be54-25d8-4638-bd3d-cbaaddd87946
+    name: currentdate
+    selector:
+    - conversation
+    - currentdate
+    value: ''
+    value_type: string
+  - description: Default to 0 unless a single file is available
+    id: b4ef058e-3800-4f2b-a57d-dfa820b8123e
+    name: isfileavailable
+    selector:
+    - conversation
+    - isfileavailable
+    value: 0
+    value_type: integer
+  - description: Default will be None, else procurement code such as PO1, PO2...
+    id: 85f05ef0-340f-44d9-989f-054623ad9bd2
+    name: active_agent
+    selector:
+    - conversation
+    - active_agent
+    value: None
+    value_type: string
+  - description: E-Sourcing Mall Agent variable to store history
+    id: 7d1009c3-7b48-4d96-b8bc-2df38bcf76e4
+    name: esourcingmalldata
+    selector:
+    - conversation
+    - esourcingmalldata
+    value: []
+    value_type: array[string]
+  - description: ''
+    id: 8508518f-c5c0-4f43-997f-83cb8cc7d881
+    name: chathistory
+    selector:
+    - conversation
+    - chathistory
+    value: ''
+    value_type: string
+  - description: ''
+    id: 01aecbdb-8ea9-45d1-952c-9522f32c255d
+    name: filehistory
+    selector:
+    - conversation
+    - filehistory
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: 'Hi there I am your smart procurement navigator.
+
+      こんにちは、私はあなたのスマート調達ナビゲーターです
+
+
+      Please select your Preferred language.
+
+      ご希望の言語を選択してください'
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - English
+    - 日本語
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1766998462150-source-1766998532769-target
+      selected: false
+      source: '1766998462150'
+      sourceHandle: source
+      target: '1766998532769'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1767161455504-source-1767070453523-target
+      selected: false
+      source: '1767161455504'
+      sourceHandle: source
+      target: '1767070453523'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1766997304622-source-1767634031344-target
+      selected: false
+      source: '1766997304622'
+      sourceHandle: source
+      target: '1767634031344'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1767634031344-source-1766997437018-target
+      selected: false
+      source: '1767634031344'
+      sourceHandle: source
+      target: '1766997437018'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1767768100489-source-1767768753419-target
+      selected: false
+      source: '1767768100489'
+      sourceHandle: source
+      target: '1767768753419'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1767774158051-source-1766996721760-target
+      selected: false
+      source: '1767774158051'
+      sourceHandle: source
+      target: '1766996721760'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1767774472293-source-1767610053221-target
+      selected: false
+      source: '1767774472293'
+      sourceHandle: source
+      target: '1767610053221'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1766996541445-true-1767774158051-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 'true'
+      target: '1767774158051'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1766996541445-0336d78b-74f3-4991-a795-6727c3a21c09-1766997304622-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 0336d78b-74f3-4991-a795-6727c3a21c09
+      target: '1766997304622'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1767946795863-source-1766996541445-target
+      selected: false
+      source: '1767946795863'
+      sourceHandle: source
+      target: '1766996541445'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1766996541445-89f904ff-d33c-4b3c-98a7-4fa3e5ab64db-1767950672397-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 89f904ff-d33c-4b3c-98a7-4fa3e5ab64db
+      target: '1767950672397'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1767950672397-true-1767768239393-target
+      selected: false
+      source: '1767950672397'
+      sourceHandle: 'true'
+      target: '1767768239393'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1767950672397-07f9a1c5-c477-4096-ac3f-f0c3ce77df9d-1767767871974-target
+      selected: false
+      source: '1767950672397'
+      sourceHandle: 07f9a1c5-c477-4096-ac3f-f0c3ce77df9d
+      target: '1767767871974'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1766996541445-b7bacc73-0c41-4ce3-a620-a9deddd82ec4-1768220000153-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: b7bacc73-0c41-4ce3-a620-a9deddd82ec4
+      target: '1768220000153'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1768220000153-source-1768220232157-target
+      selected: false
+      source: '1768220000153'
+      sourceHandle: source
+      target: '1768220232157'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: if-else
+      id: 1768220232157-source-1768220266982-target
+      selected: false
+      source: '1768220232157'
+      sourceHandle: source
+      target: '1768220266982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768220266982-true-1767161455504-target
+      selected: false
+      source: '1768220266982'
+      sourceHandle: 'true'
+      target: '1767161455504'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1768287076236-source-1768220342696-target
+      selected: false
+      source: '1768287076236'
+      sourceHandle: source
+      target: '1768220342696'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1766996541445-acc3a4c3-6c6c-4067-9286-39bfaaea4122-1768293603918-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: acc3a4c3-6c6c-4067-9286-39bfaaea4122
+      target: '1768293603918'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768293603918-true-1767161455504-target
+      selected: false
+      source: '1768293603918'
+      sourceHandle: 'true'
+      target: '1767161455504'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768293603918-37fed381-6ecb-4cb7-8e3d-e0f3b64c1987-1768287076236-target
+      selected: false
+      source: '1768293603918'
+      sourceHandle: 37fed381-6ecb-4cb7-8e3d-e0f3b64c1987
+      target: '1768287076236'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1767070453523-source-1768293790606-target
+      selected: false
+      source: '1767070453523'
+      sourceHandle: source
+      target: '1768293790606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1768220342696-source-1768293790606-target
+      selected: false
+      source: '1768220342696'
+      sourceHandle: source
+      target: '1768293790606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1767767871974-source-1767768100489-target
+      selected: false
+      source: '1767767871974'
+      sourceHandle: source
+      target: '1767768100489'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1767950672397-false-1768375846628-target
+      selected: false
+      source: '1767950672397'
+      sourceHandle: 'false'
+      target: '1768375846628'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1768375846628-source-1768375671307-target
+      selected: false
+      source: '1768375846628'
+      sourceHandle: source
+      target: '1768375671307'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1766996541445-3ec150ec-18b8-4a59-8bfb-e8f3a90457bf-1768409079125-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 3ec150ec-18b8-4a59-8bfb-e8f3a90457bf
+      target: '1768409079125'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1768409079125-source-1768409369728-target
+      selected: false
+      source: '1768409079125'
+      sourceHandle: source
+      target: '1768409369728'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: list-operator
+      id: 1766996721760-source-1768410038426-target
+      selected: false
+      source: '1766996721760'
+      sourceHandle: source
+      target: '1768410038426'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1768410082852-source-1766997304622-target
+      selected: false
+      source: '1768410082852'
+      sourceHandle: source
+      target: '1766997304622'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1768293790606-source-1768454618610-target
+      selected: false
+      source: '1768293790606'
+      sourceHandle: source
+      target: '1768454618610'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1768454618610-true-1768293744127-target
+      selected: false
+      source: '1768454618610'
+      sourceHandle: 'true'
+      target: '1768293744127'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1766996245621-source-1767946795863-target
+      selected: false
+      source: '1766996245621'
+      sourceHandle: source
+      target: '1767946795863'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1767774350948-source-1768564404874-target
+      selected: false
+      source: '1767774350948'
+      sourceHandle: source
+      target: '1768564404874'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: list-operator
+        targetType: code
+      id: 1768410038426-source-1768567494639-target
+      selected: false
+      source: '1768410038426'
+      sourceHandle: source
+      target: '1768567494639'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1768567494639-source-1768567597398-target
+      selected: false
+      source: '1768567494639'
+      sourceHandle: source
+      target: '1768567597398'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1768567597398-false-1768410082852-target
+      selected: false
+      source: '1768567597398'
+      sourceHandle: 'false'
+      target: '1768410082852'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1768567597398-true-1768567807102-target
+      selected: false
+      source: '1768567597398'
+      sourceHandle: 'true'
+      target: '1768567807102'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1768567807102-source-1768567675566-target
+      selected: false
+      source: '1768567807102'
+      sourceHandle: source
+      target: '1768567675566'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768220266982-f4004f7c-4356-4b37-b6b8-7dc5547b5ec6-1768806261516-target
+      selected: false
+      source: '1768220266982'
+      sourceHandle: f4004f7c-4356-4b37-b6b8-7dc5547b5ec6
+      target: '1768806261516'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768293603918-cc5606a6-0171-4b7b-a3e2-555acaf3ab28-1768806261516-target
+      selected: false
+      source: '1768293603918'
+      sourceHandle: cc5606a6-0171-4b7b-a3e2-555acaf3ab28
+      target: '1768806261516'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1768806261516-source-1768892841189-target
+      selected: false
+      source: '1768806261516'
+      sourceHandle: source
+      target: '1768892841189'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1768892841189-source-1768293790606-target
+      selected: false
+      source: '1768892841189'
+      sourceHandle: source
+      target: '1768293790606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768293603918-4c65dcef-ee7b-4e72-8740-d6ff9702771c-17690809328710-target
+      selected: false
+      source: '1768293603918'
+      sourceHandle: 4c65dcef-ee7b-4e72-8740-d6ff9702771c
+      target: '17690809328710'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 17690809328710-source-1769081091744-target
+      selected: false
+      source: '17690809328710'
+      sourceHandle: source
+      target: '1769081091744'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1769081091744-source-1768293790606-target
+      selected: false
+      source: '1769081091744'
+      sourceHandle: source
+      target: '1768293790606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1768293603918-93372a4f-384c-439a-999d-18290bb1719c-1769582176710-target
+      selected: false
+      source: '1768293603918'
+      sourceHandle: 93372a4f-384c-439a-999d-18290bb1719c
+      target: '1769582176710'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1769582176710-source-1769582291961-target
+      selected: false
+      source: '1769582176710'
+      sourceHandle: source
+      target: '1769582291961'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1769582291961-source-1768293790606-target
+      selected: false
+      source: '1769582291961'
+      sourceHandle: source
+      target: '1768293790606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 1766996541445-264ff988-5a7a-4c40-86a6-e1065707b6ac-1769585416348-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 264ff988-5a7a-4c40-86a6-e1065707b6ac
+      target: '1769585416348'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1769585416348-source-1766998305556-target
+      selected: false
+      source: '1769585416348'
+      sourceHandle: source
+      target: '1766998305556'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1769597878192-source-1766998532769-target
+      selected: false
+      source: '1769597878192'
+      sourceHandle: source
+      target: '1766998532769'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1766997304622-source-1769597942458-target
+      selected: false
+      source: '1766997304622'
+      sourceHandle: source
+      target: '1769597942458'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1769597942458-source-1766997437018-target
+      selected: false
+      source: '1769597942458'
+      sourceHandle: source
+      target: '1766997437018'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1766997304622-source-1769671490250-target
+      selected: false
+      source: '1766997304622'
+      sourceHandle: source
+      target: '1769671490250'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1769671490250-source-1766997396344-target
+      selected: false
+      source: '1769671490250'
+      sourceHandle: source
+      target: '1766997396344'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1766997396344-source-1767774350948-target
+      selected: false
+      source: '1766997396344'
+      sourceHandle: source
+      target: '1767774350948'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1766996541445-46c18f86-b1a4-4eea-b7ed-cf7f2fab1ee0-1770116998591-target
+      selected: false
+      source: '1766996541445'
+      sourceHandle: 46c18f86-b1a4-4eea-b7ed-cf7f2fab1ee0
+      target: '1770116998591'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1770116998591-source-1767774472293-target
+      selected: false
+      source: '1770116998591'
+      sourceHandle: source
+      target: '1767774472293'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1770116998591-source-1770117816308-target
+      selected: false
+      source: '1770116998591'
+      sourceHandle: source
+      target: '1770117816308'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1768220266982-63ff146d-bd69-4b5b-a99c-b19ca8217428-1770159268662-target
+      selected: false
+      source: '1768220266982'
+      sourceHandle: 63ff146d-bd69-4b5b-a99c-b19ca8217428
+      target: '1770159268662'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1766998305556-source-1770195014476-target
+      selected: false
+      source: '1766998305556'
+      sourceHandle: source
+      target: '1770195014476'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: code
+      id: 1770195014476-source-1766998462150-target
+      selected: false
+      source: '1770195014476'
+      sourceHandle: source
+      target: '1766998462150'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1767950672397-1c9c235c-2866-4401-a362-eb84f733a0a2-1767768239393-target
+      source: '1767950672397'
+      sourceHandle: 1c9c235c-2866-4401-a362-eb84f733a0a2
+      target: '1767768239393'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1766998305556-source-1770797018822-target
+      source: '1766998305556'
+      sourceHandle: source
+      target: '1770797018822'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1770797018822-source-1766998532769-target
+      source: '1770797018822'
+      sourceHandle: source
+      target: '1766998532769'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 1768220266982-d812739b-f057-4169-a342-4265edc466ed-1770972828569-target
+      source: '1768220266982'
+      sourceHandle: d812739b-f057-4169-a342-4265edc466ed
+      target: '1770972828569'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770972828569-source-1768287076236-target
+      source: '1770972828569'
+      sourceHandle: source
+      target: '1768287076236'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 1768220266982-669882df-1df0-4397-a0f0-838cfb0cfe7f-1770972989164-target
+      source: '1768220266982'
+      sourceHandle: 669882df-1df0-4397-a0f0-838cfb0cfe7f
+      target: '1770972989164'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770972989164-source-1769582176710-target
+      source: '1770972989164'
+      sourceHandle: source
+      target: '1769582176710'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 1768220266982-4bda3864-547d-4217-bd9b-b4eb23cc8535-1770979844369-target
+      source: '1768220266982'
+      sourceHandle: 4bda3864-547d-4217-bd9b-b4eb23cc8535
+      target: '1770979844369'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1770979844369-source-17690809328710-target
+      source: '1770979844369'
+      sourceHandle: source
+      target: '17690809328710'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1769585416348-source-1769597878192-target
+      source: '1769585416348'
+      sourceHandle: source
+      target: '1769597878192'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1766996245621'
+      position:
+        x: -117.20858150049794
+        y: 795.8351604733043
+      positionAbsolute:
+        x: -117.20858150049794
+        y: 795.8351604733043
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 89f904ff-d33c-4b3c-98a7-4fa3e5ab64db
+          conditions:
+          - comparison_operator: contains
+            id: f0636c09-9143-467f-8351-3a6737162ac0
+            value: LANGUAGE_SELECT
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: 89f904ff-d33c-4b3c-98a7-4fa3e5ab64db
+          logical_operator: and
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: a41fdb3b-53c7-4858-b244-571643ebc675
+            value: CHECK_FILES
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          - comparison_operator: '='
+            id: 06f4d3fc-a2b7-4d70-ad2f-d9622b54f3f1
+            value: '0'
+            varType: number
+            variable_selector:
+            - conversation
+            - file_counter
+          id: 'true'
+          logical_operator: and
+        - case_id: 3ec150ec-18b8-4a59-8bfb-e8f3a90457bf
+          conditions:
+          - comparison_operator: contains
+            id: aeb08245-ea29-4572-8706-fdcef543cbb7
+            value: CHECK_FILES
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          - comparison_operator: '='
+            id: 456f8ab0-70d6-4cc7-82b0-89aeeab9db26
+            value: '1'
+            varType: number
+            variable_selector:
+            - conversation
+            - file_counter
+          - comparison_operator: ≤
+            id: f0968192-c616-4a60-8060-4a84beb85487
+            value: '3'
+            varType: number
+            variable_selector:
+            - conversation
+            - reupload_counter
+          id: 3ec150ec-18b8-4a59-8bfb-e8f3a90457bf
+          logical_operator: and
+        - case_id: 46c18f86-b1a4-4eea-b7ed-cf7f2fab1ee0
+          conditions:
+          - comparison_operator: contains
+            id: 22841a00-b51a-439c-b6a0-3be93f4b90bc
+            value: CONFIRM_NO
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: 46c18f86-b1a4-4eea-b7ed-cf7f2fab1ee0
+          logical_operator: and
+        - case_id: 0336d78b-74f3-4991-a795-6727c3a21c09
+          conditions:
+          - comparison_operator: contains
+            id: 56c280bc-ab13-4f9e-81dc-3f00e0f4ca7e
+            value: UPDATE_DATA
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: 0336d78b-74f3-4991-a795-6727c3a21c09
+          logical_operator: or
+        - case_id: b7bacc73-0c41-4ce3-a620-a9deddd82ec4
+          conditions:
+          - comparison_operator: contains
+            id: 985a40ee-bdd6-494e-bc67-71b8a70574bb
+            value: proc_select
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: b7bacc73-0c41-4ce3-a620-a9deddd82ec4
+          logical_operator: and
+        - case_id: acc3a4c3-6c6c-4067-9286-39bfaaea4122
+          conditions:
+          - comparison_operator: contains
+            id: fae485d9-7b51-4e45-b6fa-5366c2c8e529
+            value: AGENT_ACTIVE
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: acc3a4c3-6c6c-4067-9286-39bfaaea4122
+          logical_operator: and
+        - case_id: 264ff988-5a7a-4c40-86a6-e1065707b6ac
+          conditions:
+          - comparison_operator: empty
+            id: 98c467a5-cd5b-4fbb-9205-477beeaaa2e0
+            value: NONE
+            varType: string
+            variable_selector:
+            - '1767946795863'
+            - result
+          id: 264ff988-5a7a-4c40-86a6-e1065707b6ac
+          logical_operator: and
+        desc: This node handles routing of user input to different nodes downstream
+          based on scenario.
+        selected: false
+        title: Ochestrator
+        type: if-else
+      height: 600
+      id: '1766996541445'
+      position:
+        x: 631.2952984363056
+        y: 795.8351604733043
+      positionAbsolute:
+        x: 631.2952984363056
+        y: 795.8351604733043
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "{{#1767774158051.result#}} \n\n"
+        desc: ''
+        selected: false
+        title: File Received Message
+        type: answer
+        variables: []
+      height: 105
+      id: '1766996721760'
+      position:
+        x: 1239.653714835107
+        y: 543.3265669139512
+      positionAbsolute:
+        x: 1239.653714835107
+        y: 543.3265669139512
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1768410082852'
+          - text
+        default_value:
+        - key: text
+          type: string
+          value: We encountered an issue displaying your file. Please choose to continue
+            as is, or select Option 2 to re-upload your document. ファイルの表示中に問題が発生しました。そのまま続行するか、オプション2を選択してドキュメントを再アップロードしてください。
+        desc: This is OCR-Agent which will read the file content and display the information
+          to the user for further confirmation or any change if required.
+        error_strategy: default-value
+        memory:
+          query_prompt_template: "user query: {{#sys.query#}}\nfile : {{#sys.files#}}\
+            \ \nchat history: {{#conversation.chathistory#}}\nfile history: {{#conversation.filehistory#}}\n\
+            preferred_language: {{#conversation.preferred_language#}}"
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 78
+        model:
+          completion_params:
+            temperature: 0.4
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 72d391b7-9ed7-47bb-923d-aa75ceb6194b
+          role: system
+          text: "# System Role: OCR Extraction Agent\n\nYou are an expert OCR Extraction\
+            \ Agent. Your primary responsibility is to read and extract content from\
+            \ procurement-related files (PDFs, Images, Invoices, Purchase Orders,\
+            \ Receipts) and present the extracted data in a clear, human-readable\
+            \ format. \n\ndoc_data : {{#context#}}\n## Core Objectives\n1. Accurately\
+            \ extract ALL visible text and data from the document and ignore the NAN/nan\
+            \ or empty field or file data.\n2. If user uploads excel file with multiple\
+            \ tab, Must ignore the (Example for Entry) as this is template for user.\
+            \ The Agent must read all the specifications from the (specification)\
+            \ and (detail) sheet\n3. Strict Adherence: Do NOT miss, summarise, infer,\
+            \ assume, or fabricate any information.\n4. No Interpretations: Do NOT\
+            \ add extra fields, explanations, or calculated values.\n5. Do not translate\
+            \ the extracted content unless explicitly requested; preserve the document's\
+            \ original language for the data values.\n6. Full State Display: Always\
+            \ display the entire dataset after every update or change request except\
+            \ (Example for Entry).\n7. Smart Updates: If the user requests a change\
+            \ (e.g., \"Change quantity to 10\"), intelligently locate the specific\
+            \ field, update the value, and reprint the full list.\n\n# The response\
+            \ language MUST be in :  {{#conversation.preferred_language#}}.\n - Respond\
+            \ only in {{#conversation.preferred_language#}}. Even if the user data\
+            \ is in other language.\n - Do not translate unless explicitly asked.\n\
+            \ - Do not translate unless explicitly asked.\n\n## Guardrails (Content\
+            \ Filtering)\n- Scope: Procurement Documents ONLY (Invoices, Receipts,\
+            \ POs, Contracts, Delivery Notes).\n- Invalid Files: If the document is\
+            \ off-topic (Resume, Selfie, Essay, Code, etc.), STOP extraction.\n- Rejection\
+            \ Protocol: Return an empty user_data field. Output a polite message in\
+            \ the User Preferred Language stating you only handle procurement documents.\n\
+            \n## Output Format\nYou must use the strict format below. Do not use conversational\
+            \ preamble other than the header.\nItem1 - Value1\nItem2 - Value2\n\n\
+            # Note: Never display (Example for Entry) tab to the user.\n# NOTE : DO\
+            \ NOT RESPOND ANY HTML FORMAT DATA - SUCH AS BUTTON FOR CONFIRMATION,\
+            \ OR CODE. ONLY TEXT BASED RESPONSE FROM FILE AS MENTIONED ABOVE."
+        retry_config:
+          max_retries: 2
+          retry_enabled: true
+          retry_interval: 1049
+        selected: false
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              ocr_confirmation:
+                description: Request user to either change or confirm data
+                type: string
+              update:
+                description: true/false if the user update then true else always false
+                enum:
+                - 'True'
+                - 'False'
+                type: string
+              user_data:
+                description: User data collected based on conversation or file.
+                type: string
+            required:
+            - user_data
+            - ocr_confirmation
+            - update
+            type: object
+        structured_output_enabled: false
+        title: OCR-AGENT
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 231
+      id: '1766997304622'
+      position:
+        x: 3095.306992372244
+        y: 669.8058944527205
+      positionAbsolute:
+        x: 3095.306992372244
+        y: 669.8058944527205
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1769671490250.result#}}
+
+
+          '
+        desc: This node will return ocr data to user for confirmation or change if
+          required.
+        selected: false
+        title: File Output
+        type: answer
+        variables: []
+      height: 149
+      id: '1766997396344'
+      position:
+        x: 3709.302253785267
+        y: 725.2234936928191
+      positionAbsolute:
+        x: 3709.302253785267
+        y: 725.2234936928191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This node assign values to different variables.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1766997304622'
+          - text
+          variable_selector:
+          - conversation
+          - filehistory
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1767634031344'
+          - file_updatet
+          variable_selector:
+          - conversation
+          - isfileavailable
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1767634031344'
+          - current_date
+          variable_selector:
+          - conversation
+          - currentdate
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1767634031344'
+          - file_updatet
+          variable_selector:
+          - conversation
+          - file_counter
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1769597942458'
+          - text
+          variable_selector:
+          - conversation
+          - product_name
+          write_mode: over-write
+        selected: false
+        title: Assign Variables.
+        type: assigner
+        version: '2'
+      height: 234
+      id: '1766997437018'
+      position:
+        x: 4185.817841449863
+        y: 301.4245450094351
+      positionAbsolute:
+        x: 4185.817841449863
+        y: 301.4245450094351
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1769585416348'
+          - result
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください。
+        desc: This node represents the Router Agent whose sole purpose is to infer
+          the user input and route the query to the specific procurement system.
+        error_strategy: default-value
+        memory:
+          query_prompt_template: "{{#sys.query#}}\n{{#sys.files#}} \n{{#conversation.chathistory#}}\n\
+            {{#conversation.filehistory#}} "
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 75
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: e8f7ddc9-8262-41bf-a244-b91e4f2f1e1e
+          role: system
+          text: "# Role\nYou are an orchestrator, a strict deterministic procurement\
+            \ routing engine. Your objective is to map user requests to the single\
+            \ correct Procurement System and Contract Type based on the consolidated\
+            \ logic below.\n\n# Routing Logic (Priority Order)\n\nEvaluate the request\
+            \ against these categories in order. Once a match is found, stop and generate\
+            \ the output.\n\n\n1. e-Sourcing Mall (Catalogue Purchasing)\n\nTrigger:\
+            \ Standardised, high-volume items available via Punch-out or internal\
+            \ catalogue.\nKeywords: Office supplies, MRO (Maintenance, Repair, Operations),\
+            \ Stationery, Pre-approved equipment.\nContract Type: Pre-contract (PO\
+            \ issued)\n\n\n2. Soft-Partner (Human Resources)\nTrigger: Human labour\
+            \ provided via temporary staffing agencies.\nKeywords: Temporary Staffing,\
+            \ Dispatch, Monthly, Weekly or Hourly labour hire.\nContract Type: Per-transaction\
+            \ contract (PO issued)\n\n\n3. JSOCIO (IT and Software Development)\n\n\
+            Trigger: Creation, modification, or operation of software/code.\nKeywords:\
+            \ Software Development, Coding, IT Outsourcing, System Integration, Quasi-mandate\
+            \ contracts.\nExclusion: Hardware leases or standard IT maintenance (refer\
+            \ to e-LINKS).\nContract Type: Per-transaction contract (PO issued)\n\n\
+            \n4. e-LINKS (Recurring Service Contracts)\nTrigger: Services provided\
+            \ over a fixed term (Monthly/Yearly) with defined scope.\nKeywords: Maintenance\
+            \ (equipment, IT), lease, IT services, consulting/research, security,\
+            \ office rent.\nContract Type: Pre-contract (contract signed or PO issued)\n\
+            \n\n5. SOCIO (Variable, Spot, and Professional Services)\nTrigger: Complex\
+            \ services, variable costs, one-off purchases, invoice payments, or professional\
+            \ fees.\nSub-Categories:\n- Variable/Performance: Industrial Gas (filling\
+            \ materials), Waste Disposal, Cleaning, Building Management (actual cost\
+            \ settlement).\n- Professional Services/Construction: Construction, Legal\
+            \ Fees (Lawyers), Accounting, Success-fee services, One-time consulting.\n\
+            - Spot/Ad-hoc: Research materials, One-off equipment, Advertising, Recruitment\
+            \ Ads.\n\nLogistics/Invoice: Courier services, Shipping, Subscriptions\
+            \ (Newspaper, Web-app, IT), Insurance fees, Bank fees.\n\nContract Type:\n\
+            - Per-transaction contract (PO issued) : Research materials, equipment,\
+            \ one-time consulting/research, advertising, recruitment ads, etc.\n-\
+            \ Per-transaction contract (special application, etc.) : Courier service,\
+            \ newspaper subscription, insurance fees, bank fees, web-based IT services,\
+            \ etc.\n- Pre-contract (contract signed or PO issued) : Construction,\
+            \ success-fee services, lawyers, accountants, etc.\n\n\n# Operational\
+            \ Instructions\n1. Scan for Keywords: Identify the core commodity or service.\n\
+            2. Check Constraints:\n- Is it IT? Determine if it is Dev (JSOCIO) or\
+            \ Maintenance (e-LINKS).\n- Is it a Person? Determine if it is Temp Staff\
+            \ (Soft-Partner) or Professional Service (SOCIO).\n3. Handle Missing Data:\
+            \ If the request lacks sufficient detail to distinguish between two systems\
+            \ (e.g., IT Services without specifying Dev vs Maint), set Selected_System\
+            \ to CLARIFICATION_REQUIRED.\n\n# Follow the instructions below to recommend\
+            \ the user for creating purchase order for different procurement system.\n\
+            1. Extract all the possible information from the user query such as date,\
+            \ department, contract type, etc before making logic. User query {{#sys.query#}}.\n\
+            2. If context data is available, provide response based on {{#context#}}\
+            \ only\n3. If no information is available in context, handle user query\
+            \ based on Procurement knowledge base.\n4. If the user query is off-topic\
+            \ such as new, cricket, or any sensitive information, professional deny\
+            \ requesting the user to ask order related query only.\n5. Response in\
+            \ bullet points format if possible.\n\n\n\n# The response language MUST\
+            \ be in : {{#conversation.preferred_language#}}.\n- Respond only in {{#conversation.preferred_language#}}.\
+            \ Even if the user data is in other language.\n- Do not translate unless\
+            \ explicitly asked.\n- Keep the response natural and fluent.\n\n\n# Output\
+            \ format:\n\n1. Recommended system : Name of recommended system based\
+            \ on user data.\n   Confidence Score : This should be float value between\
+            \ 0 and 1 to show how confident the model is while selecting system.\n\
+            \   Reasoning : Reasoning behind the model selection.\n   Contract Type\n\
+            2. Alternative system : Name of the Alternative system based on user data.\n\
+            \   Confidence Score : This should be float value between 0 and 1 to show\
+            \ how confident the model is while selecting system.\n   Reasoning : Reasoning\
+            \ behind the model selection.\n   Contract Type\n\n3. Button for \"show\
+            \ more available systems?\"\n\n\n## Followings are the list of Procurement\
+            \ system.\n\nE-SOURCING-MALL\nE-LINKS\nSOCIO\nSOFT-PARTNER\nJSOCIO\n\n\
+            \nThose buttons should be clickable. giving you example. RETURN THEIR\
+            \ CODE NAMES ON THE BUTTON CLICK.\n\n<button data-message=\"E-SOURCING-MALL\"\
+            >e-Sourcing Mall</button>\n\n<button data-message=\"E-LINKS\">e-LINKS</button>\n\
+            \n<button data-message=\"SOCIO\">SOCIO</button>\n\n<button data-message=\"\
+            SOFT-PARTNER\">Soft-Partner</button>\n\n<button data-message=\"JSOCIO\"\
+            >JSOCIO</button>\n\n## Example Output:\n\n<button data-message=\"JSOCIO\"\
+            \ style=\"background-color: #28a745; color: white; border: 1px solid #28a745;\"\
+            >JSOCIO - Recommended System</button>\n<br>\n<button data-message=\"SOFT-PARTNER\"\
+            >Soft-Partner - Alternative system</button>\n<br>\n<button data-message=\"\
+            ALL AVAILABLE SYSTEMS\">Show all avalable systems</button> or \n<button\
+            \ data-message=\"利用可能なすべてのシステム\">利用可能なすべてのシステム</button> if preferred language\
+            \ is Japanese."
+        retry_config:
+          max_retries: 2
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: Router Agent
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 231
+      id: '1766998305556'
+      position:
+        x: 1302.8411967462896
+        y: 2439.408300130308
+      positionAbsolute:
+        x: 1302.8411967462896
+        y: 2439.408300130308
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(arg1: str, arg2: str, arg3:str):\n    try:\n        # Business\
+          \ logic: combine the strings\n        combined = f\"{arg3} user: {arg1}\
+          \ system: {arg2}\"\n        \n        return {\n            \"result\":\
+          \ combined,\n        }\n    except Exception as e:\n        # Return a structured\
+          \ error response\n        return {\n            \"error\": \"Failed to combine\
+          \ strings\",\n            \"message\": str(e)\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: User chat history
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - '1766998305556'
+          - text
+          value_type: string
+          variable: arg2
+        - value_selector:
+          - conversation
+          - chathistory
+          value_type: string
+          variable: arg3
+      height: 54
+      id: '1766998462150'
+      position:
+        x: 2009.128917201941
+        y: 1998.9015298432225
+      positionAbsolute:
+        x: 2009.128917201941
+        y: 1998.9015298432225
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1766998462150'
+          - result
+          variable_selector:
+          - conversation
+          - chathistory
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1769597878192'
+          - text
+          variable_selector:
+          - conversation
+          - product_name
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1770797018822'
+          - current_date
+          variable_selector:
+          - conversation
+          - currentdate
+          write_mode: over-write
+        selected: false
+        title: Update query history
+        type: assigner
+        version: '2'
+      height: 138
+      id: '1766998532769'
+      position:
+        x: 2697.341898946613
+        y: 2450.9015298432223
+      positionAbsolute:
+        x: 2697.341898946613
+        y: 2450.9015298432223
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1767161455504.text#}}'
+        desc: This node display the output from the e-sourcing mall agent.
+        selected: false
+        title: E-sourcing-Mall output.
+        type: answer
+        variables: []
+      height: 149
+      id: '1767070453523'
+      position:
+        x: 3039.4257305626256
+        y: 1022.4882450523097
+      positionAbsolute:
+        x: 3039.4257305626256
+        y: 1022.4882450523097
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください
+        desc: This node represents e-sourcing mall agent whose job is to collect information
+          schema of e-sourcing procurement system.
+        error_strategy: default-value
+        memory:
+          query_prompt_template: "{{#sys.query#}}\nfile : {{#sys.files#}}\n{{#conversation.chathistory#}}\n\
+            {{#conversation.filehistory#}} \npreferred_language : {{#conversation.preferred_language#}}"
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 80
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: f65d2414-c6c1-4d46-869b-419d3a41f807
+          role: system
+          text: "You are expert in preparing purchase request data for E-Sourcing\
+            \ Mall procurement system. Your sole purpose is to help the user compile\
+            \ 100% accurate purchase request data for the procurement system; you\
+            \ have no authority or technical capability to place, submit, or execute\
+            \ the order itself.. Must remember the current date:  {{#conversation.currentdate#}}\n\
+            \n## Followings are the schema(fields name)\n - Request Date : Date (eg.,\
+            \ {{#conversation.currentdate#}}) it shouldn't less than current date\
+            \ and should not exceed 10 years from the current date.\n - Product Category\
+            \ : text (ask the user to choose one from the list [ Office supplies,\
+            \ MRO, safety supplies, PC peripherals, OA paper, HITACHI‑logo items and\
+            \ business stationery.])\n - Product Code : text (unique SKU or identifier\
+            \ for product, eg : ABC123)\n - Product Name : text (name of product,\
+            \ eg: laptops)\n - Quantity : text (The volume of goods ordered. Note:\
+            \ The system automatically converts this to the catalog's base unit of\
+            \ measure, eg : 10 qty)\n - Cost Center : text (The financial code or\
+            \ budget line to which the purchase will be charged, eg : Dept_001)\n\
+            \ - Requester / Department : text (The user or team initiating the order,\
+            \ eg: IT Department)\n - Delivery Date :  Date (date of delivery eg :\
+            \ 2026-01-31) it shouldn't be less than requested date and it shouldn't\
+            \ exceed 10 years from the current date.\n - Attributes : text (Specific\
+            \ metadata tags used for reporting, such as tracking sustainable/eco-friendly\
+            \ spending)\n - Environmental Attributes : text (Flags for sustainability,\
+            \ including \"Green Purchasing,\" \"Eco Mark,\" and work-style consideration)\n\
+            \ - Supplier : text (The vendor assigned to fulfill the order eg : ABC\
+            \ Computers Co.)\n - Category : text (Hierarchical classification used\
+            \ for navigation (e.g., Office Supplies, MRO, Safety Supplies))\n - Manufacturer\
+            \ Name : text (The name of the company that produced the item, eg : Dell)\n\
+            \ - Manufacturer Model : text (The specific model number assigned by the\
+            \ manufacturer, eg: VS0012919)\n - Specifications : text (Technical details\
+            \ or features of the product, eg : i7 processor, 8GB RAM, 1TB HDD and\
+            \ AMD GPU)\n - Management Codes (1/2) : text (Internal administrative\
+            \ codes used for classification or reporting)\n - Price / Price Filter\
+            \ : float (The cost of the item, eg: USD1200)\n\n# The response language\
+            \ MUST be in :  {{#conversation.preferred_language#}}.\n - Respond only\
+            \ in {{#conversation.preferred_language#}}. even if the input is in other\
+            \ language.\n - Do not translate unless explicitly asked.\n - Every schema\
+            \ and corresponding values should be in {{#conversation.preferred_language#}}\
+            \ only.\n\n# Output format:\n\nRequest Date : 2026-01-20 10:20:40\n -\
+            \ Product Category : MRO\n - Product Code : DELL-XPS13-I7-16-512S\n -\
+            \ Product Name : Dell Laptop\n - Specifications  : Pending.\n\n\n## First,\
+            \ display all available fields, then You must Always request all missing\
+            \ fields in bulk mandatory; Do not ask in batches or one-by-one and also\
+            \ take care of conflicting inputs such as user provide period as 4 months\
+            \ and later ask as JAN-26 to MAR-26, then this should be highlighted to\
+            \ the user for final confirmation. Must follow the schema format and do\
+            \ not accept any random value for any fields (eg, date can not be 4000-02-02)\n\
+            \n## Closing statement : \n- if the user provided all fields data then\
+            \ ask user for confirmation by showing the below clickable buttons.\n\
+            <br>\n<button data-message=\"Confirm\" >Confirm</button>\n<button data-message=\"\
+            No I Want to Update\">No I want to update</button>\n- or if language is\
+            \ Japanese then:\n<button data-message=\"確認する\" >確認する</button> \n<button\
+            \ data-message=\"いいえ、更新したいです\">いいえ、更新したいです</button>\n\n- if user confirms\
+            \ then show the below message ONLY in {{#conversation.preferred_language#}}:\n\
+            \  \"Great, we have the complete form data available to be raised in the\
+            \ E-SOURCING-MALL Procurement system. Please raise it in the system. Thank\
+            \ you!\"\n## Strictly follow the closing statement.\n\n## Note:\n- If\
+            \ the user request new purchase request data for the same or different\
+            \ procurement system such as [e-link, soft-partner, socio, and jsocio],\
+            \ Strictly ask the user to open a new chat session only without any explanation\
+            \ and Do not Proceed."
+        retry_config:
+          max_retries: '2'
+          retry_enabled: true
+          retry_interval: 1588
+        selected: false
+        structured_output:
+          schema:
+            properties:
+              attributes:
+                description: Specific metadata tags used for reporting, such as tracking
+                  sustainable/eco-friendly spending.
+                properties:
+                  greenEcoFlag:
+                    description: Indicates if the product is flagged as Green/Eco.
+                    type: string
+                required:
+                - greenEcoFlag
+                type: object
+              category:
+                description: Hierarchical classification used for navigation (e.g.,
+                  Office Supplies, MRO, Safety Supplies).
+                type: string
+              costCenter:
+                description: The financial code or budget line to which the purchase
+                  will be charged.
+                example: CC-2050
+                type: string
+              deliveryDate:
+                description: The requested deadline for the supplier to deliver the
+                  goods in the form YYYY-MM-DD
+                format: date
+                type: string
+              environmentalAttributes:
+                description: Flags for sustainability, including 'Green Purchasing',
+                  'Eco Mark', and work-style consideration.
+                items:
+                  enum:
+                  - Green Purchasing
+                  - Eco Mark
+                  - Work-style consideration
+                  type: string
+                type: array
+              managementCodes:
+                description: Internal administrative codes used for classification
+                  or reporting (1/2).
+                items:
+                  type: string
+                type: array
+              manufacturerModel:
+                description: The specific model number assigned by the manufacturer.
+                type: string
+              manufacturerName:
+                description: The name of the company that produced the item (used
+                  for filtering).
+                type: string
+              price:
+                additionalProperties: false
+                description: The cost of the item to estimate the budget
+                minimum: 0
+                properties:
+                  currency:
+                    description: This represent which currency to use and can be inferred
+                      from the data or ask from the user.
+                    type: string
+                  perUnit:
+                    description: This represents price per unit
+                    type: string
+                required:
+                - perUnit
+                type: object
+              productCode:
+                description: The unique SKU or identifier used to locate the specific
+                  item in the digital catalog.
+                example: Product B catalog code
+                type: string
+              productName:
+                description: The human-readable description of the item being purchased.
+                example: A4 recycled copy paper
+                type: string
+              quantity:
+                additionalProperties: false
+                description: 'The volume of goods ordered. Note: The system automatically
+                  converts this to the catalog''s base unit of measure.'
+                example: 20
+                properties:
+                  numberOfUnits:
+                    description: This is the number of units being orders
+                    type: string
+                  units:
+                    description: This is the unit of items either cartons, boxes or
+                      pieces.
+                    enum:
+                    - cartons
+                    - boxes
+                    - pieces.
+                    type: string
+                required:
+                - numberOfUnits
+                - units
+                type: object
+              requestDate:
+                description: The timestamp of when the order was technically created
+                  in the system in the format YYYY-MM-DD. This can be optional.
+                format: date
+                type: string
+              requesterDepartment:
+                description: The user or team initiating the order (typically auto-filled).
+                type: string
+              specifications:
+                description: Technical details or features of the product used for
+                  granular searches.
+                type: string
+              supplier:
+                additionalProperties: false
+                default: Default catalog supplier
+                description: The vendor assigned to fulfill the order, pre-selected
+                  based on the catalog configuration.
+                properties:
+                  supplierID:
+                    description: 'The id of supplier of the product '
+                    type: string
+                  supplierName:
+                    description: This could be the name of supplier
+                    type: string
+                required:
+                - supplierName
+                - supplierID
+                type: object
+              system:
+                description: Always e-SourcingMall
+                type: string
+            required:
+            - tCode
+            - productNamesystem
+            - produc
+            - quantity
+            - costCenter
+            - productCode
+            - productName
+            - deliveryDate
+            - attributes
+            - supplier
+            - category
+            - manufacturerName
+            - manufacturerModel
+            - specifications
+            - managementCodes
+            - price
+            - environmentalAttributes
+            type: object
+        structured_output_enabled: false
+        title: E-Sourcing Mall Agent
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: false
+      height: 231
+      id: '1767161455504'
+      position:
+        x: 2697.341898946613
+        y: 1022.4882450523097
+      positionAbsolute:
+        x: 2697.341898946613
+        y: 1022.4882450523097
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1767774472293.result#}}
+
+
+          '
+        desc: This node takes user feedback about order data.
+        selected: false
+        title: Feedback loop
+        type: answer
+        variables: []
+      height: 149
+      id: '1767610053221'
+      position:
+        x: 1865.5797923735572
+        y: 719.1737803006555
+      positionAbsolute:
+        x: 1865.5797923735572
+        y: 719.1737803006555
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "from datetime import date\n\ndef main():\n    # this function will\
+          \ return current date and time.\n    today = date.today()\n    return{\n\
+          \        \"current_date\": str(today),\n        \"file_updatet\" : 1\n \
+          \   }"
+        code_language: python3
+        desc: This node will update date and file availbility.
+        outputs:
+          current_date:
+            children: null
+            type: string
+          file_updatet:
+            children: null
+            type: number
+        selected: false
+        title: Update Date and file.
+        type: code
+        variables: []
+      height: 98
+      id: '1767634031344'
+      position:
+        x: 3602.671326739113
+        y: 527.6130287741715
+      positionAbsolute:
+        x: 3602.671326739113
+        y: 527.6130287741715
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#conversation.japanese_guide#}}'
+        desc: This node updates user preferred language.
+        selected: false
+        title: Japanese.
+        type: answer
+        variables: []
+      height: 150
+      id: '1767767871974'
+      position:
+        x: 1329.1905910058454
+        y: -55.11471555122202
+      positionAbsolute:
+        x: 1329.1905910058454
+        y: -55.11471555122202
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main():\n    return {\n        \"result\": \"Japanese\",\n  \
+          \  }\n"
+        code_language: python3
+        desc: This node update user preferred language to Japanese.
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Update Japanese.
+        type: code
+        variables: []
+      height: 98
+      id: '1767768100489'
+      position:
+        x: 1649.614390453524
+        y: -96.09310219359791
+      positionAbsolute:
+        x: 1649.614390453524
+        y: -96.09310219359791
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#conversation.english_guide#}}'
+        desc: This node inform user about their preferred language.
+        selected: false
+        title: English
+        type: answer
+        variables: []
+      height: 150
+      id: '1767768239393'
+      position:
+        x: 1207.1024813425688
+        y: -241.5153150914723
+      positionAbsolute:
+        x: 1207.1024813425688
+        y: -241.5153150914723
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This node assign user preferred language to the language variable.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1767768100489'
+          - result
+          variable_selector:
+          - conversation
+          - preferred_language
+          write_mode: over-write
+        selected: false
+        title: Assign Language.
+        type: assigner
+        version: '2'
+      height: 130
+      id: '1767768753419'
+      position:
+        x: 1961.980979991536
+        y: -117.23300638736833
+      positionAbsolute:
+        x: 1961.980979991536
+        y: -117.23300638736833
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang:str, static_data:dict):\n    if lang == \"Japanese\"\
+          :\n        data = static_data.get(\"file_rec_message_jap\")\n    else:\n\
+          \        data = static_data.get(\"file_rec_message_eng\")\n    return {\n\
+          \        \"result\": data,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: File Received Message code
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+        - value_selector:
+          - conversation
+          - static_data
+          value_type: object
+          variable: static_data
+      height: 54
+      id: '1767774158051'
+      position:
+        x: 944.6254634635213
+        y: 719.1737803006555
+      positionAbsolute:
+        x: 944.6254634635213
+        y: 719.1737803006555
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(static_data: dict, lang: str):\n    if lang == \"Japanese\"\
+          :\n        data = static_data.get(\"order_data_confirmation_jap\")\n   \
+          \ else:\n        data = static_data.get(\"order_data_confirmation_eng\"\
+          )\n    return {\n        \"result\": data,\n    }\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: data confirmation code
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+        - value_selector:
+          - conversation
+          - static_data
+          value_type: object
+          variable: static_data
+      height: 54
+      id: '1767774350948'
+      position:
+        x: 3991.1635075272925
+        y: 725.2234936928191
+      positionAbsolute:
+        x: 3991.1635075272925
+        y: 725.2234936928191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang:str, static_data:dict):\n    if lang == \"Japanese\"\
+          :\n        data = static_data.get(\"feedback_jap\")\n    else:\n       \
+          \ data = static_data.get(\"feedback_eng\")\n    return {\n        \"result\"\
+          : data,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: feedback code
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+        - value_selector:
+          - conversation
+          - static_data
+          value_type: object
+          variable: static_data
+      height: 54
+      id: '1767774472293'
+      position:
+        x: 1492.6254634635213
+        y: 714.4606420146683
+      positionAbsolute:
+        x: 1492.6254634635213
+        y: 714.4606420146683
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(query: str, files: list, is_file_available: int, is_agent:str)\
+          \ -> dict:\n    # Normalize query to lowercase for easier matching\n   \
+          \ q = query.lower() if query else \"\"\n    \n    # 1. File Upload Check\
+          \ (Start / sys.files is not empty)\n    if q and files and len(files) >\
+          \ 0:\n        return {\"result\": \"CHECK_FILES\"}\n\n    # 2. Order Confirmation:\
+          \ NO\n    # Logic: isfileavailable=1 AND (English OR Japanese)\n    if is_file_available\
+          \ == 1 and (\"order data confirmation: no\" in q or \"注文データ確認：いいえ\" in q):\n\
+          \        return {\"result\": \"CONFIRM_NO\"}\n\n    # 3. Update / Text Order\
+          \ Data\n    # Logic: Pure OR checks\n    if (\"updated order data\" in q\
+          \ or \"text order data\" in q or \n        \"更新された注文データ\" in q or \"テキスト注文データ\"\
+          \ in q):\n        return {\"result\": \"UPDATE_DATA\"}\n\n    # 4. Order\
+          \ Confirmation: YES\n    # Logic: isfileavailable=1 AND (English OR Japanese)\n\
+          \    if (is_file_available == 1 and not is_agent) and (\"order data confirmation:\
+          \ yes\" in q or \"注文データ確認：はい\" in q):\n        return {\"result\": \"CONFIRM_YES\"\
+          }\n\n    # 5. User Message Confirmation\n    if \"user message: yes\" in\
+          \ q or \"ユーザーメッセージ: はい\" in q:\n        return {\"result\": \"CONFIRM_YES\"\
+          }\n\n    # 6. Agent Active Check\n    if q and is_agent in [\"E-SOURCING-MALL\"\
+          ,\"E-LINKS\", \"SOCIO\", \"JSOCIO\", \"SOFT-PARTNER\",\"ALL AVAILABLE SYSTEMS\"\
+          , \"利用可能なすべてのシステム\"]:\n        return {\"result\": \"AGENT_ACTIVE\"}\n\n\
+          \    # 7. Language Selection\n    # Note: 'q' is lowercase, so we must check\
+          \ against lowercase strings\n    if q == \"日本語\" or q == \"english\":\n\
+          \        return {\"result\": \"LANGUAGE_SELECT\"}\n    \n    # 8. System\
+          \ selection : this will route to system selection node.\n    if q.upper()\
+          \ in [\"E-SOURCING-MALL\",\"E-LINKS\", \"SOCIO\", \"JSOCIO\", \"SOFT-PARTNER\"\
+          ,\"ALL AVAILABLE SYSTEMS\", \"利用可能なすべてのシステム\"]:\n        return {\"result\"\
+          :\"proc_select\"}\n\n    # Default fallback if nothing matches\n    return\
+          \ {\"result\": None}\n    "
+        code_language: python3
+        desc: 'This node helps to group some conditional statement (here: user input)
+          to be executed together'
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: pre orchestrator
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: query
+        - value_selector:
+          - sys
+          - files
+          value_type: array[file]
+          variable: files
+        - value_selector:
+          - conversation
+          - isfileavailable
+          value_type: number
+          variable: is_file_available
+        - value_selector:
+          - conversation
+          - active_agent
+          value_type: number
+          variable: is_agent
+      height: 114
+      id: '1767946795863'
+      position:
+        x: 213.44842061253792
+        y: 795.8351604733043
+      positionAbsolute:
+        x: 213.44842061253792
+        y: 795.8351604733043
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 13e9acbc-eee9-4427-91c2-4312077c0c02
+            value: English
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: '='
+            id: 7f0fe563-1185-452a-a92c-afea1b5d9cf0
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 'true'
+          logical_operator: and
+        - case_id: 07f9a1c5-c477-4096-ac3f-f0c3ce77df9d
+          conditions:
+          - comparison_operator: contains
+            id: 8413614f-8239-45e4-b168-e98248d7d5f6
+            value: 日本語
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: '='
+            id: 2b2e1ba7-b6c1-4261-92bc-60757784df58
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 07f9a1c5-c477-4096-ac3f-f0c3ce77df9d
+          logical_operator: and
+        - case_id: 1c9c235c-2866-4401-a362-eb84f733a0a2
+          conditions:
+          - comparison_operator: contains
+            id: 438b252d-8854-4eb4-8b6d-c9bdf36ebb34
+            value: english
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: '='
+            id: 0bc03896-dadf-4bf3-915f-716ee1b0ae27
+            value: '0'
+            varType: number
+            variable_selector:
+            - sys
+            - dialogue_count
+          id: 1c9c235c-2866-4401-a362-eb84f733a0a2
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: Language update
+        type: if-else
+      height: 300
+      id: '1767950672397'
+      position:
+        x: 962.7452219776007
+        y: 86.7099956615773
+      positionAbsolute:
+        x: 962.7452219776007
+        y: 86.7099956615773
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(arg1: str, lang: str) -> dict:\n    # FIXED: changed agr1\
+          \ to arg1\n    if lang == \"English\":\n        return {\"proc_result\"\
+          : f\"Your selected procurement system is : {arg1}\"}\n    else:\n      \
+          \  # Japanese Version\n        return {\"proc_result\": f\"選択された調達システムは\
+          \ : {arg1} です\"}"
+        code_language: python3
+        desc: This node returns name of selected procurement system
+        outputs:
+          proc_result:
+            children: null
+            type: string
+        selected: false
+        title: Returns Selected System
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: arg1
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+      height: 98
+      id: '1768220000153'
+      position:
+        x: 919.2341841505367
+        y: 1144.249383564648
+      positionAbsolute:
+        x: 919.2341841505367
+        y: 1144.249383564648
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1768220000153.proc_result#}}
+
+
+          '
+        desc: ''
+        selected: false
+        title: System Selection User Message
+        type: answer
+        variables: []
+      height: 105
+      id: '1768220232157'
+      position:
+        x: 1507.118155890539
+        y: 1144.249383564648
+      positionAbsolute:
+        x: 1507.118155890539
+        y: 1144.249383564648
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 63ff146d-bd69-4b5b-a99c-b19ca8217428
+          conditions:
+          - comparison_operator: is
+            id: a4cc18a2-fe03-40ea-a9b3-e5121ddf3519
+            value: ALL AVAILABLE SYSTEMS
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: is
+            id: 1509d5a7-4188-4dd2-9ff2-2d36d5553077
+            value: 利用可能なすべてのシステム
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 63ff146d-bd69-4b5b-a99c-b19ca8217428
+          logical_operator: or
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 14c10a70-68a8-4515-8614-cfe4bf51995c
+            value: E-SOURCING-MALL
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        - case_id: d812739b-f057-4169-a342-4265edc466ed
+          conditions:
+          - comparison_operator: is
+            id: c8977ab9-1545-47fe-b7f8-17e4a822265a
+            value: SOFT-PARTNER
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: d812739b-f057-4169-a342-4265edc466ed
+          logical_operator: and
+        - case_id: f4004f7c-4356-4b37-b6b8-7dc5547b5ec6
+          conditions:
+          - comparison_operator: is
+            id: a21a158c-c74d-4f83-8807-a4558a742155
+            value: E-LINKS
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: f4004f7c-4356-4b37-b6b8-7dc5547b5ec6
+          logical_operator: and
+        - case_id: 4bda3864-547d-4217-bd9b-b4eb23cc8535
+          conditions:
+          - comparison_operator: is
+            id: dcfdd8b0-4276-46c2-a58e-4582a0270a77
+            value: SOCIO
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 4bda3864-547d-4217-bd9b-b4eb23cc8535
+          logical_operator: and
+        - case_id: 669882df-1df0-4397-a0f0-838cfb0cfe7f
+          conditions:
+          - comparison_operator: is
+            id: f5970e5c-fbdb-482b-a86c-6cd54a088a91
+            value: JSOCIO
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 669882df-1df0-4397-a0f0-838cfb0cfe7f
+          logical_operator: and
+        desc: This node is a switch case for procurement system routing to different
+          procurement system based on user selection or auto selection.
+        selected: false
+        title: Proc System Routing
+        type: if-else
+      height: 468
+      id: '1768220266982'
+      position:
+        x: 1922.6869210037694
+        y: 948.2559128161563
+      positionAbsolute:
+        x: 1922.6869210037694
+        y: 948.2559128161563
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1768287076236.text#}}'
+        desc: ''
+        selected: false
+        title: Soft-Partner Output.
+        type: answer
+        variables: []
+      height: 105
+      id: '1768220342696'
+      position:
+        x: 3364.778383826347
+        y: 1344.4915523182135
+      positionAbsolute:
+        x: 3364.778383826347
+        y: 1344.4915523182135
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770972828569'
+          - result
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください
+        desc: This node presents soft-partner and will help the user prepare order
+          data for soft-partner.
+        error_strategy: default-value
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#sys.files#}}
+
+            chat_history : {{#conversation.chathistory#}}
+
+            file_history : {{#conversation.filehistory#}}
+
+            preferred_language : {{#conversation.preferred_language#}}
+
+            '
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 90
+        model:
+          completion_params:
+            grounding: false
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 2d43260b-6067-43ed-9701-88f8a23cbae3
+          role: system
+          text: "You are expert in preparing purchase request data for Soft-Partner\
+            \ procurement system. Your sole purpose is to help the user compile 100%\
+            \ accurate purchase request data for the procurement system; you have\
+            \ no authority or technical capability to place, submit, or execute the\
+            \ order itself.\n\n## Followings are the schema (key fields)\n- Account\
+            \ Name : Text (Up to 50 characters, eg: Staff Service Co., Ltd.)\n- Business\
+            \ Group Name : Text (Up to 40 characters, eg: 28 industries (Article 4\
+            \ of the Cabinet Order))\n- Business name : Text (Up to 40 characters,\
+            \ eg: [Ordinance Article 4, Item 3] Operation of office equipment)\n-\
+            \ Business content : Text (Up to 600 characters, eg: Organizing and analyzing\
+            \ electronic component purchasing data, assisting with centralized electronic\
+            \ component purchasing operations)\n- Account Code : Text (Up to 10 characters,\
+            \ eg: 8131006930)\n- cost center : Text (Up to 12 characters, eg: 001H3525)\n\
+            - Dispatch violation date : Text (8-character date format, eg: 20190101.\
+            \ YYYY:2019, MM:01, DD:01) -  it shouldn't less than current date :{{#conversation.currentdate#}}\
+            \ and should not exceed 10 years from the current date.\n- Work location\
+            \ name : Text (Up to 30 characters, eg: Marunouchi Center Building (Main))\n\
+            - Work location address : Text (Up to 70 characters, eg: 1-6-1 Marunouchi,\
+            \ Chiyoda-ku, Tokyo (Marunouchi Center Building, 13th floor))\n- Calendar\
+            \ Class : Text (Up to 2 characters, eg: 2)\n- Working Hours Code : Text\
+            \ (Up to 2 characters, eg: 1)\n- Man-month contract hours : Number (Up\
+            \ to 7 digits, 2 decimals, eg: 0)\n- Contract hours : Number (Up to 7\
+            \ digits, 2 decimals, eg: 0)\n- Average monthly planned overtime hours\
+            \ : Number (Up to 7 digits, 2 decimals, eg: 10)\n- Uniform availability\
+            \ flag : Text (1-character code, eg: 0)\\\n- Request reason code : Text\
+            \ (Up to 2 characters, eg: 7)\n- Budget : Text (1-character code, eg:\
+            \ 0)\n- Monthly budget : Number (eg: 500000)\n- Off-budget category :\
+            \ Text (Up to 2 characters, eg: 1)\n- Name of person in charge at the\
+            \ dispatching company : Text (Up to 64 characters, eg: Yasuto Obayashi)\n\
+            - Name of person in command : Text (Up to 64 characters, eg: Sakae Kojima)\n\
+            - Name of the person who received the complaint at the dispatch company\
+            \ : Text (Up to 64 characters, eg: Sakae Kojima)\n- Requester's name :\
+            \ Text (Up to 64 characters, eg: Kumiko Kubota)\n- Name of contract manager\
+            \ : Text (Up to 64 characters, eg: Naoki Hanamura)\n- Approver LDAP :\
+            \ Text (8-character identifier, eg: 10489765)\n\n\n# The response language\
+            \ MUST be in :  {{#conversation.preferred_language#}}.\n - Respond only\
+            \ in {{#conversation.preferred_language#}}. even if the input is in other\
+            \ language.\n - Do not translate unless explicitly asked.\n - Every schema\
+            \ and corresponding values should be in {{#conversation.preferred_language#}}\
+            \ only.\n\n# NOTE : DO NOT RESPOND ANY HTML FORMAT DATA - SUCH AS BUTTON\
+            \ FOR CONFIRMATION, OR CODE.\n\n## Purchase History Recommendations :-\
+            \ Always Recommend full schema along with available values or pending\
+            \ option:\nFirst read and fill all the schema data using context {{#context#}}\
+            \ and MUST Recommend all the available fields in  the top three past data\
+            \ to the user based on the context and help them choose one by providing\
+            \ right guidance.\nNote: extract all data for the above mentioned fields\
+            \ from the context and mark pending if information is missing.\nand give\
+            \ top 3 options to the user with reasoning.\noption 1\noption 2 \noption\
+            \ 3\noption 4 - \"start from new, Empty Form.\"\nwith all the available\
+            \ fields.\n\n## EXAMPLE Output format:\n- Account Name :  Staff Service\
+            \ Co., Ltd.\n- Business Group Name :  28 industries (Article 4 of the\
+            \ Cabinet Order)\n- Business name : Ordinance Article 4, Item 3 Operation\
+            \ of office equipment\n- Business content : Organizing and analyzing electronic\
+            \ component purchasing data, assisting with centralized electronic component\
+            \ purchasing operations\n- Account Code :  8131006930\n\n## First, display\
+            \ all available fields, then You must Always request all missing fields\
+            \ in bulk mandatory; Do not ask in batches or one-by-one and also take\
+            \ care of conflicting inputs such as user provide period as 4 months and\
+            \ later ask as JAN-26 to MAR-26, then this should be highlighted to the\
+            \ user for final confirmation. Must follow the schema format and do not\
+            \ accept any random value for any fields (eg, date can not be 4000-02-02)\n\
+            \n## Closing statement : \n- if the user provided all fields data then\
+            \ ask user for confirmation by showing the below clickable buttons.\n\
+            <br>\n<button data-message=\"Confirm\" >Confirm</button>\n<button data-message=\"\
+            No I Want to Update\">No I want to update</button>\n- or if language is\
+            \ Japanese then:\n<button data-message=\"確認する\" >確認する</button>\n<button\
+            \ data-message=\"いいえ、更新したいです\">いいえ、更新したいです</button>\n\n- if user confirms\
+            \ then show the below message ONLY in {{#conversation.preferred_language#}}::\n\
+            \  \"Great, we have the complete form data available to be raised in the\
+            \ SOFT-PARTNER Procurement system. Please raise it in the system. Thank\
+            \ you!\"\n## Strictly follow the closing statement.\n\n## Note:\n- If\
+            \ the user request new purchase request data for the same or different\
+            \ procurement system such as [e-sourcing-mall, e-link, socio, and jsocio],\
+            \ Strictly ask the user to open a new chat session only without any explanation\
+            \ and Do not Proceed."
+        retry_config:
+          max_retries: '2'
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: Soft-Partner
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 215
+      id: '1768287076236'
+      position:
+        x: 3039.4257305626256
+        y: 1238.018441567393
+      positionAbsolute:
+        x: 3039.4257305626256
+        y: 1238.018441567393
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: debf58a8-5687-46fa-a666-4222c4a53b8b
+            value: E-SOURCING-MALL
+            varType: string
+            variable_selector:
+            - conversation
+            - active_agent
+          id: 'true'
+          logical_operator: and
+        - case_id: 37fed381-6ecb-4cb7-8e3d-e0f3b64c1987
+          conditions:
+          - comparison_operator: is
+            id: 8f2081d8-9b36-4956-a785-8d5dbfc02f99
+            value: SOFT-PARTNER
+            varType: string
+            variable_selector:
+            - conversation
+            - active_agent
+          id: 37fed381-6ecb-4cb7-8e3d-e0f3b64c1987
+          logical_operator: and
+        - case_id: cc5606a6-0171-4b7b-a3e2-555acaf3ab28
+          conditions:
+          - comparison_operator: is
+            id: 6658074a-94e8-498a-a397-fcfe4143e882
+            value: E-LINKS
+            varType: string
+            variable_selector:
+            - conversation
+            - active_agent
+          id: cc5606a6-0171-4b7b-a3e2-555acaf3ab28
+          logical_operator: and
+        - case_id: 4c65dcef-ee7b-4e72-8740-d6ff9702771c
+          conditions:
+          - comparison_operator: is
+            id: a529f76c-b03b-42ba-ad23-79179563408a
+            value: SOCIO
+            varType: string
+            variable_selector:
+            - conversation
+            - active_agent
+          id: 4c65dcef-ee7b-4e72-8740-d6ff9702771c
+          logical_operator: and
+        - case_id: 93372a4f-384c-439a-999d-18290bb1719c
+          conditions:
+          - comparison_operator: is
+            id: 322c91a7-ce7d-4555-a775-77465541bea7
+            value: JSOCIO
+            varType: string
+            variable_selector:
+            - conversation
+            - active_agent
+          id: 93372a4f-384c-439a-999d-18290bb1719c
+          logical_operator: and
+        desc: This node handle user query to active agent for particular procurement
+          system.
+        selected: false
+        title: Post-Active Agent Router
+        type: if-else
+      height: 362
+      id: '1768293603918'
+      position:
+        x: 1028.5537594734978
+        y: 1413.0917313331063
+      positionAbsolute:
+        x: 1028.5537594734978
+        y: 1413.0917313331063
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1768293790606'
+          - result
+          variable_selector:
+          - conversation
+          - active_agent
+          write_mode: over-write
+        selected: false
+        title: Assign Active Procurement Code
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1768293744127'
+      position:
+        x: 4664.855531623431
+        y: 1383.521269430994
+      positionAbsolute:
+        x: 4664.855531623431
+        y: 1383.521269430994
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    if arg1 in [\"E-SOURCING-MALL\"\
+          ,\"E-LINKS\", \"SOCIO\", \"JSOCIO\", \"SOFT-PARTNER\"]:\n        return\
+          \ {\n            \"result\": arg1\n        }\n    else:\n        return\
+          \ {\n            \"result\" : \"xyz\"\n        }"
+        code_language: python3
+        desc: This node update the code name of selected procurement system to navigate
+          the user query to that agent only.
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Update Active Agent
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: arg1
+      height: 114
+      id: '1768293790606'
+      position:
+        x: 3941.400833072981
+        y: 1388.2319075728976
+      positionAbsolute:
+        x: 3941.400833072981
+        y: 1388.2319075728976
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1768375846628.result#}}
+
+
+          '
+        desc: ''
+        selected: false
+        title: Mid-process language change.
+        type: answer
+        variables: []
+      height: 105
+      id: '1768375671307'
+      position:
+        x: 1689.6522339456758
+        y: 107.55616279424788
+      positionAbsolute:
+        x: 1689.6522339456758
+        y: 107.55616279424788
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang:str) -> dict:\n    if lang == \"English\":\n      \
+          \  data = \"Language settings cannot be changed during an active conversation.\
+          \ Please continue in the current language or start a new chat to switch.\"\
+          \n    else:\n        data = \"「申し訳ございませんが、会話の途中で言語を変更することはできません。現在の言語で続けていただくか、新しいチャットを開始してください。」\"\
+          \n    return {\n        \"result\": data\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Mid-Process language Update.
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+      height: 54
+      id: '1768375846628'
+      position:
+        x: 1329.1905910058454
+        y: 157.16157820343983
+      positionAbsolute:
+        x: 1329.1905910058454
+        y: 157.16157820343983
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang:str) -> dict:\n    if lang == \"English\":\n      \
+          \  data = \"The maximum limit for file uploads has been reached. Please\
+          \ proceed using text or open a new chat session.\" \n    else:\n       \
+          \ data = \"ファイルアップロードの上限に達しました。テキストメッセージをご利用いただくか、新しいチャットセッションを開始してください\"\
+          \n    return {\n        \"result\": data\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: File counter code.
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+      height: 54
+      id: '1768409079125'
+      position:
+        x: 919.2341841505367
+        y: 619.8674066782002
+      positionAbsolute:
+        x: 919.2341841505367
+        y: 619.8674066782002
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "{{#1768409079125.result#}} \n\n"
+        desc: ''
+        selected: false
+        title: File counter output
+        type: answer
+        variables: []
+      height: 105
+      id: '1768409369728'
+      position:
+        x: 1239.653714835107
+        y: 367.1178504318681
+      positionAbsolute:
+        x: 1239.653714835107
+        y: 367.1178504318681
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This node extract documents only such as excel and docs from the uploaded
+          files by the user.
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: in
+            key: type
+            value:
+            - document
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: name
+          value: asc
+        selected: false
+        title: Document
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - sys
+        - files
+      height: 154
+      id: '1768410038426'
+      position:
+        x: 1729.5797923735572
+        y: 482.7152664102174
+      positionAbsolute:
+        x: 1729.5797923735572
+        y: 482.7152664102174
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1768410038426'
+        - result
+      height: 94
+      id: '1768410082852'
+      position:
+        x: 2766.1883427779408
+        y: 482.7152664102174
+      positionAbsolute:
+        x: 2766.1883427779408
+        y: 482.7152664102174
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not contains
+            id: 602820e3-2a93-4764-8a3b-f84717e0b216
+            value: xyz
+            varType: string
+            variable_selector:
+            - '1768293790606'
+            - result
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: update active agent.
+        type: if-else
+      height: 126
+      id: '1768454618610'
+      position:
+        x: 4303.161942191758
+        y: 1383.521269430994
+      positionAbsolute:
+        x: 4303.161942191758
+        y: 1383.521269430994
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1767774350948.result#}}'
+        desc: ''
+        selected: false
+        title: File confirmation option
+        type: answer
+        variables: []
+      height: 105
+      id: '1768564404874'
+      position:
+        x: 4278.642322180931
+        y: 725.2234936928191
+      positionAbsolute:
+        x: 4278.642322180931
+        y: 725.2234936928191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(files: list):\n    \"\"\"\n    Dify Code Node to validate\
+          \ only the file size.\n    Returns \"FAIL\" if any file exceeds the limit,\
+          \ otherwise \"PASS\".\n    \"\"\"\n    # 1. Safety Check\n    if not files:\n\
+          \        return {\"result\": \"PASS\"}\n    \n    # 2. Define Limit (15\
+          \ MB)\n    LIMIT_BYTES = 15 * 1024 * 1024\n    \n    # 3. Validate Size\n\
+          \    for file_obj in files:\n        # Ensure we are dealing with a dictionary\n\
+          \        if isinstance(file_obj, dict):\n            file_size = file_obj.get('size',\
+          \ 0)\n            \n            if file_size > LIMIT_BYTES:\n          \
+          \      return {\"result\": \"FAIL\"}\n\n    return {\"result\": \"PASS\"\
+          }"
+        code_language: python3
+        desc: This node checks it the documents is more than 15mb
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Validate File Size
+        type: code
+        variables:
+        - value_selector:
+          - '1768410038426'
+          - result
+          value_type: array[file]
+          variable: files
+      height: 98
+      id: '1768567494639'
+      position:
+        x: 2085.8163962262656
+        y: 326.7152664102174
+      positionAbsolute:
+        x: 2085.8163962262656
+        y: 326.7152664102174
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: d3cdceb2-cfab-47e4-9243-d71567320f4d
+            value: FAIL
+            varType: string
+            variable_selector:
+            - '1768567494639'
+            - result
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: PASS VS FAIL
+        type: if-else
+      height: 126
+      id: '1768567597398'
+      position:
+        x: 2424.335149069978
+        y: 314.7152664102174
+      positionAbsolute:
+        x: 2424.335149069978
+        y: 314.7152664102174
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1768567807102.result#}}'
+        desc: ''
+        selected: false
+        title: File output.
+        type: answer
+        variables: []
+      height: 105
+      id: '1768567675566'
+      position:
+        x: 3129.9911967878875
+        y: 203.1737803006555
+      positionAbsolute:
+        x: 3129.9911967878875
+        y: 203.1737803006555
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang:str):\n    if lang == \"English\":\n        data =\
+          \ \"File size limit exceeded. The file you selected is too large. Please\
+          \ ensure documents are under 15 MB and images are under 10 MB\"\n    else:\n\
+          \        data = \"ファイルサイズが上限を超えています 選択されたファイルはサイズが大きすぎます。ドキュメントは15MB以下、画像は10MB以下のファイルを選択してください\"\
+          \n    return {\n        \"result\": data,\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: file size output eng vs jap
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - preferred_language
+          value_type: string
+          variable: lang
+      height: 54
+      id: '1768567807102'
+      position:
+        x: 2750.1883427779408
+        y: 243.1737803006555
+      positionAbsolute:
+        x: 2750.1883427779408
+        y: 243.1737803006555
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください
+        desc: This node is presents e-links and help the user to collect and prepare
+          data for e-links
+        error_strategy: default-value
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#sys.files#}}
+
+            chat_history : {{#conversation.chathistory#}}
+
+            file_history : {{#conversation.filehistory#}}
+
+            preferred_language : {{#conversation.preferred_language#}}
+
+            '
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 12c7596f-158b-4f9f-aaca-39b4ad4d258f
+          role: system
+          text: "You are expert in preparing purchase request data for E-Links procurement\
+            \ system. Your sole purpose is to help the user compile 100% accurate\
+            \ purchase request data for the procurement system; you have no authority\
+            \ or technical capability to place, submit, or execute the order itself.\n\
+            \n## Followings are the schema (fields):\n - Preferred supplier : text\
+            \ (Where the quote will be obtained from / current payee such as trading\
+            \ company, manufacturer, etc.).​\n - Item name / project name : text (The\
+            \ name of the “case” and the product/service name.​)\n - Reference quotation\
+            \ : boolean (Yes, No)\n - Quotation document​ (If yes for reference quotation,\
+            \ then remind the user to attach document while placing order in E-links\
+            \ procurement system. Do ask to upload here.)\n - Deliverable - [Tangible,\
+            \ Non Tangible, or Renewable]\n - Contract Signing : (Required, Not Required,\
+            \ already Signed)\n - Contract Type : [rental, Hitachi IT services, maintenance\
+            \ contract, lease, outsourcing fee, real estate, car lease, subscription,\
+            \ transport/storage, information usage fee, etc.]\n - Quotation type :\
+            \ [“pre‑quote”, “order reservation”, or “billing case”]\n - Quotation\
+            \ due date : Date (YYYYMMDD, eg : 20200131 that means yyyy :2020, mm:01,\
+            \ dd:31) - it shouldn't less than current date : {{#conversation.currentdate#}}\
+            \ and should not exceed 10 years from the current date.\n - Contract start\
+            \ date : Date (YYYYMMDD, eg : 20200131 that means yyyy :2020, mm:01, dd:31)\
+            \ -  it shouldn't less than current date : {{#conversation.currentdate#}}\
+            \ and should not exceed 10 years from the current date.\n - Contract end\
+            \ date : Date (YYYYMMDD, eg: 20260130, that means yyyy:2026, mm:01, dd:30)\
+            \ - it should not be less than Contract start date and should not exceed\
+            \ 10 years from the current date.\n - Contract period (months/days) :\
+            \ Period (MM/DD, Time period between Contract start date and Contract\
+            \ end date)\n - RFQ line details : Long Text.\n \n# NOTE : DO NOT RESPOND\
+            \ ANY HTML FORMAT DATA - SUCH AS BUTTON FOR CONFIRMATION, OR CODE.\n#\
+            \ The response language MUST be in :  {{#conversation.preferred_language#}}.\n\
+            \ - Respond only in {{#conversation.preferred_language#}}. even if the\
+            \ input is in other language.\n - Do not translate unless explicitly asked.\n\
+            \ - Every schema and corresponding values should be in {{#conversation.preferred_language#}}\
+            \ only.\n\n## Output format:\n - Deliverable : Tangible\n - Contract Signing\
+            \ : Not Required\n - Quotation type : Pending\n\n## First, display all\
+            \ available fields, then You must Always request all missing fields in\
+            \ bulk mandatory; Do not ask in batches or one-by-one and also take care\
+            \ of conflicting inputs such as user provide period as 4 months and later\
+            \ ask as JAN-26 to MAR-26, then this should be highlighted to the user\
+            \ for final confirmation. Must follow the schema format and do not accept\
+            \ any random value for any fields (eg, date can not be 4000-02-02)\n\n\
+            ## Closing statement : \n- if the user provided all fields data then ask\
+            \ user for confirmation by showing the below clickable buttons.\n<br>\n\
+            <button data-message=\"Confirm\" >Confirm</button>\n<button data-message=\"\
+            No I Want to Update\">No I want to update</button>\n- or if language is\
+            \ Japanese then:\n<button data-message=\"確認する\" >確認する</button>\n<button\
+            \ data-message=\"いいえ、更新したいです\">いいえ、更新したいです</button>\n\n- if user confirms\
+            \ then show the below message ONLY in {{#conversation.preferred_language#}}:\n\
+            \  \"Great, we have the complete form data available to be raised in the\
+            \ E-LINKS Procurement system. Please raise it in the system. Thank you!\"\
+            \n## Strictly follow the closing statement.\n\n## Note:\n- If the user\
+            \ request new purchase request data for the same or different procurement\
+            \ system such as [e-sourcing-mall, soft-partner, socio, and jsocio], Strictly\
+            \ ask the user to open a new chat session only without any explanation\
+            \ and Do not Proceed."
+        selected: false
+        title: E-LINKS
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 186
+      id: '1768806261516'
+      position:
+        x: 2697.341898946613
+        y: 1508.397812643623
+      positionAbsolute:
+        x: 2697.341898946613
+        y: 1508.397812643623
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1768806261516.text#}}'
+        desc: ''
+        selected: false
+        title: E-Links Output
+        type: answer
+        variables: []
+      height: 105
+      id: '1768892841189'
+      position:
+        x: 3025.9911967878875
+        y: 1480.599406829304
+      positionAbsolute:
+        x: 3025.9911967878875
+        y: 1480.599406829304
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770979844369'
+          - result
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください。
+        desc: This node is presents e-links and help the user to collect and prepare
+          data for e-links
+        error_strategy: default-value
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#sys.files#}}
+
+            chat_history : {{#conversation.chathistory#}}
+
+            file_history : {{#conversation.filehistory#}}
+
+            preferred_language : {{#conversation.preferred_language#}}
+
+            '
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 75
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 12c7596f-158b-4f9f-aaca-39b4ad4d258f
+          role: system
+          text: "You are expert in preparing purchase request data for SOCIO procurement\
+            \ system. Your sole purpose is to help the user compile 100% accurate\
+            \ purchase request data for the procurement system; you have no authority\
+            \ or technical capability to place, submit, or execute the order itself.\n\
+            \n## Purchase History Recommendations :- Always Recommend full schema\
+            \ along with available values or pending option:\nFirst read and fill\
+            \ all the schema data using context {{#context#}} and MUST Recommend all\
+            \ the fields in  the top three past data to the user based on the context\
+            \ and help them choose one by providing right guidance.\nNote: extract\
+            \ all available data from  the columns-\n\n `Requester,Approver,Purchasing\
+            \ Manager,Product Name,Transferee,Account,Quantity,Unit of quantity,Request\
+            \ for delivery,Destination,Quantity of indications,Delivery Instruction\
+            \ Date,Fraction addition distinction,Delivery Instruction Flag `\n\nthese\
+            \ field.\nand give top 3 options to the user with reasoning.\noption 1\n\
+            option 2 \noption 3\noption 4 - \"start from new, Empty Form.\"\n with\
+            \ all the available fields.\n\n## Followings are the schema (fields):\n\
+            \ - Requester : text (The User Name or User ID of the person initiating\
+            \ the request.)\n - Approver : text (The User Name or User ID of the designated\
+            \ requester approver.)\n - Purchasing Manager : text (The Purchasing Manager's\
+            \ name; codes can be recommended based on historical data.)\n - Product\
+            \ Name : text (Selection must happen from the provided item list, such\
+            \ as: Training Contents, Consulting Support, JP1    Service Support, xoBlos\
+            \ Support Service, etc.)\n - Transferee : text (Accounting transfer code\
+            \ 1 - User input required.)\n - Account : text (The User Name or User\
+            \ ID associated with the account.)\n - Quantity : Float( up to 3 digits\
+            \ but not 0, eg: 2)\n - Unit of quantity : text (A specific 3-character\
+            \ quantity code.)\n- Request for delivery : Date (YYYYMMDD, eg : 20200131\
+            \ that means yyyy :2020, mm:01, dd:31) -  it shouldn't less than current\
+            \ date : {{#conversation.currentdate#}} and should not exceed 10 years\
+            \ from the current date.\n - Destination : text (Up to 10-character code,\
+            \ eg: 02)\n - Quantity of indications : Number (Decimal value, up to 3\
+            \ digits, can not zero)\n - Delivery Instruction Date : Date (YYYYMMDD,\
+            \ eg: 20260130, that means yyyy:2026, mm:01, dd:30) - it should not be\
+            \ less than Request for delivery date and should not exceed 10 years from\
+            \ the current date.\n - Fraction addition distinction : Number (A 1-character\
+            \ numeric code, eg: 1)\n - Delivery Instruction Flag : Number (A 1-character\
+            \ numeric flag indicating delivery status, eg: 2)\n\n# NOTE : DO NOT RESPOND\
+            \ ANY HTML FORMAT DATA - SUCH AS BUTTON FOR CONFIRMATION, OR CODE.\n\n\
+            # The response language MUST be in :  {{#conversation.preferred_language#}}.\n\
+            \ - Respond only in {{#conversation.preferred_language#}}. even if the\
+            \ input is in other language.\n - Do not translate unless explicitly asked.\n\
+            \ - Every schema and corresponding values should be in {{#conversation.preferred_language#}}\
+            \ only.\n\n## Output format:\n- Requester : Rohan\n- Approver : 10824124\n\
+            - Purchasing Manager : Pending\n\n## First, display all available fields,\
+            \ then You must Always request all missing fields in bulk mandatory; Do\
+            \ not ask in batches or one-by-one and also take care of conflicting inputs\
+            \ such as user provide period as 4 months and later ask as JAN-26 to MAR-26,\
+            \ then this should be highlighted to the user for final confirmation.\
+            \ Must follow the schema format and do not accept any random value for\
+            \ any fields (eg, date can not be 4000-02-02)\n\n## Closing statement\
+            \ : \n- if the user provided all fields data then ask user for confirmation\
+            \ by showing the below clickable buttons.\n<br>\n<button data-message=\"\
+            Confirm\" >Confirm</button>\n<button data-message=\"No I Want to Update\"\
+            >No I want to update</button>\n- or if language is Japanese then:\n<button\
+            \ data-message=\"確認する\" >確認する</button>\n<button data-message=\"いいえ、更新したいです\"\
+            >いいえ、更新したいです</button>\n\n- if user confirms then show the below message\
+            \ ONLY in {{#conversation.preferred_language#}}:\n  \"Great, we have the\
+            \ complete form data available to be raised in the SOCIO Procurement system.\
+            \ Please raise it in the system. Thank you!\"\n## Strictly follow the\
+            \ closing statement.\n\n## Note:\n- If the user request new purchase request\
+            \ data for the same or different procurement system such as [e-sourcing-mall,\
+            \ e-link, soft-partner, and jsocio], Strictly ask the user to open a new\
+            \ chat session only without any explanation and Do not Proceed."
+        retry_config:
+          max_retries: '2'
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: SOCIO
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 215
+      id: '17690809328710'
+      position:
+        x: 3025.9911967878875
+        y: 1684.431170540305
+      positionAbsolute:
+        x: 3025.9911967878875
+        y: 1684.431170540305
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#17690809328710.text#}}'
+        desc: ''
+        selected: false
+        title: SOCIO OUTPUT
+        type: answer
+        variables: []
+      height: 105
+      id: '1769081091744'
+      position:
+        x: 3394.671326739113
+        y: 1711.7615753289244
+      positionAbsolute:
+        x: 3394.671326739113
+        y: 1711.7615753289244
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1770972989164'
+          - result
+        default_value:
+        - key: text
+          type: string
+          value: An error occurred while processing your request. Please try again
+            or enter your query directly in the chat for assistance. 「エラーが発生しました。お手数ですが、もう一度お試しいただくか、チャット欄に直接入力してください。
+        desc: This node represents jsocio which help the user to collect information
+          for jsocio procurement system.
+        error_strategy: default-value
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#sys.files#}}
+
+            chat_history : {{#conversation.chathistory#}}
+
+            file_history : {{#conversation.filehistory#}}
+
+            preferred_language : {{#conversation.preferred_language#}}
+
+            '
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 75
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 139d6f1d-9019-4cd2-9625-034841f42d92
+          role: system
+          text: "You are expert in preparing purchase request data for JSOCIO procurement\
+            \ system. Your sole purpose is to help the user compile 100% accurate\
+            \ purchase request data for the procurement system; you have no authority\
+            \ or technical capability to place, submit, or execute the order itself.\n\
+            \n## Followings are the schema (fields):\n- Hitachi Standard Development\
+            \ Criteria Code: Text (Up to 5 characters, eg:DP1)\n- Hitachi Standard\
+            \ Development Criteria Name: Text (Up to 50 characters, eg:HIPACE)\n-\
+            \ Work style code: Text (Fixed 2 characters, eg:23)\n- Work type name:\
+            \ Text (Up to 30 characters, eg:Operation)\n- Work contract classification:\
+            \ Text (Up to 2 characters, eg:2)\n- Work contract category name: Text\
+            \ (Up to 30 characters, eg:Quasi-delegation contract)\n- Order Classification:\
+            \ Text (Up to 2 characters, eg:2)\n- Order classification name: Text (Up\
+            \ to 20 characters, eg:Formal request)\n- Cost department Accounting location\
+            \ code: Text (Up to 6 characters, eg:316)\n- Transfer number: Text (Up\
+            \ to 14 characters, eg:316107DE)\n- Account Classification: Text (Up to\
+            \ 17 characters, eg:8131007920)\n- Priority classification: Text (Fixed\
+            \ 1 character, eg:0)\n- Demand destination name: Text (Up to 80 characters,\
+            \ eg:10326611)\n- Development system name: Text (Up to 80 characters eg:\
+            \ Email sending test)\n- Product name: Text(Up to 128 characters, eg:Jsocio\
+            \ subcontracting degree limit addition work)\n- Project overview: Text\
+            \ (Long text, up to 1024 characters, eg:Support for the design, development,\
+            \ testing, and user verification)\n- Desired customer code: Text (Upto\
+            \ 12 characters, eg:111082)\n- Reason code for selecting desired business\
+            \ partner: Text (Fixed 1 or 2 characters,eg:1)\n- Reasons for selecting\
+            \ desired business partner: Text (Up to 60 characters, eg:We have experience\
+            \ working with this system.)\n- Customer sales representative information:\
+            \ Text (Up to 128 characters)\n- IP usage category: Text (Fixed 1 character,\
+            \ eg:0)\n- IP utilization category name: Text (Up to 16 characters, eg:Unutilized)\n\
+            - Contents of subcontract conditions: Text (Up to 100 characters, eg:Possible\
+            \ after approval from the client)\n- Customer approval required flag:\
+            \ Number (1-digit flag, eg:1)\n- Customer Approved Flag: Number (1-digit\
+            \ flag,eg:1)\n- Re-entrustment flag: Number (1-digit flag, eg:0)\n- Management\
+            \ work digital technology utilization flag: Number (1-digit flag, eg:1)\n\
+            \n# NOTE : DO NOT RESPOND ANY HTML FORMAT DATA - SUCH AS BUTTON FOR CONFIRMATION,\
+            \ OR CODE.\n\n# The response language MUST be in :  {{#conversation.preferred_language#}}.\n\
+            \ - Respond only in {{#conversation.preferred_language#}}. even if the\
+            \ input is in other language.\n - Do not translate unless explicitly asked.\n\
+            \ - Every schema and corresponding values should be in {{#conversation.preferred_language#}}\
+            \ only.\n\n## Purchase History Recommendations :- Always Recommend full\
+            \ schema along with available values or pending option:\nFirst read and\
+            \ fill all the schema data using context {{#context#}} and MUST Recommend\
+            \ all the fields in  the top three past data to the user based on the\
+            \ context and help them choose one by providing right guidance.\nNote:\
+            \ extract all data for the above mentioned fields from the context and\
+            \ mark pending if information is missing.\nand give top 3 options to the\
+            \ user with reasoning.\noption 1\noption 2 \noption 3\noption 4 - \"start\
+            \ from new, Empty Form.\"\nwith all the available fields.\n\n## Output\
+            \ format:\n- Hitachi Standard Development Criteria Code: DP1\n- Hitachi\
+            \ Standard Development Criteria Name: HIPACE\n- Work style code: 23\n\n\
+            ## First, display all available fields, then You must Always request all\
+            \ missing fields in bulk mandatory; Do not ask in batches or one-by-one\
+            \ and also take care of conflicting inputs such as user provide period\
+            \ as 4 months and later ask as JAN-26 to MAR-26, then this should be highlighted\
+            \ to the user for final confirmation. Must follow the schema format and\
+            \ do not accept any random value for any fields (eg, date can not be 4000-02-02)\n\
+            \n## Closing statement : \n- if the user provided all fields data then\
+            \ ask user for confirmation by showing the below clickable buttons.\n\
+            <br>\n<button data-message=\"Confirm\" >Confirm</button>\n<button data-message=\"\
+            No I Want to Update\">No I want to update</button>\n- or if language is\
+            \ Japanese then:\n<button data-message=\"確認する\" >確認する</button>\n<button\
+            \ data-message=\"いいえ、更新したいです\">いいえ、更新したいです</button>\n\n- if user confirms\
+            \ then show the below message ONLY in {{#conversation.preferred_language#}}:\n\
+            \  \"Great, we have the complete form data available to be raised in the\
+            \ JSOCIO Procurement system. Please raise it in the system. Thank you!\"\
+            \n## Strictly follow the closing statement.\n\n## Note:\n- If the user\
+            \ request new purchase request data for the same or different procurement\
+            \ system such as [e-sourcing-mall, e-link, soft-partner, and socio], Strictly\
+            \ ask the user to open a new chat session only without any explanation\
+            \ and Do not Proceed."
+        retry_config:
+          max_retries: '2'
+          retry_enabled: true
+          retry_interval: 1000
+        selected: false
+        title: JSOCIO
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 215
+      id: '1769582176710'
+      position:
+        x: 3049.991196787888
+        y: 1967.8959353900646
+      positionAbsolute:
+        x: 3049.991196787888
+        y: 1967.8959353900646
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1769582176710.text#}}'
+        desc: ''
+        selected: false
+        title: JSOCIO Output
+        type: answer
+        variables: []
+      height: 105
+      id: '1769582291961'
+      position:
+        x: 3384.778383826347
+        y: 1998.9015298432225
+      positionAbsolute:
+        x: 3384.778383826347
+        y: 1998.9015298432225
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - m1mbcPvtosxzQFlzZ0JWlHDminWTORBGtNFiz7unnUcsFZCNBpAxxGLVn2dKyUD9
+        desc: This node contains some user-AI dialogue and some guardrails
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.7
+        query_variable_selector:
+        - '1766996245621'
+        - sys.query
+        retrieval_mode: multiple
+        selected: false
+        title: Knowledge Retrieval
+        type: knowledge-retrieval
+      height: 136
+      id: '1769585416348'
+      position:
+        x: 1035.7679242242402
+        y: 1892.2084466146832
+      positionAbsolute:
+        x: 1035.7679242242402
+        y: 1892.2084466146832
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: This node help to extract the name of product from the user query that
+          is helpful while retrieving the past data from KB.
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            preferred language: {{#conversation.preferred_language#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 70
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 73a05c63-515c-4b4d-a147-d7a8f2984aef
+          role: system
+          text: 'You are a smart parameter extractor. You only return the product
+            name or service name from the user query.
+
+
+            use the context {{#context#}} to understand the product name.
+
+
+            # Example output:
+
+            user query or context : I want dispatch worker for 30 days at Noida location
+
+
+            then simply return product name as : Dispatch worker.
+
+
+            # The response language MUST be in : {{#conversation.preferred_language#}}.
+
+            - Respond only in {{#conversation.preferred_language#}}. Even if the user
+            data is in other language.
+
+            '
+        selected: false
+        title: Product Name Extractor.
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 150
+      id: '1769597878192'
+      position:
+        x: 1302.8411967462896
+        y: 1769.093818947821
+      positionAbsolute:
+        x: 1302.8411967462896
+        y: 1769.093818947821
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - sys
+          - query
+        desc: This node help to extract the name of product from the user query that
+          is helpful while retrieving the past data from KB.
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+            {{#1768410082852.text#}}
+
+            preferred langauge: {{#conversation.preferred_language#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 51
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 045a6358-0349-42c0-84ec-6c5a5a06726a
+          role: system
+          text: 'You are a smart parameter extractor. You only return the product
+            name or service name from the user query or text
+
+
+            use the context {{#context#}} to understand the product name.
+
+
+            # Example output:
+
+            user query or context : I want dispatch worker for 30 days at Noida location
+
+
+            then simply return product name as : Dispatch worker.
+
+
+            # The response language MUST be in : {{#conversation.preferred_language#}}.
+
+            - Respond only in {{#conversation.preferred_language#}}. Even if the user
+            data is in other language.'
+        selected: false
+        title: Product Name Extractor
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 150
+      id: '1769597942458'
+      position:
+        x: 3566.671326739113
+        y: 171.86740667820015
+      positionAbsolute:
+        x: 3566.671326739113
+        y: 171.86740667820015
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(model_output: str) -> dict:\n    # Define the phrase to\
+          \ look for\n    stop_phrase = \"Is this data correct?\"\n    \n    # 1.\
+          \ Check if the specific phrase exists and split\n    if stop_phrase in model_output:\n\
+          \        clean_output = model_output.split(stop_phrase)[0]\n    # 2. Otherwise,\
+          \ check for the '<' character\n    elif '<' in model_output:\n        clean_output\
+          \ = model_output.split('<', 1)[0]\n    # 3. If neither are found, keep the\
+          \ original text\n    else:\n        clean_output = model_output\n\n    return\
+          \ {\n        \"result\": clean_output.strip()\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Output formating.
+        type: code
+        variables:
+        - value_selector:
+          - '1766997304622'
+          - text
+          value_type: string
+          variable: model_output
+      height: 54
+      id: '1769671490250'
+      position:
+        x: 3402.671326739113
+        y: 725.2234936928191
+      positionAbsolute:
+        x: 3402.671326739113
+        y: 725.2234936928191
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(reupload_counter:int,file_counter:int ) -> dict:\n    if\
+          \ file_counter and (reupload_counter < 3):\n        file_counter = 0\n \
+          \       reupload_counter+=1 \n    else:\n        file_counter = 1\n    return\
+          \ {\n        \"file_counter\": file_counter,\n        \"reupload_counter\"\
+          \ : reupload_counter\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          file_counter:
+            children: null
+            type: number
+          reupload_counter:
+            children: null
+            type: number
+        selected: false
+        title: Reset file counter
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - reupload_counter
+          value_type: number
+          variable: reupload_counter
+        - value_selector:
+          - conversation
+          - file_counter
+          value_type: number
+          variable: file_counter
+      height: 54
+      id: '1770116998591'
+      position:
+        x: 956.6254634635213
+        y: 818.4606420146682
+      positionAbsolute:
+        x: 956.6254634635213
+        y: 818.4606420146682
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1770116998591'
+          - reupload_counter
+          variable_selector:
+          - conversation
+          - reupload_counter
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1770116998591'
+          - file_counter
+          variable_selector:
+          - conversation
+          - file_counter
+          write_mode: over-write
+        selected: false
+        title: Assign file counter and reupload counter
+        type: assigner
+        version: '2'
+      height: 112
+      id: '1770117816308'
+      position:
+        x: 1492.6254634635213
+        y: 818.4606420146682
+      positionAbsolute:
+        x: 1492.6254634635213
+        y: 818.4606420146682
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '<button data-message="E-SOURCING-MALL">e-Sourcing Mall</button>
+
+
+          <button data-message="E-LINKS">e-LINKS</button>
+
+
+          <button data-message="SOCIO">SOCIO</button>
+
+
+          <button data-message="SOFT-PARTNER">Soft-Partner</button>
+
+
+          <button data-message="JSOCIO">JSOCIO</button>'
+        desc: ''
+        selected: false
+        title: All Systems List
+        type: answer
+        variables: []
+      height: 214
+      id: '1770159268662'
+      position:
+        x: 2702.1883427779408
+        y: 774.9560483594685
+      positionAbsolute:
+        x: 2702.1883427779408
+        y: 774.9560483594685
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1766998305556.text#}}'
+        desc: ''
+        selected: false
+        title: Procurement Suggestion
+        type: answer
+        variables: []
+      height: 105
+      id: '1770195014476'
+      position:
+        x: 1683.6782588951557
+        y: 1998.9015298432225
+      positionAbsolute:
+        x: 1683.6782588951557
+        y: 1998.9015298432225
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "from datetime import date\n\ndef main():\n    # this function will\
+          \ return current date and time.\n    today = date.today()\n    return{\n\
+          \        \"current_date\": str(today)\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          current_date:
+            children: null
+            type: string
+        selected: false
+        title: update date
+        type: code
+        variables: []
+      height: 54
+      id: '1770797018822'
+      position:
+        x: 1663.0955089400675
+        y: 2875.8009685833126
+      positionAbsolute:
+        x: 1663.0955089400675
+        y: 2875.8009685833126
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - cKULEvDMEgtGH0mp+0AH/XGdeS9jhPWIoNZDppf+EPKr00Xan+gByOATb5iiWXdj
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.7
+        query_variable_selector:
+        - conversation
+        - product_name
+        retrieval_mode: multiple
+        selected: false
+        title: SOFT-PARTNER NEW KB
+        type: knowledge-retrieval
+      height: 92
+      id: '1770972828569'
+      position:
+        x: 2689.341898946613
+        y: 1304.4915523182135
+      positionAbsolute:
+        x: 2689.341898946613
+        y: 1304.4915523182135
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - HVH5ukS2nnp8Vi8NL1SL813+rehAMzR3e8qM9ngLGMyWDwk438uneVuYtrd2Ip/d
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0.2
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 0.8
+        query_variable_selector:
+        - conversation
+        - product_name
+        retrieval_mode: multiple
+        selected: false
+        title: JSOCIO KB
+        type: knowledge-retrieval
+      height: 92
+      id: '1770972989164'
+      position:
+        x: 2649.341898946613
+        y: 2016.8774903486049
+      positionAbsolute:
+        x: 2649.341898946613
+        y: 2016.8774903486049
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        dataset_ids:
+        - B7nfBgeNHWyhcde9SkU14voAoW8OaeycrdBBAd7B8lxq7bmIjsgkYGjxkeyw5j62
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: weighted_score
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: null
+          top_k: 3
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: gemini-embedding-001
+              embedding_provider_name: langgenius/gemini/google
+              vector_weight: 1
+        query_variable_selector:
+        - conversation
+        - product_name
+        retrieval_mode: multiple
+        selected: false
+        title: socio kb
+        type: knowledge-retrieval
+      height: 92
+      id: '1770979844369'
+      position:
+        x: 2714.1883427779408
+        y: 1792.6381185415535
+      positionAbsolute:
+        x: 2714.1883427779408
+        y: 1792.6381185415535
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -239.0467051208044
+      y: -32.67841675721104
+      zoom: 0.8465107065290607
