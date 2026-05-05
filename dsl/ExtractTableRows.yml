@@ -1,1 +1,189 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: workflow\n  name: Extract-Table-Rows\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: code\n      id: 1777893235508-source-1777893295262-target\n      source: '1777893235508'\n      sourceHandle: source\n      target: '1777893295262'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: end\n      id: 1777893295262--1777893451124-target\n      source: '1777893295262'\n      sourceHandle: source\n      target: '1777893451124'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions: []\n          allowed_file_types:\n          - document\n          allowed_file_upload_methods:\n          - local_file\n          - remote_url\n          label: file\n          max_length: 5\n          options: []\n          required: true\n          type: text-input\n          variable: file\n      height: 89\n      id: '1777893235508'\n      position:\n        x: 25.187792184369357\n        y: 282\n      positionAbsolute:\n        x: 25.187792184369357\n        y: 282\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"import pandas as pd\\nimport io\\n\\ndef main(file: bytes) -> dict:\\n\\\n          \\    df = pd.read_excel(io.BytesIO(file), sheet_name=\\\"Form 3\\\", header=None)\\n\\\n          \\    \\n    # Find header row containing \\\"Category 1\\\"\\n    header_row =\\\n          \\ None\\n    for idx, row in df.iterrows():\\n        if \\\"Category 1\\\" in\\\n          \\ str(row.values):\\n            header_row = idx\\n            break\\n  \\\n          \\  \\n    if header_row is None:\\n        return {\\\"rows_data\\\": {\\\"rows\\\"\\\n          : []}}\\n    \\n    df_table = pd.read_excel(io.BytesIO(file), sheet_name=\\\"\\\n          Form 3\\\", header=header_row)\\n    \\n    # Filter to only required columns\\\n          \\ and convert NaN values\\n    required_cols = [\\\"Revision/Abolition Category\\\"\\\n          , \\\"Category 1\\\", \\\"Category 2\\\", \\n                     \\\"Holiday Category\\\"\\\n          , \\\"Allowance Amount\\\"]\\n    existing_cols = [c for c in required_cols if\\\n          \\ c in df_table.columns]\\n    df_table = df_table[existing_cols].fillna(\\\"\\\n          \\\")\\n    \\n    # Clean the allowance amount\\n    def clean_amount(val):\\n\\\n          \\        if pd.isna(val) or val == \\\"\\\":\\n            return None\\n    \\\n          \\    if str(val).strip().lower() == \\\"actual expenses\\\":\\n            return\\\n          \\ None\\n        return float(val)\\n    \\n    if \\\"Allowance Amount\\\" in\\\n          \\ df_table.columns:\\n        df_table[\\\"Allowance Amount\\\"] = df_table[\\\"\\\n          Allowance Amount\\\"].apply(clean_amount)\\n    \\n    return {\\\"rows_data\\\"\\\n          : {\\\"rows\\\": df_table.to_dict(orient=\\\"records\\\")}}\"\n        code_language: python3\n        desc: ''\n        outputs:\n          rows_data:\n            children: null\n            type: object\n        selected: false\n        title: Code\n        type: code\n        variables:\n        - value_selector:\n          - '1777893235508'\n          - file\n          value_type: string\n          variable: file\n      height: 53\n      id: '1777893295262'\n      position:\n        x: 384\n        y: 282\n      positionAbsolute:\n        x: 384\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777893295262'\n          - rows_data\n          value_type: object\n          variable: result\n        selected: false\n        title: End\n        type: end\n      height: 90\n      id: '1777893451124'\n      position:\n        x: 688\n        y: 282\n      positionAbsolute:\n        x: 688\n        y: 282\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 31.65456795568548\n      y: -6.923901646794576\n      zoom: 1.1029239631772647\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Extract-Table-Rows
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1777893235508-source-1777893295262-target
+      source: '1777893235508'
+      sourceHandle: source
+      target: '1777893295262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1777893295262--1777893451124-target
+      source: '1777893295262'
+      sourceHandle: source
+      target: '1777893451124'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: file
+          max_length: 5
+          options: []
+          required: true
+          type: text-input
+          variable: file
+      height: 89
+      id: '1777893235508'
+      position:
+        x: 25.187792184369357
+        y: 282
+      positionAbsolute:
+        x: 25.187792184369357
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import pandas as pd\nimport io\n\ndef main(file: bytes) -> dict:\n\
+          \    df = pd.read_excel(io.BytesIO(file), sheet_name=\"Form 3\", header=None)\n\
+          \    \n    # Find header row containing \"Category 1\"\n    header_row =\
+          \ None\n    for idx, row in df.iterrows():\n        if \"Category 1\" in\
+          \ str(row.values):\n            header_row = idx\n            break\n  \
+          \  \n    if header_row is None:\n        return {\"rows_data\": {\"rows\"\
+          : []}}\n    \n    df_table = pd.read_excel(io.BytesIO(file), sheet_name=\"\
+          Form 3\", header=header_row)\n    \n    # Filter to only required columns\
+          \ and convert NaN values\n    required_cols = [\"Revision/Abolition Category\"\
+          , \"Category 1\", \"Category 2\", \n                     \"Holiday Category\"\
+          , \"Allowance Amount\"]\n    existing_cols = [c for c in required_cols if\
+          \ c in df_table.columns]\n    df_table = df_table[existing_cols].fillna(\"\
+          \")\n    \n    # Clean the allowance amount\n    def clean_amount(val):\n\
+          \        if pd.isna(val) or val == \"\":\n            return None\n    \
+          \    if str(val).strip().lower() == \"actual expenses\":\n            return\
+          \ None\n        return float(val)\n    \n    if \"Allowance Amount\" in\
+          \ df_table.columns:\n        df_table[\"Allowance Amount\"] = df_table[\"\
+          Allowance Amount\"].apply(clean_amount)\n    \n    return {\"rows_data\"\
+          : {\"rows\": df_table.to_dict(orient=\"records\")}}"
+        code_language: python3
+        desc: ''
+        outputs:
+          rows_data:
+            children: null
+            type: object
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1777893235508'
+          - file
+          value_type: string
+          variable: file
+      height: 53
+      id: '1777893295262'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777893295262'
+          - rows_data
+          value_type: object
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1777893451124'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 31.65456795568548
+      y: -6.923901646794576
+      zoom: 1.1029239631772647
