@@ -1,1 +1,775 @@
-{"data": "app:\n  description: 'D-17  welcome message chat flow '\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: 'D-17 Welcome Message '\n  use_icon_as_answer_icon: false\ndependencies:\n- current_identifier: null\n  type: marketplace\n  value:\n    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables:\n  - description: ''\n    id: 2dfc4ba5-d93b-4af2-a80b-791fb202b6aa\n    name: user_language\n    selector:\n    - conversation\n    - user_language\n    value: ''\n    value_type: string\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - remote_url\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: '\n\n      Welcome to \u201cUnit Price Revision Agent\u201d\n\n      \u5358\u4fa1\u6539\u5b9a\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u3078\u3088\u3046\u3053\u305d\n\n\n      Please choose your preferred language / \u3054\u5e0c\u671b\u306e\u8a00\u8a9e\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044 :\n\n      '\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions:\n    - English\n    - Japanese\n    suggested_questions_after_answer:\n      enabled: true\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        sourceType: llm\n        targetType: answer\n      id: llm-answer\n      source: llm\n      sourceHandle: source\n      target: answer\n      targetHandle: target\n      type: custom\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: llm\n      id: 1776927870318-source-1776931562103-target\n      source: '1776927870318'\n      sourceHandle: source\n      target: '1776931562103'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: llm\n        targetType: assigner\n      id: 1776931562103-source-1776931893743-target\n      source: '1776931562103'\n      sourceHandle: source\n      target: '1776931893743'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: assigner\n        targetType: llm\n      id: 1776931893743-source-llm-target\n      source: '1776931893743'\n      sourceHandle: source\n      target: llm\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables: []\n      height: 53\n      id: '1776927870318'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        memory:\n          query_prompt_template: '{{#sys.query#}}\n\n\n            {{#sys.files#}}'\n          role_prefix:\n            assistant: ''\n            user: ''\n          window:\n            enabled: false\n            size: 10\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-3-pro-preview\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: 8a9039af-2c95-4f57-98e8-0e676efed24c\n          role: system\n          text: \" The user has already selected their preferred language, which is\\\n            \\ stored in the variable: {{#conversation.user_language#}}\\n\\n\\nYou MUST\\\n            \\ respond entirely in the language specified by the variable: {{#conversation.user_language#}}.\\n\\\n            If {{#conversation.user_language#}} is english, use English.\\nIf {{#conversation.user_language#}}\\\n            \\ is japanese, use Japanese.\\n   use:-\u5358\u4fa1\u6539\u5b9a\u30a8\u30fc\u30b8\u30a7\u30f3\u30c8\u3078\u3088\u3046\u3053\u305d\\n\\nGenerate a warm\\\n            \\ welcome message that:\\n-Welcome to \\\"Unit Price Revision Agent\\\".\\n\\n\\\n            Generate a warm welcome message in {{#conversation.user_language#}}.\\n\\\n            \\nUse single line breaks between the welcome heading, the service description,\\\n            \\ and the closing question to ensure the output is easy to read.\\n\\nnote:\\\n            \\ Do not mention the variable name or the language detection process in\\\n            \\ your response.\\n\\n\\n\"\n        selected: false\n        title: Generate Welcome\n        type: llm\n        variables: []\n        vision:\n          enabled: false\n      height: 89\n      id: llm\n      position:\n        x: 966.8310909735668\n        y: 272.7201705861493\n      positionAbsolute:\n        x: 966.8310909735668\n        y: 272.7201705861493\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#llm.text#}}'\n        desc: ''\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 103\n      id: answer\n      position:\n        x: 1297.0781508870004\n        y: 272.7201705861493\n      positionAbsolute:\n        x: 1297.0781508870004\n        y: 272.7201705861493\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-3-pro-preview\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: 7339dc8f-3f9f-4f4a-9777-e4e7e0f9565d\n          role: system\n          text: 'Role: Professional BPO Assistant (Unit Price Revision Agent).\n\n            Context:\n\n            You are interacting with a BPO Staff representative. The user''s preferred\n            language has been identified and is stored in the variable: {{#conversation.user_language#}}.\n\n            Objective:\n\n            Generate a professional welcome message strictly following the requirements\n            below.\n\n            Strict Instructions:\n\n\n            Language: You MUST write the entire response in the language specified\n            by {{#conversation.user_language#}}.\n\n            If {{#conversation.user_language#}} is english, respond in English.\n\n            If {{#conversation.user_language#}} is japanese, respond in Japanese.\n\n            Content Structure:\n\n            Start with the exact phrase: \"Welcome to ''Unit Price Revision Agent''\".\n\n            Explain that you are here to assist with session inputs, drafting emails,\n            and tracking action items.\n\n            End by asking: \"How can I help you today?\"\n\n            Tone: Keep the tone professional, helpful, and concise as per BPO standards.\n\n            Constraint:\n\n\n            Do NOT mention the variable name user_language or any internal logic in\n            your response.\n\n            Output ONLY the welcome message.'\n        - id: e4a77ec1-a289-41ea-acb3-3b476cd84c88\n          role: user\n          text: '{{#sys.query#}}'\n        selected: false\n        title: Language Classifier\n        type: llm\n        variables: []\n        vision:\n          enabled: false\n      height: 89\n      id: '1776931562103'\n      position:\n        x: 360.59672031649393\n        y: 272.7201705861493\n      positionAbsolute:\n        x: 360.59672031649393\n        y: 272.7201705861493\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        items:\n        - input_type: variable\n          operation: over-write\n          value:\n          - '1776931562103'\n          - text\n          variable_selector:\n          - conversation\n          - user_language\n          write_mode: over-write\n        selected: false\n        title: Save Language\n        type: assigner\n        version: '2'\n      height: 85\n      id: '1776931893743'\n      position:\n        x: 656.3786160374711\n        y: 272.7201705861493\n      positionAbsolute:\n        x: 656.3786160374711\n        y: 272.7201705861493\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 23.099101719775263\n      y: 187.51031110126308\n      zoom: 0.39611740546248336\n"}
+app:
+  description: 'D-17  welcome message chat flow '
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 'D-17 Welcome Message '
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: c5481630-b1b6-4847-a714-8b4b64f0146e
+    name: progress_management_sheet
+    selector:
+    - conversation
+    - progress_management_sheet
+    value: 0
+    value_type: integer
+  - description: this variable stores all static data in both language English and
+      Japanese
+    id: 6f7c13f0-e937-4f61-8ee5-770acaae6130
+    name: static_data
+    selector:
+    - conversation
+    - static_data
+    value:
+      button_template: '{index}. <button type="button" data-message="{id}">{label}</button>'
+      document_received_msg: null
+      error_message_document_received: null
+      error_message_file_missing: null
+      error_message_language: null
+      request_file_msg: null
+      select_lang_first_msg: null
+      user_guide: null
+    value_type: object
+  - description: This variable stores user's preferred language, the default one is
+      None
+    id: 2dfc4ba5-d93b-4af2-a80b-791fb202b6aa
+    name: user_language
+    selector:
+    - conversation
+    - user_language
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '
+
+      Hi there, Welcome to “Unit Price Revision Agent”.
+
+
+      Please select your Preferred language.
+
+
+      ***
+
+      こんにちは。単価改定エージェントへようこそ
+
+
+      ご希望の言語を選択してください。
+
+      ***'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - English
+    - Japanese
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1776931893743-source-llm-target
+      source: '1776931893743'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1776927870318-source-1777014194321-target
+      source: '1776927870318'
+      sourceHandle: source
+      target: '1777014194321'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1777014194321-true-1777014536556-target
+      source: '1777014194321'
+      sourceHandle: 'true'
+      target: '1777014536556'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1777014536556-source-1777014652008-target
+      source: '1777014536556'
+      sourceHandle: source
+      target: '1777014652008'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1777014652008-source-1777014777539-target
+      source: '1777014652008'
+      sourceHandle: source
+      target: '1777014777539'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1777014777539-true-1777014872237-target
+      source: '1777014777539'
+      sourceHandle: 'true'
+      target: '1777014872237'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: code
+      id: 1777014872237-source-1777014997957-target
+      source: '1777014872237'
+      sourceHandle: source
+      target: '1777014997957'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1777014997957-source-1777015315686-target
+      source: '1777014997957'
+      sourceHandle: source
+      target: '1777015315686'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1777014777539-false-1777015376820-target
+      source: '1777014777539'
+      sourceHandle: 'false'
+      target: '1777015376820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1777014194321-false-1777015529554-target
+      source: '1777014194321'
+      sourceHandle: 'false'
+      target: '1777015529554'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 53
+      id: '1776927870318'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-3-pro-preview
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 8a9039af-2c95-4f57-98e8-0e676efed24c
+          role: system
+          text: " The user has already selected their preferred language, which is\
+            \ stored in the variable: {{#conversation.user_language#}}\n\n\nYou MUST\
+            \ respond entirely in the language specified by the variable: {{#conversation.user_language#}}.\n\
+            If {{#conversation.user_language#}} is english, use English.\nIf {{#conversation.user_language#}}\
+            \ is japanese, use Japanese.\n   use:-単価改定エージェントへようこそ\n\nGenerate a warm\
+            \ welcome message that:\n-Welcome to \"Unit Price Revision Agent\".\n\n\
+            Generate a warm welcome message in {{#conversation.user_language#}}.\n\
+            \nUse single line breaks between the welcome heading, the service description,\
+            \ and the closing question to ensure the output is easy to read.\n\nnote:\
+            \ Do not mention the variable name or the language detection process in\
+            \ your response.\n\n\n"
+        selected: false
+        title: Generate Welcome
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: llm
+      position:
+        x: 2112.6072237731587
+        y: 3576.7476132704896
+      positionAbsolute:
+        x: 2112.6072237731587
+        y: 3576.7476132704896
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 2450.4790497731547
+        y: 3313.4160877090317
+      positionAbsolute:
+        x: 2450.4790497731547
+        y: 3313.4160877090317
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-3-pro-preview
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 7339dc8f-3f9f-4f4a-9777-e4e7e0f9565d
+          role: system
+          text: 'Role: Professional BPO Assistant (Unit Price Revision Agent).
+
+            Context:
+
+            You are interacting with a BPO Staff representative. The user''s preferred
+            language has been identified and is stored in the variable: {{#conversation.user_language#}}.
+
+            Objective:
+
+            Generate a professional welcome message strictly following the requirements
+            below.
+
+            Strict Instructions:
+
+
+            Language: You MUST write the entire response in the language specified
+            by {{#conversation.user_language#}}.
+
+            If {{#conversation.user_language#}} is english, respond in English.
+
+            If {{#conversation.user_language#}} is japanese, respond in Japanese.
+
+            Content Structure:
+
+            Start with the exact phrase: "Welcome to ''Unit Price Revision Agent''".
+
+            Explain that you are here to assist with session inputs, drafting emails,
+            and tracking action items.
+
+            End by asking: "How can I help you today?"
+
+            Tone: Keep the tone professional, helpful, and concise as per BPO standards.
+
+            Constraint:
+
+
+            Do NOT mention the variable name user_language or any internal logic in
+            your response.
+
+            Output ONLY the welcome message.'
+        - id: e4a77ec1-a289-41ea-acb3-3b476cd84c88
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: Language Classifier
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1776931562103'
+      position:
+        x: 1993.1561644369965
+        y: 3132.6916378939304
+      positionAbsolute:
+        x: 1993.1561644369965
+        y: 3132.6916378939304
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1776931562103'
+          - text
+          variable_selector:
+          - conversation
+          - user_language
+          write_mode: over-write
+        selected: false
+        title: Save Language
+        type: assigner
+        version: '2'
+      height: 85
+      id: '1776931893743'
+      position:
+        x: 1340.4086327203922
+        y: 3376.1121579050423
+      positionAbsolute:
+        x: 1340.4086327203922
+        y: 3376.1121579050423
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 3e828d82-1ec6-40b3-aa90-bdc10661527d
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: dddb4b3d-09e0-440f-8f36-48fb6891ba4b
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - user_language
+          id: 'true'
+          logical_operator: and
+        - case_id: d51817a9-c5b5-4399-bcb0-a59b8e6614ab
+          conditions:
+          - comparison_operator: not empty
+            id: 0d92b9bf-fb8d-42b9-88a2-a66bad80c240
+            value: '{{#sys.files#}}'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: a85cdabc-017a-482a-8967-c0483a6910d8
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          - comparison_operator: not empty
+            id: f96c196c-5fd9-453c-91ad-09c8e6d2a64e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - user_language
+          id: d51817a9-c5b5-4399-bcb0-a59b8e6614ab
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: Orchestrator
+        type: if-else
+      height: 251
+      id: '1777014194321'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This workflow validate the user input if they have selected their preferred
+          language or not and return preferred language as key such "en" for English
+          and in case no language selected, request the user to choose language first.
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: this receives user's query to validate language preference
+            ja_JP: this receives user's query to validate language preference
+            pt_BR: this receives user's query to validate language preference
+            zh_Hans: this receives user's query to validate language preference
+          label:
+            en_US: User input
+            ja_JP: User input
+            pt_BR: User input
+            zh_Hans: User input
+          llm_description: this receives user's query to validate language preference
+          max: null
+          min: null
+          name: user_query
+          options: []
+          placeholder:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          user_query: ''
+        provider_id: 7fb8ca4f-fc35-415e-94d5-48edc65fcf26
+        provider_name: COM_Bilingual_Workflow
+        provider_type: workflow
+        selected: false
+        title: COM_Bilingual_Workflow
+        tool_configurations: {}
+        tool_description: This workflow automate the language validation as per requirement
+          and return user's preferred language. Currently it supports English and
+          Japanese.
+        tool_label: COM_Bilingual_Workflow
+        tool_name: comBilingualWorkflow
+        tool_node_version: '2'
+        tool_parameters:
+          user_query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 177
+      id: '1777014536556'
+      position:
+        x: 753.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 753.6371056698304
+        y: 158.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(lang_result:list):\n    lang_obj = lang_result[0]\n    return\
+          \ {\n        \"result\": lang_obj.get(\"result\", \"\")\n    }"
+        code_language: python3
+        desc: This code node format response received from bilingual workflow so that
+          downstream node can use it to display respective message related to language
+          preference.
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: code_format_response
+        type: code
+        variables:
+        - value_selector:
+          - '1777014536556'
+          - json
+          value_type: array[object]
+          variable: lang_result
+      height: 145
+      id: '1777014652008'
+      position:
+        x: 1057.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 1057.6371056698304
+        y: 158.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 3de96b5d-6a35-40f8-904a-a57cc11bb9cd
+            value: en
+            varType: string
+            variable_selector:
+            - '1777014652008'
+            - result
+          - comparison_operator: is
+            id: 4ac20e4e-7a3a-48e3-9c03-fc27c1ca2efa
+            value: jp
+            varType: string
+            variable_selector:
+            - '1777014652008'
+            - result
+          id: 'true'
+          logical_operator: or
+        desc: This node checks if the user has selected their preferred language if
+          yes it will return language code like "en" else prompt the user to select
+          language first.
+        selected: false
+        title: Yes/No
+        type: if-else
+      height: 243
+      id: '1777014777539'
+      position:
+        x: 1361.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 1361.6371056698304
+        y: 158.2993008530123
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This node updates user preferred language to the variable preferred_lang
+          as en or jp
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1777014652008'
+          - result
+          variable_selector:
+          - conversation
+          - user_language
+          write_mode: over-write
+        selected: false
+        title: Update preferred language
+        type: assigner
+        version: '2'
+      height: 145
+      id: '1777014872237'
+      position:
+        x: 1665.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 1665.6371056698304
+        y: 158.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(preferred_lang: str, static_data: dict):\n    return {\n\
+          \        \"result\": static_data.get(\"user_guide\",{}).get(preferred_lang)\n\
+          \    }"
+        code_language: python3
+        desc: This code node fetch user guide based on preferred language from static
+          data and pass to next node to display the same message.
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: code_fetch_user_guide
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - user_language
+          value_type: string
+          variable: preferred_lang
+        - value_selector:
+          - conversation
+          - static_data
+          value_type: object
+          variable: static_data
+      height: 129
+      id: '1777014997957'
+      position:
+        x: 1969.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 1969.6371056698304
+        y: 158.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1777014997957.result#}}'
+        desc: This node display the user guide based on preferred language
+        selected: false
+        title: User guide output
+        type: answer
+        variables: []
+      height: 147
+      id: '1777015315686'
+      position:
+        x: 2273.6371056698304
+        y: 158.2993008530123
+      positionAbsolute:
+        x: 2273.6371056698304
+        y: 158.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1777014652008.result#}}'
+        desc: This node request the user to enter the language if preferred language
+          is not selected.
+        selected: false
+        title: Request Language
+        type: answer
+        variables: []
+      height: 163
+      id: '1777015376820'
+      position:
+        x: 1665.6371056698304
+        y: 342.2993008530123
+      positionAbsolute:
+        x: 1665.6371056698304
+        y: 342.2993008530123
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Thank you, we received your query
+        desc: This is placeholder for input coming from user post file upload
+        selected: false
+        title: Post_file_uploade_msg
+        type: answer
+        variables: []
+      height: 145
+      id: '1777015529554'
+      position:
+        x: 730.4379563437687
+        y: 794.7838823878803
+      positionAbsolute:
+        x: 730.4379563437687
+        y: 794.7838823878803
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -517.861817381386
+      y: 248.73165683275124
+      zoom: 0.5083873366459775
