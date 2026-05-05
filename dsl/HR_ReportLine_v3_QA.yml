@@ -15,22 +15,6 @@ version: 0.3.1
 workflow:
   conversation_variables:
   - description: ''
-    id: 00b42b24-1e79-460a-ad3b-a337d9140586
-    name: user_info_v2
-    selector:
-    - conversation
-    - user_info_v2
-    value: ''
-    value_type: string
-  - description: ''
-    id: ac7b8d23-7ae7-442d-8514-9ef423e413f4
-    name: registration_form
-    selector:
-    - conversation
-    - registration_form
-    value: ''
-    value_type: string
-  - description: ''
     id: 395aa99b-c5ab-496d-bd0f-d59fa0ab6e98
     name: date_confirmation
     selector:
@@ -162,6 +146,19 @@ workflow:
       source: '1772536222440'
       sourceHandle: '2'
       target: '1772537005890'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1772532942904-source-1772715715231-target
+      selected: false
+      source: '1772532942904'
+      sourceHandle: source
+      target: '1772715715231'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -554,36 +551,12 @@ workflow:
     - data:
         isInIteration: false
         isInLoop: false
-        sourceType: code
-        targetType: if-else
-      id: 1773387351196-source-1773389157884-target
-      source: '1773387351196'
-      sourceHandle: source
-      target: '1773389157884'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
         sourceType: if-else
         targetType: assigner
       id: 1773389157884-true-1773389178403-target
       source: '1773389157884'
       sourceHandle: 'true'
       target: '1773389178403'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: llm
-      id: 1773389157884-false-1773389351724-target
-      source: '1773389157884'
-      sourceHandle: 'false'
-      target: '1773389351724'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -595,17 +568,6 @@ workflow:
       source: '1773389351724'
       sourceHandle: source
       target: '1773387336044'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: if-else
-        targetType: llm
-      id: 1773389157884-true-1773389351724-target
-      source: '1773389157884'
-      sourceHandle: 'true'
-      target: '1773389351724'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -634,14 +596,24 @@ workflow:
       type: custom
       zIndex: 0
     - data:
-        isInIteration: false
         isInLoop: false
         sourceType: code
-        targetType: assigner
-      id: 1772532942904-source-1773638608899-target
-      source: '1772532942904'
+        targetType: llm
+      id: 1773387351196-source-1773389351724-target
+      source: '1773387351196'
       sourceHandle: source
-      target: '1773638608899'
+      target: '1773389351724'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1773389351724-source-1773389157884-target
+      source: '1773389351724'
+      sourceHandle: source
+      target: '1773389157884'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -664,16 +636,16 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
-        code: "\ndef main(arg1: list) -> dict:\n    return {\n        \"arr_str\"\
-          : [str(arg1)]\n    }\n\n    \n"
+        code: "\ndef main(arg1: list) -> dict:\n    return {\n        \"result\":\
+          \ arg1\n    }\n\n    \n"
         code_language: python3
         desc: ''
         outputs:
-          arr_str:
+          result:
             children: null
-            type: array[string]
+            type: array[object]
         selected: false
         title: HiNext response formatting
         type: code
@@ -695,11 +667,11 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         classes:
         - id: '1'
-          name: 'if its employee code that contains numeric only of length 7 digits.
+          name: 'if its employee code that contains numeric only of length 8 digits.
             Eg : 12345678'
         - id: '2'
           name: 'generic chat message like : ok you can proceed.'
@@ -742,7 +714,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -797,7 +769,36 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: extend
+          value:
+          - '1772532942904'
+          - result
+          variable_selector:
+          - conversation
+          - user_info
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 85
+      id: '1772715715231'
+      position:
+        x: 2299.4246323857856
+        y: 337.10506853993104
+      positionAbsolute:
+        x: 2299.4246323857856
+        y: 337.10506853993104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
     - data:
         code: "import re\n\ndef main(user_input: str, transferee_ids: list, language:\
           \ str):\n    # Define response templates\n    messages = {\n        'english':\
@@ -813,7 +814,7 @@ workflow:
           \ = re.findall(r'\\d+', user_input)\n    \n    if len(extracted) != 1:\n\
           \        return {\n            \"result\": msg['single_input'], \n     \
           \       \"id\": -1\n        }\n\n    user_id = extracted[0]\n    if len(user_id)\
-          \ != 7:\n        return {\n            \"result\": msg['invalid_id'], \n\
+          \ != 8:\n        return {\n            \"result\": msg['invalid_id'], \n\
           \            \"id\": -1\n        }\n\n    user_id_int = int(user_id)\n \
           \   if user_id_int in transferee_ids:\n        return {\n            \"\
           result\": msg['exists'],\n            \"id\": -1\n        }\n\n    return\
@@ -859,7 +860,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This node append employee LDAP in the list
         items:
@@ -888,7 +889,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -918,7 +919,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1773056094185.result#}}'
         desc: ''
@@ -926,7 +927,7 @@ workflow:
         title: Employee LDAP Extractor Output
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1773058477418'
       position:
         x: 1602.1802547578707
@@ -938,7 +939,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: congratulations  registration done successfully
         desc: ''
@@ -958,7 +959,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1772537005890.text#}}'
         desc: ''
@@ -966,7 +967,7 @@ workflow:
         title: Generic chat output
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1773086606642'
       position:
         x: 1296.6951348354883
@@ -978,7 +979,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 71acaf60-2996-4214-a6a3-01c74fda36b2
@@ -1105,7 +1106,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -1176,7 +1177,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "import datetime\nimport re\n\ndef main(model_output: str):\n    \"\"\
           \"\n    1. Checks if the input is a date (YYYY-MM-DD).\n    2. If it is\
@@ -1226,7 +1227,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1278,7 +1279,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         items:
@@ -1307,7 +1308,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: Please Enter the Correct date. Either date does not exist in the calendar
           or date is out of the allowed 1-year range.
@@ -1328,7 +1329,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1773120243119.text#}}'
         desc: ''
@@ -1336,7 +1337,7 @@ workflow:
         title: Incorrect date data output
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1773120597167'
       position:
         x: 1825.920375478499
@@ -1348,7 +1349,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: " {{#1773120243119.text#}}. \n{{#conversation.date_confirmation#}}"
         desc: ''
@@ -1368,7 +1369,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: 'Your preferred language is now English.
 
@@ -1394,7 +1395,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: 'ご希望の言語が日本語に設定されました。
 
@@ -1419,7 +1420,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: Language settings cannot be changed during an active conversation.
           Please continue in the current language or start a new chat to switch.
@@ -1432,15 +1433,15 @@ workflow:
       id: '1773316828205'
       position:
         x: 1186.405797122384
-        y: -637.9164161982583
+        y: -636.3645439039271
       positionAbsolute:
         x: 1186.405797122384
-        y: -637.9164161982583
+        y: -636.3645439039271
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: 「申し訳ございませんが、会話の途中で言語を変更することはできません。現在の言語で続けていただくか、新しいチャットを開始してください。」
         desc: ''
@@ -1460,7 +1461,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         items:
@@ -1507,7 +1508,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main() -> dict:\n    return {\n        \"result\": \"\"\"# ROLE\
           \ \nYou are the Hitachi HR Reporting Line Change Assistant (AI Agent). Your\
@@ -1561,16 +1562,16 @@ workflow:
       height: 53
       id: '1773347946071'
       position:
-        x: 1181.7389882824457
+        x: 1203.2860608328
         y: -895.8806037317665
       positionAbsolute:
-        x: 1181.7389882824457
+        x: 1203.2860608328
         y: -895.8806037317665
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         items:
@@ -1617,7 +1618,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main() -> dict:\n    return {\n        \"result\": \"\"\"# ROLE\
           \ \nYou are the Hitachi HR Reporting Line Change Assistant (AI Agent). Internal\
@@ -1652,16 +1653,16 @@ workflow:
       height: 53
       id: '1773348042081'
       position:
-        x: 1186.405797122384
+        x: 1203.2860608328
         y: -750.0732685620485
       positionAbsolute:
-        x: 1186.405797122384
+        x: 1203.2860608328
         y: -750.0732685620485
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1691,7 +1692,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: 正しい日付を入力してください。入力された日付はカレンダーに存在しないか、または許可されている1年間の範囲外です
         desc: ''
@@ -1711,7 +1712,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1741,7 +1742,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: おめでとうございます。登録は正常に完了しました。
         desc: ''
@@ -1760,7 +1761,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: To check the manager ldap
         is_team_authorization: true
@@ -1848,7 +1849,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         is_team_authorization: true
@@ -1916,13 +1917,7 @@ workflow:
         tool_label: HR-006-FetchData
         tool_name: HR-006-FetchData
         tool_node_version: '2'
-        tool_parameters:
-          EMP_LDAP:
-            type: mixed
-            value: '{{#sys.query#}}'
-          manager_ldap:
-            type: mixed
-            value: null
+        tool_parameters: {}
         type: tool
       height: 85
       id: '1773387315445'
@@ -1936,7 +1931,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1773389351724.text#}}'
         desc: ''
@@ -1944,29 +1939,31 @@ workflow:
         title: managers ldap output
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1773387336044'
       position:
-        x: 1974.3618068393994
-        y: 133.08441552919777
+        x: 1457.039305006115
+        y: 140.10180316464576
       positionAbsolute:
-        x: 1974.3618068393994
-        y: 133.08441552919777
+        x: 1457.039305006115
+        y: 140.10180316464576
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
-        code: "def main(manager_data: list,query:str ) -> dict:\n    # 1. Access the\
-          \ first element of the list\n    first_item = manager_data[0]\n    \n  \
-          \  # 2. Access the 'result' dictionary\n    result_obj = first_item[\"result\"\
-          ]\n    \n    # 3. Extract the specific values\n    exists_status = result_obj[\"\
-          exists\"]\n    message_text = result_obj[\"message\"]\n     \n    if exists_status\
-          \ == True:\n        return {\n            \"result\": message_text,\n  \
-          \          \"status\": int(query)\n        }\n    else:\n        return{\n\
-          \            \"result\" :message_text,\n            \"status\": -1\n   \
-          \     }"
+        code: "def main(manager_data: list,query:str, default_language:str) -> dict:\n\
+          \    # 1. Access the first element of the list\n    if default_language\
+          \ == \"English\":\n        msg = \"Who do you want to transfer? Please enter\
+          \ the employee's LDAP.\"\n    else:\n        msg = \"転送する従業員は誰ですか？ 従業員のLDAPを入力してください。\"\
+          \n    first_item = manager_data[0]\n    \n    # 2. Access the 'result' dictionary\n\
+          \    result_obj = first_item[\"result\"]\n    \n    # 3. Extract the specific\
+          \ values\n    exists_status = result_obj[\"exists\"]\n    message_text =\
+          \ result_obj[\"message\"]\n     \n    if exists_status == True:\n      \
+          \  return {\n            \"result\": message_text + msg,\n            \"\
+          status\": int(query)\n        }\n    else:\n        return{\n          \
+          \  \"result\" :message_text,\n            \"status\": -1\n        }"
         code_language: python3
         desc: ''
         outputs:
@@ -1976,7 +1973,7 @@ workflow:
           status:
             children: null
             type: number
-        selected: true
+        selected: false
         title: Manager response parser
         type: code
         variables:
@@ -1990,6 +1987,11 @@ workflow:
           - query
           value_type: string
           variable: query
+        - value_selector:
+          - conversation
+          - default_language
+          value_type: string
+          variable: default_language
       height: 53
       id: '1773387351196'
       position:
@@ -1998,11 +2000,11 @@ workflow:
       positionAbsolute:
         x: 892.8234683027445
         y: 60.326409008074336
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -2023,16 +2025,16 @@ workflow:
       height: 125
       id: '1773389157884'
       position:
-        x: 1157.6071823586865
-        y: 60.326409008074336
+        x: 1457.039305006115
+        y: 2.7291794806793632
       positionAbsolute:
-        x: 1157.6071823586865
-        y: 60.326409008074336
+        x: 1457.039305006115
+        y: 2.7291794806793632
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         items:
@@ -2052,16 +2054,16 @@ workflow:
       height: 85
       id: '1773389178403'
       position:
-        x: 1498.7389111332689
-        y: 29.743252263239356
+        x: 1785.7096648739878
+        y: 35.02128390633089
       positionAbsolute:
-        x: 1498.7389111332689
-        y: 29.743252263239356
+        x: 1785.7096648739878
+        y: 35.02128390633089
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -2086,11 +2088,8 @@ workflow:
         prompt_template:
         - id: 76eda54b-f37f-4837-8b56-05f20a591361
           role: system
-          text: "Return same result you recieve {{#1773387351196.result#}}  as it\
-            \ is in the user preferred language {{#conversation.default_language#}}\n\
-            \nand say \n\nenglish : Who are you transferring? Enter your employee's\
-            \ LDAP.\njapanese : 誰を異動させますか？\n従業員のLDAPを入れてください。\n\nbased on {{#conversation.default_language#}}\
-            \ language."
+          text: Return same result you recieve {{#1773387351196.result#}}  as it is
+            in the user preferred language {{#conversation.default_language#}}
         selected: false
         title: manager ldap
         type: llm
@@ -2100,16 +2099,16 @@ workflow:
       height: 89
       id: '1773389351724'
       position:
-        x: 1602.1802547578707
-        y: 146.67072417674
+        x: 1168.3126996340031
+        y: 60.326409008074336
       positionAbsolute:
-        x: 1602.1802547578707
-        y: 146.67072417674
+        x: 1168.3126996340031
+        y: 60.326409008074336
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         context:
           enabled: false
@@ -2119,7 +2118,7 @@ workflow:
           query_prompt_template: '{{#sys.query#}}
 
 
-            {{#1772532942904.arr_str#}}
+            {{#1772532942904.result#}}
 
             {{#conversation.user_info#}}
 
@@ -2158,8 +2157,8 @@ workflow:
 
             "SVO ID": "223456",
 
-            Do You have another transferee, Please enter the LDAP or Confirm to regist
-            the above one.
+            "remark":  "Do You have another transferee, Please enter the LDAP or Confirm
+            to regist the above one.
 
 
             Rule 2: if Current Organization has more than one then ask the user to
@@ -2173,7 +2172,8 @@ workflow:
 
             "SVO ID": "223456", "223457"
 
-            This belongs to multiple organisation. Please connect with HR department"
+            "remarks" : "This belongs to multiple organisation. Please connect with
+            HR department"
 
 
             # You must show all the previous records in the same manner
@@ -2206,7 +2206,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1773389968314.text#}}'
         desc: ''
@@ -2214,7 +2214,7 @@ workflow:
         title: Employee ldap output
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1773390572640'
       position:
         x: 2596.5324422558037
@@ -2222,40 +2222,12 @@ workflow:
       positionAbsolute:
         x: 2596.5324422558037
         y: 481.78163892987754
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
-    - data:
-        desc: ''
-        items:
-        - input_type: variable
-          operation: append
-          value:
-          - '1773056094185'
-          - result
-          variable_selector:
-          - conversation
-          - user_info
-          write_mode: over-write
-        selected: false
-        title: Variable Assigner 6
-        type: assigner
-        version: '2'
-      height: 85
-      id: '1773638608899'
-      position:
-        x: 2292.5324422558037
-        y: 610.7816389298775
-      positionAbsolute:
-        x: 2292.5324422558037
-        y: 610.7816389298775
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
+      width: 243
     viewport:
-      x: -11.260616611757769
-      y: 172.33945945274996
-      zoom: 0.4319849031694483
+      x: -744.6189971295707
+      y: 2.355026316162366
+      zoom: 0.6597539553864491
