@@ -1,8 +1,10 @@
 app:
-  description: ''
+  description: 'Multi-format file reader. PDF, OCR images, Excel, TXT, DOC/DOCX, CSV.
+    English and Japanese. File validation: empty, zip disguised, compressed formats
+    blocked.'
   icon: 🤖
   icon_background: '#FFEAD5'
-  mode: advanced-chat
+  mode: workflow
   name: test
   use_icon_as_answer_icon: false
 dependencies:
@@ -27,9 +29,9 @@ workflow:
       allowed_file_types:
       - image
       allowed_file_upload_methods:
-      - remote_url
       - local_file
-      enabled: true
+      - remote_url
+      enabled: false
       fileUploadConfig:
         audio_file_size_limit: 50
         batch_count_limit: 5
@@ -61,32 +63,297 @@ workflow:
   graph:
     edges:
     - data:
-        sourceType: start
-        targetType: llm
-      id: 1777358116676-llm
-      source: '1777358116676'
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: e-detect-route
+      source: '1776006990907'
       sourceHandle: source
-      target: llm
+      target: '1776007103329'
       targetHandle: target
       type: custom
+      zIndex: 0
     - data:
-        sourceType: llm
-        targetType: answer
-      id: llm-answer
-      source: llm
-      sourceHandle: source
-      target: answer
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: e-route-pdf
+      source: '1776007103329'
+      sourceHandle: 'true'
+      target: '1776007289790'
       targetHandle: target
       type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: e-route-ocr
+      source: '1776007103329'
+      sourceHandle: a62a50de-36b5-4a82-8409-84da0959e7a2
+      target: '17760073854930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-zip-error
+      source: '1776007103329'
+      sourceHandle: b3c4d5e6-1234-5678-abcd-ef0123456789
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-empty-error
+      source: '1776007103329'
+      sourceHandle: a1b2c3d4-5678-90ab-cdef-012345678901
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-error
+      source: '1776007103329'
+      sourceHandle: 'false'
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: e-pdf-formatter
+      source: '1776007289790'
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: e-ocr-formatter
+      source: '17760073854930'
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: e-error-formatter
+      source: '1776007607703'
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: e-formatter-end
+      source: '1776007699730'
+      sourceHandle: source
+      target: '1776008679232'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-exe-error
+      source: '1776007103329'
+      sourceHandle: d4e5f6a7-1234-5678-abcd-ef0123456789
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: e-route-doc-extractor
+      source: '1776007103329'
+      sourceHandle: c5d6e7f8-1234-5678-abcd-ef0123456789
+      target: node-doc-extractor-doc
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: code
+      id: e-extractor-normalize
+      source: node-doc-extractor-doc
+      sourceHandle: source
+      target: node-doc-normalize
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: e-normalize-process-doc
+      source: node-doc-normalize
+      sourceHandle: source
+      target: node-process-document
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: e-doc-formatter
+      source: node-process-document
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-word-error
+      source: '1776007103329'
+      sourceHandle: e5f6a7b8-1234-5678-abcd-ef0123456789
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-size-error
+      source: '1776007103329'
+      sourceHandle: f6a7b8c9-1234-5678-abcd-ef0123456789
+      target: '1776007607703'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: e-start-detect
+      selected: false
+      source: '1776006764107'
+      sourceHandle: source
+      target: '1776006990907'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-excel
+      source: '1776007103329'
+      sourceHandle: 07e60910-cd79-4478-99ba-506a1e97e376
+      target: node-excel-unified
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: e-excel-unified-llm
+      source: node-excel-unified
+      sourceHandle: source
+      target: node-excel-llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: e-excel-llm-formatter
+      source: node-excel-llm
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: e-route-word-doc
+      source: '1776007103329'
+      sourceHandle: b1c2d3e4-abcd-4321-fedc-ba9876543210
+      target: node-word-extract
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: e-word-extract-process
+      source: node-word-extract
+      sourceHandle: source
+      target: node-process-word
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: e-word-process-formatter
+      source: node-process-word
+      sourceHandle: source
+      target: '1776007699730'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
-        desc: ''
+        desc: Upload one file — PDF, image (JPG/PNG), or Excel (XLSX). ZIP not allowed.
         selected: false
         title: Start
         type: start
-        variables: []
-      height: 53
-      id: '1777358116676'
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          label: select_file
+          max_length: 1
+          options: []
+          required: true
+          type: file-list
+          variable: select_file
+      height: 149
+      id: '1776006764107'
       position:
         x: 80
         y: 282
@@ -99,70 +366,1665 @@ workflow:
       type: custom
       width: 244
     - data:
+        code: "import urllib.request\n\ndef main(inputs):\n    if not inputs or not\
+          \ isinstance(inputs, list):\n        return {\"result\": \"empty\"}\n\n\
+          \    file = inputs[0]\n    if not file:\n        return {\"result\": \"\
+          empty\"}\n\n    file_name = (file.get(\"filename\") or file.get(\"name\"\
+          ) or \"\").strip()\n    mime      = (file.get(\"mime_type\") or file.get(\"\
+          type\") or \"\").lower().strip()\n\n    # ── VALIDATION 1: Empty file ──────────────────────────────────────\n\
+          \    if not file_name:\n        return {\"result\": \"empty\"}\n\n    size\
+          \ = file.get(\"size\") or file.get(\"file_size\") or 0\n    try:\n     \
+          \   size = int(size)\n    except (TypeError, ValueError):\n        size\
+          \ = 0\n    if size == 0 and file.get(\"size\") is not None:\n        return\
+          \ {\"result\": \"empty\"}\n\n    name_lower = file_name.lower()\n\n    #\
+          \ ── VALIDATION 2: Magic byte check (catches renamed ZIPs) ─────────\n \
+          \   # Fetches first 16 bytes via HTTP Range header and checks file\n   \
+          \ # signatures. A ZIP renamed to .png still starts with PK\\x03\\x04.\n\
+          \    # XLSX/DOCX are ZIP-based office formats — intentionally exempt.\n\
+          \    # Gracefully skips if network is unavailable (Dify Cloud sandbox).\n\
+          \    ALLOWED_ZIP_EXT = (\n        \".xlsx\", \".xls\", \".docx\", \".doc\"\
+          ,\n        \".odt\", \".pptx\", \".ppt\", \".odp\", \".ods\"\n    )\n  \
+          \  if not any(name_lower.endswith(e) for e in ALLOWED_ZIP_EXT):\n      \
+          \  file_url = (\n            file.get(\"url\") or file.get(\"remote_url\"\
+          ) or file.get(\"path\") or \"\"\n        ).strip()\n        if file_url:\n\
+          \            try:\n                req = urllib.request.Request(\n     \
+          \               file_url,\n                    headers={\"Range\": \"bytes=0-15\"\
+          }\n                )\n                with urllib.request.urlopen(req, timeout=5)\
+          \ as resp:\n                    header = resp.read(16)\n\n             \
+          \   MAGIC = [\n                    b\"PK\\x03\\x04\",          # ZIP (also\
+          \ XLSX/DOCX — exempt above)\n                    b\"PK\\x05\\x06\",    \
+          \      # Empty ZIP\n                    b\"PK\\x07\\x08\",          # Spanned\
+          \ ZIP\n                    b\"Rar!\\x1a\\x07\",        # RAR v4\n      \
+          \              b\"Rar!\\x1a\\x07\\x01\",   # RAR v5\n                  \
+          \  b\"7z\\xbc\\xaf\\x27\\x1c\",# 7-Zip\n                    b\"\\x1f\\x8b\"\
+          ,            # GZip\n                    b\"BZh\",                   # BZip2\n\
+          \                    b\"\\xfd7zXZ\\x00\",        # XZ\n                \
+          \    b\"MSCF\",                  # CAB\n                    b\"\\x04\\x22\\\
+          x4d\\x18\",  # LZ4\n                    b\"\\x28\\xb5\\x2f\\xfd\",  # Zstandard\n\
+          \                ]\n                for sig in MAGIC:\n                \
+          \    if header[:len(sig)] == sig:\n                        return {\"result\"\
+          : \"zip_blocked\"}\n            except Exception:\n                pass\
+          \  # Network blocked — continue to other checks\n\n    # ── VALIDATION 3:\
+          \ Executable files blocked ────────────────────────\n    BLOCKED_EXE = (\n\
+          \        \".exe\", \".msi\", \".bat\", \".cmd\", \".com\", \".pif\", \"\
+          .scr\",\n        \".ps1\", \".psm1\", \".psd1\", \".vbs\", \".vbe\", \"\
+          .wsf\", \".wsh\", \".js\", \".jse\",\n        \".sh\", \".bash\", \".zsh\"\
+          , \".fish\", \".ksh\", \".csh\",\n        \".app\", \".dmg\", \".pkg\",\
+          \ \".mpkg\", \".ipa\",\n        \".apk\", \".aab\", \".xapk\",\n       \
+          \ \".bin\", \".run\", \".out\", \".elf\",\n        \".dll\", \".so\", \"\
+          .dylib\", \".sys\", \".drv\",\n        \".class\", \".jar\", \".war\", \"\
+          .ear\",\n        \".pyc\", \".pyo\", \".pyd\",\n        \".rb\", \".pl\"\
+          , \".php\", \".asp\", \".aspx\", \".cgi\",\n        \".reg\", \".lnk\",\
+          \ \".url\",\n    )\n    if any(name_lower.endswith(e) for e in BLOCKED_EXE):\n\
+          \        return {\"result\": \"exe_blocked\"}\n\n    BLOCKED_EXE_MIMES =\
+          \ (\n        \"application/x-msdownload\", \"application/x-msdos-program\"\
+          ,\n        \"application/x-ms-dos-executable\", \"application/x-executable\"\
+          ,\n        \"application/x-elf\", \"application/x-mach-binary\",\n     \
+          \   \"application/x-dosexec\", \"application/x-sh\",\n        \"application/x-bat\"\
+          , \"application/x-msi\",\n    )\n    if any(mime.startswith(m) for m in\
+          \ BLOCKED_EXE_MIMES):\n        return {\"result\": \"exe_blocked\"}\n\n\
+          \    # ── VALIDATION 4: ZIP / archive by MIME ───────────────────────────\n\
+          \    BLOCKED_MIMES = (\n        \"application/zip\", \"application/x-zip\"\
+          ,\n        \"application/x-zip-compressed\", \"application/x-rar-compressed\"\
+          ,\n        \"application/x-rar\", \"application/vnd.rar\",\n        \"application/x-7z-compressed\"\
+          , \"application/x-tar\",\n        \"application/gzip\", \"application/x-gzip\"\
+          ,\n        \"application/x-bzip2\", \"application/x-bzip\",\n        \"\
+          application/x-xz\", \"application/x-lzip\",\n        \"application/x-lzma\"\
+          , \"application/x-compress\",\n        \"application/x-compressed\", \"\
+          application/x-apple-diskimage\",\n    )\n    if any(mime.startswith(m) for\
+          \ m in BLOCKED_MIMES):\n        return {\"result\": \"zip_blocked\"}\n\n\
+          \    # ── VALIDATION 5: ZIP / archive by extension ──────────────────────\n\
+          \    BLOCKED_EXT = (\n        \".zip\", \".rar\", \".tar\", \".gz\", \"\
+          .tgz\", \".tar.gz\",\n        \".7z\", \".bz2\", \".xz\", \".lz\", \".lzma\"\
+          , \".z\", \".cab\", \".iso\",\n    )\n    if any(name_lower.endswith(e)\
+          \ for e in BLOCKED_EXT):\n        return {\"result\": \"zip_blocked\"}\n\
+          \n    # ── VALIDATION 6: File type detection + size limits ───────────────\n\
+          \    MB = 1024 * 1024\n    SIZE_LIMITS = {\n        \"pdf\":      15 * MB,\n\
+          \        \"image\":    15 * MB,\n        \"excel\":    15 * MB,\n      \
+          \  \"document\": 15 * MB,\n        \"word_doc\": 15 * MB,\n    }\n\n   \
+          \ if name_lower.endswith(\".pdf\"):\n        file_type = \"pdf\"\n    elif\
+          \ name_lower.endswith((\".jpg\", \".jpeg\", \".png\", \".gif\", \".webp\"\
+          ,\n                               \".bmp\", \".tiff\", \".tif\", \".svg\"\
+          )):\n        file_type = \"image\"\n    elif name_lower.endswith((\".xlsx\"\
+          , \".xls\")):\n        file_type = \"excel\"\n    elif name_lower.endswith((\"\
+          .doc\", \".docx\")):\n        file_type = \"word_doc\"\n    elif name_lower.endswith((\"\
+          .txt\", \".csv\", \".htm\", \".html\",\n                               \"\
+          .md\", \".rtf\", \".odt\")):\n        file_type = \"document\"\n    else:\n\
+          \        return {\"result\": \"unsupported\"}\n\n    if size > 0 and file_type\
+          \ in SIZE_LIMITS and size > SIZE_LIMITS[file_type]:\n        size_mb  =\
+          \ round(size / MB, 1)\n        limit_mb = SIZE_LIMITS[file_type] // MB\n\
+          \        return {\"result\": f\"size_exceeded|{file_type}|{size_mb}|{limit_mb}\"\
+          }\n\n    return {\"result\": file_type}\n"
+        code_language: python3
+        desc: 'Single node: magic byte check + all file validation + type detection.
+          Returns pdf | image | excel | document | zip_blocked (archive by magic bytes,
+          MIME, or extension) | exe_blocked | word_unsupported | empty | size_exceeded|type|mb|limit
+          | unsupported.'
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Detect File Type
+        type: code
+        variables:
+        - value_selector:
+          - '1776006764107'
+          - select_file
+          value_type: array[file]
+          variable: inputs
+      height: 193
+      id: '1776006990907'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: cond-pdf
+            value: pdf
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: 'true'
+          logical_operator: and
+        - case_id: a62a50de-36b5-4a82-8409-84da0959e7a2
+          conditions:
+          - comparison_operator: contains
+            id: cond-image
+            value: image
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: a62a50de-36b5-4a82-8409-84da0959e7a2
+          logical_operator: and
+        - case_id: 07e60910-cd79-4478-99ba-506a1e97e376
+          conditions:
+          - comparison_operator: contains
+            id: cond-excel
+            value: excel
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: 07e60910-cd79-4478-99ba-506a1e97e376
+          logical_operator: and
+        - case_id: b3c4d5e6-1234-5678-abcd-ef0123456789
+          conditions:
+          - comparison_operator: contains
+            id: cond-zip
+            value: zip_blocked
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: b3c4d5e6-1234-5678-abcd-ef0123456789
+          logical_operator: and
+        - case_id: a1b2c3d4-5678-90ab-cdef-012345678901
+          conditions:
+          - comparison_operator: contains
+            id: cond-empty
+            value: empty
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: a1b2c3d4-5678-90ab-cdef-012345678901
+          logical_operator: and
+        - case_id: c5d6e7f8-1234-5678-abcd-ef0123456789
+          conditions:
+          - comparison_operator: contains
+            id: cond-document
+            value: document
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: c5d6e7f8-1234-5678-abcd-ef0123456789
+          logical_operator: and
+        - case_id: d4e5f6a7-1234-5678-abcd-ef0123456789
+          conditions:
+          - comparison_operator: contains
+            id: cond-exe
+            value: exe_blocked
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: d4e5f6a7-1234-5678-abcd-ef0123456789
+          logical_operator: and
+        - case_id: e5f6a7b8-1234-5678-abcd-ef0123456789
+          conditions:
+          - comparison_operator: contains
+            id: cond-word-unsupported
+            value: word_unsupported
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: e5f6a7b8-1234-5678-abcd-ef0123456789
+          logical_operator: and
+        - case_id: f6a7b8c9-1234-5678-abcd-ef0123456789
+          conditions:
+          - comparison_operator: contains
+            id: cond-size-exceeded
+            value: size_exceeded
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: f6a7b8c9-1234-5678-abcd-ef0123456789
+          logical_operator: and
+        - case_id: b1c2d3e4-abcd-4321-fedc-ba9876543210
+          conditions:
+          - comparison_operator: contains
+            id: cond-word-doc
+            value: word_doc
+            varType: string
+            variable_selector:
+            - '1776006990907'
+            - result
+          id: b1c2d3e4-abcd-4321-fedc-ba9876543210
+          logical_operator: and
+        desc: Routes to PDF / OCR / Excel / Document / Error. exe_blocked, zip_blocked,
+          and empty all route to Error node.
+        selected: false
+        title: Route By Type
+        type: if-else
+      height: 617
+      id: '1776007103329'
+      position:
+        x: 661
+        y: 282
+      positionAbsolute:
+        x: 661
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
         context:
           enabled: false
           variable_selector: []
-        desc: ''
-        memory:
-          query_prompt_template: '{{#sys.query#}}
-
-
-            {{#sys.files#}}'
-          role_prefix:
-            assistant: ''
-            user: ''
-          window:
-            enabled: false
-            size: 10
+        desc: Extracts text + tables + image insights from any PDF. English and Japanese
+          with kanji/kana accuracy. Vision disabled.
         model:
           completion_params:
-            temperature: 0.7
+            temperature: 0.1
           mode: chat
           name: gemini-2.5-pro
           provider: langgenius/gemini/google
         prompt_template:
-        - id: 03149656-b9ed-42b1-a166-1b5c7f93b01a
+        - id: pdf-prompt-v4
           role: system
-          text: ''
-        selected: true
-        title: LLM
+          text: "PDF: {{#1776006764107.select_file#}}\n\nTASK: Extract everything.\
+            \ Return 1 JSON object. No fences. No prose.\n\nRULES:\n- text: all text\
+            \ verbatim, original line breaks kept\n- language: preserve text in its\
+            \ ORIGINAL language — do NOT translate\n- language_detected: scan ALL\
+            \ visible text. Set \"ja\" ONLY if Japanese script (hiragana ひ, katakana\
+            \ ア, kanji 漢) is clearly and intentionally present as the primary written\
+            \ language. Set \"en\" for everything else including English, mixed, numeric-only,\
+            \ symbol-only, or unrecognised content. Never guess \"ja\".\n- ja accuracy:\
+            \ preserve 漢字 (kanji) ひらがな (hiragana) カタカナ (katakana) 句読点 exactly; never\
+            \ romanize; use full-width chars as printed\n- tables: every table/grid\
+            \ found; [] if none\n- images: every image/photo/chart/logo/illustration\
+            \ found; [] if none\n\nFOR EACH IMAGE:\n- index: 1-based integer\n- page:\
+            \ page number\n- type: photo|illustration|chart|diagram|logo|screenshot|infographic|other\n\
+            - caption: exact caption near image, or \"\"\n- description: what is literally\
+            \ visible, 2 sentences\n- subject: e.g. \"Bahubali character – Amarendra\
+            \ Bahubali\" or \"Bar chart – Q3 revenue\"\n- identity: name, origin (film/brand/place),\
+            \ type (fictional_character/real_person/brand/landmark/other)\n- insights:\
+            \ 3-4 sentences — character: role/actor/traits/impact; logo: founding/industry/HQ;\
+            \ landmark: location/history; chart: what data shows\n- portrayed_by:\
+            \ actor/creator name, or \"\"\n- text_in_image: all text visible inside\
+            \ the image, or \"\"\n- sentiment: positive|negative|neutral|dramatic|inspirational|informational\n\
+            - tags: array of 3-5 keywords\n\nOUTPUT SCHEMA (no extras):\n{\n  \"source_type\"\
+            : \"pdf\",\n  \"language_detected\": \"en\",\n  \"text\": \"\",\n  \"\
+            tables\": [\n    { \"title\": \"\", \"headers\": [\"c1\",\"c2\"], \"rows\"\
+            : [[\"v1\",\"v2\"]] }\n  ],\n  \"images\": [\n    {\n      \"index\":\
+            \ 1,\n      \"page\": 1,\n      \"type\": \"\",\n      \"caption\": \"\
+            \",\n      \"description\": \"\",\n      \"subject\": \"\",\n      \"\
+            identity\": { \"name\": \"\", \"origin\": \"\", \"type\": \"\" },\n  \
+            \    \"insights\": \"\",\n      \"portrayed_by\": \"\",\n      \"text_in_image\"\
+            : \"\",\n      \"sentiment\": \"\",\n      \"tags\": []\n    }\n  ]\n\
+            }\n"
+        selected: false
+        title: Process PDF
         type: llm
         variables: []
         vision:
           enabled: false
-      height: 89
-      id: llm
+      height: 165
+      id: '1776007289790'
       position:
-        x: 380
-        y: 282
+        x: 984
+        y: 45
       positionAbsolute:
-        x: 380
-        y: 282
+        x: 984
+        y: 45
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: OCR + visual analysis. English and Japanese with kanji/kana accuracy.
+          Vision disabled.
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: ocr-prompt-v4
+          role: system
+          text: "IMAGE: {{#1776006764107.select_file#}}\n\nTASK: OCR all text. Analyse\
+            \ all visuals. Return 1 JSON object. No fences. No prose.\n\nRULES:\n\
+            - text: all printed/handwritten text verbatim, original layout kept; blank\
+            \ fields as \"___\"\n- language: preserve text in its ORIGINAL language\
+            \ — do NOT translate\n- language_detected: scan ALL visible text. Set\
+            \ \"ja\" ONLY if Japanese script (hiragana ひ, katakana ア, kanji 漢) is\
+            \ clearly and intentionally present as the primary written language. Set\
+            \ \"en\" for everything else including English, mixed, numeric-only, symbol-only,\
+            \ or unrecognised content. Never guess \"ja\".\n- ja accuracy: preserve\
+            \ 漢字 (kanji) ひらがな (hiragana) カタカナ (katakana) 句読点 exactly; never romanize;\
+            \ distinguish similar kanji carefully (e.g. 土/士 己/已/巳); use full-width\
+            \ chars as printed\n- tables: every table/grid detected; [] if none\n\
+            - visual_analysis: always include image-level metadata + subjects array\n\
+            \nFOR subjects — one entry per distinct person/character/logo/landmark/object:\n\
+            - index: 1-based integer\n- type: person_real|person_fictional|logo|landmark|chart|object|artwork|other\n\
+            - description: what is literally visible, 2 sentences\n- subject: e.g.\
+            \ \"Bahubali character – Devasena\" or \"Logo – Amazon India\"\n- identity:\
+            \ name, origin (film/brand/city), type (fictional_character/real_person/brand/landmark/other)\n\
+            - insights: 3-4 sentences — character: role/actor/traits/impact; brand:\
+            \ founding/industry/HQ; landmark: location/history; person: profession/achievements\n\
+            - portrayed_by: actor/creator, or \"\"\n- sentiment: positive|negative|neutral|dramatic|inspirational|informational|celebratory|formal\n\
+            - tags: array of 3-5 keywords\n\nOUTPUT SCHEMA (no extras):\n{\n  \"source_type\"\
+            : \"image\",\n  \"language_detected\": \"en\",\n  \"text\": \"\",\n  \"\
+            tables\": [\n    { \"title\": \"\", \"headers\": [\"c1\",\"c2\"], \"rows\"\
+            : [[\"v1\",\"v2\"]] }\n  ],\n  \"visual_analysis\": {\n    \"image_type\"\
+            : \"document|photograph|illustration|screenshot|artwork|infographic|mixed\"\
+            ,\n    \"document_category\": \"invoice|receipt|form|certificate|id_card|letter|report|poster|advertisement|other\"\
+            ,\n    \"language\": \"\",\n    \"quality\": \"excellent|good|fair|poor\"\
+            ,\n    \"orientation\": \"portrait|landscape|square\",\n    \"subjects\"\
+            : [\n      {\n        \"index\": 1,\n        \"type\": \"\",\n       \
+            \ \"description\": \"\",\n        \"subject\": \"\",\n        \"identity\"\
+            : { \"name\": \"\", \"origin\": \"\", \"type\": \"\" },\n        \"insights\"\
+            : \"\",\n        \"portrayed_by\": \"\",\n        \"sentiment\": \"\"\
+            ,\n        \"tags\": []\n      }\n    ]\n  }\n}\n"
+        selected: false
+        title: Process OCR
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 149
+      id: '17760073854930'
+      position:
+        x: 984
+        y: 241
+      positionAbsolute:
+        x: 984
+        y: 241
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\ndef main(file_type: str = \"\") -> dict:\n    ALLOWED\
+          \ = (\n        \"Supported file types and limits (max 15 MB per file):\"\
+          \n        \"\\n\"\n        \"\\n  PDF          : .pdf\"\n        \"\\n \
+          \ Images       : .jpg  .jpeg  .png  .gif  .webp  .bmp  .tiff  .svg\"\n \
+          \       \"\\n  Excel        : .xlsx  .xls         (up to 2,000 rows/sheet\
+          \ rendered)\"\n        \"\\n  Word         : .doc  .docx         (up to\
+          \ 200,000 characters extracted)\"\n        \"\\n  Plain text   : .txt  .md\
+          \  .rtf  .odt\"\n        \"\\n  Web / data   : .html  .htm  .csv  (up to\
+          \ 200,000 characters extracted)\"\n        \"\\n\"\n        \"\\nBlocked:\
+          \ .zip .rar .tar .gz .7z and all archives\"\n        \"\\nBlocked: .exe\
+          \ .msi .bat .sh .ps1 .dll and all executables\"\n    )\n\n    ft = (file_type\
+          \ or \"\").strip()\n\n    # size_exceeded carries payload: \"size_exceeded|type|actual_mb|limit_mb\"\
+          \n    if ft.startswith(\"size_exceeded\"):\n        parts    = ft.split(\"\
+          |\")\n        ftype    = parts[1] if len(parts) > 1 else \"file\"\n    \
+          \    actual   = parts[2] if len(parts) > 2 else \"?\"\n        limit   \
+          \ = parts[3] if len(parts) > 3 else \"?\"\n        msg = (\n           \
+          \ f\"File too large: {actual} MB uploaded, maximum for {ftype} is {limit}\
+          \ MB.\\n\\n\"\n            \"The Dify platform enforces a 15 MB upload limit\
+          \ for all file types.\\n\\n\"\n            \"Tips to reduce file size:\\\
+          n\"\n            \"  PDF     : Compress or split using any PDF editor (e.g.\
+          \ ilovepdf.com).\\n\"\n            \"  Image   : Compress using TinyPNG,\
+          \ Squoosh, or imagemagick.\\n\"\n            \"  Excel   : Remove unused\
+          \ sheets, rows, or embedded images.\\n\"\n            \"  Word    : Remove\
+          \ embedded images or split into smaller documents.\\n\"\n            \"\
+          \  Document: Trim content or split into multiple files.\\n\\n\"\n      \
+          \      f\"{ALLOWED}\"\n        )\n        return {\"result\": json.dumps({\n\
+          \            \"source_type\": \"unknown\", \"success\": False,\n       \
+          \     \"error_message\": msg, \"data\": {}\n        })}\n\n    messages\
+          \ = {\n        \"empty\": (\n            \"The uploaded file is empty or\
+          \ has no readable content.\\n\\n\"\n            f\"Allowed formats:\\n{ALLOWED}\"\
+          \n        ),\n        \"zip_disguised\": (\n            \"File rejected.\
+          \ A compressed archive was detected inside this file.\\n\\n\"\n        \
+          \    \"The file content signature (magic bytes PK/Rar!/7z etc.) identifies\
+          \ \"\n            \"this as a ZIP or archive file, even though it was uploaded\
+          \ with a \"\n            \"different extension (.png, .jpg, .pdf, .txt etc.).\\\
+          n\\n\"\n            \"Renaming a compressed file does not change its content.\
+          \ \"\n            \"Please upload the original uncompressed file.\\n\\n\"\
+          \n            f\"Allowed formats:\\n{ALLOWED}\"\n        ),\n        \"\
+          zip_blocked\": (\n            \"Compressed and archive files are not allowed.\
+          \ \"\n            \"Blocked: .zip .rar .tar .gz .7z .bz2 .xz .cab .iso and\
+          \ all variants.\\n\\n\"\n            f\"Allowed formats:\\n{ALLOWED}\"\n\
+          \        ),\n        \"exe_blocked\": (\n            \"Executable and script\
+          \ files are not allowed. \"\n            \"Blocked: .exe .msi .bat .cmd\
+          \ .sh .ps1 .vbs .app .apk \"\n            \".dll .so .class .pyc .php .rb\
+          \ .pl .lnk and all others.\\n\\n\"\n            f\"Allowed formats:\\n{ALLOWED}\"\
+          \n        ),\n        \"word_unsupported\": (\n            \".doc and .docx\
+          \ are supported — please re-upload your file.\\n\\n\"\n            \"If\
+          \ the error persists, convert to .txt or .html as a fallback:\\n\"\n   \
+          \         \"  1. Save as .txt  (File > Save As > Plain Text)\\n\"\n    \
+          \        \"  2. Save as .html (File > Save As > Web Page)\\n\\n\"\n    \
+          \        f\"Supported document formats:\\n{ALLOWED}\"\n        ),\n    \
+          \    \"unsupported\": (\n            \"Unsupported file format.\\n\\n\"\n\
+          \            f\"{ALLOWED}\\n\\n\"\n            \"If your file is not listed\
+          \ above, consider converting it:\\n\"\n            \"  Word processor files\
+          \ (.pages, .odf, .wps) → save as .docx or .txt\\n\"\n            \"  Presentations\
+          \ (.pptx, .key)               → export as PDF\\n\"\n            \"  Spreadsheets\
+          \ (.ods, .numbers)             → export as .xlsx or .csv\\n\"\n        \
+          \    \"  E-books (.epub, .mobi)                    → convert to .txt or\
+          \ PDF\\n\"\n            \"  Data files (.json, .xml)                  →\
+          \ rename to .txt\"\n        ),\n    }\n\n    msg = messages.get(ft, messages[\"\
+          unsupported\"])\n    return {\"result\": json.dumps({\n        \"source_type\"\
+          : \"unknown\", \"success\": False,\n        \"error_message\": msg, \"data\"\
+          : {}\n    })}\n"
+        code_language: python3
+        desc: 'Dynamic error messages for: empty, zip_blocked, exe_blocked, unsupported.
+          Lists all allowed formats (PDF, images, Excel, TXT, DOC/DOCX, CSV, HTM/HTML).
+          Lists all blocked categories (archives, executables).'
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 'Error: Invalid File'
+        type: code
+        variables:
+        - value_selector:
+          - '1776006990907'
+          - result
+          value_type: string
+          variable: file_type
+      height: 161
+      id: '1776007607703'
+      position:
+        x: 997.2808261846812
+        y: 704.7419849534729
+      positionAbsolute:
+        x: 997.2808261846812
+        y: 704.7419849534729
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json, re\n\ndef strip_fences(raw):\n    return re.sub(r\"```[a-zA-Z]*\\\
+          s*|\\s*```\", \"\", raw).strip()\n\ndef parse_json(raw):\n    try:\n   \
+          \     return json.loads(strip_fences(raw)), \"\"\n    except json.JSONDecodeError\
+          \ as e:\n        return {}, f\"JSON parse failed: {e}\"\n\ndef section(title):\n\
+          \    return f\"\\n{'─' * 60}\\n  {title}\\n{'─' * 60}\"\n\ndef fmt_table(table):\n\
+          \    headers = table.get(\"headers\") or []\n    rows    = table.get(\"\
+          rows\")    or []\n    title   = (table.get(\"title\")  or \"\").strip()\n\
+          \    if not headers:\n        return \"  (empty table)\"\n    col_w = [\n\
+          \        max(len(str(h)), max((len(str(r[i])) for r in rows if i < len(r)),\
+          \ default=0))\n        for i, h in enumerate(headers)\n    ]\n    def fmt_row(cells):\n\
+          \        return \"| \" + \" | \".join(\n            str(cells[i]).ljust(col_w[i])\
+          \ if i < len(cells) else \" \" * col_w[i]\n            for i in range(len(headers))\n\
+          \        ) + \" |\"\n    sep   = \"+\" + \"+\".join(\"-\" * (w + 2) for\
+          \ w in col_w) + \"+\"\n    block = []\n    if title:\n        block.append(f\"\
+          \  Table: {title}\")\n    block += [sep, fmt_row(headers), sep]\n    for\
+          \ row in rows:\n        block.append(fmt_row(row))\n    block.append(sep)\n\
+          \    return \"\\n\".join(block)\n\ndef render_image_entry(img, idx_label):\n\
+          \    lines    = []\n    identity = img.get(\"identity\") or {}\n    lines.append(f\"\
+          \\n  {idx_label}\")\n    if img.get(\"subject\"):        lines.append(f\"\
+          \    Subject      : {img['subject']}\")\n    if img.get(\"description\"\
+          ):    lines.append(f\"    Description  : {img['description']}\")\n    if\
+          \ identity.get(\"name\"):      lines.append(f\"    Name         : {identity['name']}\"\
+          )\n    if identity.get(\"origin\"):    lines.append(f\"    Origin      \
+          \ : {identity['origin']}\")\n    if identity.get(\"type\"):      lines.append(f\"\
+          \    Identity Type: {identity['type']}\")\n    if img.get(\"portrayed_by\"\
+          ):   lines.append(f\"    Portrayed By : {img['portrayed_by']}\")\n    if\
+          \ img.get(\"insights\"):\n        lines.append(\"    Insights     :\")\n\
+          \        for s in img[\"insights\"].split(\". \"):\n            s = s.strip()\n\
+          \            if s:\n                lines.append(f\"      \\u2022 {s}{'.'\
+          \ if not s.endswith('.') else ''}\")\n    if img.get(\"caption\"):     \
+          \   lines.append(f\"    Caption      : {img['caption']}\")\n    if img.get(\"\
+          text_in_image\"):  lines.append(f\"    Text Inside  : {img['text_in_image']}\"\
+          )\n    if img.get(\"sentiment\"):      lines.append(f\"    Sentiment   \
+          \ : {img['sentiment']}\")\n    tags = img.get(\"tags\") or []\n    if tags:\
+          \                      lines.append(f\"    Tags         : {', '.join(tags)}\"\
+          )\n    return lines\n\ndef format_pdf(data):\n    lines = []\n    lines.append(section(\"\
+          EXTRACTED TEXT\"))\n    text = (data.get(\"text\") or \"\").strip()\n  \
+          \  lines.append(text if text else \"  (no text found)\")\n    tables = data.get(\"\
+          tables\") or []\n    lines.append(section(f\"TABLES  ({len(tables)} found)\"\
+          ))\n    if not tables:\n        lines.append(\"  (no tables found)\")\n\
+          \    else:\n        for i, t in enumerate(tables, 1):\n            lines.append(f\"\
+          \\n  [Table {i}]\")\n            lines.append(fmt_table(t))\n    images\
+          \ = data.get(\"images\") or []\n    lines.append(section(f\"IMAGES IN PDF\
+          \  ({len(images)} found)\"))\n    if not images:\n        lines.append(\"\
+          \  (no images found)\")\n    else:\n        for img in images:\n       \
+          \     label = (\n                f\"\\u25b8 Image #{img.get('index','')}\
+          \ \"\n                f\"| Page {img.get('page','')} \"\n              \
+          \  f\"| {img.get('type','').upper()}\"\n            )\n            lines.extend(render_image_entry(img,\
+          \ label))\n    return \"\\n\".join(lines)\n\ndef format_image(data):\n \
+          \   lines = []\n    lines.append(section(\"EXTRACTED TEXT  (OCR)\"))\n \
+          \   text = (data.get(\"text\") or \"\").strip()\n    lines.append(text if\
+          \ text else \"  (no text found)\")\n    tables = data.get(\"tables\") or\
+          \ []\n    lines.append(section(f\"TABLES  ({len(tables)} found)\"))\n  \
+          \  if not tables:\n        lines.append(\"  (no tables found)\")\n    else:\n\
+          \        for i, t in enumerate(tables, 1):\n            lines.append(f\"\
+          \\n  [Table {i}]\")\n            lines.append(fmt_table(t))\n    va = data.get(\"\
+          visual_analysis\") or {}\n    lines.append(section(\"VISUAL ANALYSIS\"))\n\
+          \    if not va:\n        lines.append(\"  (no visual analysis)\")\n    else:\n\
+          \        lines.append(f\"  Image Type        : {va.get('image_type','')}\"\
+          )\n        lines.append(f\"  Document Category : {va.get('document_category','')}\"\
+          )\n        lines.append(f\"  Language          : {va.get('language','')}\"\
+          )\n        lines.append(f\"  Image Quality     : {va.get('quality','')}\"\
+          )\n        lines.append(f\"  Orientation       : {va.get('orientation','')}\"\
+          )\n        subjects = va.get(\"subjects\") or []\n        lines.append(f\"\
+          \\n  Subjects Found: {len(subjects)}\")\n        for sub in subjects:\n\
+          \            label = (\n                f\"\\u25b8 Subject #{sub.get('index','')}\
+          \ \"\n                f\"| {sub.get('type','').upper()}\"\n            )\n\
+          \            lines.extend(render_image_entry(sub, label))\n    return \"\
+          \\n\".join(lines)\n\ndef format_excel(raw, vision_raw=\"\"):\n    lines\
+          \ = []\n    parsed, err = parse_json(raw)\n    if err or not parsed.get(\"\
+          success\", False):\n        msg = parsed.get(\"error_message\", err) if\
+          \ not err else err\n        lines.append(section(\"EXCEL ERROR\"))\n   \
+          \     lines.append(f\"  {msg}\")\n        return \"\\n\".join(lines)\n \
+          \   data        = parsed.get(\"data\", {})\n    sheets      = data.get(\"\
+          sheets\", {})\n    sheet_names = data.get(\"sheet_names\", list(sheets.keys()))\n\
+          \    sheet_count = data.get(\"sheet_count\", len(sheets))\n    lines.append(section(f\"\
+          EXCEL DATA  ({sheet_count} sheet{'s' if sheet_count != 1 else ''})\"))\n\
+          \    lines.append(f\"  Sheet Names : {', '.join(sheet_names)}\")\n    for\
+          \ sheet_name, sheet_data in sheets.items():\n        # Support both old\
+          \ format (list of dicts) and new large-file format (dict with metadata)\n\
+          \        if isinstance(sheet_data, dict) and \"records\" in sheet_data:\n\
+          \            records    = sheet_data.get(\"records\", [])\n            total_rows\
+          \ = sheet_data.get(\"total_rows\", len(records))\n            truncated\
+          \  = sheet_data.get(\"truncated\", False)\n            trunc_note = sheet_data.get(\"\
+          truncation_note\", \"\")\n        else:\n            records    = sheet_data\
+          \ if isinstance(sheet_data, list) else []\n            total_rows = len(records)\n\
+          \            truncated  = False\n            trunc_note = \"\"\n       \
+          \ lines.append(f\"\\n  {'=' * 50}\")\n        lines.append(f\"  Sheet: {sheet_name}\
+          \  (Total rows: {total_rows} | Loaded: {len(records)})\")\n        if truncated:\n\
+          \            lines.append(f\"  [LARGE FILE] {trunc_note}\")\n        lines.append(f\"\
+          \  {'=' * 50}\")\n        if not records:\n            lines.append(\" \
+          \ (empty sheet)\")\n            continue\n        headers  = list(records[0].keys())\n\
+          \        row_data = [[str(r.get(h, \"\")) for h in headers] for r in records]\n\
+          \        fake_t   = {\"title\": \"\", \"headers\": headers, \"rows\": row_data}\n\
+          \        for tline in fmt_table(fake_t).splitlines():\n            lines.append(\"\
+          \  \" + tline)\n        lines.append(f\"\\n  Columns: {len(headers)}  |\
+          \  Rows loaded: {len(records)}  |  Total rows: {total_rows}\")\n       \
+          \ lines.append(f\"  Column names: {', '.join(headers)}\")\n    if vision_raw:\n\
+          \        vdata, verr = parse_json(vision_raw)\n        if not verr:\n  \
+          \          images = vdata.get(\"images\") or []\n            lines.append(section(f\"\
+          EMBEDDED IMAGES IN EXCEL  ({len(images)} found)\"))\n            if not\
+          \ images:\n                lines.append(\"  (no embedded images found)\"\
+          )\n            else:\n                for img in images:\n             \
+          \       label = (\n                        f\"\\u25b8 Image #{img.get('index','')}\
+          \ \"\n                        f\"| Sheet: {img.get('sheet','')} \"\n   \
+          \                     f\"| {(img.get('chart_type') or img.get('type') or\
+          \ '').upper()}\"\n                    )\n                    lines.append(f\"\
+          \\n  {label}\")\n                    if img.get('title'):\n            \
+          \            lines.append(f\"    Title        : {img['title']}\")\n    \
+          \                if img.get('description'):\n                        lines.append(f\"\
+          \    Description  : {img['description']}\")\n                    if img.get('data_summary'):\n\
+          \                        lines.append(f\"    Data Insight : {img['data_summary']}\"\
+          )\n                    axes = img.get('axes') or {}\n                  \
+          \  if axes.get('x_label') or axes.get('y_label'):\n                    \
+          \    lines.append(f\"    Axes         : X={axes.get('x_label','')}  Y={axes.get('y_label','')}\"\
+          )\n                    series = img.get('series') or []\n              \
+          \      if series:\n                        lines.append(f\"    Series  \
+          \     : {', '.join(str(s) for s in series)}\")\n                    if img.get('sentiment'):\n\
+          \                        lines.append(f\"    Sentiment    : {img['sentiment']}\"\
+          )\n                    tags = img.get('tags') or []\n                  \
+          \  if tags:\n                        lines.append(f\"    Tags         :\
+          \ {', '.join(str(t) for t in tags)}\")\n    return \"\\n\".join(lines)\n\
+          \n\ndef format_document(data):\n    lines = []\n    doc_type   = (data.get(\"\
+          doc_type\")   or \"\").upper()\n    word_count = data.get(\"word_count\"\
+          ,   0)\n    summary    = (data.get(\"summary\")    or \"\").strip()\n  \
+          \  lines.append(section(\"DOCUMENT INFO\"))\n    lines.append(f\"  Document\
+          \ Type : {doc_type if doc_type else '(unknown)'}\")\n    lines.append(f\"\
+          \  Word Count    : {word_count}\")\n    extraction_error = (data.get('extraction_error')\
+          \ or '').strip()\n    if extraction_error:\n        lines.append(section('EXTRACTION\
+          \ ERROR'))\n        lines.append(f'  {extraction_error}')\n        return\
+          \ '\\n'.join(lines)\n    if summary:\n        lines.append(f\"  Summary\
+          \       : {summary}\")\n    lines.append(section(\"EXTRACTED TEXT\"))\n\
+          \    text = (data.get(\"text\") or \"\").strip()\n    lines.append(text\
+          \ if text else \"  (no text found)\")\n    tables = data.get(\"tables\"\
+          ) or []\n    lines.append(section(f\"TABLES  ({len(tables)} found)\"))\n\
+          \    if not tables:\n        lines.append(\"  (no tables found)\")\n   \
+          \ else:\n        for i, t in enumerate(tables, 1):\n            lines.append(f\"\
+          \\n  [Table {i}]\")\n            lines.append(fmt_table(t))\n    return\
+          \ \"\\n\".join(lines)\n\ndef format_word(data):\n    lines = []\n    doc_type\
+          \   = (data.get(\"doc_type\")   or \"\").upper()\n    word_count = data.get(\"\
+          word_count\",   0)\n    summary    = (data.get(\"summary\")    or \"\").strip()\n\
+          \    lines.append(section(\"DOCUMENT INFO\"))\n    lines.append(f\"  Document\
+          \ Type : {doc_type if doc_type else '(unknown)'}\")\n    lines.append(f\"\
+          \  Word Count    : {word_count}\")\n    if summary:\n        lines.append(f\"\
+          \  Summary       : {summary}\")\n    lines.append(section(\"EXTRACTED TEXT\"\
+          ))\n    text = (data.get(\"text\") or \"\").strip()\n    lines.append(text\
+          \ if text else \"  (no text found)\")\n    tables = data.get(\"tables\"\
+          ) or []\n    lines.append(section(f\"TABLES  ({len(tables)} found)\"))\n\
+          \    if not tables:\n        lines.append(\"  (no tables found)\")\n   \
+          \ else:\n        for i, t in enumerate(tables, 1):\n            lines.append(f\"\
+          \\n  [Table {i}]\")\n            lines.append(fmt_table(t))\n    images\
+          \ = data.get(\"images\") or []\n    lines.append(section(f\"IMAGES IN DOCUMENT\
+          \  ({len(images)} found)\"))\n    if not images:\n        lines.append(\"\
+          \  (no images found)\")\n    else:\n        for img in images:\n       \
+          \     label = (\n                f\"\\u25b8 Image #{img.get('index','')}\
+          \ \"\n                f\"| {img.get('type','').upper()}\"\n            )\n\
+          \            lines.extend(render_image_entry(img, label))\n    return \"\
+          \\n\".join(lines)\n\n\ndef format_error(msg):\n    lines = [section(\"ERROR\"\
+          )]\n    lines.append(f\"  {msg}\")\n    return \"\\n\".join(lines)\n\ndef\
+          \ main(\n    pdf_raw:          str = \"\",\n    ocr_raw:          str =\
+          \ \"\",\n    excel_text                = \"\",\n    excel_vision_raw: str\
+          \ = \"\",\n    doc_raw:          str = \"\",\n    word_raw:         str\
+          \ = \"\",\n    error_raw:        str = \"\"\n) -> dict:\n\n    pdf_raw \
+          \         = (pdf_raw          or \"\").strip()\n    ocr_raw          = (ocr_raw\
+          \          or \"\").strip()\n    excel_vision_raw = (excel_vision_raw or\
+          \ \"\").strip()\n    error_raw        = (error_raw        or \"\").strip()\n\
+          \    doc_raw          = (doc_raw          or \"\").strip()\n    word_raw\
+          \         = (word_raw         or \"\").strip()\n\n    # excel_text may arrive\
+          \ as list from Document Extractor\n    if isinstance(excel_text, list):\n\
+          \        excel_text = \"\\n\".join(str(i) for i in excel_text if i)\n  \
+          \  excel_text = str(excel_text or \"\").strip()\n\n    DIV = \"=\" * 60\n\
+          \n    try:\n        # ── Error branch ───────────────────────────────────────────────\n\
+          \        if error_raw:\n            parsed, _ = parse_json(error_raw)\n\
+          \            msg     = parsed.get(\"error_message\", error_raw) or error_raw\n\
+          \            body    = format_error(msg)\n            source  = \"ERROR\"\
+          \n            lang    = \"\"\n            success = False\n\n        # ──\
+          \ Excel branch ───────────────────────────────────────────────\n       \
+          \ elif excel_text:\n            body    = format_excel(excel_text, excel_vision_raw)\n\
+          \            source  = \"EXCEL\"\n            parsed, _ = parse_json(excel_text)\n\
+          \            success = parsed.get(\"success\", True)\n            lang \
+          \   = \"\"\n\n        # ── PDF branch ─────────────────────────────────────────────────\n\
+          \        elif pdf_raw:\n            parsed, err = parse_json(pdf_raw)\n\
+          \            if err:\n                body = format_error(\n           \
+          \         f\"Could not parse PDF response.\\n  {err}\\n\\n  Raw preview:\\\
+          n  {pdf_raw[:400]}\"\n                )\n                success = False\n\
+          \                lang    = \"\"\n            else:\n                body\
+          \    = format_pdf(parsed)\n                success = True\n            \
+          \    lang    = parsed.get(\"language_detected\", \"\")\n            source\
+          \ = \"PDF\"\n\n        # ── OCR / Image branch ─────────────────────────────────────────\n\
+          \        elif ocr_raw:\n            parsed, err = parse_json(ocr_raw)\n\
+          \            if err:\n                body = format_error(\n           \
+          \         f\"Could not parse OCR response.\\n  {err}\\n\\n  Raw preview:\\\
+          n  {ocr_raw[:400]}\"\n                )\n                success = False\n\
+          \                lang    = \"\"\n            else:\n                body\
+          \    = format_image(parsed)\n                success = True\n          \
+          \      lang    = parsed.get(\"language_detected\", \"\")\n            source\
+          \ = \"IMAGE\"\n\n        # ── Document branch (txt/doc/docx/csv) ─────────────────────────\n\
+          \        elif doc_raw:\n            parsed, err = parse_json(doc_raw)\n\
+          \            if err:\n                body = format_error(\n           \
+          \         f\"Could not parse document response.\\n  {err}\\n\\n  Raw preview:\\\
+          n  {doc_raw[:400]}\"\n                )\n                success = False\n\
+          \                lang    = \"\"\n            else:\n                body\
+          \    = format_document(parsed)\n                success = True\n       \
+          \         lang    = parsed.get(\"language_detected\", \"\")\n          \
+          \  source = \"DOCUMENT\"\n\n        # ── Word document branch (.doc / .docx)\
+          \ ────────────────────────\n        elif word_raw:\n            parsed,\
+          \ err = parse_json(word_raw)\n            if err:\n                body\
+          \ = format_error(\n                    f\"Could not parse Word document\
+          \ response.\\n  {err}\\n\\n  Raw preview:\\n  {word_raw[:400]}\"\n     \
+          \           )\n                success = False\n                lang   \
+          \ = \"\"\n            else:\n                body    = format_word(parsed)\n\
+          \                success = True\n                lang    = parsed.get(\"\
+          language_detected\", \"\")\n            source = \"WORD\"\n\n        # ──\
+          \ Nothing arrived ────────────────────────────────────────────\n       \
+          \ else:\n            body    = format_error(\n                \"No data\
+          \ received. Verify all branch edges are connected to this Formatter node.\"\
+          \n            )\n            source  = \"UNKNOWN\"\n            success\
+          \ = False\n            lang    = \"\"\n\n        status      = \"SUCCESS\"\
+          \ if success else \"FAILED\"\n        lang_map    = {\"en\": \"English\"\
+          , \"ja\": \"Japanese\"}\n        lang_label  = lang_map.get(lang.lower(),\
+          \ lang.upper()) if lang else \"\"\n        lang_suffix = f\"  |  Language:\
+          \ {lang_label}\" if lang_label else \"\"\n\n        result = \"\\n\".join([\n\
+          \            DIV,\n            f\"  FILE READER  |  Source: {source}  |\
+          \  Status: {status}{lang_suffix}\",\n            DIV,\n            body,\n\
+          \            \"\",\n            DIV\n        ])\n        return {\"result\"\
+          : result}\n\n    except Exception as e:\n        return {\"result\": \"\\\
+          n\".join([\n            DIV,\n            \"  FILE READER  |  FORMATTER\
+          \ ERROR\",\n            DIV,\n            format_error(str(e))\n       \
+          \ ])}\n"
+        code_language: python3
+        desc: 'Single formatter — PDF, OCR, Excel, Document (txt/doc/docx/csv), Error.
+          NEW: doc_raw variable for document branch. Language shown as English/Japanese
+          in header.'
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Formatter
+        type: code
+        variables:
+        - value_selector:
+          - '1776007289790'
+          - text
+          value_type: string
+          variable: pdf_raw
+        - value_selector:
+          - '17760073854930'
+          - text
+          value_type: string
+          variable: ocr_raw
+        - value_selector:
+          - node-excel-unified
+          - excel_data
+          value_type: string
+          variable: excel_text
+        - value_selector:
+          - node-excel-llm
+          - text
+          value_type: string
+          variable: excel_vision_raw
+        - value_selector:
+          - '1776007607703'
+          - result
+          value_type: string
+          variable: error_raw
+        - value_selector:
+          - node-process-document
+          - text
+          value_type: string
+          variable: doc_raw
+        - value_selector:
+          - node-process-word
+          - text
+          value_type: string
+          variable: word_raw
+      height: 145
+      id: '1776007699730'
+      position:
+        x: 1500
+        y: 307
+      positionAbsolute:
+        x: 1500
+        y: 307
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Final output. result is a fully formatted descriptive report. Contains
+          source type, status, language, extracted content, and insights.
+        outputs:
+        - value_selector:
+          - '1776007699730'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 166
+      id: '1776008679232'
+      position:
+        x: 1800
+        y: 289
+      positionAbsolute:
+        x: 1800
+        y: 289
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Extracts text from TXT, CSV, HTML, HTM, MD, RTF, ODT natively on Dify
+          Cloud. No external API needed for these formats.
+        selected: false
+        title: Extract Document Content
+        type: document-extractor
+        variable_selector:
+        - '1776006764107'
+        - select_file
+      height: 170
+      id: node-doc-extractor-doc
+      position:
+        x: 984
+        y: 870
+      positionAbsolute:
+        x: 984
+        y: 870
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import json\n\nMAX_CHARS = 200_000  # ~50K tokens — well within Gemini\
+          \ 2.5 Pro context\n\ndef main(raw_text=\"\") -> dict:\n    # Document Extractor\
+          \ outputs array[string] — join to single string\n    if isinstance(raw_text,\
+          \ list):\n        raw_text = \"\\n\".join(str(i) for i in raw_text if i)\n\
+          \n    content = str(raw_text or \"\").strip()\n\n    if not content:\n \
+          \       content = \"[EMPTY: No readable text could be extracted from this\
+          \ file.]\"\n        return {\"content\": content}\n\n    total_chars = len(content)\n\
+          \n    if total_chars > MAX_CHARS:\n        # Trim to limit, try to cut at\
+          \ a clean line boundary\n        trimmed = content[:MAX_CHARS]\n       \
+          \ last_nl = trimmed.rfind(\"\\n\")\n        if last_nl > MAX_CHARS * 0.9:\
+          \   # only snap to line if close to limit\n            trimmed = trimmed[:last_nl]\n\
+          \        omitted = total_chars - len(trimmed)\n        content = (\n   \
+          \         trimmed +\n            f\"\\n\\n[TRUNCATED: File too large to\
+          \ process in full. \"\n            f\"Showing first {len(trimmed):,} of\
+          \ {total_chars:,} characters. \"\n            f\"{omitted:,} characters\
+          \ omitted. \"\n            f\"Split the file into smaller parts to process\
+          \ the full content.]\"\n        )\n\n    return {\"content\": content}\n"
+        code_language: python3
+        desc: Normalises Document Extractor output. Joins array[string] to single
+          string. Guarantees non-empty content so LLM never receives empty input.
+        outputs:
+          content:
+            children: null
+            type: string
+        selected: false
+        title: Normalize Document
+        type: code
+        variables:
+        - value_selector:
+          - node-doc-extractor-doc
+          - text
+          value_type: string
+          variable: raw_text
+      height: 129
+      id: node-doc-normalize
+      position:
+        x: 1266.883170777831
+        y: 870
+      positionAbsolute:
+        x: 1266.883170777831
+        y: 870
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - node-doc-normalize
+          - content
+        desc: Processes extracted document text. Receives actual text via doc_content
+          variable. System + user turns — Gemini requires non-empty contents[]. Temperature
+          0.1.
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: doc-system-v7
+          role: system
+          text: You are a document extraction engine. Return ONLY JSON. No fences.
+            No prose.
+        - id: doc-user-v7
+          role: user
+          text: 'DOCUMENT CONTENT:
+
+            {{#context#}}
+
+            /
+
+            TASK: Analyse DOCUMENT CONTENT above only. Return 1 JSON object.
+
+
+            RULES:
+
+            - text: copy ALL content verbatim from DOCUMENT CONTENT; do NOT invent
+
+            - do NOT translate
+
+            - language_detected: scan text. Set "ja" ONLY if Japanese script (hiragana
+            ひ, katakana ア, kanji 漢) is clearly the primary language. Set "en" for
+            everything else. Never guess "ja".
+
+            - ja accuracy: preserve 漢字 ひらがな カタカナ 句読点 exactly; never romanize
+
+            - doc_type: report|letter|article|form|data|spreadsheet|webpage|notes|other
+
+            - word_count: count words in DOCUMENT CONTENT
+
+            - summary: 2-3 sentences in English about DOCUMENT CONTENT
+
+            - tables: every table/grid in DOCUMENT CONTENT; [] if none
+
+            - CSV: headers = first row; all rows → table format
+
+            - HTML: visible text only, strip tags
+
+            - Word (.doc/.docx): extract all text verbatim; preserve heading hierarchy
+            (Heading 1 / Heading 2 …) as section markers; extract all tables; preserve
+            numbered and bulleted lists; ignore headers/footers/watermarks
+
+
+            OUTPUT SCHEMA (no extras):
+
+            {"source_type":"document","language_detected":"en","doc_type":"","word_count":0,"summary":"","text":"","tables":[]}'
+        selected: true
+        title: Process Document
+        type: llm
+        variables:
+        - value_selector:
+          - node-doc-normalize
+          - content
+          variable: doc_content
+        vision:
+          enabled: false
+      height: 181
+      id: node-process-document
+      position:
+        x: 1550.7958964877648
+        y: 850.3102951523795
+      positionAbsolute:
+        x: 1550.7958964877648
+        y: 850.3102951523795
       selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: '{{#llm.text#}}'
-        desc: ''
+        code: "\nimport zipfile, io, json, base64\nimport xml.etree.ElementTree as\
+          \ ET\nimport urllib.request\n\n# ── Namespaces ────────────────────────────────────────────────────────────────\n\
+          NS_SS  = \"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"\n\
+          NS_R   = \"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"\
+          \nNS_XDR = \"http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing\"\
+          \nNS_A   = \"http://schemas.openxmlformats.org/drawingml/2006/main\"\nNS_C\
+          \   = \"http://schemas.openxmlformats.org/drawingml/2006/chart\"\n\nMAX_ROWS\
+          \      = 2000   # rows per sheet for table rendering\nMAX_CSV_ROWS  = 200\
+          \    # rows per sheet sent to the LLM\n\n\ndef _resolve(base_dir, target):\n\
+          \    import posixpath\n    # Absolute path (leading '/') — strip slash,\
+          \ use as-is\n    # e.g. '/xl/worksheets/sheet1.xml' -> 'xl/worksheets/sheet1.xml'\n\
+          \    if target.startswith('/'):\n        return target.lstrip('/')\n   \
+          \ # Relative path — join with base_dir\n    # e.g. 'worksheets/sheet1.xml'\
+          \ (Google Sheets) -> 'xl/worksheets/sheet1.xml'\n    # e.g. '../media/image.png'\
+          \   (drawing rels)   -> 'xl/media/image.png'\n    return posixpath.normpath(posixpath.join(base_dir,\
+          \ target))\n\n\ndef _col_idx(col_str):\n    \"\"\"'A'→0, 'B'→1, 'Z'→25,\
+          \ 'AA'→26 …\"\"\"\n    n = 0\n    for ch in col_str.upper():\n        n\
+          \ = n * 26 + (ord(ch) - 64)\n    return n - 1\n\n\ndef _col_letter(idx):\n\
+          \    \"\"\"0→'A', 1→'B', 25→'Z', 26→'AA' … (inverse of _col_idx)\"\"\"\n\
+          \    label = ''\n    n = idx + 1\n    while n:\n        n, rem = divmod(n\
+          \ - 1, 26)\n        label = chr(65 + rem) + label\n    return label\n\n\n\
+          def _shared_strings(zf, names):\n    ss = []\n    if 'xl/sharedStrings.xml'\
+          \ in names:\n        for si in ET.parse(zf.open('xl/sharedStrings.xml')).getroot()\
+          \ \\\n                     .findall(f'.//{{{NS_SS}}}si'):\n            ss.append(''.join(t.text\
+          \ or '' for t in si.findall(f'.//{{{NS_SS}}}t')))\n    return ss\n\n\ndef\
+          \ _sheet_info(zf, names):\n    \"\"\"Return [(sheet_name, ws_path), …] in\
+          \ workbook order.\"\"\"\n    wb_rels = {}\n    if 'xl/_rels/workbook.xml.rels'\
+          \ in names:\n        for rel in ET.parse(zf.open('xl/_rels/workbook.xml.rels')).getroot():\n\
+          \            wb_rels[rel.get('Id', '')] = _resolve('xl', rel.get('Target',\
+          \ ''))\n    info = []\n    if 'xl/workbook.xml' in names:\n        for s\
+          \ in ET.parse(zf.open('xl/workbook.xml')).getroot() \\\n               \
+          \     .findall(f'.//{{{NS_SS}}}sheet'):\n            path = wb_rels.get(s.get(f'{{{NS_R}}}id',\
+          \ ''), '')\n            if path:\n                info.append((s.get('name',\
+          \ 'Sheet'), path))\n    return info\n\n\ndef _extract_cell_data(zf, names,\
+          \ shared, sheet_info):\n    \"\"\"\n    Parse every worksheet and return:\n\
+          \      processed_sheets  – dict matching the Process Excel node JSON schema\n\
+          \      csv_map           – dict sheet_name → CSV text (for LLM context)\n\
+          \    \"\"\"\n    processed, csv_map = {}, {}\n\n    for sname, ws_path in\
+          \ sheet_info:\n        if ws_path not in names:\n            continue\n\
+          \        root = ET.parse(zf.open(ws_path)).getroot()\n\n        row_map\
+          \ = {}\n        for row_el in root.findall(f'.//{{{NS_SS}}}row'):\n    \
+          \        rnum  = int(row_el.get('r', 0))\n            cells = {}\n     \
+          \       for c in row_el.findall(f'{{{NS_SS}}}c'):\n                ref =\
+          \ c.get('r', '')\n                col = _col_idx(''.join(ch for ch in ref\
+          \ if ch.isalpha()))\n                ct  = c.get('t', '')\n            \
+          \    val = ''\n\n                if ct == 'inlineStr':\n               \
+          \     # Inline string: value in <is><t>…</t></is>, not <v>\n           \
+          \         is_el = c.find(f'{{{NS_SS}}}is')\n                    if is_el\
+          \ is not None:\n                        val = ''.join(\n               \
+          \             t.text or ''\n                            for t in is_el.findall(f'.//{{{NS_SS}}}t')\n\
+          \                        )\n                else:\n                    v\
+          \ = c.find(f'{{{NS_SS}}}v')\n                    if v is not None:\n   \
+          \                     raw = v.text or ''\n                        if ct\
+          \ == 's':\n                            # shared string — some writers emit\
+          \ '0.0' not '0'\n                            try:\n                    \
+          \            val = shared[int(float(raw))]\n                           \
+          \ except (ValueError, IndexError):\n                                val\
+          \ = raw\n                        elif ct == 'b':\n                     \
+          \       val = 'TRUE' if raw == '1' else 'FALSE'\n                      \
+          \  else:\n                            # number, formula result (str), error\
+          \ (e)\n                            val = raw\n\n                # Only store\
+          \ non-empty values — prevents blank cells\n                # from masking\
+          \ real header values in hdr_row lookup\n                if val.strip():\n\
+          \                    cells[col] = val.strip()\n\n            if cells:\n\
+          \                row_map[rnum] = cells\n\n        if not row_map:\n    \
+          \        processed[sname] = {\n                'records': [], 'total_rows':\
+          \ 0, 'loaded_rows': 0,\n                'truncated': False, 'truncation_note':\
+          \ '',\n            }\n            csv_map[sname] = ''\n            continue\n\
+          \n        all_cols    = sorted({c for row in row_map.values() for c in row})\n\
+          \        sorted_rows = sorted(row_map.keys())\n        hdr_row     = row_map[sorted_rows[0]]\n\
+          \        headers     = [\n            str(hdr_row.get(c, '')).strip() or\
+          \ _col_letter(c)\n            for c in all_cols\n        ]\n\n        records,\
+          \ csv_lines = [], [','.join(f'\"{h}\"' for h in headers)]\n        for rn\
+          \ in sorted_rows[1:]:\n            rc = row_map[rn]\n            if not\
+          \ any(str(rc.get(c, '')).strip() for c in all_cols):\n                continue\n\
+          \            rec = {headers[i]: str(rc.get(c, '')).strip()\n           \
+          \        for i, c in enumerate(all_cols)}\n            records.append(rec)\n\
+          \            csv_lines.append(','.join(f'\"{rec.get(h, \"\")}\"' for h in\
+          \ headers))\n\n        total   = len(records)\n        trunc   = total >\
+          \ MAX_ROWS\n        preview = records[:MAX_ROWS]\n\n        processed[sname]\
+          \ = {\n            'records':         preview,\n            'total_rows':\
+          \      total,\n            'loaded_rows':     len(preview),\n          \
+          \  'truncated':       trunc,\n            'truncation_note': (\n       \
+          \         f'Large file: showing first {MAX_ROWS} of {total} rows. '\n  \
+          \              f'{total - MAX_ROWS} rows omitted.'\n            ) if trunc\
+          \ else '',\n        }\n        csv_map[sname] = '\\n'.join(csv_lines)\n\n\
+          \    return processed, csv_map\n\n\nCHART_LABEL = {\n    'barChart': 'Bar',\
+          \ 'bar3DChart': 'Bar 3D',\n    'lineChart': 'Line', 'line3DChart': 'Line\
+          \ 3D',\n    'pieChart': 'Pie', 'pie3DChart': 'Pie 3D', 'doughnutChart':\
+          \ 'Doughnut',\n    'scatterChart': 'Scatter', 'bubbleChart': 'Bubble',\n\
+          \    'areaChart': 'Area', 'area3DChart': 'Area 3D',\n    'radarChart': 'Radar',\
+          \ 'stockChart': 'Stock', 'surfaceChart': 'Surface',\n}\n\n\ndef _parse_chart(zf,\
+          \ chart_path):\n    \"\"\"Return structured chart metadata dict from chart\
+          \ XML.\"\"\"\n    root = ET.fromstring(zf.read(chart_path))\n    C, A =\
+          \ f'{{{NS_C}}}', f'{{{NS_A}}}'\n\n    # Type\n    chart_type = 'Other'\n\
+          \    for tag, label in CHART_LABEL.items():\n        if root.find(f'.//{C}{tag}')\
+          \ is not None:\n            chart_type = label\n            break\n\n  \
+          \  # Title\n    title = ''\n    t_el = root.find(f'.//{C}title')\n    if\
+          \ t_el is not None:\n        parts = t_el.findall(f'.//{A}t') or t_el.findall(f'.//{C}v')\n\
+          \        title = ''.join(p.text or '' for p in parts).strip()\n\n    # Axis\
+          \ labels\n    x_label, y_label = '', ''\n    for ax_tag, side in [('catAx',\
+          \ 'x'), ('valAx', 'y'), ('dateAx', 'x')]:\n        for ax in root.findall(f'.//{C}{ax_tag}'):\n\
+          \            ax_t = ax.find(f'.//{C}title')\n            if ax_t is not\
+          \ None:\n                parts = ax_t.findall(f'.//{A}t') or ax_t.findall(f'.//{C}v')\n\
+          \                lbl = ''.join(p.text or '' for p in parts).strip()\n  \
+          \              if side == 'x' and not x_label:\n                    x_label\
+          \ = lbl\n                elif side == 'y' and not y_label:\n           \
+          \         y_label = lbl\n\n    # Series: name + up to 10 values + categories\n\
+          \    series = []\n    for ser in root.findall(f'.//{C}ser'):\n        tx\
+          \    = ser.find(f'.//{C}tx')\n        sname = ''\n        if tx is not None:\n\
+          \            parts = tx.findall(f'.//{A}t') or tx.findall(f'.//{C}v')\n\
+          \            sname = ''.join(p.text or '' for p in parts).strip()\n    \
+          \    vals = [v.text for v in ser.findall(f'.//{C}val//{C}v')  if v.text][:10]\n\
+          \        cats = [v.text for v in ser.findall(f'.//{C}cat//{C}v')  if v.text][:10]\n\
+          \        series.append({'name': sname, 'values': vals, 'categories': cats})\n\
+          \n    return {\n        'chart_type': chart_type,\n        'title':    \
+          \  title,\n        'x_label':    x_label,\n        'y_label':    y_label,\n\
+          \        'series':     series,\n    }\n\n\ndef _extract_visuals(zf, names,\
+          \ sheet_info):\n    \"\"\"\n    Discover all charts and raster images embedded\
+          \ in the workbook.\n    Charts are fully parsed from their XML (type, title,\
+          \ axes, series + values).\n    Raster images: metadata only (name, sheet,\
+          \ format, size).\n    Returns (charts_list, images_list) — 1-based index,\
+          \ ordered by sheet.\n    \"\"\"\n    charts, images = [], []\n    chart_idx,\
+          \ image_idx = 1, 1\n\n    # Build worksheet rels mapping once\n    for sname,\
+          \ ws_path in sheet_info:\n        if ws_path not in names:\n           \
+          \ continue\n        ws_rels_path = ws_path.replace(\n            'xl/worksheets/',\
+          \ 'xl/worksheets/_rels/') + '.rels'\n        if ws_rels_path not in names:\n\
+          \            continue\n\n        draw_paths   = []\n        direct_chart\
+          \ = []   # chart sheets linked directly from worksheet\n        for rel\
+          \ in ET.parse(zf.open(ws_rels_path)).getroot():\n            typ = rel.get('Type',\
+          \ '').lower()\n            tgt = _resolve('xl/worksheets', rel.get('Target',\
+          \ ''))\n            if 'drawing' in typ and tgt in names:\n            \
+          \    draw_paths.append(tgt)\n            elif 'chart' in typ and tgt in\
+          \ names:\n                direct_chart.append(tgt)\n\n        # Direct chart\
+          \ references (rare but valid)\n        for chart_path in direct_chart:\n\
+          \            meta = _parse_chart(zf, chart_path)\n            charts.append({\n\
+          \                'index': chart_idx, 'name': f'Chart {chart_idx}',\n   \
+          \             'sheet': sname, **meta,\n            })\n            chart_idx\
+          \ += 1\n\n        for draw_path in draw_paths:\n            draw_rels =\
+          \ draw_path.replace(\n                'xl/drawings/', 'xl/drawings/_rels/')\
+          \ + '.rels'\n            rid_to_media, rid_to_chart = {}, {}\n         \
+          \   if draw_rels in names:\n                for rel in ET.parse(zf.open(draw_rels)).getroot():\n\
+          \                    typ = rel.get('Type', '').lower()\n               \
+          \     tgt = _resolve('xl/drawings', rel.get('Target', ''))\n           \
+          \         if 'image' in typ:\n                        rid_to_media[rel.get('Id',\
+          \ '')] = tgt\n                    elif 'chart' in typ and tgt in names:\n\
+          \                        rid_to_chart[rel.get('Id', '')] = tgt\n\n     \
+          \       d_root = ET.parse(zf.open(draw_path)).getroot()\n\n            for\
+          \ tag in ['oneCellAnchor', 'twoCellAnchor', 'absoluteAnchor']:\n       \
+          \         for anchor in d_root.findall(f'{{{NS_XDR}}}{tag}'):\n\n      \
+          \              # ── Charts via graphicFrame ───────────────────────────\n\
+          \                    for gf in anchor.findall(f'.//{{{NS_XDR}}}graphicFrame'):\n\
+          \                        # Correct lookup: c:chart element carries r:id\n\
+          \                        chart_el = gf.find(f'.//{{{NS_C}}}chart')\n   \
+          \                     if chart_el is not None:\n                       \
+          \     rid = chart_el.get(f'{{{NS_R}}}id', '')\n                        \
+          \    if rid and rid in rid_to_chart:\n                                meta\
+          \  = _parse_chart(zf, rid_to_chart[rid])\n                             \
+          \   nv    = gf.find(\n                                    f'{{{NS_XDR}}}nvGraphicFramePr'\n\
+          \                                    f'/{{{NS_XDR}}}cNvPr')\n          \
+          \                      cname = (nv.get('name', '') if nv is not None\n \
+          \                                        else '') or f'Chart {chart_idx}'\n\
+          \                                charts.append({\n                     \
+          \               'index': chart_idx, 'name': cname,\n                   \
+          \                 'sheet': sname, **meta,\n                            \
+          \    })\n                                chart_idx += 1\n\n            \
+          \        # ── Raster images via pic ─────────────────────────────\n    \
+          \                for pic in anchor.findall(f'.//{{{NS_XDR}}}pic'):\n   \
+          \                     nv    = pic.find(f'{{{NS_XDR}}}nvPicPr')\n       \
+          \                 cnvpr = nv.find(f'{{{NS_XDR}}}cNvPr') if nv is not None\
+          \ else None\n                        pname = (cnvpr.get('name', '') if cnvpr\
+          \ is not None\n                                 else '') or f'Image {image_idx}'\n\
+          \                        bf    = pic.find(f'{{{NS_XDR}}}blipFill')\n   \
+          \                     blip  = bf.find(f'{{{NS_A}}}blip') if bf is not None\
+          \ else None\n                        embed = blip.get(f'{{{NS_R}}}embed',\
+          \ '') if blip is not None else ''\n                        media = rid_to_media.get(embed,\
+          \ '')\n                        if media and media in names:\n          \
+          \                  raw = zf.read(media)\n                            ext\
+          \ = media.rsplit('.', 1)[-1].lower()\n                            mime =\
+          \ {\n                                'png': 'image/png', 'jpg': 'image/jpeg',\n\
+          \                                'jpeg': 'image/jpeg', 'gif': 'image/gif',\n\
+          \                                'bmp': 'image/bmp', 'tiff': 'image/tiff',\n\
+          \                                'tif': 'image/tiff', 'webp': 'image/webp',\n\
+          \                            }.get(ext, 'image/png')\n                 \
+          \           images.append({\n                                'index':  \
+          \     image_idx,\n                                'name':        pname,\n\
+          \                                'sheet':       sname,\n               \
+          \                 'format':      ext,\n                                'mime_type':\
+          \   mime,\n                                'size_bytes':  len(raw),\n  \
+          \                              'base64_data': base64.b64encode(raw).decode(),\n\
+          \                            })\n                            image_idx +=\
+          \ 1\n\n    return charts, images\n\n\ndef _build_visual_content(fname, sheet_names,\
+          \ csv_map, charts, images):\n    \"\"\"\n    Build the rich structured text\
+          \ block that the LLM node will receive.\n    Includes: spreadsheet CSV data\
+          \ + full chart XML metadata + image info.\n    The LLM uses this to produce\
+          \ accurate, data-driven descriptions.\n    \"\"\"\n    SEP = '=' * 60\n\
+          \    lines = [\n        f'EXCEL FILE: {fname}',\n        f'SHEETS: {\",\
+          \ \".join(sheet_names)}',\n        '',\n        SEP,\n        'SPREADSHEET\
+          \ DATA (CSV — actual cell values per sheet):',\n        SEP,\n    ]\n\n\
+          \    for sname, csv_text in csv_map.items():\n        if not csv_text.strip():\n\
+          \            lines.append(f'\\n[Sheet: {sname}] — empty')\n            continue\n\
+          \        csv_rows = csv_text.split('\\n')\n        lines.append(f'\\n[Sheet:\
+          \ {sname}]')\n        for row in csv_rows[:MAX_CSV_ROWS]:\n            lines.append(row)\n\
+          \        if len(csv_rows) > MAX_CSV_ROWS:\n            lines.append(f'…\
+          \ ({len(csv_rows) - MAX_CSV_ROWS} more rows omitted)')\n\n    if charts:\n\
+          \        lines += ['', SEP, f'EMBEDDED CHARTS ({len(charts)} found):', SEP]\n\
+          \        for ch in charts:\n            lines.append(f'\\nChart {ch[\"index\"\
+          ]}: {ch[\"name\"]}')\n            lines.append(f'  Sheet      : {ch[\"sheet\"\
+          ]}')\n            lines.append(f'  Type       : {ch[\"chart_type\"]}')\n\
+          \            if ch.get('title'):\n                lines.append(f'  Title\
+          \      : {ch[\"title\"]}')\n            if ch.get('x_label'):\n        \
+          \        lines.append(f'  X Axis     : {ch[\"x_label\"]}')\n           \
+          \ if ch.get('y_label'):\n                lines.append(f'  Y Axis     : {ch[\"\
+          y_label\"]}')\n            for s in ch.get('series', []):\n            \
+          \    sn   = s.get('name', '(unnamed)')\n                vals = ', '.join(s.get('values',\
+          \ []))\n                cats = ', '.join(s.get('categories', []))\n    \
+          \            row  = f'  Series     : {sn}'\n                if vals:\n \
+          \                   row += f'  |  values: {vals}'\n                if cats:\n\
+          \                    row += f'  |  categories: {cats}'\n               \
+          \ lines.append(row)\n\n    if images:\n        lines += ['', SEP, f'EMBEDDED\
+          \ RASTER IMAGES ({len(images)} found):', SEP]\n        for img in images:\n\
+          \            lines.append(f'\\nImage {img[\"index\"]}: {img[\"name\"]}')\n\
+          \            lines.append(f'  Sheet      : {img[\"sheet\"]}')\n        \
+          \    lines.append(f'  Format     : {img[\"format\"].upper()}')\n       \
+          \     lines.append(f'  MIME Type  : {img[\"mime_type\"]}')\n           \
+          \ lines.append(f'  Size       : {img[\"size_bytes\"]:,} bytes')\n      \
+          \      lines.append(f'  Base64     : {img[\"base64_data\"]}')\n\n    return\
+          \ '\\n'.join(lines)\n\n\ndef main(select_file) -> dict:\n    EMPTY_IMAGES\
+          \ = json.dumps({\n        'source_type': 'excel_images', 'image_count':\
+          \ 0, 'images': [],\n    })\n\n    def _err(msg):\n        return {\n   \
+          \         'excel_data': json.dumps({\n                'source_type': 'excel',\
+          \ 'success': False,\n                'error_message': msg,\n           \
+          \     'data': {'sheets': {}, 'sheet_names': [], 'sheet_count': 0},\n   \
+          \         }),\n            'visual_content': '',\n            'note': msg,\n\
+          \        }\n\n    file_list = select_file if isinstance(select_file, list)\
+          \ else [select_file]\n    if not file_list:\n        return _err('No file\
+          \ received.')\n\n    f        = file_list[0]\n    file_url = (f.get('url')\
+          \ or f.get('remote_url') or f.get('path') or '').strip()\n    fname    =\
+          \ (f.get('filename') or f.get('name') or 'workbook.xlsx').strip()\n    if\
+          \ not file_url:\n        return _err('File URL not accessible.')\n\n   \
+          \ # ── Fetch the entire XLSX as binary ───────────────────────────────────────\n\
+          \    try:\n        req = urllib.request.Request(file_url)\n        with\
+          \ urllib.request.urlopen(req, timeout=30) as r:\n            xlsx_bytes\
+          \ = r.read()\n    except Exception as e:\n        return _err(f'Could not\
+          \ fetch file: {e}')\n\n    # ── Parse the XLSX ZIP in memory ──────────────────────────────────────────\n\
+          \    try:\n        with zipfile.ZipFile(io.BytesIO(xlsx_bytes)) as zf:\n\
+          \            names      = set(zf.namelist())\n            shared     = _shared_strings(zf,\
+          \ names)\n            sinfo      = _sheet_info(zf, names)\n            proc,\
+          \ cmap = _extract_cell_data(zf, names, shared, sinfo)\n            charts,\
+          \ imgs = _extract_visuals(zf, names, sinfo)\n    except Exception as e:\n\
+          \        return _err(f'XLSX parsing failed: {e}')\n\n    sheet_names = [s[0]\
+          \ for s in sinfo]\n\n    # ── Output 1: structured table data for the Formatter\
+          \ ────────────────────\n    excel_data = json.dumps({\n        'source_type':\
+          \ 'excel', 'success': True, 'error_message': '',\n        'data': {\n  \
+          \          'sheets':      proc,\n            'sheet_names': sheet_names,\n\
+          \            'sheet_count': len(sheet_names),\n        },\n    }, ensure_ascii=False)\n\
+          \n    # ── Output 2: rich text for the LLM node ─────────────────────────────────\n\
+          \    visual_content = _build_visual_content(fname, sheet_names, cmap, charts,\
+          \ imgs)\n\n    total_visuals = len(charts) + len(imgs)\n    return {\n \
+          \       'excel_data':      excel_data,\n        'visual_content':  visual_content,\n\
+          \        'note': (\n            f'Extracted {len(sheet_names)} sheet(s),\
+          \ '\n            f'{len(charts)} chart(s), {len(imgs)} image(s).'\n    \
+          \        + ('' if total_visuals else ' No embedded visuals found.')\n  \
+          \      ),\n    }\n"
+        code_language: python3
+        desc: 'Reads the XLSX binary once. Extracts cell data (XML parsing), chart
+          metadata (XML: type, title, axes, series, data values), and raster images
+          with COMPLETE metadata including base64-encoded binary data. visual_content
+          contains the full image binary so the downstream LLM node has everything
+          needed for visual analysis.'
+        outputs:
+          excel_data:
+            children: null
+            type: string
+          note:
+            children: null
+            type: string
+          visual_content:
+            children: null
+            type: string
         selected: false
-        title: Answer
-        type: answer
-        variables: []
-      height: 103
-      id: answer
+        title: Process Excel (Unified)
+        type: code
+        variables:
+        - value_selector:
+          - '1776006764107'
+          - select_file
+          value_type: array[file]
+          variable: select_file
+      height: 209
+      id: node-excel-unified
       position:
-        x: 680
-        y: 282
+        x: 984
+        y: 457
       positionAbsolute:
-        x: 680
-        y: 282
+        x: 984
+        y: 457
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - node-excel-unified
+          - visual_content
+        desc: 'Processes the complete Excel content using the configured Gemini model.
+          Receives full spreadsheet data + chart XML metadata + image info via visual_content
+          variable. Produces excel_images JSON for the Formatter. Mirrors OCR node
+          pattern: single system prompt, vision disabled, no API key needed — uses
+          platform-configured model credentials.'
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: excel-llm-system-v1
+          role: system
+          text: ''
+        - id: 6a22ae27-ae3f-46a5-bac0-a0055cea2699
+          role: user
+          text: 'EXCEL CONTENT:
+
+            {{#context#}}
+
+
+            TASK: Analyse the complete Excel content above. Return 1 JSON object.
+            No fences. No prose.
+
+
+            You have the full spreadsheet data (CSV), chart metadata extracted from
+            XML (type, title, axes, series names, and actual data values), and raster
+            image info.
+
+
+            RULES:
+
+            - For each CHART: use the exact chart_type, title, axis labels, series
+            names, and data values from the metadata above. Write a precise, data-driven
+            description. Never invent data — only use what is in the metadata.
+
+            - For each RASTER IMAGE: describe based on its name, sheet context, and
+            format. Be clear if visual pixel content is unavailable.
+
+            - If no charts or images exist, return image_count:0 with an empty images
+            array.
+
+            - language_detected: scan all text labels in the metadata. Set "ja" ONLY
+            if Japanese script is clearly present as the primary language. Set "en"
+            for everything else.
+
+
+            For EACH chart or image:
+
+            - index: 1-based integer, charts first then images
+
+            - name: from metadata
+
+            - sheet: from metadata
+
+            - chart_type: bar|line|pie|scatter|area|table|photo|illustration|other
+
+            - title: exact title from metadata, or ""
+
+            - description: 2-3 sentences — what this chart/image shows and how it
+            relates to the spreadsheet data
+
+            - data_summary: key insight from the actual data values (2 sentences)
+
+            - axes: {"x_label":"","y_label":""} if chart else {}
+
+            - series: array of series names from metadata, else []
+
+            - language_detected: "en" or "ja" only
+
+            - sentiment: positive|negative|neutral|informational
+
+            - tags: 3-5 keyword tags
+
+
+            OUTPUT SCHEMA (no extras):
+
+            {"source_type":"excel_images","image_count":0,"images":[{"index":1,"name":"","sheet":"","chart_type":"","title":"","description":"","data_summary":"","axes":{},"series":[],"language_detected":"en","sentiment":"","tags":[]}]}'
+        selected: false
+        title: Analyse Excel Content
+        type: llm
+        variables:
+        - value_selector:
+          - node-excel-unified
+          - visual_content
+          value_type: string
+          variable: visual_content
+        vision:
+          enabled: false
+      height: 261
+      id: node-excel-llm
+      position:
+        x: 1276.4344272926282
+        y: 457
+      positionAbsolute:
+        x: 1276.4344272926282
+        y: 457
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\nimport zipfile, io, base64\nimport xml.etree.ElementTree as ET\n\
+          import urllib.request\n\nNS_W   = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'\n\
+          NS_R   = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'\n\
+          NS_A   = 'http://schemas.openxmlformats.org/drawingml/2006/main'\nNS_WP\
+          \  = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'\n\
+          \nMAX_CHARS      = 200_000   # text budget (~50 K tokens)\nMAX_IMAGES  \
+          \   = 10        # cap to keep visual_content manageable\nMAX_IMG_B     \
+          \ = 4_000_000 # skip individual images larger than 4 MB raw\nMAX_B64_BUDGET\
+          \ = 250_000   # total base64 chars across ALL images\n                 \
+          \          # Dify caps output variables at 320 000 chars;\n            \
+          \               # 250 K leaves ~70 K for text, headers, and metadata\n\n\
+          \ndef _w(tag):  return f'{{{NS_W}}}{tag}'\ndef _r(tag):  return f'{{{NS_R}}}{tag}'\n\
+          def _a(tag):  return f'{{{NS_A}}}{tag}'\n\n\n# ── Text extraction ───────────────────────────────────────────────────────────\n\
+          \ndef _para_text(para_el):\n    \"\"\"Collect visible text from a <w:p>,\
+          \ skipping deleted runs.\"\"\"\n    parts = []\n    for run in para_el.findall(f'.//{_w(\"\
+          r\")}'):\n        if run.find(f'.//{_w(\"delText\")}') is not None:\n  \
+          \          continue\n        for t in run.findall(_w('t')):\n          \
+          \  parts.append(t.text or '')\n    return ''.join(parts)\n\n\ndef _extract_text_and_tables(body):\n\
+          \    \"\"\"\n    Walk <w:body> and return (text_lines list, tables list).\n\
+          \    Preserves heading hierarchy, bullet points, and table structure.\n\
+          \    \"\"\"\n    lines, tables = [], []\n\n    for elem in body:\n     \
+          \   local = elem.tag.split('}')[-1] if '}' in elem.tag else elem.tag\n\n\
+          \        if local == 'p':\n            pPr   = elem.find(_w('pPr'))\n  \
+          \          style = ''\n            numPr = None\n            if pPr is not\
+          \ None:\n                ps = pPr.find(_w('pStyle'))\n                if\
+          \ ps is not None:\n                    style = ps.get(_w('val'), '') or\
+          \ ''\n                numPr = pPr.find(_w('numPr'))\n\n            text\
+          \ = _para_text(elem).strip()\n            if not text:\n               \
+          \ continue\n\n            slo = style.lower()\n            if slo in ('heading1',\
+          \ 'title') or slo == 'heading 1':\n                lines.append(f'\\n# {text}')\n\
+          \            elif slo in ('heading2', 'heading 2'):\n                lines.append(f'\\\
+          n## {text}')\n            elif slo in ('heading3', 'heading 3'):\n     \
+          \           lines.append(f'\\n### {text}')\n            elif slo.startswith('heading'):\n\
+          \                lines.append(f'\\n#### {text}')\n            elif numPr\
+          \ is not None:\n                lines.append(f'  \\u2022 {text}')\n    \
+          \        else:\n                lines.append(text)\n\n        elif local\
+          \ == 'tbl':\n            tbl_rows = []\n            for tr in elem.findall(f'.//{_w(\"\
+          tr\")}'):\n                cells = []\n                for tc in tr.findall(_w('tc')):\n\
+          \                    cell_text = ' '.join(\n                        _para_text(p).strip()\n\
+          \                        for p in tc.findall(_w('p'))\n                \
+          \        if _para_text(p).strip()\n                    )\n             \
+          \       cells.append(cell_text)\n                if any(cells):\n      \
+          \              tbl_rows.append(cells)\n\n            if tbl_rows:\n    \
+          \            lines.append('\\n[TABLE]')\n                for i, row in enumerate(tbl_rows):\n\
+          \                    lines.append('  ' + ' | '.join(row))\n            \
+          \        if i == 0:\n                        lines.append('  ' + '-' * max(40,\
+          \ len(' | '.join(row))))\n                tables.append(tbl_rows)\n\n  \
+          \  return lines, tables\n\n\n# ── Image extraction ─────────────────────────────────────────────────────────\n\
+          \ndef _extract_images(zf, names):\n    \"\"\"\n    Extract embedded images\
+          \ from DOCX.\n    Returns list of dicts: index, ext, mime, size_bytes, base64.\n\
+          \    Skips vector formats (wmf/emf) and tiny placeholder images (<500 B).\n\
+          \    \"\"\"\n    SUPPORTED_MIME = {\n        'png': 'image/png',  'jpg':\
+          \ 'image/jpeg', 'jpeg': 'image/jpeg',\n        'gif': 'image/gif',  'bmp':\
+          \ 'image/bmp',  'tiff': 'image/tiff',\n        'tif': 'image/tiff', 'webp':\
+          \ 'image/webp',\n    }\n\n    # Build rid → media path from document relationships\n\
+          \    rid_to_path = {}\n    rels_path = 'word/_rels/document.xml.rels'\n\
+          \    if rels_path in names:\n        for rel in ET.parse(zf.open(rels_path)).getroot():\n\
+          \            if 'image' in rel.get('Type', '').lower():\n              \
+          \  tgt = rel.get('Target', '')\n                # Target is relative to\
+          \ word/ directory\n                full = f'word/{tgt}' if not tgt.startswith('/')\
+          \ else tgt.lstrip('/')\n                rid_to_path[rel.get('Id', '')] =\
+          \ full\n\n    images = []\n    seen   = set()  # deduplicate by path\n\n\
+          \    for rid, path in rid_to_path.items():\n        if path in seen or path\
+          \ not in names:\n            continue\n        seen.add(path)\n\n      \
+          \  ext  = path.rsplit('.', 1)[-1].lower() if '.' in path else ''\n     \
+          \   mime = SUPPORTED_MIME.get(ext)\n        if not mime:\n            continue\
+          \   # skip wmf, emf, svg, etc.\n\n        raw = zf.read(path)\n        if\
+          \ len(raw) < 500:\n            continue   # skip tiny placeholder icons\n\
+          \        if len(raw) > MAX_IMG_B:\n            continue   # skip very large\
+          \ images to stay within context limits\n\n        images.append({\n    \
+          \        'index':      len(images) + 1,\n            'ext':        ext,\n\
+          \            'mime':       mime,\n            'size_bytes': len(raw),\n\
+          \            'base64':     base64.b64encode(raw).decode(),\n        })\n\
+          \n        if len(images) >= MAX_IMAGES:\n            break\n\n    return\
+          \ images\n\n\n# ── visual_content builder ────────────────────────────────────────────────────\n\
+          \ndef _build_visual_content(fname, text_lines, images):\n    \"\"\"\n  \
+          \  Assemble the structured text block passed to the LLM node.\n    Mirrors\
+          \ the Excel unified node's _build_visual_content pattern.\n    \"\"\"\n\
+          \    SEP = '=' * 60\n    content_text = '\\n'.join(text_lines).strip()\n\
+          \n    # Trim text portion to budget\n    if len(content_text) > MAX_CHARS:\n\
+          \        trimmed = content_text[:MAX_CHARS]\n        last_nl = trimmed.rfind('\\\
+          n')\n        if last_nl > MAX_CHARS * 0.9:\n            trimmed = trimmed[:last_nl]\n\
+          \        omitted      = len(content_text) - len(trimmed)\n        content_text\
+          \ = (\n            trimmed +\n            f'\\n\\n[TRUNCATED: Showing first\
+          \ {len(trimmed):,} of '\n            f'{len(content_text):,} chars. {omitted:,}\
+          \ chars omitted.]'\n        )\n\n    lines = [\n        f'WORD DOCUMENT:\
+          \ {fname}',\n        '',\n        SEP,\n        'DOCUMENT TEXT (verbatim,\
+          \ heading markers preserved):',\n        SEP,\n        content_text,\n \
+          \   ]\n\n    if images:\n        lines += ['', SEP, f'EMBEDDED IMAGES ({len(images)}\
+          \ found):', SEP]\n        b64_used = 0   # running total of base64 chars\
+          \ emitted\n        for img in images:\n            b64      = img['base64']\n\
+          \            b64_len  = len(b64)\n            lines.append(f'\\nImage {img[\"\
+          index\"]}:')\n            lines.append(f'  Format     : {img[\"ext\"].upper()}')\n\
+          \            lines.append(f'  MIME Type  : {img[\"mime\"]}')\n         \
+          \   lines.append(f'  Size       : {img[\"size_bytes\"]:,} bytes')\n    \
+          \        if b64_used + b64_len <= MAX_B64_BUDGET:\n                # Fits\
+          \ within budget — include full base64\n                lines.append(f' \
+          \ Base64     : {b64}')\n                b64_used += b64_len\n          \
+          \  else:\n                # Would exceed budget — include metadata only\n\
+          \                remaining = MAX_B64_BUDGET - b64_used\n               \
+          \ lines.append(\n                    f'  Base64     : [OMITTED — this image\
+          \ ({b64_len:,} chars) '\n                    f'would exceed the {MAX_B64_BUDGET:,}-char\
+          \ base64 budget '\n                    f'(used so far: {b64_used:,}, remaining:\
+          \ {remaining:,}). '\n                    f'Image metadata preserved but\
+          \ visual analysis unavailable.]'\n                )\n\n    # ── Hard cap:\
+          \ guarantee visual_content never exceeds Dify's 320 K limit ──\n    DIFY_VAR_LIMIT\
+          \ = 310_000   # 10 K below Dify's 320 000-char cap\n    result = '\\n'.join(lines)\n\
+          \    if len(result) > DIFY_VAR_LIMIT:\n        result = (\n            result[:DIFY_VAR_LIMIT]\
+          \ +\n            f'\\n\\n[HARD CAP: visual_content truncated at {DIFY_VAR_LIMIT:,}\
+          \ chars '\n            f'to stay within Dify 320,000-char variable limit.]'\n\
+          \        )\n    return result\n\n\n# ── Main ──────────────────────────────────────────────────────────────────────\n\
+          \ndef main(select_file) -> dict:\n    file_list = select_file if isinstance(select_file,\
+          \ list) else [select_file]\n    if not file_list:\n        return {'visual_content':\
+          \ '[EMPTY: No file received.]',\n                'images_found': 0, 'note':\
+          \ 'No file received.'}\n\n    f        = file_list[0]\n    file_url = (f.get('url')\
+          \ or f.get('remote_url') or f.get('path') or '').strip()\n    fname    =\
+          \ (f.get('filename') or f.get('name') or 'document.docx').strip()\n\n  \
+          \  if not file_url:\n        return {'visual_content': '[ERROR: File URL\
+          \ not accessible.]',\n                'images_found': 0, 'note': 'File URL\
+          \ not accessible.'}\n\n    # Fetch file bytes\n    try:\n        req = urllib.request.Request(file_url)\n\
+          \        with urllib.request.urlopen(req, timeout=30) as r:\n          \
+          \  file_bytes = r.read()\n    except Exception as e:\n        return {'visual_content':\
+          \ f'[ERROR: Could not fetch file: {e}]',\n                'images_found':\
+          \ 0, 'note': str(e)}\n\n    # Validate ZIP / detect legacy .doc\n    try:\n\
+          \        zf = zipfile.ZipFile(io.BytesIO(file_bytes), 'r')\n    except zipfile.BadZipFile:\n\
+          \        msg = (\n            '[DOC FORMAT NOTICE: Legacy .doc binary format\
+          \ cannot be processed '\n            'directly.\\nPlease re-save as .docx\
+          \ in Microsoft Word or LibreOffice '\n            '(File \\u2192 Save As\
+          \ \\u2192 Word Document / .docx), then re-upload.]'\n        )\n       \
+          \ return {'visual_content': msg, 'images_found': 0,\n                'note':\
+          \ 'Legacy .doc — conversion required.'}\n\n    with zf:\n        names =\
+          \ set(zf.namelist())\n\n        if 'word/document.xml' not in names:\n \
+          \           return {'visual_content': '[ERROR: word/document.xml not found\
+          \ — corrupt DOCX?]',\n                    'images_found': 0, 'note': 'word/document.xml\
+          \ missing.'}\n\n        try:\n            root = ET.fromstring(zf.read('word/document.xml'))\n\
+          \        except ET.ParseError as e:\n            return {'visual_content':\
+          \ f'[ERROR: Failed to parse document XML: {e}]',\n                    'images_found':\
+          \ 0, 'note': str(e)}\n\n        body = root.find(_w('body'))\n        if\
+          \ body is None:\n            return {'visual_content': '[ERROR: No <w:body>\
+          \ element found.]',\n                    'images_found': 0, 'note': 'No\
+          \ body element.'}\n\n        text_lines, _ = _extract_text_and_tables(body)\n\
+          \        images        = _extract_images(zf, names)\n\n    visual_content\
+          \ = _build_visual_content(fname, text_lines, images)\n\n    return {\n \
+          \       'visual_content': visual_content,\n        'images_found':   len(images),\n\
+          \        'note': (\n            f'Extracted text + {len(images)} image(s)\
+          \ from {fname}.'\n            + (f' ({MAX_IMAGES} image cap applied.)' if\
+          \ len(images) == MAX_IMAGES else '')\n        ),\n    }\n"
+        code_language: python3
+        desc: 'Reads DOCX binary directly (zipfile + xml.etree.ElementTree). Extracts:
+          text with heading hierarchy, bullet points, tables (word/document.xml) +
+          embedded images (word/media/ via word/_rels/document.xml.rels). Builds visual_content
+          combining document text and image base64 data — identical pattern to the
+          Excel unified node. Legacy .doc returns a conversion notice. Max 10 images,
+          each up to 4 MB raw.'
+        outputs:
+          images_found:
+            children: null
+            type: number
+          note:
+            children: null
+            type: string
+          visual_content:
+            children: null
+            type: string
+        selected: false
+        title: Extract Word Document
+        type: code
+        variables:
+        - value_selector:
+          - '1776006764107'
+          - select_file
+          value_type: array[file]
+          variable: select_file
+      height: 241
+      id: node-word-extract
+      position:
+        x: 984
+        y: 1100
+      positionAbsolute:
+        x: 984
+        y: 1100
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - node-word-extract
+          - visual_content
+        desc: 'Analyses the full Word document: text, tables, and embedded images.
+          Receives visual_content (document text + image base64) from Extract Word
+          Document. Uses Gemini 2.5 Pro to produce JSON matching the PDF output schema
+          — with text, tables, and per-image analysis. No API key needed — uses platform-configured
+          model credentials.'
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: word-llm-system-v2
+          role: system
+          text: You are a document extraction engine. Return ONLY JSON. No fences.
+            No prose.
+        - id: word-llm-user-v2
+          role: user
+          text: 'WORD DOCUMENT CONTENT:
+
+            {{#context#}}
+
+
+            TASK: Analyse the complete Word document above — text, tables, and every
+            embedded image.
+
+            Return 1 JSON object. No fences. No prose.
+
+
+            RULES:
+
+            - text: copy ALL document text verbatim from DOCUMENT TEXT section; do
+            NOT invent
+
+            - do NOT translate; preserve original language exactly
+
+            - language_detected: Set "ja" ONLY if Japanese script is clearly the primary
+            language. Set "en" for everything else. Never guess "ja".
+
+            - ja accuracy: preserve 漢字 ひらがな カタカナ 句読点 exactly; never romanize
+
+            - doc_type: report|letter|article|form|data|spreadsheet|webpage|notes|other
+
+            - word_count: count words in the document text
+
+            - summary: 2-3 sentences in English summarising the document
+
+            - tables: every table found in DOCUMENT TEXT; [] if none
+
+            - images: every image in EMBEDDED IMAGES section; [] if none found
+
+
+            FOR EACH IMAGE — analyse using its Base64 field:
+
+            - index: from image list (1-based)
+
+            - type: photo|illustration|chart|diagram|logo|screenshot|infographic|other
+
+            - caption: any caption or label visible near the image, or ""
+
+            - description: what is literally visible in the image, 2 sentences
+
+            - subject: e.g. "Bar chart — Q3 revenue" or "Logo — Acme Corp" or "Portrait
+            — person in suit"
+
+            - identity: name, origin (company/film/place), type (fictional_character|real_person|brand|landmark|other)
+
+            - insights: 3-4 sentences — chart: what data shows and key trend; logo:
+            company background; photo: context and significance
+
+            - portrayed_by: actor/creator name if relevant, or ""
+
+            - text_in_image: all text visible inside the image, or ""
+
+            - sentiment: positive|negative|neutral|dramatic|inspirational|informational
+
+            - tags: array of 3-5 keywords
+
+
+            OUTPUT SCHEMA (no extras):
+
+            {"source_type":"word","language_detected":"en","doc_type":"","word_count":0,"summary":"","text":"","tables":[{"title":"","headers":["c1","c2"],"rows":[["v1","v2"]]}],"images":[{"index":1,"type":"","caption":"","description":"","subject":"","identity":{"name":"","origin":"","type":""},"insights":"","portrayed_by":"","text_in_image":"","sentiment":"","tags":[]}]}'
+        selected: false
+        title: Process Word Document
+        type: llm
+        variables:
+        - value_selector:
+          - node-word-extract
+          - visual_content
+          value_type: string
+          variable: visual_content
+        vision:
+          enabled: false
+      height: 245
+      id: node-process-word
+      position:
+        x: 1300
+        y: 1100
+      positionAbsolute:
+        x: 1300
+        y: 1100
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: 38
-      y: -82
-      zoom: 1
+      x: 75.38628427862898
+      y: 28.364139789295336
+      zoom: 0.6820739174396768
