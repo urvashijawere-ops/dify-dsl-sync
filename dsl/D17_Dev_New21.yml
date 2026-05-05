@@ -437,7 +437,7 @@ workflow:
         title: User Input
         type: start
         variables: []
-      height: 53
+      height: 54
       id: '1775796563709'
       position:
         x: 61.279807562300334
@@ -542,7 +542,7 @@ workflow:
         selected: false
         title: Orchestrator
         type: if-else
-      height: 469
+      height: 470
       id: '1775804011997'
       position:
         x: 373.4343196299668
@@ -600,7 +600,7 @@ workflow:
           result:
             children: null
             type: string
-        selected: true
+        selected: false
         title: Document received message
         type: code
         variables:
@@ -624,7 +624,7 @@ workflow:
           - sheet_name
           value_type: string
           variable: sheet_name
-      height: 161
+      height: 162
       id: '1776057413585'
       position:
         x: 1074.8936343483567
@@ -632,7 +632,7 @@ workflow:
       positionAbsolute:
         x: 1074.8936343483567
         y: 431.3745880206932
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -647,7 +647,7 @@ workflow:
         title: Doc received output
         type: answer
         variables: []
-      height: 164
+      height: 165
       id: '1776057896250'
       position:
         x: 1689.6996629053294
@@ -677,7 +677,7 @@ workflow:
         title: Update preferred language
         type: assigner
         version: '2'
-      height: 145
+      height: 146
       id: '1776153517859'
       position:
         x: 1944.3296427516207
@@ -717,7 +717,7 @@ workflow:
           - preferred_lang
           value_type: string
           variable: preferred_lang
-      height: 149
+      height: 150
       id: '1776188847640'
       position:
         x: 714.682302537459
@@ -738,7 +738,7 @@ workflow:
         title: file missing output
         type: answer
         variables: []
-      height: 147
+      height: 148
       id: '1776189352854'
       position:
         x: 1162.3532660277638
@@ -809,7 +809,7 @@ workflow:
           - preferred_lang
           value_type: string
           variable: preferred_lang
-      height: 129
+      height: 130
       id: '1776326940664'
       position:
         x: 2285.502758533631
@@ -829,7 +829,7 @@ workflow:
         title: Message for different fail branch
         type: answer
         variables: []
-      height: 147
+      height: 148
       id: '1776331413831'
       position:
         x: 2598.502758533631
@@ -875,7 +875,7 @@ workflow:
         title: post file upload
         type: answer
         variables: []
-      height: 145
+      height: 146
       id: '1776335836167'
       position:
         x: 719.9759708830964
@@ -929,7 +929,7 @@ workflow:
         provider_id: 7fb8ca4f-fc35-415e-94d5-48edc65fcf26
         provider_name: COM_Bilingual_Workflow
         provider_type: workflow
-        selected: false
+        selected: true
         title: COM_Bilingual_Workflow
         tool_configurations: {}
         tool_description: This workflow automate the language validation as per requirement
@@ -943,7 +943,7 @@ workflow:
             type: mixed
             value: '{{#sys.query#}}'
         type: tool
-      height: 213
+      height: 214
       id: '1777021956002'
       position:
         x: 719.9759708830964
@@ -951,7 +951,7 @@ workflow:
       positionAbsolute:
         x: 719.9759708830964
         y: -15.113408246636872
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -976,7 +976,7 @@ workflow:
           - json
           value_type: array[object]
           variable: lang_result
-      height: 145
+      height: 146
       id: '1777022031701'
       position:
         x: 1203.7440079254611
@@ -1014,7 +1014,7 @@ workflow:
         selected: false
         title: Yes/No
         type: if-else
-      height: 227
+      height: 244
       id: '1777022146398'
       position:
         x: 1503.7440079254611
@@ -1034,7 +1034,7 @@ workflow:
         title: Request Language
         type: answer
         variables: []
-      height: 103
+      height: 104
       id: '1777022300038'
       position:
         x: 1791.634947076113
@@ -1072,7 +1072,7 @@ workflow:
           - preferred_lang
           value_type: string
           variable: preferred_lang
-      height: 129
+      height: 130
       id: '1777022445744'
       position:
         x: 2248.3296427516207
@@ -1092,7 +1092,7 @@ workflow:
         title: User guide output
         type: answer
         variables: []
-      height: 103
+      height: 104
       id: '1777022598833'
       position:
         x: 2552.3296427516207
@@ -1262,7 +1262,7 @@ workflow:
             type: mixed
             value: '{{#conversation.file_extension#}}'
         type: tool
-      height: 149
+      height: 150
       id: '1777452194414'
       position:
         x: 714.682302537459
@@ -1287,7 +1287,7 @@ workflow:
         title: return 1
         type: code
         variables: []
-      height: 97
+      height: 98
       id: '1777553831531'
       position:
         x: 1993.6996629053294
@@ -1317,7 +1317,7 @@ workflow:
         title: Assign 1 to file_uploaded
         type: assigner
         version: '2'
-      height: 145
+      height: 146
       id: '1777553925943'
       position:
         x: 2297.699662905329
@@ -1543,7 +1543,7 @@ workflow:
             - sys
             - files
         type: tool
-      height: 53
+      height: 54
       id: '1777964487990'
       position:
         x: 1389.6996629053294
@@ -1563,7 +1563,7 @@ workflow:
         title: Answer 7
         type: answer
         variables: []
-      height: 103
+      height: 104
       id: '1777965627576'
       position:
         x: 1496.4057091376144
@@ -1577,6 +1577,6 @@ workflow:
       type: custom
       width: 244
     viewport:
-      x: -827.7361392708258
-      y: -273.4139468085441
+      x: -263.73613927082556
+      y: 248.5860531914559
       zoom: 0.8556609230290014
