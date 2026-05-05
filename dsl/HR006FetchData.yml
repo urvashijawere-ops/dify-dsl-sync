@@ -1,0 +1,282 @@
+app:
+  description: This workflow is used to fetch the details using the manager ID
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: HR-006-FetchData
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1773314525482-source-1773385123103-target
+      source: '1773314525482'
+      sourceHandle: source
+      target: '1773385123103'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1773385123103-source-1773314538925-target
+      source: '1773385123103'
+      sourceHandle: source
+      target: '1773314538925'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: true
+        title: Start
+        type: start
+        variables:
+        - label: emp_id
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: EMP_LDAP
+        - label: manager_ldap
+          max_length: 48
+          options: []
+          required: false
+          type: text-input
+          variable: manager_ldap
+      height: 115
+      id: '1773314525482'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: The Node that fetches the final output
+        outputs:
+        - value_selector:
+          - '1773385123103'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 118
+      id: '1773314538925'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(ldap_id: str = None, manager_ldap: str = None) -> dict:\n\
+          \    \"\"\"\n    Fetches employee records based on LDAP ID (Priority) or\
+          \ checks Manager existence.\n    Data sourced from HR-006 Provisional Test\
+          \ Data.\n    \"\"\"\n    # Updated database with full test data from PDF\
+          \ \n    manager_employee_db = {\n        # Happy Path - Hitachi 2 [cite:\
+          \ 1]\n        \"1000001\": {\"Name\": \"A1\", \"Reporting Manager\": \"\
+          2000001\", \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"\
+          },\n        \"1000002\": {\"Name\": \"A2\", \"Reporting Manager\": \"2000002\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000003\": {\"Name\": \"A3\", \"Reporting Manager\": \"2000003\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000004\": {\"Name\": \"A4\", \"Reporting Manager\": \"2000004\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000005\": {\"Name\": \"A5\", \"Reporting Manager\": \"2000005\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000006\": {\"Name\": \"A6\", \"Reporting Manager\": \"2000006\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000007\": {\"Name\": \"A7\", \"Reporting Manager\": \"2000007\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000008\": {\"Name\": \"A8\", \"Reporting Manager\": \"2000008\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000009\": {\"Name\": \"A9\", \"Reporting Manager\": \"2000009\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \"1000010\": {\"Name\": \"A10\", \"Reporting Manager\": \"2000010\"\
+          , \"Current Organization\": \"Hitachi 2\", \"SVO ID\": \"223456\"},\n  \
+          \      \n        # Happy Path - Hitachi 3 [cite: 1]\n        \"1000011\"\
+          : {\"Name\": \"A11\", \"Reporting Manager\": \"2000011\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000012\": {\"Name\"\
+          : \"A12\", \"Reporting Manager\": \"2000012\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000013\": {\"Name\"\
+          : \"A13\", \"Reporting Manager\": \"2000013\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000014\": {\"Name\"\
+          : \"A14\", \"Reporting Manager\": \"2000014\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000015\": {\"Name\"\
+          : \"A15\", \"Reporting Manager\": \"2000015\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000016\": {\"Name\"\
+          : \"A16\", \"Reporting Manager\": \"2000016\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000017\": {\"Name\"\
+          : \"A17\", \"Reporting Manager\": \"2000017\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000018\": {\"Name\"\
+          : \"A18\", \"Reporting Manager\": \"2000018\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000019\": {\"Name\"\
+          : \"A19\", \"Reporting Manager\": \"2000019\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n        \"1000020\": {\"Name\"\
+          : \"A20\", \"Reporting Manager\": \"2000020\", \"Current Organization\"\
+          : \"Hitachi 3\", \"SVO ID\": \"323456\"},\n\n        # Multiple SVO IDs\
+          \ [cite: 1]\n        \"3000001\": {\"Name\": \"C1\", \"Reporting Manager\"\
+          : \"3000010\", \"Current Organization\": [\"Hitachi 1\", \"Hitachi 2\"],\
+          \ \"SVO ID\": [\"123456\", \"223456\"]},\n        \"3000002\": {\"Name\"\
+          : \"C2\", \"Reporting Manager\": \"3000011\", \"Current Organization\":\
+          \ [\"Hitachi 1\", \"Hitachi 2\", \"Hitachi 3\"], \"SVO ID\": [\"123456\"\
+          , \"223456\", \"323456\"]},\n        \"3000003\": {\"Name\": \"C3\", \"\
+          Reporting Manager\": \"3000012\", \"Current Organization\": [\"Hitachi 1\"\
+          , \"Hitachi 2\"], \"SVO ID\": [\"123456\", \"223456\"]},\n        \"3000004\"\
+          : {\"Name\": \"C4\", \"Reporting Manager\": \"3000013\", \"Current Organization\"\
+          : [\"Hitachi 1\", \"Hitachi 2\"], \"SVO ID\": [\"123456\", \"223456\"]},\n\
+          \        \"3000005\": {\"Name\": \"C5\", \"Reporting Manager\": \"3000014\"\
+          , \"Current Organization\": [\"Hitachi 1\", \"Hitachi 2\"], \"SVO ID\":\
+          \ [\"123456\", \"223456\"]},\n\n        # No SVO ID \n        \"2000004\"\
+          : {\"Name\": \"B4\", \"Reporting Manager\": \"3000004\", \"Current Organization\"\
+          : None, \"SVO ID\": None},\n        \"2000005\": {\"Name\": \"B5\", \"Reporting\
+          \ Manager\": \"3000005\", \"Current Organization\": None, \"SVO ID\": None},\n\
+          \        \"2000006\": {\"Name\": \"B6\", \"Reporting Manager\": \"3000006\"\
+          , \"Current Organization\": None, \"SVO ID\": None},\n        \"2000007\"\
+          : {\"Name\": \"B7\", \"Reporting Manager\": \"3000007\", \"Current Organization\"\
+          : None, \"SVO ID\": None},\n        \"2000008\": {\"Name\": \"B8\", \"Reporting\
+          \ Manager\": \"3000008\", \"Current Organization\": None, \"SVO ID\": None},\n\
+          \        \"2000009\": {\"Name\": \"B9\", \"Reporting Manager\": \"3000009\"\
+          , \"Current Organization\": None, \"SVO ID\": None},\n\n        # No Reporting\
+          \ Manager (No RM) [cite: 2]\n        \"2000010\": {\"Name\": \"B10\", \"\
+          Reporting Manager\": None, \"Current Organization\": None, \"SVO ID\": None},\n\
+          \        \"2000011\": {\"Name\": \"B11\", \"Reporting Manager\": None, \"\
+          Current Organization\": None, \"SVO ID\": None},\n        \"2000012\": {\"\
+          Name\": \"B12\", \"Reporting Manager\": None, \"Current Organization\":\
+          \ None, \"SVO ID\": None},\n        \"2000013\": {\"Name\": \"B13\", \"\
+          Reporting Manager\": None, \"Current Organization\": None, \"SVO ID\": None},\n\
+          \        \"2000014\": {\"Name\": \"B14\", \"Reporting Manager\": None, \"\
+          Current Organization\": None, \"SVO ID\": None},\n        \"2000015\": {\"\
+          Name\": \"B15\", \"Reporting Manager\": None, \"Current Organization\":\
+          \ None, \"SVO ID\": None},\n\n        # Happy Path - Hitachi 4 \n      \
+          \  \"2000001\": {\"Name\": \"B1\", \"Reporting Manager\": \"3000001\", \"\
+          Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n      \
+          \  \"2000002\": {\"Name\": \"B2\", \"Reporting Manager\": \"3000002\", \"\
+          Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n      \
+          \  \"2000003\": {\"Name\": \"B3\", \"Reporting Manager\": \"3000003\", \"\
+          Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n      \
+          \  \"3000012\": {\"Name\": \"B16\", \"Reporting Manager\": \"3000016\",\
+          \ \"Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n  \
+          \      \"2000017\": {\"Name\": \"B17\", \"Reporting Manager\": \"3000017\"\
+          , \"Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n  \
+          \      \"2000018\": {\"Name\": \"B18\", \"Reporting Manager\": \"3000018\"\
+          , \"Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n  \
+          \      \"2000019\": {\"Name\": \"B19\", \"Reporting Manager\": \"3000019\"\
+          , \"Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n  \
+          \      \"2000020\": {\"Name\": \"B20\", \"Reporting Manager\": \"3000020\"\
+          , \"Current Organization\": \"Hitachi 4\", \"SVO ID\": \"423456\"},\n  \
+          \  }\n\n    # Priority 1: Check Employee ID (ldap_id)\n    if ldap_id:\n\
+          \        id_key = str(ldap_id).strip()\n        if id_key in manager_employee_db:\n\
+          \            return {\"result\": manager_employee_db[id_key]}\n        return\
+          \ {\"result\": {\"error\": f\"Employee ID {id_key} is invalid.\"}}\n\n \
+          \   # Priority 2: Check Manager ID (manager_ldap)\n    if manager_ldap:\n\
+          \        mgr_key = str(manager_ldap).strip()\n        is_existing = mgr_key\
+          \ in manager_employee_db\n        return {\n            \"result\": {\n\
+          \                \"exists\": is_existing,\n                \"message\":\
+          \ f\"Manager ID {mgr_key} {'is valid' if is_existing else 'is not valid'}.\"\
+          \n            }\n        }\n\n    return {\"result\": {\"error\": \"Please\
+          \ provide an Employee ID or Manager ID.\"}}"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1773314525482'
+          - EMP_LDAP
+          value_type: string
+          variable: ldap_id
+        - value_selector:
+          - '1773314525482'
+          - manager_ldap
+          value_type: string
+          variable: manager_ldap
+      height: 53
+      id: '1773385123103'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 33.41981486954023
+      y: -20.90844830800836
+      zoom: 0.8809631915190861
