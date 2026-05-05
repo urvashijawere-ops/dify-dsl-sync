@@ -1,0 +1,615 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: F1-024 - GLJAI-873 - OPTIMISED PART- Session - Detects and ask for Conversion
+    rate
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: Stores the USD to JPY rate for the session.
+    id: f7cbecb7-ba8c-4694-8ea3-537918b9437e
+    name: jpy_conversion_rate
+    selector:
+    - conversation
+    - jpy_conversion_rate
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: llm-source-1771497251611-target
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: '1771497251611'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771497251611-true-answer-target
+      selected: false
+      source: '1771497251611'
+      sourceHandle: 'true'
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771507362508-source-1771508722183-target
+      selected: false
+      source: '1771507362508'
+      sourceHandle: source
+      target: '1771508722183'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771590851288-true-llm-target
+      selected: false
+      source: '1771590851288'
+      sourceHandle: 'true'
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1771495658856-source-1771590851288-target
+      selected: false
+      source: '1771495658856'
+      sourceHandle: source
+      target: '1771590851288'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771497251611-a214154d-5154-437e-b71b-e7e0f066b35e-1771575086314-target
+      selected: false
+      source: '1771497251611'
+      sourceHandle: a214154d-5154-437e-b71b-e7e0f066b35e
+      target: '1771575086314'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1771590851288-false-1771926252149-target
+      selected: false
+      source: '1771590851288'
+      sourceHandle: 'false'
+      target: '1771926252149'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771926252149-true-1771849454202-target
+      selected: false
+      source: '1771926252149'
+      sourceHandle: 'true'
+      target: '1771849454202'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771926252149-4c4e72f1-dac0-4c21-a4f2-09f96b222548-1771575086314-target
+      selected: false
+      source: '1771926252149'
+      sourceHandle: 4c4e72f1-dac0-4c21-a4f2-09f96b222548
+      target: '1771575086314'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771926252149-6adb90ae-2ae6-40c5-b18d-acb636b9b5f4-1771507362508-target
+      selected: false
+      source: '1771926252149'
+      sourceHandle: 6adb90ae-2ae6-40c5-b18d-acb636b9b5f4
+      target: '1771507362508'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771926252149-false-1771920633531-target
+      selected: false
+      source: '1771926252149'
+      sourceHandle: 'false'
+      target: '1771920633531'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771497251611-false-1771575086314-target
+      source: '1771497251611'
+      sourceHandle: 'false'
+      target: '1771575086314'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Upload PDF
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: pdf_upload_file
+      height: 89
+      id: '1771495658856'
+      position:
+        x: 0.056277289532602026
+        y: 282
+      positionAbsolute:
+        x: 0.056277289532602026
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 59467a4d-6c6c-4fdf-8df9-8f41531963b0
+          role: system
+          text: 'Role: High-Precision JPY Detection Sensor.
+
+            Objective: Scan the provided document exclusively for explicit text-based
+            Japanese Yen (JPY/¥/円) occurrences.
+
+            Strict Extraction Rules:
+
+
+            Include: Only numbers explicitly and physically preceded or followed by
+            "JPY", "Yen", the symbol "¥", or the Japanese characters "円" or "億円" (e.g.,
+            ¥500, 500 JPY, 100億円).
+
+
+            Exclude Tables & Charts: Ignore all numerical values found inside tables,
+            grids, or visual charts, even if the table specifies a unit at the top.
+
+            Exclude ALL Table Content: Ignore all text and numbers located within
+            any table, including "Remarks", "Notes", or "Bullet points" inside a grid.
+
+
+            Exclude Standalone Numbers: Ignore years (e.g., 2024, 2025), quantities,
+            or percentages that do not have a currency identifier attached to the
+            number itself.
+
+
+
+            Output Format:
+
+            Evidence: For every unique sentence containing JPY, output exactly one
+            line: FOUND: Page: [Page Number] - [Snippet]. Even if a sentence contains
+            multiple currency values, do not repeat the sentence in this list.
+
+
+            Summary Table: At the end of the report, provide a table listing:
+
+            | Page: [Page Number] | Count: [Total count of all currency instances
+            found on this page] |
+
+            (Count every single currency mention, even if they are in the same sentence.
+            Ensure each page is on a new line).'
+        selected: false
+        title: 'Detect Currency: LLM'
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - '1771495658856'
+            - pdf_upload_file
+          enabled: true
+      height: 89
+      id: llm
+      position:
+        x: 554.3909164631003
+        y: 341.1106313221812
+      positionAbsolute:
+        x: 554.3909164631003
+        y: 341.1106313221812
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 'I detected JPY here: {{#llm.text#}}. Would you like to convert this
+          to USD? Yes/No'
+        desc: ''
+        selected: false
+        title: 'Answer: Currency Detected'
+        type: answer
+        variables: []
+      height: 136
+      id: answer
+      position:
+        x: 1187.405193536504
+        y: 372.55280372758585
+      positionAbsolute:
+        x: 1187.405193536504
+        y: 372.55280372758585
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 00ec267d-6de2-478f-bb9d-4a4e8cffa9cf
+            value: FOUND
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: 'true'
+          logical_operator: and
+        - case_id: a214154d-5154-437e-b71b-e7e0f066b35e
+          conditions:
+          - comparison_operator: contains
+            id: 3ae02722-7053-41e0-801d-e2fbfe06bc5b
+            value: CLEAN
+            varType: string
+            variable_selector:
+            - llm
+            - text
+          id: a214154d-5154-437e-b71b-e7e0f066b35e
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 'Result Check: IF/ELSE'
+        type: if-else
+      height: 173
+      id: '1771497251611'
+      position:
+        x: 838.3170285966256
+        y: 341.1106313221812
+      positionAbsolute:
+        x: 838.3170285966256
+        y: 341.1106313221812
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - sys
+          - query
+          variable_selector:
+          - conversation
+          - jpy_conversion_rate
+          write_mode: over-write
+        selected: false
+        title: 'Variable Assigner: JPY_RATE'
+        type: assigner
+        version: '2'
+      height: 85
+      id: '1771507362508'
+      position:
+        x: 838.3170285966256
+        y: 525.3638880784862
+      positionAbsolute:
+        x: 838.3170285966256
+        y: 525.3638880784862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: The conversion rate of {{#conversation.jpy_conversion_rate#}} has
+          been saved for this session. The agent is now ready to perform the unification.
+        desc: ''
+        selected: false
+        title: 'Answer: Rate Saved'
+        type: answer
+        variables: []
+      height: 153
+      id: '1771508722183'
+      position:
+        x: 1187.405193536504
+        y: 525.3638880784862
+      positionAbsolute:
+        x: 1187.405193536504
+        y: 525.3638880784862
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: No JPY currencies were detected in the document. The data is already
+          unified and ready for analysis.
+        desc: ''
+        selected: false
+        title: 'Answer: No Currency'
+        type: answer
+        variables: []
+      height: 133
+      id: '1771575086314'
+      position:
+        x: 1201.4035281253832
+        y: 746.7213677392509
+      positionAbsolute:
+        x: 1201.4035281253832
+        y: 746.7213677392509
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: exists
+            id: 5dfbeacf-dfdb-40f3-8fe1-09792fa61081
+            value: ''
+            varType: file
+            variable_selector:
+            - '1771495658856'
+            - pdf_upload_file
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 'IS FILE UPLOAD: IF/ELSE'
+        type: if-else
+      height: 125
+      id: '1771590851288'
+      position:
+        x: 272.6810658178132
+        y: 282
+      positionAbsolute:
+        x: 272.6810658178132
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Please provide the JPY to USD conversion rate (e.g., 0.0065)
+        desc: ''
+        selected: false
+        title: 'Answer: Provide Rate'
+        type: answer
+        variables: []
+      height: 117
+      id: '1771849454202'
+      position:
+        x: 838.3170285966256
+        y: 613.8405456167658
+      positionAbsolute:
+        x: 838.3170285966256
+        y: 613.8405456167658
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: I couldn't find a numerical rate in your message. Please provide a
+          value like '0.0065'.
+        desc: ''
+        selected: false
+        title: 'Answer: Invalid Rate'
+        type: answer
+        variables: []
+      height: 133
+      id: '1771920633531'
+      position:
+        x: 830.549341465443
+        y: 781.2966935109516
+      positionAbsolute:
+        x: 830.549341465443
+        y: 781.2966935109516
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 6adb90ae-2ae6-40c5-b18d-acb636b9b5f4
+          conditions:
+          - comparison_operator: start with
+            id: 7de11f15-8cf5-4f3c-a585-da16ccdea89d
+            value: '0'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 6adb90ae-2ae6-40c5-b18d-acb636b9b5f4
+          logical_operator: and
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: d2e3632c-2de8-48f3-b0fc-8ade1feef011
+            value: 'Yes'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: da4c8635-77d5-463b-84bc-f69bf2a310b9
+            value: y
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: f8587e44-3ebd-4ecc-a732-42d6829be9d7
+            value: ok
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: or
+        - case_id: 4c4e72f1-dac0-4c21-a4f2-09f96b222548
+          conditions:
+          - comparison_operator: contains
+            id: 7427284b-31f6-4775-9890-8cb9f849bfb6
+            value: 'No'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: c59cfd24-a12f-4f5b-829f-f7b25c1344dc
+            value: n
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: contains
+            id: 63042727-1687-4e82-aeaa-a6afbadf5b27
+            value: stop
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 4c4e72f1-dac0-4c21-a4f2-09f96b222548
+          logical_operator: or
+        desc: ''
+        selected: false
+        title: 'INPUT VERIFIER: IF/ELSE'
+        type: if-else
+      height: 325
+      id: '1771926252149'
+      position:
+        x: 530.0598356400734
+        y: 490.01787926829405
+      positionAbsolute:
+        x: 530.0598356400734
+        y: 490.01787926829405
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -62.82102451636524
+      y: -134.97906519074672
+      zoom: 0.6041157070590585
