@@ -1,0 +1,1435 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: FI-024-GLJAI-1864
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 403e69e2-23f7-4b03-9b61-15bd1a285666
+    name: table_extraction
+    selector:
+    - conversation
+    - table_extraction
+    value: '| Item | 3Q見通し | 3Q前月比 | 3Q予算比 | 3Q前年比 | 下期見通し | 下期前月比 | 下期予算比 | 下期前年比
+      | 年度見通し | 年度前月比 | 年度予算比 | 年度前年比 |
+
+      |:---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+
+      | <売上成長率> | - | 2.1% | 23.9% | 3.6% | - | -0.0% | 8.0% | -6.8% | - | -0.0% |
+      9.6% | -2.7% |
+
+      | 売上収益 | 290 | 6 | 56 | 10 | 635 | 0 | 47 | -46 | 1140 | 0 | 100 | -31 |
+
+      | <利益率> | 10.7% | 2.2% | -0.8% | 1.7% | 9.2% | 0.6% | -5.9% | 3.5% | 10.0% |
+      0.4% | -0.6% | 4.0% |
+
+      | 営業利益 | 31 | 7 | 4 | 6 | 59 | 4 | -30 | 20 | 114 | 4 | 4 | 44 |
+
+      | <Adj. EBITA率> | 10.7% | 2.2% | -0.8% | 1.7% | 9.2% | 0.6% | -5.9% | 3.5% |
+      10.0% | 0.4% | -0.6% | 4.0% |
+
+      | Adj. EBITA(25年度～) | 31 | 7 | 4 | 6 | 59 | 4 | -30 | 20 | 114 | 4 | 4 | 44
+      |
+
+      | EBIT | 29 | 5 | 2 | 3 | 59 | 4 | -29 | 23 | 112 | 4 | 4 | 51 |
+
+      | 営業CF | -15 | 3 | -8 | 0 | 23 | 4 | -10 | -53 | 74 | 4 | 4 | 14 |
+
+      | 投資CF | -6 | 1 | 1 | -4 | -47 | 0 | -5 | -40 | -54 | 0 | 0 | -44 |
+
+      | FCF | -21 | 4 | -7 | -4 | -24 | 4 | -14 | -93 | 20 | 4 | 4 | -29 |
+
+      | <コアFCFマージン率> | -6.5% | 2.4% | -0.7% | -0.7% | 1.0% | 0.6% | -2.4% | -9.3%
+      | 4.4% | 0.4% | -0.0% | 0.1% |
+
+      | コアFCF | -19 | 6 | -5 | -3 | 6 | 4 | -14 | -64 | 50 | 4 | 4 | 0 |'
+    value_type: string
+  - description: ''
+    id: 881d9f02-20f5-4f23-94d2-8672cb306777
+    name: step_counter
+    selector:
+    - conversation
+    - step_counter
+    value: ''
+    value_type: string
+  - description: ''
+    id: eeebc201-4ea6-4ffc-8840-800024c66621
+    name: user_consent
+    selector:
+    - conversation
+    - user_consent
+    value: ''
+    value_type: string
+  - description: ''
+    id: 90fa588a-44a0-437a-b146-e44c3379b710
+    name: currency_rate
+    selector:
+    - conversation
+    - currency_rate
+    value: ''
+    value_type: string
+  - description: ''
+    id: 742333e2-ba04-4ba5-883e-75e235e3ac74
+    name: extracted_doc
+    selector:
+    - conversation
+    - extracted_doc
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1771851561833-source-1771852223758-target
+      source: '1771851561833'
+      sourceHandle: source
+      target: '1771852223758'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 1771851995979-source-1771854405606-target
+      selected: false
+      source: '1771851995979'
+      sourceHandle: source
+      target: '1771854405606'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771855194116-source-17718548374930-target
+      source: '1771855194116'
+      sourceHandle: source
+      target: '17718548374930'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1771852223758-3892cc5b-1387-4673-9f7b-50c9ea4b75e8-1771855805057-target
+      source: '1771852223758'
+      sourceHandle: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+      target: '1771855805057'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1771855805057-source-1771855194116-target
+      source: '1771855805057'
+      sourceHandle: source
+      target: '1771855194116'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: llm
+      id: 1771851955724-source-1771856983531-target
+      source: '1771851955724'
+      sourceHandle: source
+      target: '1771856983531'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: llm
+      id: 17718548374930-source-llm-target
+      source: '17718548374930'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1771856983531-source-1771921748950-target
+      source: '1771856983531'
+      sourceHandle: source
+      target: '1771921748950'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771921748950-true-1771851995979-target
+      source: '1771921748950'
+      sourceHandle: 'true'
+      target: '1771851995979'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771921748950-87ec1d41-b862-40f1-8968-d8d993f22ffa-17719219929820-target
+      source: '1771921748950'
+      sourceHandle: 87ec1d41-b862-40f1-8968-d8d993f22ffa
+      target: '17719219929820'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 17719219929820-source-1771922100517-target
+      source: '17719219929820'
+      sourceHandle: source
+      target: '1771922100517'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1771852223758-1651a48a-5cfe-4c6b-b32e-4c85a192ca46-1771922696244-target
+      source: '1771852223758'
+      sourceHandle: 1651a48a-5cfe-4c6b-b32e-4c85a192ca46
+      target: '1771922696244'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771922696244-true-1771922774745-target
+      source: '1771922696244'
+      sourceHandle: 'true'
+      target: '1771922774745'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 17719231286460-source-17719234465300-target
+      source: '17719231286460'
+      sourceHandle: source
+      target: '17719234465300'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771922774745-source-17719222056450-target
+      source: '1771922774745'
+      sourceHandle: source
+      target: '17719222056450'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771922696244-false-1771924995326-target
+      source: '1771922696244'
+      sourceHandle: 'false'
+      target: '1771924995326'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: llm-source-1771925483914-target
+      source: llm
+      sourceHandle: source
+      target: '1771925483914'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771925483914-source-1771926247983-target
+      source: '1771925483914'
+      sourceHandle: source
+      target: '1771926247983'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771922696244-1a62d992-e9aa-402c-8791-4d5285b59141-1771926322080-target
+      source: '1771922696244'
+      sourceHandle: 1a62d992-e9aa-402c-8791-4d5285b59141
+      target: '1771926322080'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771926322080-source-17719231286460-target
+      source: '1771926322080'
+      sourceHandle: source
+      target: '17719231286460'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771852223758-6bc92913-9d1b-462d-bd35-cb1bc946be90-17719273678400-target
+      source: '1771852223758'
+      sourceHandle: 6bc92913-9d1b-462d-bd35-cb1bc946be90
+      target: '17719273678400'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771852223758-false-1771952408597-target
+      source: '1771852223758'
+      sourceHandle: 'false'
+      target: '1771952408597'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: assigner
+      id: 1771952408597-source-1771851955724-target
+      source: '1771952408597'
+      sourceHandle: source
+      target: '1771851955724'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1771852223758-8cfb4789-6380-43da-bd8f-5c78eceb7119-1772457044094-target
+      source: '1771852223758'
+      sourceHandle: 8cfb4789-6380-43da-bd8f-5c78eceb7119
+      target: '1772457044094'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1772457044094-source-1772457201939-target
+      source: '1772457044094'
+      sourceHandle: source
+      target: '1772457201939'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 1771926247983-source-1772457377648-target
+      source: '1771926247983'
+      sourceHandle: source
+      target: '1772457377648'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1772457377648-source-1772457458889-target
+      source: '1772457377648'
+      sourceHandle: source
+      target: '1772457458889'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: bu_report
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: bu_report
+      height: 90
+      id: '1771851561833'
+      position:
+        x: 30
+        y: 945
+      positionAbsolute:
+        x: 30
+        y: 945
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#conversation.currency_rate#}}
+
+            {{#conversation.extracted_doc#}}
+
+            {{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 10
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 5bc7317c-60cc-4376-b8a4-e9c0086c9afc
+          role: system
+          text: 'Role: You are a high-precision data processing engine. Your task
+            is string-replacement and currency calculation only.
+
+            Data Source: {{#conversation.extracted_doc#}}
+
+            Objective: Scan the provided document {{#conversation.extracted_doc#}}
+            for US Dollars (USD/$) and replace them with Japanese Yen (JPY/¥) use
+            {{#conversation.currency_rate#}} for all the conversion.
+
+            Mandatory Workflow:
+
+
+            Literal Replication: You must perform a character-for-character replication
+            of the original text.
+
+            The "No-Change" Rule: * Do NOT summarize.
+
+            Do NOT fix grammar or typos in the original text.
+
+            Do NOT omit headers, footers, or citations.
+
+            Do NOT change the layout or paragraph structure.
+
+            The Conversion Rule: When you find a JPY value, calculate the USD equivalent
+            using the rate provided in {{#conversation.currency_rate#}}. Replace the
+            USD text with the JPY result.
+
+            Example: "The cost was $10.25 USD" becomes "The cost was  ¥1,500" (assuming
+            the rate).
+
+            Verification Step: After generating the response, perform a "self-audit"
+            to ensure the word count and structure match the original perfectly.'
+        selected: false
+        title: Doc Regenerator with currency rate
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: llm
+      position:
+        x: 1791
+        y: 277
+      positionAbsolute:
+        x: 1791
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1771952408597'
+          - text
+          variable_selector:
+          - conversation
+          - extracted_doc
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771851955724'
+      position:
+        x: 2459
+        y: 1039
+      positionAbsolute:
+        x: 2459
+        y: 1039
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Multiple currencies detected. Do you want to convert? All currency
+          units will be converted to JPY, Enter 0 for no and 1 for yes
+        desc: ''
+        selected: false
+        title: Multi-currency detection
+        type: answer
+        variables: []
+      height: 150
+      id: '1771851995979'
+      position:
+        x: 3552
+        y: 860
+      positionAbsolute:
+        x: 3552
+        y: 860
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+          conditions:
+          - comparison_operator: is
+            id: c1ad270d-9cb3-4de8-8293-cfead932c539
+            value: DOC_REGENRATE
+            varType: string
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 3892cc5b-1387-4673-9f7b-50c9ea4b75e8
+          logical_operator: and
+        - case_id: 1651a48a-5cfe-4c6b-b32e-4c85a192ca46
+          conditions:
+          - comparison_operator: is
+            id: 1826ee95-7f45-48a7-bd4d-5e29020144aa
+            value: USER_CONSENT
+            varType: string
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 1651a48a-5cfe-4c6b-b32e-4c85a192ca46
+          logical_operator: and
+        - case_id: 6bc92913-9d1b-462d-bd35-cb1bc946be90
+          conditions:
+          - comparison_operator: is
+            id: 6e29b136-0c45-4fde-874f-5dde5b2b28cc
+            value: PROCESS_FURTHER
+            varType: string
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 6bc92913-9d1b-462d-bd35-cb1bc946be90
+          logical_operator: and
+        - case_id: 8cfb4789-6380-43da-bd8f-5c78eceb7119
+          conditions:
+          - comparison_operator: is
+            id: 8c716550-beae-4986-ba20-abf99e788445
+            value: GENERATE_SUMMARY
+            varType: string
+            variable_selector:
+            - conversation
+            - step_counter
+          id: 8cfb4789-6380-43da-bd8f-5c78eceb7119
+          logical_operator: and
+        desc: Case 1 - used
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 298
+      id: '1771852223758'
+      position:
+        x: 364
+        y: 945
+      positionAbsolute:
+        x: 364
+        y: 945
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: USER_CONSENT
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 4
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771854405606'
+      position:
+        x: 3886
+        y: 860
+      positionAbsolute:
+        x: 3886
+        y: 860
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Conversion rate has been set as per input {{#conversation.currency_rate#}}
+        desc: ''
+        selected: false
+        title: Conversion Rate confirmation
+        type: answer
+        variables: []
+      height: 122
+      id: '17718548374930'
+      position:
+        x: 1457
+        y: 277
+      positionAbsolute:
+        x: 1457
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1771855805057'
+          - result
+          variable_selector:
+          - conversation
+          - currency_rate
+          write_mode: over-write
+        selected: false
+        title: Curreny Rate
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771855194116'
+      position:
+        x: 1123
+        y: 277
+      positionAbsolute:
+        x: 1123
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: str) -> dict:\n    return {\n        \"result\": arg1,\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: arg1
+      height: 54
+      id: '1771855805057'
+      position:
+        x: 789
+        y: 277
+      positionAbsolute:
+        x: 789
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 4b62fc17-5aa5-409d-a1f9-a664b9ae2494
+          role: system
+          text: 'Data Source: {{#conversation.extracted_doc#}}
+
+
+            Role: High-Precision Currency Processor.
+
+            Task 1 (Document Analysis): Scan the provided PDF for Japanese Yen (JPY/¥).
+
+            Rules: Ignore dates (2024, 2026), quantities, or plain numbers without
+            symbols.
+
+            Output: If JPY is found, output NEED_CONFIRMATION. Otherwise, output CLEAN.
+
+            Task 2 (Confirmation): If the user is responding to a previous prompt
+            about converting JPY:
+
+            Rules: If the user says "Yes" or expresses agreement, output ASK_FOR_RATE.
+
+            Task 3 (Rate Extraction): If the user provides a numerical value (e.g.,
+            0.0065):
+
+            Output: Extract and output ONLY the raw numerical value.
+
+            Mandatory Rule: Output exactly one keyword (NEED_CONFIRMATION, CLEAN,
+            ASK_FOR_RATE) or one number. No prose.'
+        - id: 00163ee8-08b9-415d-8234-6d2145b901bf
+          role: user
+          text: '{{#conversation.extracted_doc#}}'
+        selected: false
+        title: Currency Detector
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 90
+      id: '1771856983531'
+      position:
+        x: 2793
+        y: 1003
+      positionAbsolute:
+        x: 2793
+        y: 1003
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: Koushik B M
+        desc: ''
+        height: 187
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"step_counter:","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"0
+          = document extraction and detecting the USD currency","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"1
+          = Ask user for currency conversion rate","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"2
+          = Doc regeneration based on user input of consent with yes or no for conversion
+          and currency rate","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 322
+      height: 187
+      id: '1771860287500'
+      position:
+        x: 76.04454055608323
+        y: -111.45912801206785
+      positionAbsolute:
+        x: 76.04454055608323
+        y: -111.45912801206785
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 322
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 5d087bde-bec4-444d-9ff1-31ceb560c004
+            value: NEED_CONFIRMATION
+            varType: string
+            variable_selector:
+            - '1771856983531'
+            - text
+          id: 'true'
+          logical_operator: and
+        - case_id: 87ec1d41-b862-40f1-8968-d8d993f22ffa
+          conditions:
+          - comparison_operator: is
+            id: aa70c27a-a1ba-4875-be0c-aaceca4d5a94
+            value: CLEAN
+            varType: string
+            variable_selector:
+            - '1771856983531'
+            - text
+          id: 87ec1d41-b862-40f1-8968-d8d993f22ffa
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 174
+      id: '1771921748950'
+      position:
+        x: 3127
+        y: 1005
+      positionAbsolute:
+        x: 3127
+        y: 1005
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: No multiple currency detected
+        desc: ''
+        selected: false
+        title: Multi-currency detection (1)
+        type: answer
+        variables: []
+      height: 102
+      id: '17719219929820'
+      position:
+        x: 3886
+        y: 1017
+      positionAbsolute:
+        x: 3886
+        y: 1017
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: PROCESS_FURTHER
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 6
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771922100517'
+      position:
+        x: 4220
+        y: 1025
+      positionAbsolute:
+        x: 4220
+        y: 1025
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Document taken for further processing for the next node
+        desc: ''
+        selected: false
+        title: Document Processing
+        type: answer
+        variables: []
+      height: 118
+      id: '17719222056450'
+      position:
+        x: 2125
+        y: 403
+      positionAbsolute:
+        x: 2125
+        y: 403
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 139f81cf-4264-4804-8f9b-f63792a9c535
+            value: '0'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        - case_id: 1a62d992-e9aa-402c-8791-4d5285b59141
+          conditions:
+          - comparison_operator: contains
+            id: 2c3a106d-50d0-4891-8507-50d219682fce
+            value: '1'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 1a62d992-e9aa-402c-8791-4d5285b59141
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 3
+        type: if-else
+      height: 174
+      id: '1771922696244'
+      position:
+        x: 1123
+        y: 635
+      positionAbsolute:
+        x: 1123
+        y: 635
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: 'No'
+          variable_selector:
+          - conversation
+          - user_consent
+          write_mode: over-write
+        - input_type: constant
+          operation: set
+          value: PROCESS_FURTHER
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 8
+        type: assigner
+        version: '2'
+      height: 112
+      id: '1771922774745'
+      position:
+        x: 1791
+        y: 408
+      positionAbsolute:
+        x: 1791
+        y: 408
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Please enter the currency conversion rate, if 1JPY = 0.065USD enter
+          0.0065
+        desc: ''
+        selected: false
+        title: Ask for Currency rate (1)
+        type: answer
+        variables: []
+      height: 134
+      id: '17719231286460'
+      position:
+        x: 2459
+        y: 571
+      positionAbsolute:
+        x: 2459
+        y: 571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: DOC_REGENRATE
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 5 (1)
+        type: assigner
+        version: '2'
+      height: 86
+      id: '17719234465300'
+      position:
+        x: 2793
+        y: 561
+      positionAbsolute:
+        x: 2793
+        y: 561
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Please enter either 0 or 1
+        desc: ''
+        selected: false
+        title: Answer 8
+        type: answer
+        variables: []
+      height: 102
+      id: '1771924995326'
+      position:
+        x: 2459
+        y: 745
+      positionAbsolute:
+        x: 2459
+        y: 745
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - llm
+          - text
+          variable_selector:
+          - conversation
+          - extracted_doc
+          write_mode: over-write
+        selected: false
+        title: Doc Regenerator
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771925483914'
+      position:
+        x: 2125
+        y: 277
+      positionAbsolute:
+        x: 2125
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: ' Your document has been processed and regenrated with {{#conversation.currency_rate#}}converison
+          and stored for future purpose
+
+
+          {{#conversation.extracted_doc#}}'
+        desc: ''
+        selected: false
+        title: Answer 8
+        type: answer
+        variables: []
+      height: 173
+      id: '1771926247983'
+      position:
+        x: 2459
+        y: 277
+      positionAbsolute:
+        x: 2459
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: 'Yes'
+          variable_selector:
+          - conversation
+          - user_consent
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 11
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1771926322080'
+      position:
+        x: 2125
+        y: 561
+      positionAbsolute:
+        x: 2125
+        y: 561
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - conversation
+          - extracted_doc
+          variable_selector:
+          - conversation
+          - extracted_doc
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 5 (2)
+        type: assigner
+        version: '2'
+      height: 86
+      id: '17719273678400'
+      position:
+        x: 1457
+        y: 850
+      positionAbsolute:
+        x: 1457
+        y: 850
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 53c2b99f-d758-4c8a-a332-d8e7ff811733
+          role: system
+          text: 'Data Source: {{#1771851561833.bu_report#}}
+
+            Role: You are a highly precise Document-to-Text Parser. Your objective
+            is to extract all written prose and tabular data from the provided document
+            while enforcing a strict, absolute blackout on all visual and graph-based
+            content.
+
+            Core Directives:
+
+            Sequential Extraction: Process the document page-by-page. Use the markdown
+            header ## Page [X] to separate them.
+
+            Zero Text Loss for Prose: Transcribe all paragraphs, headings, lists,
+            and standard prose exactly as written.
+
+            STRICT Table & Visual Blackout: You must completely ignore the following
+            elements:
+
+            Tables: If you encounter a data table or grid, skip it entirely. Do not
+            transcribe it, do not summarize it, and do not include any of its data
+            points in the output.
+
+            Visuals: Ignore all images, photographs, icons, diagrams, and graphs (including
+            waterfall, bar, pie, or line graphs).
+
+            Ignore Embedded Graph Text (Crucial): If a page consists entirely or primarily
+            of a visual graph or chart, you must skip the entire page. Do NOT transcribe
+            the axis labels, legends, data points, or floating text associated with
+            the graph, even if your OCR/source data provides them as readable text.
+
+            No Placeholders: Do not include phrases like "[Image omitted]" or "[Graph
+            skipped]". If a page is skipped, simply do not output that page number.
+
+            Quality Check: Before providing the output, verify that no fragmented
+            text, floating numbers, or labels from skipped graphs have slipped into
+            the output, and ensure that no statistical data from valid tables was
+            dropped.
+
+            '
+        - id: d615196b-ed8c-4b02-b6cc-84ab0a598b3b
+          role: user
+          text: ''
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1771952408597'
+      position:
+        x: 1457
+        y: 975
+      positionAbsolute:
+        x: 1457
+        y: 975
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: e984d3a4-62d9-45c7-b346-c64a602d0f8c
+          role: system
+          text: "\"I am providing two sources of data: a raw text extraction from\
+            \ a 2025 Financial Hearing PDF {{#conversation.extracted_doc#}} and a\
+            \ structured Markdown table containing 3Q and Full Year forecasts {{#conversation.table_extraction#}}\n\
+            Please synthesize this data into a formal financial summary using the\
+            \ following template.\nInstructions:\nSource Mapping: Use the Markdown\
+            \ table for the numerical 'Variation' and 'Month-on-Month' data. Use the\
+            \ PDF text to provide context for 'Assessment Month' findings and 'Risks\
+            \ and Opportunities.'\nCalculation: For 'Feel Width' (Range), use the\
+            \ 'Risk' and 'Chance' subtotals from the PDF to calculate the potential\
+            \ upper and lower limits of the forecast.\nCurrency/Units: All monetary\
+            \ values should be in billions of yen (100億円 = 10 billion) or as specified\
+            \ in the text.\nStyle: Keep the tone professional, concise, and data-driven.\n\
+            Template to Follow: <YY/Q<current>> results PL Sales: XX billion | Adj.\
+            \ EBITA: YY billion Month-on-Month Variation: Budget-on-Month Variation:\
+            \ YoY Variation: Current Assessment (as of Nov 2025): [Include Margin\
+            \ % and Adj. EBITA sentiment] CF Core FCF: ZZ Billion (Include MoM, Budget,\
+            \ and YoY comparisons)\nForecast for FY2025 PL Sales: XX billion | Adj.\
+            \ EBITA: YY billion Budget-on-Month Variation: Year-on-Year Variation:\
+            \ Net Sales Forecast Range (Feel Width): [Lower limit] to [Upper limit]\
+            \ Adj. EBITA Forecast Range (Feel Width): [Lower limit] to [Upper limit]\
+            \ Adj. EBITA Action Required: [Summarize key recovery actions from PDF]\
+            \ CF Core FCF: ZZ billion (Include MoM, Budget, and YoY comparisons) Orders\
+            \ Received: [From PDF Table]\nRisks and Opportunities by BU: [Summarize\
+            \ GX and D&S specific points found in the PDF text]\nInput Data: \n{{#conversation.extracted_doc#}}\n\
+            {{#conversation.table_extraction#}}\n "
+        - role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM 4
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1772457044094'
+      position:
+        x: 1457
+        y: 1104
+      positionAbsolute:
+        x: 1457
+        y: 1104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1772457044094.text#}}'
+        desc: ''
+        selected: false
+        title: Answer 8
+        type: answer
+        variables: []
+      height: 105
+      id: '1772457201939'
+      position:
+        x: 1761
+        y: 1104
+      positionAbsolute:
+        x: 1761
+        y: 1104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: constant
+          operation: set
+          value: GENERATE_SUMMARY
+          variable_selector:
+          - conversation
+          - step_counter
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner 10
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1772457377648'
+      position:
+        x: 2763
+        y: 277
+      positionAbsolute:
+        x: 2763
+        y: 277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Generate Summary?
+        desc: ''
+        selected: false
+        title: Answer 9
+        type: answer
+        variables: []
+      height: 102
+      id: '1772457458889'
+      position:
+        x: 3067
+        y: 277
+      positionAbsolute:
+        x: 3067
+        y: 277
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 99.84994355176553
+      y: 186.6402948501322
+      zoom: 0.25
