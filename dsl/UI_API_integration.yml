@@ -1,0 +1,247 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: UI_API integration
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1772173484768-source-1772173489176-target
+      source: '1772173484768'
+      sourceHandle: source
+      target: '1772173489176'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1772173489176-source-1772173543322-target
+      source: '1772173489176'
+      sourceHandle: source
+      target: '1772173543322'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 53
+      id: '1772173484768'
+      position:
+        x: 185
+        y: 282
+      positionAbsolute:
+        x: 185
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main():\n    screen1 = {\n        \"Branch Code\": 11,\n      \
+          \  \"Customer #\": 10001,\n        \"Equipment Type\": \"Elevator\",\n \
+          \       \"Sec #\": \"SEC-01\",\n        \"Unit Number\": \"UNIT-12A\",\n\
+          \        \"Product Name/Model\": \"Mitsubishi Electric Elevator Model ZX-300\"\
+          ,\n        \"Delivery Year/Month\": \"2018-04\",\n        \"Contract\":\
+          \ \"Full Maintenance Contract\",\n        \"Order Number\": \"ORD-778899\"\
+          ,\n        \"Building Code\": \"BLD-1301-TKY\"\n    }\n\n    screen2 = {\n\
+          \        \"Search Information\": [\n            \"MITSUI SUMITOMO GINKO\
+          \ HIGASHIKAN\",\n            \"Sumitomo Mitsui Banking Corporation East\
+          \ Tower\",\n            \"1-3-2 Marunouchi, Chiyoda-ku, Tokyo 100-0005\"\
+          \n        ],\n        \"Basic Property Information\": {\n            \"\
+          Building Alias (Kana)\": \"ミツイスミトモギンコヒガシカン\",\n            \"Building Alias\
+          \ (Kanji)\": \"三井住友銀行東館\",\n            \"Address (Kana)\": \"TOKYOTO CHIYODAKU\
+          \ MARUNOUCHI\",\n            \"Job Classification Code\": \"0105312000\"\
+          ,\n            \"Region Code\": \"1301\",\n            \"Emergency Classification\"\
+          : \"Branch-Specific Designated Customer\",\n            \"Recurrence Classification\"\
+          : \"No Recurrence\"\n        },\n        \"Customer Contact Window\": {\n\
+          \            \"Contact Window Name\": \"B2 Floor Electrical Room\",\n  \
+          \          \"Phone Number (Day)\": \"03-3528-6182\",\n            \"Phone\
+          \ Number (Night)\": \"03-3522-2583\"\n        },\n        \"Access/Entry\
+          \ Information\": {\n            \"Client Name\": \"Sumitomo Mitsui Banking\
+          \ Corporation\",\n            \"Nearest Station\": \"Tokyo Station\",\n\
+          \            \"Landmark\": \"Marunouchi Business District\",\n         \
+          \   \"Entry Method\": \"Borrow keys at B2 Electrical Room; sign in at 1F\
+          \ Reception and obtain visitor badge\",\n            \"Individual Information\"\
+          : \"Contact building manager before accessing machine room\"\n        },\n\
+          \        \"Special Notes\": [\n            \"★ [Strict Adherence] Always\
+          \ call before departing in case of failure.\",\n            \"Fill in working\
+          \ hours on inspection report.\",\n            \"On holidays/nights, call\
+          \ 1F security room for entry approval.\",\n            \"Submit failure\
+          \ repair report after completion.\",\n            \"Submit monthly reports\
+          \ by the 20th of each month.\"\n        ],\n        \"Maintenance Special\
+          \ Notes\": {\n            \"Elevator\": {\n                \"Entry Method\
+          \ Supplement\": \"Use service elevator for equipment transport\",\n    \
+          \            \"Special Notes Supplement\": \"Ensure elevator is set to maintenance\
+          \ mode before inspection\"\n            }\n        }\n    }\n\n    screen3\
+          \ = {\n            \"Designated Contact Information\": {\n             \
+          \   \"Specific Customer Information\": {\n                    \"Building\
+          \ Name\": \"Sumitomo Mitsui Banking Corporation East Tower\",\n        \
+          \            \"Client Code\": \"923701-001\",\n                    \"Customer\
+          \ Name\": \"Sumitomo Mitsui Banking Corporation\",\n                   \
+          \ \"Contractor Name\": \"ABC Elevator Maintenance Co., Ltd.\",\n       \
+          \             \"Special A Classification\": \"Tier-1 Financial Institution\"\
+          ,\n                    \"Last Updated Date\": \"2026-02-20\"\n         \
+          \       },\n                \"Contact from 'Sales Office' (●: Contact Required\
+          \ / ×: Contact Not Required)\": {\n                    \"Customer\": \"\
+          ●\",\n                    \"Sales\": \"●\",\n                    \"Technical\
+          \ Champion\": \"×\",\n                    \"Seller\": \"●\"\n          \
+          \      },\n                \"Contact for 'Customer Primary'\": {\n     \
+          \                   \"Contact Time Slot\": \"All Day\",\n              \
+          \          \"Contact Deadline\": \"Immediate\",\n                      \
+          \  \"Department\": \"Technical Support Center\",\n                     \
+          \   \"Name\": \"Taro Yamada\",\n                        \"Contact Method\"\
+          : \"Phone\",\n                        \"Phone Number\": \"03-1234-5678\"\
+          ,\n                        \"FAX Number\": \"03-1234-5679\",\n         \
+          \               \"Designated Report\": \"Failure Report Required\"\n   \
+          \             },\n                \"Contact for 'Customer Secondary'\":\
+          \ {\n                        \"Contact Time Slot\": \"All Day\",\n     \
+          \                   \"Contact Deadline\": \"Within 2 Hours\",\n        \
+          \                \"Department\": \"Facility Management\",\n            \
+          \            \"Name\": \"Hanako Suzuki\",\n                        \"Contact\
+          \ Method\": \"Phone\",\n                        \"Phone Number\": \"03-2345-6789\"\
+          ,\n                        \"FAX Number\": \"\",\n                     \
+          \   \"Designated Report\": \"Email Summary\"\n                },\n     \
+          \           \"Contact for 'Customer Tertiary'\": {\n                   \
+          \     \"Contact Time Slot\": \"Business Hours Only\",\n                \
+          \        \"Contact Deadline\": \"Same Day\",\n                        \"\
+          Department\": \"Administration\",\n                        \"Name\": \"\
+          Kenji Tanaka\",\n                        \"Contact Method\": \"Email\",\n\
+          \                        \"Phone Number\": \"03-3456-7890\",\n         \
+          \               \"FAX Number\": \"\",\n                        \"Designated\
+          \ Report\": \"Monthly Maintenance Report\"\n                },\n       \
+          \         \"Special Notes\": \"Technical Support Center operates 24/7. For\
+          \ resident-managed sites, always inform building management.\"\n       \
+          \         },\n                \"Contact for 'Sales Primary'\": {\n     \
+          \                   \"Contact Time Slot\": \"All Day\",\n              \
+          \          \"Department\": \"Metropolitan Branch, 3rd Sales Dept, 1st Group\"\
+          ,\n                        \"Contact Method\": \"Phone then Email\",\n \
+          \                       \"Office Phone Number\": \"03-4567-8901\"\n    \
+          \            },\n                \"Contact for 'Sales Secondary\": {\n \
+          \                       \"Contact Time Slot\": \"Business Hours\",\n   \
+          \                     \"Department\": \"Metropolitan Branch, 3rd Sales Dept,\
+          \ 1st Group\",\n                        \"Contact Method\": \"Email\",\n\
+          \                        \"Office Phone Number\": \"03-4567-8902\"\n   \
+          \             },\n                \"Contact for 'Sales Tertiary\": {\n \
+          \                       \"Contact Time Slot\": \"Business Hours\",\n   \
+          \                     \"Department\": \"Metropolitan Branch, 3rd Sales Dept,\
+          \ 1st Group\",\n                        \"Contact Method\": \"Email\",\n\
+          \                        \"Office Phone Number\": \"03-4567-8903\"\n   \
+          \             }\n    }\n\n    return {\n        \"result\": [\n        \
+          \    {\n                \"Screen 1\": screen1,\n                \"Screen\
+          \ 2\": screen2,\n                \"Screen 3\": screen3\n            }\n\
+          \        ]\n    }\n"
+        code_language: python3
+        desc: 'Integration '
+        outputs:
+          result:
+            children: null
+            type: array[object]
+        selected: true
+        title: Code
+        type: code
+        variables: []
+      height: 81
+      id: '1772173489176'
+      position:
+        x: 550
+        y: 282
+      positionAbsolute:
+        x: 550
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1772173489176'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1772173543322'
+      position:
+        x: 948
+        y: 282
+      positionAbsolute:
+        x: 948
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 50.5
+      y: 74
+      zoom: 1
