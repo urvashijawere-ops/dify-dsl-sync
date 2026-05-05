@@ -183,13 +183,6 @@ workflow:
       allowed_file_upload_methods:
       - local_file
       enabled: true
-      fileUploadConfig:
-        audio_file_size_limit: 50
-        batch_count_limit: 5
-        file_size_limit: 50
-        image_file_size_limit: 10
-        video_file_size_limit: 100
-        workflow_file_upload_limit: 10
       image:
         enabled: false
         number_limits: 3
@@ -785,7 +778,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -929,7 +922,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1776942555536.result#}}
 
@@ -939,7 +932,7 @@ workflow:
         title: User guide output
         type: answer
         variables: []
-      height: 148
+      height: 147
       id: '1775811952263'
       position:
         x: 2268.725588330158
@@ -951,7 +944,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This node updates user preferred language to the variable preferred_lang
           as en or jp
@@ -981,7 +974,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "def main(static_data: dict, preferred_lang: str):\n    \n    # Access\
           \ the nested object using the new structure\n    msg = static_data.get(\"\
@@ -1021,7 +1014,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1776188847640.result#}}'
         desc: Thid node display file missing output to request the user to upload
@@ -1030,7 +1023,7 @@ workflow:
         title: file missing output
         type: answer
         variables: []
-      height: 148
+      height: 147
       id: '1776189352854'
       position:
         x: 1000.8702668263868
@@ -1042,7 +1035,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\nimport json\n\ndef main(preferred_lang_error: str, missing_file_error:\
           \ str,doc_rcv_error:str, preferred_lang:str,file_extractor_error:str,client_extractor_error:str,text:str,\
@@ -1130,7 +1123,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1776326940664.result#}}'
         desc: This node display message based on failed branch
@@ -1138,7 +1131,7 @@ workflow:
         title: Message for different fail branch
         type: answer
         variables: []
-      height: 148
+      height: 147
       id: '1776331413831'
       position:
         x: 3232.1981239803235
@@ -1150,7 +1143,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         author: kumar_vi@itg.hitachi.co.jp
         desc: ''
@@ -1215,7 +1208,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(lang_result:list):\n    lang_obj = lang_result[0]\n    return\
           \ {\n        \"result\": lang_obj.get(\"result\", \"\")\n    }\n"
@@ -1248,7 +1241,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1287,7 +1280,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1776940676228.result#}}'
         desc: This node request the user to enter the language if preferred language
@@ -1296,7 +1289,7 @@ workflow:
         title: Request Language
         type: answer
         variables: []
-      height: 164
+      height: 163
       id: '1776942497647'
       position:
         x: 1654.0659641439952
@@ -1308,7 +1301,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(preferred_lang: str, static_data: dict):\n    return {\n\
           \        \"result\": static_data.get(\"user_guide\",{}).get(preferred_lang)\n\
@@ -1346,7 +1339,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "def main(static_data:dict, preferred_lang:str):\n    msg = static_data.get(\"\
           document_received_msg\", {}).get(preferred_lang)\n\n    return{\n      \
@@ -1388,7 +1381,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This workflow validate the user input if they have selected their preferred
           language or not and return preferred language as key such "en" for English
@@ -1456,7 +1449,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1776947739078.result#}}'
         desc: This node prompt message to the user that file has been received and
@@ -1465,7 +1458,7 @@ workflow:
         title: doc received output.
         type: answer
         variables: []
-      height: 164
+      height: 163
       id: '1776948841588'
       position:
         x: 1016.1881096452678
@@ -1477,7 +1470,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -1507,7 +1500,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '
 
@@ -1532,7 +1525,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "import re\nimport json\nfrom typing import List, Dict, Any\n\ndef main(input_data:\
           \ str, lang: str, static_data:dict) -> dict:\n    # 1. Define Localization\
@@ -1635,7 +1628,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: ' {{#1777498691372.client_name#}} '
         desc: This node display selected client name to the user.
@@ -1643,7 +1636,7 @@ workflow:
         title: Display Client Name
         type: answer
         variables: []
-      height: 148
+      height: 147
       id: '1777498194542'
       position:
         x: 1299.6177003607243
@@ -1655,7 +1648,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "def main(user_input: str, sheet_data: list, static_data: dict, preferred_lang:\
           \ str, is_follow_up: str) -> dict:\n    # 1. Handle Follow-up logic (Directly\
@@ -1725,7 +1718,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(preferred_lang: str, static_data: dict):\n    msg_templates\
           \ = static_data.get(\"choose_client_msg\", {})\n    choose_client_msg =\
@@ -1764,7 +1757,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This workflow validate the file in terms of file extension, size, and
           return validation result in preferred language.
@@ -1929,7 +1922,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(file_response: list, uploaded_file_config:dict):\n    #\
           \ parse the sheet info:\n    sheet = uploaded_file_config.get(\"sheet_name\"\
@@ -1986,7 +1979,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -2016,7 +2009,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '
 
@@ -2027,7 +2020,7 @@ workflow:
         title: display validation error
         type: answer
         variables: []
-      height: 148
+      height: 147
       id: '1777882738011'
       position:
         x: 1902.487345639779
@@ -2039,7 +2032,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1777969630436.result#}}'
         desc: ''
@@ -2047,7 +2040,7 @@ workflow:
         title: display email
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1777883882023'
       position:
         x: 1332.7752208271447
@@ -2059,7 +2052,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         error_strategy: fail-branch
@@ -2285,7 +2278,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This workflow handles user query as error or follow up questions. And
           based on that it provide solutions. It takes user input, is_follow_up as
@@ -2450,7 +2443,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(ai_response : list):\n    ai_response = ai_response[0]\n\
           \    return {\n        \"result\": ai_response.get(\"text\"),\n        \"\
@@ -2486,7 +2479,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '
 
@@ -2496,7 +2489,7 @@ workflow:
         title: Display response
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1777894044696'
       position:
         x: 2180.682230714791
@@ -2508,7 +2501,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This node assign follow up and error history variables to YES and instructions
           respectively.
@@ -2547,7 +2540,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -2578,7 +2571,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '{{#1777498691372.error#}}'
         desc: ''
@@ -2586,7 +2579,7 @@ workflow:
         title: Display invalid error
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1777901673135'
       position:
         x: 1299.6177003607243
@@ -2598,7 +2591,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "def main(preferred_lang: str, static_data: dict):\n    template = static_data.get(\"\
           button_template\", \"\")\n\n    rectify = static_data.get(\"rectify_button\"\
@@ -2642,7 +2635,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '
 
@@ -2654,7 +2647,7 @@ workflow:
         title: Display buttons
         type: answer
         variables: []
-      height: 164
+      height: 163
       id: '1777956632079'
       position:
         x: 2766.9808029901887
@@ -2666,7 +2659,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main():\n    return {\n        \"result\": \"Generate Email\"\
           ,\n    }\n"
@@ -2693,7 +2686,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: This node assign generate email as value to the variable is_follow_up
           to handle the upcoming input into this stream.
@@ -2723,7 +2716,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         answer: '
 
@@ -2735,7 +2728,7 @@ workflow:
         title: File Error Node
         type: answer
         variables: []
-      height: 104
+      height: 103
       id: '1777968122808'
       position:
         x: 2902.716053246384
@@ -2747,7 +2740,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         desc: ''
         is_team_authorization: true
@@ -2938,7 +2931,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     - data:
         code: "\ndef main(arg1: list) -> dict:\n    return {\n        \"result\":\
           \ dict(arg1[0]).get(\"result\")\n    }\n"
@@ -2969,8 +2962,8 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 243
     viewport:
-      x: -1.7710593087210782
-      y: 151.84808164958667
-      zoom: 0.25
+      x: -347.16445857383667
+      y: 256.80514413787586
+      zoom: 0.5109450962147166
