@@ -1,1 +1,667 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: POC_QA_Validation_Agent\n  use_icon_as_answer_icon: false\ndependencies:\n- current_identifier: null\n  type: marketplace\n  value:\n    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        sourceType: llm\n        targetType: answer\n      id: llm-answer\n      selected: false\n      source: llm\n      sourceHandle: source\n      target: answer\n      targetHandle: target\n      type: custom\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: http-request\n      id: 1777018662155-source-1777018754675-target\n      selected: false\n      source: '1777018662155'\n      sourceHandle: source\n      target: '1777018754675'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: http-request\n        targetType: llm\n      id: 1777018754675-source-llm-target\n      source: '1777018754675'\n      sourceHandle: source\n      target: llm\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions:\n          - .yml\n          allowed_file_types:\n          - custom\n          allowed_file_upload_methods:\n          - local_file\n          - remote_url\n          label: Input_DSL_File\n          max_length: 48\n          options: []\n          required: true\n          type: file\n          variable: Input_DSL_File\n        - label: Please start\n          max_length: 24\n          options: []\n          required: true\n          type: text-input\n          variable: Hello_Text\n      height: 115\n      id: '1777018662155'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-2.5-pro\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: dfe33a3d-515e-4f8d-b431-4badef6e08a3\n          role: system\n          text: 'You are a senior QA automation expert analyzing a Dify DSL workflow.\n\n\n            STRICT INSTRUCTIONS:\n\n            - The DSL file is the ONLY source of truth\n\n            - Do NOT infer, assume, or generate any data not present\n\n            - You MUST evaluate ALL nodes \u2014 do not stop early\n\n            - Ensure COMPLETE coverage of all input and file upload nodes\n\n\n            TASK:\n\n\n            1. USER INPUT VALIDATION\n\n            Check for:\n\n            - Required fields\n\n            - Data types\n\n            - Length constraints\n\n            - Format validation\n\n            --------------------------------------------------\n\n            2. FILE UPLOAD VALIDATION\n\n            Check for each input node where file upload is applied:\n\n            - Number of files allowed\n\n            - Allowed file types\n\n            - Single file size limit\n\n            - Total upload size limit\n\n\n            --------------------------------------------------\n\n            3. MULTILINGUAL LITERAL VALIDATION (ENGLISH + JAPANESE)\n\n\n            Check all user-facing text (prompts, messages, labels, responses):\n\n\n            - Identify literals in English\n\n            - Verify if corresponding Japanese translation exists\n\n            - Identify literals in Japanese\n\n            - Verify if corresponding English translation exists\n\n\n            Flag:\n\n            - Missing translations\n\n            - Partial translations\n\n            - Hardcoded single-language text\n\n\n            --------------------------------------------------\n\n\n            4. ERROR HANDLING VALIDATION\n\n\n            Check across ALL nodes:\n\n\n            - Whether error scenarios are handled (API failure, invalid input, empty\n            response, etc.)\n\n            - Presence of fallback paths or error branches\n\n            - User-friendly error messages defined\n\n            - Generic vs specific error messaging\n\n\n            --------------------------------------------------\n\n\n            5. PROMPT INJECTION & INPUT SECURITY VALIDATION\n\n\n            Analyze how user inputs are used in prompts and workflows:\n\n\n            Check for:\n\n            - Direct insertion of user input into prompts without sanitization\n\n            - Lack of input filtering or validation before LLM usage\n\n            - Absence of system-level guardrails or instructions\n\n            - Susceptibility to prompt injection (e.g., \"ignore previous instructions\",\n            \"act as system\", etc.)\n\n            - Unsafe variable interpolation in prompts\n\n            - No separation between system instructions and user input\n\n\n            Flag:\n\n            - Unsafe prompt construction\n\n            - Missing sanitization\n\n            - Lack of guardrails\n\n            - Potential injection vectors\n\n\n            OUTPUT:\n\n            Provide Five separate tables:\n\n\n            --------------------------------------------------\n\n            TABLE 1: USER INPUT VALIDATION\n\n\n            | Node Name | Input Variable | Required | Data Type | Length Constraints\n            | Format Validation | Missing Validation | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 2: FILE UPLOAD VALIDATION\n\n\n            | Node Name | File Variable | Max Files | File Types | Single File Size\n            | Total Size Limit | Missing Validation | Risk Level |\n\n\n            --------------------------------------------------\n\n            --------------------------------------------------\n\n            TABLE 3: MULTILINGUAL VALIDATION\n\n\n            | Node Name | Text/Field | English Present | Japanese Present | Missing\n            Translation | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 4: ERROR HANDLING VALIDATION\n\n\n            | Node Name | Error Scenario Covered | Error Message Defined | Fallback\n            Present | Missing Handling | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 5: PROMPT INJECTION & SECURITY\n\n\n            | Node Name | User Input Used in Prompt | Sanitization Present | Guardrails\n            Present | Injection Risk | Missing Protection | Risk Level |\n\n\n            --------------------------------------------------\n\n\n\n            RISK LOGIC:\n\n            - High \u2192 No validation present\n\n            - Medium \u2192 Partial validation\n\n            - Low \u2192 Sufficient validation\n\n\n            IMPORTANT:\n\n            - If any field is not explicitly defined \u2192 write \"Not Defined\"\n\n            - Keep output crisp, no explanations outside tables'\n        - id: 78cf8172-9cf1-496b-b4df-ce28933ff65c\n          role: user\n          text: 'input data : {{#1777018754675.files#}}'\n        selected: false\n        title: LLM\n        type: llm\n        variables: []\n        vision:\n          configs:\n            detail: high\n            variable_selector:\n            - sys\n            - files\n          enabled: true\n      height: 89\n      id: llm\n      position:\n        x: 672.7229251262244\n        y: 301\n      positionAbsolute:\n        x: 672.7229251262244\n        y: 301\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#llm.text#}}'\n        desc: ''\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 104\n      id: answer\n      position:\n        x: 1053\n        y: 309\n      positionAbsolute:\n        x: 1053\n        y: 309\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        authorization:\n          config: null\n          type: no-auth\n        body:\n          data: []\n          type: none\n        desc: ''\n        headers: ''\n        method: get\n        params: ''\n        retry_config:\n          max_retries: 3\n          retry_enabled: true\n          retry_interval: 100\n        selected: false\n        ssl_verify: true\n        timeout:\n          max_connect_timeout: 0\n          max_read_timeout: 0\n          max_write_timeout: 0\n        title: HTTP Request\n        type: http-request\n        url: '{{#1777018662155.Input_DSL_File.url#}}'\n        variables: []\n      height: 125\n      id: '1777018754675'\n      position:\n        x: 355\n        y: 289\n      positionAbsolute:\n        x: 355\n        y: 289\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-2.5-pro\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: 1f896bce-bd37-4eb3-b9ba-a72d68fe6527\n          role: system\n          text: 'You are a senior QA automation expert analyzing a Dify DSL ({{#1777018754675.body#}})/\n            workflow.\n\n\n            STRICT INSTRUCTIONS:\n\n            - The DSL file is the ONLY source of truth\n\n            - Do NOT infer, assume, or generate any data not present\n\n            - You MUST evaluate ALL nodes \u2014 do not stop early\n\n            - Ensure COMPLETE coverage of all input and file upload nodes\n\n\n            TASK:\n\n\n            1. USER INPUT VALIDATION\n\n            Check for:\n\n            - Required fields\n\n            - Data types\n\n            - Length constraints\n\n            - Format validation\n\n            --------------------------------------------------\n\n            2. FILE UPLOAD VALIDATION\n\n            Check for each input node where file upload is applied:\n\n            - Number of files allowed\n\n            - Allowed file types\n\n            - Single file size limit\n\n            - Total upload size limit\n\n\n            --------------------------------------------------\n\n            3. MULTILINGUAL LITERAL VALIDATION (ENGLISH + JAPANESE)\n\n\n            Check all user-facing text (prompts, messages, labels, responses):\n\n\n            - Identify literals in English\n\n            - Verify if corresponding Japanese translation exists\n\n            - Identify literals in Japanese\n\n            - Verify if corresponding English translation exists\n\n\n            Flag:\n\n            - Missing translations\n\n            - Partial translations\n\n            - Hardcoded single-language text\n\n\n            --------------------------------------------------\n\n\n            4. ERROR HANDLING VALIDATION\n\n\n            Check across ALL nodes:\n\n\n            - Whether error scenarios are handled (API failure, invalid input, empty\n            response, etc.)\n\n            - Presence of fallback paths or error branches\n\n            - User-friendly error messages defined\n\n            - Generic vs specific error messaging\n\n\n            --------------------------------------------------\n\n\n            5. PROMPT INJECTION & INPUT SECURITY VALIDATION\n\n\n            Analyze how user inputs are used in prompts and workflows:\n\n\n            Check for:\n\n            - Direct insertion of user input into prompts without sanitization\n\n            - Lack of input filtering or validation before LLM usage\n\n            - Absence of system-level guardrails or instructions\n\n            - Susceptibility to prompt injection (e.g., \"ignore previous instructions\",\n            \"act as system\", etc.)\n\n            - Unsafe variable interpolation in prompts\n\n            - No separation between system instructions and user input\n\n\n            Flag:\n\n            - Unsafe prompt construction\n\n            - Missing sanitization\n\n            - Lack of guardrails\n\n            - Potential injection vectors\n\n\n            OUTPUT:\n\n            Provide Five separate tables:\n\n\n            --------------------------------------------------\n\n            TABLE 1: USER INPUT VALIDATION\n\n\n            | Node Name | Input Variable | Required | Data Type | Length Constraints\n            | Format Validation | Missing Validation | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 2: FILE UPLOAD VALIDATION\n\n\n            | Node Name | File Variable | Max Files | File Types | Single File Size\n            | Total Size Limit | Missing Validation | Risk Level |\n\n\n            --------------------------------------------------\n\n            --------------------------------------------------\n\n            TABLE 3: MULTILINGUAL VALIDATION\n\n\n            | Node Name | Text/Field | English Present | Japanese Present | Missing\n            Translation | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 4: ERROR HANDLING VALIDATION\n\n\n            | Node Name | Error Scenario Covered | Error Message Defined | Fallback\n            Present | Missing Handling | Risk Level |\n\n\n            --------------------------------------------------\n\n            TABLE 5: PROMPT INJECTION & SECURITY\n\n\n            | Node Name | User Input Used in Prompt | Sanitization Present | Guardrails\n            Present | Injection Risk | Missing Protection | Risk Level |\n\n\n            --------------------------------------------------\n\n\n\n            RISK LOGIC:\n\n            - High \u2192 No validation present\n\n            - Medium \u2192 Partial validation\n\n            - Low \u2192 Sufficient validation\n\n\n            IMPORTANT:\n\n            - If any field is not explicitly defined \u2192 write \"Not Defined\"\n\n            - Keep output crisp, no explanations outside tables'\n        selected: true\n        title: LLM 2\n        type: llm\n        variables: []\n        vision:\n          configs:\n            detail: high\n            variable_selector:\n            - sys\n            - files\n          enabled: true\n      height: 89\n      id: '1777370343446'\n      position:\n        x: 702.9440340940826\n        y: 621.4849747829584\n      positionAbsolute:\n        x: 702.9440340940826\n        y: 621.4849747829584\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: -14.820166178877685\n      y: 18.35233265978448\n      zoom: 0.7629481332559978\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: POC_QA_Validation_Agent
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      selected: false
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1777018662155-source-1777018754675-target
+      selected: false
+      source: '1777018662155'
+      sourceHandle: source
+      target: '1777018754675'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1777018754675-source-llm-target
+      source: '1777018754675'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions:
+          - .yml
+          allowed_file_types:
+          - custom
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: Input_DSL_File
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: Input_DSL_File
+        - label: Please start
+          max_length: 24
+          options: []
+          required: true
+          type: text-input
+          variable: Hello_Text
+      height: 115
+      id: '1777018662155'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: dfe33a3d-515e-4f8d-b431-4badef6e08a3
+          role: system
+          text: 'You are a senior QA automation expert analyzing a Dify DSL workflow.
+
+
+            STRICT INSTRUCTIONS:
+
+            - The DSL file is the ONLY source of truth
+
+            - Do NOT infer, assume, or generate any data not present
+
+            - You MUST evaluate ALL nodes — do not stop early
+
+            - Ensure COMPLETE coverage of all input and file upload nodes
+
+
+            TASK:
+
+
+            1. USER INPUT VALIDATION
+
+            Check for:
+
+            - Required fields
+
+            - Data types
+
+            - Length constraints
+
+            - Format validation
+
+            --------------------------------------------------
+
+            2. FILE UPLOAD VALIDATION
+
+            Check for each input node where file upload is applied:
+
+            - Number of files allowed
+
+            - Allowed file types
+
+            - Single file size limit
+
+            - Total upload size limit
+
+
+            --------------------------------------------------
+
+            3. MULTILINGUAL LITERAL VALIDATION (ENGLISH + JAPANESE)
+
+
+            Check all user-facing text (prompts, messages, labels, responses):
+
+
+            - Identify literals in English
+
+            - Verify if corresponding Japanese translation exists
+
+            - Identify literals in Japanese
+
+            - Verify if corresponding English translation exists
+
+
+            Flag:
+
+            - Missing translations
+
+            - Partial translations
+
+            - Hardcoded single-language text
+
+
+            --------------------------------------------------
+
+
+            4. ERROR HANDLING VALIDATION
+
+
+            Check across ALL nodes:
+
+
+            - Whether error scenarios are handled (API failure, invalid input, empty
+            response, etc.)
+
+            - Presence of fallback paths or error branches
+
+            - User-friendly error messages defined
+
+            - Generic vs specific error messaging
+
+
+            --------------------------------------------------
+
+
+            5. PROMPT INJECTION & INPUT SECURITY VALIDATION
+
+
+            Analyze how user inputs are used in prompts and workflows:
+
+
+            Check for:
+
+            - Direct insertion of user input into prompts without sanitization
+
+            - Lack of input filtering or validation before LLM usage
+
+            - Absence of system-level guardrails or instructions
+
+            - Susceptibility to prompt injection (e.g., "ignore previous instructions",
+            "act as system", etc.)
+
+            - Unsafe variable interpolation in prompts
+
+            - No separation between system instructions and user input
+
+
+            Flag:
+
+            - Unsafe prompt construction
+
+            - Missing sanitization
+
+            - Lack of guardrails
+
+            - Potential injection vectors
+
+
+            OUTPUT:
+
+            Provide Five separate tables:
+
+
+            --------------------------------------------------
+
+            TABLE 1: USER INPUT VALIDATION
+
+
+            | Node Name | Input Variable | Required | Data Type | Length Constraints
+            | Format Validation | Missing Validation | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 2: FILE UPLOAD VALIDATION
+
+
+            | Node Name | File Variable | Max Files | File Types | Single File Size
+            | Total Size Limit | Missing Validation | Risk Level |
+
+
+            --------------------------------------------------
+
+            --------------------------------------------------
+
+            TABLE 3: MULTILINGUAL VALIDATION
+
+
+            | Node Name | Text/Field | English Present | Japanese Present | Missing
+            Translation | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 4: ERROR HANDLING VALIDATION
+
+
+            | Node Name | Error Scenario Covered | Error Message Defined | Fallback
+            Present | Missing Handling | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 5: PROMPT INJECTION & SECURITY
+
+
+            | Node Name | User Input Used in Prompt | Sanitization Present | Guardrails
+            Present | Injection Risk | Missing Protection | Risk Level |
+
+
+            --------------------------------------------------
+
+
+
+            RISK LOGIC:
+
+            - High → No validation present
+
+            - Medium → Partial validation
+
+            - Low → Sufficient validation
+
+
+            IMPORTANT:
+
+            - If any field is not explicitly defined → write "Not Defined"
+
+            - Keep output crisp, no explanations outside tables'
+        - id: 78cf8172-9cf1-496b-b4df-ce28933ff65c
+          role: user
+          text: 'input data : {{#1777018754675.files#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 89
+      id: llm
+      position:
+        x: 672.7229251262244
+        y: 301
+      positionAbsolute:
+        x: 672.7229251262244
+        y: 301
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 1053
+        y: 309
+      positionAbsolute:
+        x: 1053
+        y: 309
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP Request
+        type: http-request
+        url: '{{#1777018662155.Input_DSL_File.url#}}'
+        variables: []
+      height: 125
+      id: '1777018754675'
+      position:
+        x: 355
+        y: 289
+      positionAbsolute:
+        x: 355
+        y: 289
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 1f896bce-bd37-4eb3-b9ba-a72d68fe6527
+          role: system
+          text: 'You are a senior QA automation expert analyzing a Dify DSL ({{#1777018754675.body#}})/
+            workflow.
+
+
+            STRICT INSTRUCTIONS:
+
+            - The DSL file is the ONLY source of truth
+
+            - Do NOT infer, assume, or generate any data not present
+
+            - You MUST evaluate ALL nodes — do not stop early
+
+            - Ensure COMPLETE coverage of all input and file upload nodes
+
+
+            TASK:
+
+
+            1. USER INPUT VALIDATION
+
+            Check for:
+
+            - Required fields
+
+            - Data types
+
+            - Length constraints
+
+            - Format validation
+
+            --------------------------------------------------
+
+            2. FILE UPLOAD VALIDATION
+
+            Check for each input node where file upload is applied:
+
+            - Number of files allowed
+
+            - Allowed file types
+
+            - Single file size limit
+
+            - Total upload size limit
+
+
+            --------------------------------------------------
+
+            3. MULTILINGUAL LITERAL VALIDATION (ENGLISH + JAPANESE)
+
+
+            Check all user-facing text (prompts, messages, labels, responses):
+
+
+            - Identify literals in English
+
+            - Verify if corresponding Japanese translation exists
+
+            - Identify literals in Japanese
+
+            - Verify if corresponding English translation exists
+
+
+            Flag:
+
+            - Missing translations
+
+            - Partial translations
+
+            - Hardcoded single-language text
+
+
+            --------------------------------------------------
+
+
+            4. ERROR HANDLING VALIDATION
+
+
+            Check across ALL nodes:
+
+
+            - Whether error scenarios are handled (API failure, invalid input, empty
+            response, etc.)
+
+            - Presence of fallback paths or error branches
+
+            - User-friendly error messages defined
+
+            - Generic vs specific error messaging
+
+
+            --------------------------------------------------
+
+
+            5. PROMPT INJECTION & INPUT SECURITY VALIDATION
+
+
+            Analyze how user inputs are used in prompts and workflows:
+
+
+            Check for:
+
+            - Direct insertion of user input into prompts without sanitization
+
+            - Lack of input filtering or validation before LLM usage
+
+            - Absence of system-level guardrails or instructions
+
+            - Susceptibility to prompt injection (e.g., "ignore previous instructions",
+            "act as system", etc.)
+
+            - Unsafe variable interpolation in prompts
+
+            - No separation between system instructions and user input
+
+
+            Flag:
+
+            - Unsafe prompt construction
+
+            - Missing sanitization
+
+            - Lack of guardrails
+
+            - Potential injection vectors
+
+
+            OUTPUT:
+
+            Provide Five separate tables:
+
+
+            --------------------------------------------------
+
+            TABLE 1: USER INPUT VALIDATION
+
+
+            | Node Name | Input Variable | Required | Data Type | Length Constraints
+            | Format Validation | Missing Validation | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 2: FILE UPLOAD VALIDATION
+
+
+            | Node Name | File Variable | Max Files | File Types | Single File Size
+            | Total Size Limit | Missing Validation | Risk Level |
+
+
+            --------------------------------------------------
+
+            --------------------------------------------------
+
+            TABLE 3: MULTILINGUAL VALIDATION
+
+
+            | Node Name | Text/Field | English Present | Japanese Present | Missing
+            Translation | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 4: ERROR HANDLING VALIDATION
+
+
+            | Node Name | Error Scenario Covered | Error Message Defined | Fallback
+            Present | Missing Handling | Risk Level |
+
+
+            --------------------------------------------------
+
+            TABLE 5: PROMPT INJECTION & SECURITY
+
+
+            | Node Name | User Input Used in Prompt | Sanitization Present | Guardrails
+            Present | Injection Risk | Missing Protection | Risk Level |
+
+
+            --------------------------------------------------
+
+
+
+            RISK LOGIC:
+
+            - High → No validation present
+
+            - Medium → Partial validation
+
+            - Low → Sufficient validation
+
+
+            IMPORTANT:
+
+            - If any field is not explicitly defined → write "Not Defined"
+
+            - Keep output crisp, no explanations outside tables'
+        selected: true
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 89
+      id: '1777370343446'
+      position:
+        x: 702.9440340940826
+        y: 621.4849747829584
+      positionAbsolute:
+        x: 702.9440340940826
+        y: 621.4849747829584
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -14.820166178877685
+      y: 18.35233265978448
+      zoom: 0.7629481332559978
