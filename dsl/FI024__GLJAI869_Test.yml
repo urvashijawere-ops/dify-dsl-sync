@@ -1,0 +1,1192 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: FI-024 - GLJAI-869 Test
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: ad011688-f110-4c0e-a943-cf90ed49c491
+    name: conversion_rate
+    selector:
+    - conversation
+    - conversion_rate
+    value: '0'
+    value_type: string
+  - description: ''
+    id: 0c4c121f-bb88-4361-95d8-f1a9e201f7bb
+    name: choose_language_first
+    selector:
+    - conversation
+    - choose_language_first
+    value: 'Sorry, I''m unable to response for this query. Please `Choose Language`
+      To Start The Conversation.
+
+
+      申し訳ございませんが、この質問にはお答えできません。会話を始めるには言語を選択してください。'
+    value_type: string
+  - description: ''
+    id: 61fe55bd-c30e-497f-bbe5-414167af91e0
+    name: choose_session_ja
+    selector:
+    - conversation
+    - choose_session_ja
+    value: '開始するセッションを選択してください。
+
+
+      <button type="button" data-message="Session 1">セッション 1</button> <button type="button"
+      data-message="Session 2">セッション 2</button>'
+    value_type: string
+  - description: ''
+    id: 4b260ce1-7bdb-4670-97ba-0b7657c543d3
+    name: choose_session_en
+    selector:
+    - conversation
+    - choose_session_en
+    value: 'Please choose the session from where you want to start with.
+
+
+      <button type="button" data-message="1">Session 1</button> <button type="button"
+      data-message="2">Session 2</button>'
+    value_type: string
+  - description: ''
+    id: 32e135c6-35f8-4818-91ba-c7c739c41ad4
+    name: reset_upload_message
+    selector:
+    - conversation
+    - reset_upload_message
+    value:
+      '1':
+        en: 'Please upload the *`current month’s BU-A Hearing`* file in **PDF** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: "当月のBU-AヒアリングファイルをPDF形式でアップロードしてください。  \nアップロードの際、月と年を次の形式で入力してください: MM/YYYY\
+          \ \n例: 11/2025"
+      '2':
+        en: Thanks for choosing the `Session 2`.
+        ja: セッション2をお選びいただきありがとうございます。
+    value_type: object
+  - description: ''
+    id: 219d22d5-9df4-409c-9cba-6d73e302d9a8
+    name: file_prev_bu_hearing
+    selector:
+    - conversation
+    - file_prev_bu_hearing
+    value: ''
+    value_type: string
+  - description: ''
+    id: cac3f2f9-1e15-4491-96d1-dff65df9745c
+    name: file_number_table
+    selector:
+    - conversation
+    - file_number_table
+    value: ''
+    value_type: string
+  - description: ''
+    id: 44660743-c0b1-417f-991d-9b903f6cf571
+    name: file_performance_variance
+    selector:
+    - conversation
+    - file_performance_variance
+    value: ''
+    value_type: string
+  - description: ''
+    id: c52218d0-c2b6-4439-8ce6-4d8c8ae3d450
+    name: file_bu_hearing
+    selector:
+    - conversation
+    - file_bu_hearing
+    value: ''
+    value_type: string
+  - description: ''
+    id: 57f2cb7a-0736-42b6-a787-1c3b27305dbd
+    name: session_config
+    selector:
+    - conversation
+    - session_config
+    value:
+      '1':
+        en: 'Thanks for choosing the `Session 1`.
+
+
+          ***
+
+
+          Please upload the *`current month’s BU-A Hearing`* file in **PDF** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: セッション1をお選びいただきありがとうございます。
+      '2':
+        en: Thanks for choosing the `Session 2`.
+        ja: セッション2をお選びいただきありがとうございます。
+    value_type: object
+  - description: ''
+    id: a02167ad-dddf-4007-ba82-f367438eb14c
+    name: user_guide
+    selector:
+    - conversation
+    - user_guide
+    value:
+      en:
+        btn_s1: Session 1
+        btn_s2: Session 2
+        result: English
+        text: "Thanks for choosing your preferred language as `English`.\n\n***\n\n\
+          Quick User Guide for Session 1 (**Pre-Hearing Preparation**):\n*Goal: Generate\
+          \ the \"Analysis & BU Hearing questions\" (Summary, Data, & Questions).*\n\
+          \n1. **Upload Documents with ease:**\n    * **BU Docs:** Current & Previous\
+          \ month (Excel & PPT/PDF).\n    * **Financial Data:** Official **Hi-Tree**\
+          \ export (Excel).\n    * **Reference:** Past Hearing MOM & Question List.\n\
+          \n2. **Unify Currency:**\n    * Confirm the Agent's prompt to convert figures\
+          \ (e.g., USD → JPY) using real-time rates.\n\n3. **Review Outputs:**\n \
+          \   * **Qualitative Summary:** Summary in the required template, extracted\
+          \ from the BU Documents.\n    * **Number Table:** Standardized financial\
+          \ table compiled from Hi-Tree/BU performance Excel.\n    * **Draft Questions:**\
+          \ Generated based on data gaps & historical patterns.\n\n***\n\nQuick User\
+          \ Guide for Session 2 (**Post-Hearing Synthesis**):\n*Goal: Generate the\
+          \ draft for Final Report in Minutes format (MOM).*\n\n1. **Upload Hearing\
+          \ Data with BU performance inputs:**\n    * **Transcript:** Text file of\
+          \ the hearing conversation.\n    * **BU Docs:** Current & Previous month\
+          \ (Excel & PPT/PDF).\n    * **Financial Data:** Official **Hi-Tree** export\
+          \ (Excel).\n    * **Reference:** Past Hearing MOM & Question List.\n   \
+          \ * **Session 1 Outputs:** The Questions, Number Table, & Summary generated\
+          \ previously.\n\n2. **Synthesize:**\n    * Agent extracts **Spoken Commitments**,\
+          \ **Future Actions**, and **Verbal Clarifications**.\n\n3. **Finalize Report:**\n\
+          \    * Review the **Final Report Draft** which merges financial tables with\
+          \ transcript insights.\n    * Use the chat to request specific text edits\
+          \ before closure.\n\n***\n\n**Now, please choose the session from where\
+          \ you want to start with.**"
+      ja:
+        btn_s1: セッション 1
+        btn_s2: セッション 2
+        result: Japanese
+        text: "希望言語として`日本語`を選択していただき、ありがとうございます。\n\n***\n\nセッション 1 クイックユーザーガイド (**事前準備：ヒアリング前**):\n\
+          *目的：分析 & BUヒアリング質問を生成する。（サマリー、データ、質問）*\n\n1. **ドキュメントのアップロード:**\n    * **BU資料:**\
+          \ 当月・前月分 (Excel & PPT/PDF)。\n    * **財務データ:** **Hi-Tree** エクスポート (Excel)。\n\
+          \    * **参考資料:** 過去ヒアリング会議の議事録および質問リスト。\n\n2. **通貨の統一:**\n    * Agentのプロンプトを確認し、数値をリアルタイムレートで変換（例:\
+          \ USD → JPY）します。\n\n3. **アウトプットの確認:**\n    * **定性サマリー:** BU資料から抽出し、特定テンプレートにまとめたサマリー。\n\
+          \    * **数値表:** Hi-Tree/BU業績Excelから用意された財務表。\n    * **質問案:** データの不足や過去の履歴パターンに基づき生成。\n\
+          \n***\n\nセッション 2 クイックユーザーガイド (**事後整理：ヒアリング後**):\n*目的：最終報告書（議事録形式）のドラフト版を生成する。*\n\
+          \n1. **ヒアリングデータのアップロード:**\n    * **文字起こし:** ヒアリング会話のテキストファイル。\n    * **BU資料:**\
+          \ 当月・前月分 (Excel & PPT/PDF)。\n    * **財務データ:** **Hi-Tree** エクスポート (Excel)。\n\
+          \    * **参考資料:** 過去ヒアリングMOMおよび質問リスト。\n    * **セッション 1 のアウトプット:** 質問、数値表、サマリー。\n\
+          \n2. **統合・整理:**\n    * Agentが発言内容から**口頭での約束事項、補足説明**、**今後のアクション**を抽出します。\n\
+          \n3. **最終報告書の完成:**\n    * 財務表とトランスクリプトの洞察を統合した**ドラフト**を確認します。\n    * 最後に、テキスト修正がありましたらチャット機能を用いて依頼してください。\n\
+          \n***\n\n**開始したいセッションを選択してください。**"
+    value_type: object
+  - description: ''
+    id: 8c1e6a2b-9f19-4d67-9dc4-deaa0e144c31
+    name: file_upload_success_message
+    selector:
+    - conversation
+    - file_upload_success_message
+    value:
+      '1':
+        en: 'BU Hearing PDF Successfully Uploaded
+
+
+          ***
+
+
+          Now, Please upload the *`current month''s BU Performance Variance Data`*
+          file in **EXCEL** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: 'BUヒアリングPDFのアップロードが成功しました。
+
+
+          ***
+
+
+          次に、当月の*BU業績差異データ*を**Excel**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '2':
+        en: 'BU Performance Variance Data Successfully Uploaded
+
+
+          ***
+
+
+          Now, Please upload the *`current month''s BU Template Data`* in **Excel**
+          format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: 'BU業績差異データのアップロードが成功しました。
+
+
+          ***
+
+
+          次に、当月の*BUテンプレートデータ*を**Excel**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '3':
+        en: 'BU Template Data Successfully Uploaded
+
+
+          ***
+
+
+          Now, Please upload the *`previous month''s BU Hearing Data`* in **PDF**
+          format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: 'BUテンプレートデータのアップロードが成功しました。
+
+
+          ***
+
+
+          次に、前月の*BUヒアリングデータ*を**PDF**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '4':
+        en: 'BU Hearing PDF Successfully Uploaded
+
+
+          ***
+
+
+          All files uploaded successfully.
+
+
+          Do you want to reupload all files?
+
+          <button type="button" data-message="1">Yes</button> <button type="button"
+          data-message="2">No</button>'
+        ja: 'BUヒアリングPDFのアップロードが成功しました。
+
+
+          ***
+
+
+          すべてのファイルのアップロードが完了しました。
+
+
+          すべてのファイルを再アップロードしますか？
+
+          <button type="button" data-message="1">はい</button> <button type="button"
+          data-message="2">いいえ</button>'
+    value_type: object
+  - description: ''
+    id: 432e0799-8f1f-443e-ab90-1d479071f496
+    name: file_error_message
+    selector:
+    - conversation
+    - file_error_message
+    value:
+      '1':
+        en: 'Please upload the *`current month’s BU-A Hearing`* file in **PDF** format
+          only. While uploading, mention the month and year in the following format:
+          **MM/YYYY**'
+        ja: 「今月のBU-Aヒアリング」ファイルは**PDF形式**のみでアップロードしてください。アップロードの際、月・年を「**MM/YYYY**」の形式で入力してください。
+        type: pdf
+      '2':
+        en: 'Please upload the *`current month’s BU-Performance Variance Data`* file
+          in **EXCEL** format only. While uploading, mention the month and year in
+          the following format: **MM/YYYY**'
+        ja: 「今月のBU実績差異データ」ファイルは**EXCEL形式**のみでアップロードしてください。アップロードの際、月・年を「**MM/YYYY**」の形式で入力してください。
+        type: excel
+      '3':
+        en: 'Please upload the *`current month’s Number Table Data`* file in **EXCEL**
+          format only. While uploading, mention the month and year in the following
+          format: **MM/YYYY**'
+        ja: 「今月の数値テーブルデータ」ファイルは**EXCEL形式**のみでアップロードしてください。アップロードの際、月・年を「**MM/YYYY**」の形式で入力してください。
+        type: excel
+      '4':
+        en: 'Please upload the *`previous month’s BU-A Hearing`* file in **PDF** format
+          only. While uploading, mention the month and year in the following format:
+          **MM/YYYY**'
+        ja: 「先月のBU-Aヒアリング」ファイルは**PDF形式**のみでアップロードしてください。アップロードの際、月・年を「**MM/YYYY**」の形式で入力してください。
+        type: pdf
+    value_type: object
+  - description: ''
+    id: bb96b3c6-cfd1-45a3-8192-28ffda911b7f
+    name: upload_step
+    selector:
+    - conversation
+    - upload_step
+    value: '0'
+    value_type: string
+  - description: ''
+    id: 57112dee-17e6-46be-b0a8-83c52d0fdedc
+    name: selected_language
+    selector:
+    - conversation
+    - selected_language
+    value: ''
+    value_type: string
+  - description: ''
+    id: 2690bf8e-eacf-4ee9-a5f7-8d268c5434b9
+    name: selected_session
+    selector:
+    - conversation
+    - selected_session
+    value: ''
+    value_type: string
+  environment_variables:
+  - description: ''
+    id: b5738a02-f168-42cc-b6aa-ad226214305b
+    name: API_SET_SESSION
+    selector:
+    - env
+    - API_SET_SESSION
+    value: app-hH8Kxoc5GfSAEWVd9jKdBuwi
+    value_type: string
+  - description: ''
+    id: 570eba24-4191-44af-b46a-12d52184542d
+    name: API_USER_GUIDE
+    selector:
+    - env
+    - API_USER_GUIDE
+    value: app-Ak0zHVxLTV053JWFe4qmfPNR
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'Hi there, I am your BU performance hearing assistant.
+
+
+      Please select your Preferred language.
+
+
+      ***
+
+      こんにちは。BU パフォーマンス聴覚アシスタントです。
+
+
+      ご希望の言語を選択してください。
+
+      ***'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - English
+    - 日本語
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: http-request
+        targetType: code
+      id: 1771844448474-source-1771844703914-target
+      source: '1771844448474'
+      sourceHandle: source
+      target: '1771844703914'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1771844703914-source-17718453115070-target
+      source: '1771844703914'
+      sourceHandle: source
+      target: '17718453115070'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17718453115070-source-1771844634392-target
+      source: '17718453115070'
+      sourceHandle: source
+      target: '1771844634392'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 17718492631340-source-17718493479130-target
+      source: '17718492631340'
+      sourceHandle: source
+      target: '17718493479130'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17718493479130-source-17718493598760-target
+      source: '17718493479130'
+      sourceHandle: source
+      target: '17718493598760'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: http-request
+      id: 1770961002414-source-1771844448474-target
+      source: '1770961002414'
+      sourceHandle: source
+      target: '1771844448474'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 52
+      id: '1770961002414'
+      position:
+        x: 188.8944443027283
+        y: 6.228355337246583
+      positionAbsolute:
+        x: 188.8944443027283
+        y: 6.228355337246583
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 11bc3b2d-2c75-4fb8-a77a-708fdc810e2d
+            value: English
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: 0774e84a-06c9-4e8a-9936-1e404aaec43e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: ba5789e1-538f-411a-a388-a821ea104b1d
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 'true'
+          logical_operator: and
+        - case_id: 0f1ac98a-eba8-489b-bf1a-4c8634661bb2
+          conditions:
+          - comparison_operator: is
+            id: 010dc0a9-31c7-4c1f-90c6-ba4b6aacec06
+            value: 日本語
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: 5ef3f82a-cc0d-426f-b94f-d131941d2af6
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 2080da2b-86bb-4281-bb04-0d76d2a0c0ca
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 0f1ac98a-eba8-489b-bf1a-4c8634661bb2
+          logical_operator: and
+        - case_id: 17701c18-6743-4349-8e46-a0343658e03d
+          conditions:
+          - comparison_operator: is
+            id: cbd17c0a-c58e-49e6-b3be-62ebb2d1dd63
+            value: '1'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: not empty
+            id: 7648a6cb-44d4-453f-a9ad-1c603132c673
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: bc5d2bb2-dd92-4be9-a6de-fff54c09e2c7
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 17701c18-6743-4349-8e46-a0343658e03d
+          logical_operator: and
+        - case_id: 59048238-bb85-4fae-ac86-0c12dbd0830d
+          conditions:
+          - comparison_operator: is
+            id: f9e3d27e-ca15-4a5c-aac2-11b039b99f36
+            value: '2'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: not empty
+            id: 3358a2b6-f527-46cf-b624-48bbf29c7789
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 5914e5f9-87e0-4889-a313-281680fb0712
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 59048238-bb85-4fae-ac86-0c12dbd0830d
+          logical_operator: and
+        - case_id: f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f
+          conditions:
+          - comparison_operator: not empty
+            id: 5253d5e6-c3cf-4bd0-a506-3c363b4ac67e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: f0f0577f-cbd9-462f-b06d-3b4efd5750c6
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 8a80bb3c-4294-4efb-88ee-345dda517156
+            value: '1'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: 341dfa8d-f7a8-48fc-96c9-d42f2d547287
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f
+          logical_operator: and
+        - case_id: d9cda55a-2893-470e-9257-d87951aa1493
+          conditions:
+          - comparison_operator: not empty
+            id: 5d275e8a-9695-49db-a6f9-b9cdadca829e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 42f9017f-43ff-4dc2-ab61-55f78a2d331c
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 3458d838-1422-49dd-8f81-fc23b0433df4
+            value: '2'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: c2e7203c-1802-463e-8281-800ba78a783a
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: d9cda55a-2893-470e-9257-d87951aa1493
+          logical_operator: and
+        - case_id: 5c1f1a47-e49f-46f4-a58e-0ec06130d6a3
+          conditions:
+          - comparison_operator: not empty
+            id: 9df5ff72-9ee2-484c-8cd4-73aa0ea32d60
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 115411c5-8c5b-4871-8fb3-a165df88dd90
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 8a73a0f2-da9e-4d39-a2a7-a372ef3457a5
+            value: '3'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: f4bf51e0-2d5d-4206-aada-6d162e00f837
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 5c1f1a47-e49f-46f4-a58e-0ec06130d6a3
+          logical_operator: and
+        - case_id: b8cef663-35c6-41a3-922c-855a74c51580
+          conditions:
+          - comparison_operator: not empty
+            id: 0dc7911e-dd4f-4c81-a0f9-15eef79ed056
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 4c089663-75f0-4f56-9f61-5594197eee2e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: f812a3bc-dfe5-4b37-b9be-15aa343e05f8
+            value: '4'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: 02626e18-0401-4d58-a502-7ac1cd05276d
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: b8cef663-35c6-41a3-922c-855a74c51580
+          logical_operator: and
+        - case_id: 834e124c-59da-465c-ab9c-089886099008
+          conditions:
+          - comparison_operator: not empty
+            id: df7be8b3-cc28-44ac-827e-fb600ba7cbb3
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: b8dcee05-68f0-4539-b11d-cd2e6439253a
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 557d353f-3542-4913-b0ea-faf12e36f811
+            value: '5'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: is
+            id: 4d3e07ea-3637-494a-88db-0fb7ae28e608
+            value: '1'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 834e124c-59da-465c-ab9c-089886099008
+          logical_operator: and
+        - case_id: 5509f003-7e2c-477b-8313-3ae5c4c527ce
+          conditions:
+          - comparison_operator: not empty
+            id: 9bb3e078-7b4d-4c36-981c-561a309642b2
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: fee37c7c-6295-48e1-b0f4-491357ff8ac4
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: eb0519a6-c462-41d9-8ea2-dec32273f798
+            value: '5'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: is
+            id: 129c9105-eb4a-4510-8473-6ead3c3634d6
+            value: '2'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 5509f003-7e2c-477b-8313-3ae5c4c527ce
+          logical_operator: and
+        - case_id: b0432e17-bfc3-4fb7-b09d-63ce79156765
+          conditions:
+          - comparison_operator: not empty
+            id: d26a78b8-a109-4dea-ae64-5f53e85188ec
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 6bdfaaa1-03b4-4a6c-81ea-1db0322abd1d
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 059f6a31-1a7b-4623-a8fe-82d1fb252301
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: b0432e17-bfc3-4fb7-b09d-63ce79156765
+          logical_operator: and
+        - case_id: a628f2d4-e8ed-443d-bd1b-7dd5814a4f41
+          conditions:
+          - comparison_operator: not empty
+            id: 602d7c97-70f8-4fb4-bad5-6836f7703d2e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: not empty
+            id: 80a38b7a-2264-41db-b325-70b88385a9f3
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 89d90d73-cc7a-4bb1-9954-f2a28ccdb782
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: a628f2d4-e8ed-443d-bd1b-7dd5814a4f41
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 1432
+      id: '1770961019005'
+      position:
+        x: 414.56312365843723
+        y: 282
+      positionAbsolute:
+        x: 414.56312365843723
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config:
+            api_key: '{{#env.API_USER_GUIDE#}}'
+            type: bearer
+          type: api-key
+        body:
+          data:
+          - id: key-value-64
+            key: ''
+            type: text
+            value: "{\n    \"inputs\": {\n        \"text\": \"{{#sys.query#}}\"\n\
+              \    },\n    \"response_mode\": \"blocking\",\n    \"user\": \"dify_user\"\
+              \n}"
+          type: json
+        desc: Sets the workflow language to English or Japanese, retrieves localized
+          content from the user_guide, and generates a formatted message with interactive
+          buttons for session selection.
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP Request
+        type: http-request
+        url: http://172.30.116.165/v1/workflows/run
+        variables: []
+      height: 230
+      id: '1771844448474'
+      position:
+        x: 819
+        y: -67.27265438505133
+      positionAbsolute:
+        x: 819
+        y: -67.27265438505133
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1771844703914.final_answer#}}'
+        desc: Sends the localized message and interactive buttons to the user interface,
+          allowing them to see the instructions and select a session in their preferred
+          language.
+        selected: false
+        title: Show User Guide
+        type: answer
+        variables: []
+      height: 195
+      id: '1771844634392'
+      position:
+        x: 1710.062326443274
+        y: -67.27265438505133
+      positionAbsolute:
+        x: 1710.062326443274
+        y: -67.27265438505133
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\n\ndef main(content_data: str, status_code: float, **kwargs):\n\
+          \    # 1. Verify the HTTP status code\n    if status_code != 200:\n    \
+          \    return {\n            \"result\": \"Error\",\n            \"final_answer\"\
+          : f\"Request failed with status code: {int(status_code)}\",\n          \
+          \  \"language_code\": \"N/A\"\n        }\n\n    try:\n        # 2. Parse\
+          \ the JSON body from the HTTP Request\n        data = json.loads(content_data)\n\
+          \        \n        # 3. Safely access the outputs dictionary from the Dify\
+          \ response structure\n        # We define 'outputs' here so it is available\
+          \ for the next steps\n        outputs = data.get(\"data\", {}).get(\"outputs\"\
+          , {})\n        \n        # 4. Extract both specific values using the keys\
+          \ from your first workflow\n        message_to_display = outputs.get(\"\
+          message\", \"No message found.\")\n        selected_lang = outputs.get(\"\
+          selected_language\", \"en\")\n\n        return {\n            \"result\"\
+          : \"Success\",\n            \"final_answer\": message_to_display,\n    \
+          \        \"language_code\": selected_lang\n        }\n        \n    except\
+          \ Exception as e:\n        return {\n            \"result\": \"Error\",\n\
+          \            \"final_answer\": f\"Failed to parse response: {str(e)}\",\n\
+          \            \"language_code\": \"error\"\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          final_answer:
+            children: null
+            type: string
+          language_code:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Extract Data
+        type: code
+        variables:
+        - value_selector:
+          - '1771844448474'
+          - body
+          value_type: string
+          variable: content_data
+        - value_selector:
+          - '1771844448474'
+          - status_code
+          value_type: number
+          variable: status_code
+      height: 52
+      id: '1771844703914'
+      position:
+        x: 1147.1753506237155
+        y: -67.27265438505133
+      positionAbsolute:
+        x: 1147.1753506237155
+        y: -67.27265438505133
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: Updates the global selected_language variable with the output from the
+          Choose Language node to maintain the user's preference throughout the session.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1771844703914'
+          - language_code
+          variable_selector:
+          - conversation
+          - selected_language
+          write_mode: over-write
+        selected: false
+        title: Update Language
+        type: assigner
+        version: '2'
+      height: 176
+      id: '17718453115070'
+      position:
+        x: 1435.090723561921
+        y: -67.27265438505133
+      positionAbsolute:
+        x: 1435.090723561921
+        y: -67.27265438505133
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config:
+            api_key: '{{#env.API_SET_SESSION#}}'
+            type: bearer
+          type: api-key
+        body:
+          data:
+          - id: key-value-64
+            key: ''
+            type: text
+            value: "{\n    \"inputs\": {\n        \"text\": \"{{#sys.query#}}\"\n\
+              \    },\n    \"response_mode\": \"blocking\",\n    \"user\": \"dify_user\"\
+              \n}"
+          type: json
+        desc: Sets the workflow language to English or Japanese, retrieves localized
+          content from the user_guide, and generates a formatted message with interactive
+          buttons for session selection.
+        headers: Content-Type:application/json
+        method: post
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP Request (1)
+        type: http-request
+        url: http://172.30.116.165/v1/workflows/run
+        variables: []
+      height: 230
+      id: '17718464912200'
+      position:
+        x: 819
+        y: 208.3841934085338
+      positionAbsolute:
+        x: 819
+        y: 208.3841934085338
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\n\ndef main(content_data: str, status_code: float):\n \
+          \   # Check for HTTP errors first\n    if status_code != 200:\n        return\
+          \ {\n            \"result\": \"Error\",\n            \"final_answer\": f\"\
+          Request failed with status code: {int(status_code)}\",\n            \"selected_session\"\
+          : \"N/A\"\n        }\n\n    try:\n        # Parse the JSON response from\
+          \ the target workflow\n        data = json.loads(content_data)\n       \
+          \ \n        # Access the outputs dictionary (Standard Dify API structure)\n\
+          \        outputs = data.get(\"data\", {}).get(\"outputs\", {})\n       \
+          \ \n        # Extract the message and the session ID\n        message_to_display\
+          \ = outputs.get(\"message\", \"No message found.\")\n        # Default to\
+          \ \"N/A\" if the session wasn't returned\n        session_id = outputs.get(\"\
+          selected_session\", \"N/A\")\n\n        return {\n            \"result\"\
+          : \"Success\",\n            \"final_answer\": message_to_display,\n    \
+          \        \"selected_session\": session_id\n        }\n        \n    except\
+          \ Exception as e:\n        return {\n            \"result\": \"Error\",\n\
+          \            \"final_answer\": f\"Failed to parse response: {str(e)}\",\n\
+          \            \"selected_session\": \"error\"\n        }"
+        code_language: python3
+        desc: ''
+        outputs:
+          final_answer:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+          selected_session:
+            children: null
+            type: string
+        selected: false
+        title: Extract Data (1)
+        type: code
+        variables:
+        - value_selector:
+          - '17718464912200'
+          - body
+          value_type: string
+          variable: content_data
+        - value_selector:
+          - '17718464912200'
+          - status_code
+          value_type: number
+          variable: status_code
+      height: 52
+      id: '17718492631340'
+      position:
+        x: 1147.1753506237155
+        y: 208.3841934085338
+      positionAbsolute:
+        x: 1147.1753506237155
+        y: 208.3841934085338
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: Updates the global selected_language variable with the output from the
+          Choose Language node to maintain the user's preference throughout the session.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17718492631340'
+          - selected_session
+          variable_selector:
+          - conversation
+          - selected_session
+          write_mode: over-write
+        selected: false
+        title: Update Language (1)
+        type: assigner
+        version: '2'
+      height: 176
+      id: '17718493479130'
+      position:
+        x: 1435.090723561921
+        y: 208.3841934085338
+      positionAbsolute:
+        x: 1435.090723561921
+        y: 208.3841934085338
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#17718492631340.final_answer#}}'
+        desc: Sends the localized message and interactive buttons to the user interface,
+          allowing them to see the instructions and select a session in their preferred
+          language.
+        selected: false
+        title: Show User Guide (1)
+        type: answer
+        variables: []
+      height: 195
+      id: '17718493598760'
+      position:
+        x: 1710.062326443274
+        y: 208.3841934085338
+      positionAbsolute:
+        x: 1710.062326443274
+        y: 208.3841934085338
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 280.93205277876075
+      y: 317.30839196407317
+      zoom: 0.3789291416275998
