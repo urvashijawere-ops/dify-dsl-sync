@@ -1,1 +1,221 @@
-{"data": "app:\n  description: Converts any currency pair using ExchangeRate-API. Enter the source\n    currency, target currency, and amount \u2014 the converted value is returned instantly.\n  icon: \ud83d\udcb1\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: Currency Converter Code node\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables:\n  - description: ''\n    id: f9397188-09a1-4268-bc2f-e6d8f8f1f313\n    name: EXCHANGE_API_KEY\n    selector:\n    - env\n    - EXCHANGE_API_KEY\n    value: 9b49904ae724c1f2cc47c482\n    value_type: string\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: '\ud83d\udcb1 **Currency Converter**\n\n\n      Please fill in the three fields to convert between any two currencies:\n\n      - **From Currency** \u2014 e.g. `EUR`\n\n      - **To Currency**   \u2014 e.g. `GBP`\n\n      - **Amount**        \u2014 e.g. `100`\n\n      '\n    retriever_resource:\n      enabled: false\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions:\n    - EUR \u2192 GBP, amount 100\n    - USD \u2192 INR, amount 500\n    - GBP \u2192 JPY, amount 250\n    suggested_questions_after_answer:\n      enabled: true\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInLoop: false\n        sourceType: start\n        targetType: code\n      id: 1776686402897-source-1777007058293-target\n      source: '1776686402897'\n      sourceHandle: source\n      target: '1777007058293'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: code\n        targetType: answer\n      id: 1777007058293-source-answer-target\n      source: '1777007058293'\n      sourceHandle: source\n      target: answer\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: User provides source currency, target currency, and amount\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - label: From Currency\n          max_length: 10\n          required: true\n          type: text-input\n          variable: from_currency\n        - label: To Currency\n          max_length: 10\n          required: true\n          type: text-input\n          variable: to_currency\n        - label: Amount\n          required: true\n          type: number\n          variable: amount\n      height: 186\n      id: '1776686402897'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#1777007058293.result#}}'\n        desc: Displays the converted currency amount to the user\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 149\n      id: answer\n      position:\n        x: 732.4004765929358\n        y: 282\n      positionAbsolute:\n        x: 732.4004765929358\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"import requests\\n\\ndef main(from_cur: str, to_cur: str, amount: float,\\\n          \\ api_key: str) -> dict:\\n    #api_key = env.get(\\\"EXCHANGE_API_KEY\\\")\\n\\\n          \\    #api_key = \\\"9b49904ae724c1f2cc47c482\\\"\\n    \\n    if not api_key:\\n\\\n          \\        raise ValueError(\\\"Missing EXCHANGE_API_KEY in environment variables\\\"\\\n          )\\n\\n    url = f\\\"https://v6.exchangerate-api.com/v6/{api_key}/pair/{from_cur}/{to_cur}/{amount}\\\"\\\n          \\n    \\n    try:\\n        response = requests.get(url, timeout=10)\\n   \\\n          \\     response.raise_for_status()\\n        data = response.json()\\n    except\\\n          \\ requests.RequestException as e:\\n        return {\\n            \\\"success\\\"\\\n          : False,\\n            \\\"error\\\": str(e)\\n        }\\n\\n    # API-specific\\\n          \\ handling\\n    if data.get(\\\"result\\\") != \\\"success\\\":\\n        return\\\n          \\ {\\n            \\\"success\\\": False,\\n            \\\"error\\\": data.get(\\\"\\\n          error-type\\\", \\\"Unknown API error\\\"),\\n            \\\"raw\\\": data\\n     \\\n          \\   }\\n\\n    return {\\\"result\\\" : {\\n        \\\"success\\\": True,\\n      \\\n          \\  \\\"from\\\": from_cur,\\n        \\\"to\\\": to_cur,\\n        \\\"amount\\\": amount,\\n\\\n          \\        \\\"converted_amount\\\": data.get(\\\"conversion_result\\\"),\\n      \\\n          \\  \\\"rate\\\": data.get(\\\"conversion_rate\\\")\\n    }}\\n\"\n        code_language: python3\n        desc: ''\n        outputs:\n          result:\n            children: null\n            type: object\n        selected: false\n        title: Code 2\n        type: code\n        variables:\n        - value_selector:\n          - '1776686402897'\n          - from_currency\n          value_type: string\n          variable: from_cur\n        - value_selector:\n          - '1776686402897'\n          - to_currency\n          value_type: string\n          variable: to_cur\n        - value_selector:\n          - '1776686402897'\n          - amount\n          value_type: number\n          variable: amount\n        - value_selector:\n          - env\n          - EXCHANGE_API_KEY\n          value_type: string\n          variable: api_key\n      height: 54\n      id: '1777007058293'\n      position:\n        x: 377.56059582850185\n        y: 282\n      positionAbsolute:\n        x: 377.56059582850185\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 185.23570226644915\n      y: 40.348366106903654\n      zoom: 0.7897517805985852\n"}
+app:
+  description: Converts any currency pair using ExchangeRate-API. Enter the source
+    currency, target currency, and amount — the converted value is returned instantly.
+  icon: 💱
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Currency Converter Code node
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: f9397188-09a1-4268-bc2f-e6d8f8f1f313
+    name: EXCHANGE_API_KEY
+    selector:
+    - env
+    - EXCHANGE_API_KEY
+    value: 9b49904ae724c1f2cc47c482
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '💱 **Currency Converter**
+
+
+      Please fill in the three fields to convert between any two currencies:
+
+      - **From Currency** — e.g. `EUR`
+
+      - **To Currency**   — e.g. `GBP`
+
+      - **Amount**        — e.g. `100`
+
+      '
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - EUR → GBP, amount 100
+    - USD → INR, amount 500
+    - GBP → JPY, amount 250
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1776686402897-source-1777007058293-target
+      source: '1776686402897'
+      sourceHandle: source
+      target: '1777007058293'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1777007058293-source-answer-target
+      source: '1777007058293'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: User provides source currency, target currency, and amount
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: From Currency
+          max_length: 10
+          required: true
+          type: text-input
+          variable: from_currency
+        - label: To Currency
+          max_length: 10
+          required: true
+          type: text-input
+          variable: to_currency
+        - label: Amount
+          required: true
+          type: number
+          variable: amount
+      height: 186
+      id: '1776686402897'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1777007058293.result#}}'
+        desc: Displays the converted currency amount to the user
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 149
+      id: answer
+      position:
+        x: 732.4004765929358
+        y: 282
+      positionAbsolute:
+        x: 732.4004765929358
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import requests\n\ndef main(from_cur: str, to_cur: str, amount: float,\
+          \ api_key: str) -> dict:\n    #api_key = env.get(\"EXCHANGE_API_KEY\")\n\
+          \    #api_key = \"9b49904ae724c1f2cc47c482\"\n    \n    if not api_key:\n\
+          \        raise ValueError(\"Missing EXCHANGE_API_KEY in environment variables\"\
+          )\n\n    url = f\"https://v6.exchangerate-api.com/v6/{api_key}/pair/{from_cur}/{to_cur}/{amount}\"\
+          \n    \n    try:\n        response = requests.get(url, timeout=10)\n   \
+          \     response.raise_for_status()\n        data = response.json()\n    except\
+          \ requests.RequestException as e:\n        return {\n            \"success\"\
+          : False,\n            \"error\": str(e)\n        }\n\n    # API-specific\
+          \ handling\n    if data.get(\"result\") != \"success\":\n        return\
+          \ {\n            \"success\": False,\n            \"error\": data.get(\"\
+          error-type\", \"Unknown API error\"),\n            \"raw\": data\n     \
+          \   }\n\n    return {\"result\" : {\n        \"success\": True,\n      \
+          \  \"from\": from_cur,\n        \"to\": to_cur,\n        \"amount\": amount,\n\
+          \        \"converted_amount\": data.get(\"conversion_result\"),\n      \
+          \  \"rate\": data.get(\"conversion_rate\")\n    }}\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: Code 2
+        type: code
+        variables:
+        - value_selector:
+          - '1776686402897'
+          - from_currency
+          value_type: string
+          variable: from_cur
+        - value_selector:
+          - '1776686402897'
+          - to_currency
+          value_type: string
+          variable: to_cur
+        - value_selector:
+          - '1776686402897'
+          - amount
+          value_type: number
+          variable: amount
+        - value_selector:
+          - env
+          - EXCHANGE_API_KEY
+          value_type: string
+          variable: api_key
+      height: 54
+      id: '1777007058293'
+      position:
+        x: 377.56059582850185
+        y: 282
+      positionAbsolute:
+        x: 377.56059582850185
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 185.23570226644915
+      y: 40.348366106903654
+      zoom: 0.7897517805985852
