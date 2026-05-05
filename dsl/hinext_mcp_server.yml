@@ -1,0 +1,199 @@
+app:
+  description: for hr line this is mcp server
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: hinext_mcp_server
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1772529775156-source-1772530287655-target
+      source: '1772529775156'
+      sourceHandle: source
+      target: '1772530287655'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1772530287655-source-1772529793450-target
+      source: '1772530287655'
+      sourceHandle: source
+      target: '1772529793450'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: Employee ID
+          max_length: 15
+          options: []
+          required: true
+          type: text-input
+          variable: Employee_id
+        - label: manager_id
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: manager_id
+      height: 116
+      id: '1772529775156'
+      position:
+        x: 134
+        y: 274
+      positionAbsolute:
+        x: 134
+        y: 274
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1772530287655'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1772529793450'
+      position:
+        x: 746
+        y: 274
+      positionAbsolute:
+        x: 746
+        y: 274
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(query_id: str, manager_id: int):\n    \"\"\"\n    Fetches\
+          \ employee records based on Manager ID and Employee ID.\n    Unifies all\
+          \ failed lookups into a single FAIL status.\n    \"\"\"\n    manager_employee_db\
+          \ = {\n        \"20001001\": {\n            \"11110000\": [\"Fintech Migrations\"\
+          ],\n            \"11110002\": [\"DevOps\"],\n            \"44445555\": [\"\
+          Hitachi Taro\", \"Infosys\"],\n            \"22223333\": [\"Hitachi Ume\"\
+          , \"GlobalLogic\"],\n            \"80009000\": [\"Hitachi Sakura\", \"Hitachi\
+          \ Ume\", \"Marketing\"]\n        },\n        \"20001002\": {\n         \
+          \   \"90001001\": [\"Sales\"],\n            \"55554444\": [\"Linda White\"\
+          , \"HR\", \"Finance\"]\n        },\n        \"20001003\": {\n          \
+          \  \"70003001\": [\"Engineering\"],\n            \"66665555\": [\"IT\",\
+          \ \"R&D\"]\n        },\n        \"20001004\": {\n            \"10005001\"\
+          : [\"General pvt ltd\"],\n            \"10005004\": [\"General pvt ltd\"\
+          , \"General public\"]\n        },\n        \"20001005\": {\n           \
+          \ \"88880005\": [\"QA\", \"UAT\"]\n        }\n    }\n\n    # FIX: Convert\
+          \ manager_id to string to match dictionary keys\n    m_id_str = str(manager_id).strip()\n\
+          \    e_id_str = query_id.strip()\n\n    # Unified logic check\n    if m_id_str\
+          \ not in manager_employee_db:\n        msg = \"The Manager LDAP you entered\
+          \ is invalid. Please enter your own LDAP.\"\n    elif e_id_str not in manager_employee_db[m_id_str]:\n\
+          \        msg = \"Employee ID not found under this manager.\"\n    else:\n\
+          \        # Success path\n        record = manager_employee_db[m_id_str][e_id_str]\n\
+          \        return {\n            \"result\": list(record),\n        }\n\n\
+          \    # Unified return for all failed cases\n    return {\n        \"result\"\
+          : [msg]\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: true
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1772529775156'
+          - Employee_id
+          value_type: string
+          variable: query_id
+        - value_selector:
+          - '1772529775156'
+          - manager_id
+          value_type: number
+          variable: manager_id
+      height: 54
+      id: '1772530287655'
+      position:
+        x: 438
+        y: 274
+      positionAbsolute:
+        x: 438
+        y: 274
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -8.155816873962294
+      y: 159.56055718270073
+      zoom: 0.8500452651143525
