@@ -1,1 +1,265 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: test_ocr_chatfllow\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - remote_url\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: 'Hi! I''m your File Reader assistant.\n\n\n      Upload a file and ask me anything about it \u2014 I''ll analyse it and answer your\n      questions.\n\n\n      Supported: PDF \u00b7 Images \u00b7 Excel \u00b7 Word \u00b7 TXT \u00b7 CSV \u00b7 HTML (max 15 MB)'\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions:\n    - what is this file about?\n    suggested_questions_after_answer:\n      enabled: true\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInLoop: false\n        sourceType: start\n        targetType: agent\n      id: 1777276098793-source-1777276381906-target\n      source: '1777276098793'\n      sourceHandle: source\n      target: '1777276381906'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables: []\n      height: 53\n      id: '1777276098793'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#1777276381906.text#}}'\n        desc: ''\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 104\n      id: answer\n      position:\n        x: 1066\n        y: 201\n      positionAbsolute:\n        x: 1066\n        y: 201\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        agent_parameters:\n          instruction:\n            type: constant\n            value: 'You are a file analysis assistant. You help users understand the\n              content of uploaded files.\n\n\n              ## When a file is uploaded\n\n              Always call the OCR Summarizer Tool immediately \u2014 do not attempt to\n              describe or analyse the file yourself without calling the tool first.\n\n\n              Pass the uploaded file to the tool and wait for the result.\n\n\n              Once you have the result, answer the user''s question based on it. If\n              the user did not ask a specific question, provide a clear summary covering:\n\n              - What type of file it is\n\n              - What it contains (key text, data, tables, images)\n\n              - Any notable findings or insights\n\n\n              ## When no file is uploaded\n\n              Politely ask the user to upload a file. Let them know the supported\n              formats:\n\n              PDF, Images (JPG, PNG, GIF, WEBP, BMP, TIFF), Excel (XLSX, XLS), Word\n              (DOCX, DOC), Plain text (TXT, MD, RTF, ODT), Web/data (HTML, CSV). Max\n              15 MB.\n\n\n              ## Response rules\n\n              - Base all answers strictly on the tool result \u2014 never invent or assume\n              file content\n\n              - Use markdown formatting (bold, bullet points, tables) where it aids\n              clarity\n\n              - Be concise and focused \u2014 avoid echoing the raw tool output verbatim\n\n              - If the tool returns an error, explain what went wrong and what the\n              user can do to fix it\n\n              - Support both English and Japanese content \u2014 preserve the original\n              language in your answers'\n          model:\n            type: constant\n            value:\n              completion_params: {}\n              mode: chat\n              model: gemini-2.5-flash\n              model_type: llm\n              provider: langgenius/gemini/google\n              type: model-selector\n          query:\n            type: constant\n            value: '{{#sys.query#}}'\n          tools:\n            type: constant\n            value:\n            - enabled: true\n              extra:\n                description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,\n                  DOC/DOCX, CSV. English and Japanese. File validation: empty, zip\n                  disguised, compressed formats blocked.'\n              parameters:\n                select_file:\n                  auto: 0\n                  value:\n                    type: variable\n                    value:\n                    - sys\n                    - files\n              provider_name: 2a48d915-5f63-4cae-bf06-298eb218edc6\n              provider_show_name: OCR Summarizer\n              schemas:\n              - auto_generate: null\n                default: null\n                form: llm\n                human_description:\n                  en_US: Upload file\n                  ja_JP: Upload file\n                  pt_BR: Upload file\n                  zh_Hans: Upload file\n                label:\n                  en_US: select_file\n                  ja_JP: select_file\n                  pt_BR: select_file\n                  zh_Hans: select_file\n                llm_description: Upload file\n                max: null\n                min: null\n                name: select_file\n                options: []\n                placeholder:\n                  en_US: ''\n                  ja_JP: ''\n                  pt_BR: ''\n                  zh_Hans: ''\n                precision: null\n                required: true\n                scope: null\n                template: null\n                type: files\n              settings: {}\n              tool_description: 'Multi-format file reader. PDF, OCR images, Excel,\n                TXT, DOC/DOCX, CSV. English and Japanese. File validation: empty,\n                zip disguised, compressed formats blocked.'\n              tool_label: OCR Summarizer\n              tool_name: ocr_wf\n              type: workflow\n        agent_strategy_label: FunctionCalling\n        agent_strategy_name: function_calling\n        agent_strategy_provider_name: langgenius/agent/agent\n        desc: ''\n        meta:\n          minimum_dify_version: 1.7.0\n          version: 0.0.2\n        output_schema: null\n        plugin_unique_identifier: langgenius/agent:0.0.24@0274c08e62efaa28f6327e7bdba655e16559ec28d4f41f2fa3ef553e6327c0f6\n        selected: false\n        title: Agent\n        tool_node_version: '2'\n        type: agent\n      height: 197\n      id: '1777276381906'\n      position:\n        x: 389\n        y: 313\n      positionAbsolute:\n        x: 389\n        y: 313\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: -1.0231608487129051\n      y: -266.25844617055793\n      zoom: 1.297738766939181\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: test_ocr_chatfllow
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'Hi! I''m your File Reader assistant.
+
+
+      Upload a file and ask me anything about it — I''ll analyse it and answer your
+      questions.
+
+
+      Supported: PDF · Images · Excel · Word · TXT · CSV · HTML (max 15 MB)'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - what is this file about?
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: agent
+      id: 1777276098793-source-1777276381906-target
+      source: '1777276098793'
+      sourceHandle: source
+      target: '1777276381906'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 53
+      id: '1777276098793'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1777276381906.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 104
+      id: answer
+      position:
+        x: 1066
+        y: 201
+      positionAbsolute:
+        x: 1066
+        y: 201
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        agent_parameters:
+          instruction:
+            type: constant
+            value: 'You are a file analysis assistant. You help users understand the
+              content of uploaded files.
+
+
+              ## When a file is uploaded
+
+              Always call the OCR Summarizer Tool immediately — do not attempt to
+              describe or analyse the file yourself without calling the tool first.
+
+
+              Pass the uploaded file to the tool and wait for the result.
+
+
+              Once you have the result, answer the user''s question based on it. If
+              the user did not ask a specific question, provide a clear summary covering:
+
+              - What type of file it is
+
+              - What it contains (key text, data, tables, images)
+
+              - Any notable findings or insights
+
+
+              ## When no file is uploaded
+
+              Politely ask the user to upload a file. Let them know the supported
+              formats:
+
+              PDF, Images (JPG, PNG, GIF, WEBP, BMP, TIFF), Excel (XLSX, XLS), Word
+              (DOCX, DOC), Plain text (TXT, MD, RTF, ODT), Web/data (HTML, CSV). Max
+              15 MB.
+
+
+              ## Response rules
+
+              - Base all answers strictly on the tool result — never invent or assume
+              file content
+
+              - Use markdown formatting (bold, bullet points, tables) where it aids
+              clarity
+
+              - Be concise and focused — avoid echoing the raw tool output verbatim
+
+              - If the tool returns an error, explain what went wrong and what the
+              user can do to fix it
+
+              - Support both English and Japanese content — preserve the original
+              language in your answers'
+          model:
+            type: constant
+            value:
+              completion_params: {}
+              mode: chat
+              model: gemini-2.5-flash
+              model_type: llm
+              provider: langgenius/gemini/google
+              type: model-selector
+          query:
+            type: constant
+            value: '{{#sys.query#}}'
+          tools:
+            type: constant
+            value:
+            - enabled: true
+              extra:
+                description: 'Multi-format file reader. PDF, OCR images, Excel, TXT,
+                  DOC/DOCX, CSV. English and Japanese. File validation: empty, zip
+                  disguised, compressed formats blocked.'
+              parameters:
+                select_file:
+                  auto: 0
+                  value:
+                    type: variable
+                    value:
+                    - sys
+                    - files
+              provider_name: 2a48d915-5f63-4cae-bf06-298eb218edc6
+              provider_show_name: OCR Summarizer
+              schemas:
+              - auto_generate: null
+                default: null
+                form: llm
+                human_description:
+                  en_US: Upload file
+                  ja_JP: Upload file
+                  pt_BR: Upload file
+                  zh_Hans: Upload file
+                label:
+                  en_US: select_file
+                  ja_JP: select_file
+                  pt_BR: select_file
+                  zh_Hans: select_file
+                llm_description: Upload file
+                max: null
+                min: null
+                name: select_file
+                options: []
+                placeholder:
+                  en_US: ''
+                  ja_JP: ''
+                  pt_BR: ''
+                  zh_Hans: ''
+                precision: null
+                required: true
+                scope: null
+                template: null
+                type: files
+              settings: {}
+              tool_description: 'Multi-format file reader. PDF, OCR images, Excel,
+                TXT, DOC/DOCX, CSV. English and Japanese. File validation: empty,
+                zip disguised, compressed formats blocked.'
+              tool_label: OCR Summarizer
+              tool_name: ocr_wf
+              type: workflow
+        agent_strategy_label: FunctionCalling
+        agent_strategy_name: function_calling
+        agent_strategy_provider_name: langgenius/agent/agent
+        desc: ''
+        meta:
+          minimum_dify_version: 1.7.0
+          version: 0.0.2
+        output_schema: null
+        plugin_unique_identifier: langgenius/agent:0.0.24@0274c08e62efaa28f6327e7bdba655e16559ec28d4f41f2fa3ef553e6327c0f6
+        selected: false
+        title: Agent
+        tool_node_version: '2'
+        type: agent
+      height: 197
+      id: '1777276381906'
+      position:
+        x: 389
+        y: 313
+      positionAbsolute:
+        x: 389
+        y: 313
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1.0231608487129051
+      y: -266.25844617055793
+      zoom: 1.297738766939181
