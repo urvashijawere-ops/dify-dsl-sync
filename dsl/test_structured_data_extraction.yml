@@ -1,1 +1,772 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: advanced-chat\n  name: test_structured_data_extraction\n  use_icon_as_answer_icon: false\ndependencies:\n- current_identifier: null\n  type: marketplace\n  value:\n    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - remote_url\n      - local_file\n      enabled: true\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        sourceType: start\n        targetType: llm\n      id: 1777367948921-llm\n      source: '1777367948921'\n      sourceHandle: source\n      target: llm\n      targetHandle: target\n      type: custom\n    - data:\n        sourceType: llm\n        targetType: answer\n      id: llm-answer\n      source: llm\n      sourceHandle: source\n      target: answer\n      targetHandle: target\n      type: custom\n    nodes:\n    - data:\n        desc: ''\n        selected: true\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions: []\n          allowed_file_types:\n          - document\n          allowed_file_upload_methods:\n          - local_file\n          - remote_url\n          label: file\n          max_length: 48\n          options: []\n          required: true\n          type: file\n          variable: file\n      height: 89\n      id: '1777367948921'\n      position:\n        x: 80\n        y: 282\n      positionAbsolute:\n        x: 80\n        y: 282\n      selected: true\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        context:\n          enabled: false\n          variable_selector: []\n        desc: ''\n        memory:\n          query_prompt_template: '{{#sys.query#}}\n\n\n            {{#sys.files#}}'\n          role_prefix:\n            assistant: ''\n            user: ''\n          window:\n            enabled: false\n            size: 10\n        model:\n          completion_params:\n            temperature: 0.7\n          mode: chat\n          name: gemini-2.5-pro\n          provider: langgenius/gemini/google\n        prompt_template:\n        - id: 5f1c3a3b-1aa0-41fe-b8a8-8a203383aa06\n          role: system\n          text: ''\n        selected: false\n        title: LLM\n        type: llm\n        variables: []\n        vision:\n          enabled: false\n      height: 89\n      id: llm\n      position:\n        x: 380\n        y: 282\n      positionAbsolute:\n        x: 380\n        y: 282\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        answer: '{{#llm.text#}}'\n        desc: ''\n        selected: false\n        title: Answer\n        type: answer\n        variables: []\n      height: 103\n      id: answer\n      position:\n        x: 680\n        y: 282\n      positionAbsolute:\n        x: 680\n        y: 282\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: 0\n      y: 0\n      zoom: 1\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: test_structured_data_extraction
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1777368082220-source-1777368132716-target
+      source: '1777368082220'
+      sourceHandle: source
+      target: '1777368132716'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1777368132716-source-1777368293086-target
+      source: '1777368132716'
+      sourceHandle: source
+      target: '1777368293086'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1777368043818-source-1777370993719-target
+      source: '1777368043818'
+      sourceHandle: source
+      target: '1777370993719'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1777370993719-source-1777371165793-target
+      source: '1777370993719'
+      sourceHandle: source
+      target: '1777371165793'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1777371165793-true-1777368082220-target
+      source: '1777371165793'
+      sourceHandle: 'true'
+      target: '1777368082220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1777371165793-19fc6f2a-ae01-4386-a95b-413e534d0fbe-1777371304258-target
+      source: '1777371165793'
+      sourceHandle: 19fc6f2a-ae01-4386-a95b-413e534d0fbe
+      target: '1777371304258'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1777371304258-source-1777371588069-target
+      source: '1777371304258'
+      sourceHandle: source
+      target: '1777371588069'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1777371588069-source-1777371596600-target
+      source: '1777371588069'
+      sourceHandle: source
+      target: '1777371596600'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1777371165793-87b63a7d-521e-4d0a-b088-05070c8f7871-1777371951993-target
+      source: '1777371165793'
+      sourceHandle: 87b63a7d-521e-4d0a-b088-05070c8f7871
+      target: '1777371951993'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions:
+          - .pdf
+          allowed_file_types:
+          - custom
+          allowed_file_upload_methods:
+          - local_file
+          label: file
+          max_length: 48
+          options: []
+          required: true
+          type: file
+          variable: file
+      height: 89
+      id: '1777368043818'
+      position:
+        x: -88.0565685681608
+        y: 403.9765417026974
+      positionAbsolute:
+        x: -88.0565685681608
+        y: 403.9765417026974
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1777368043818'
+        - file
+      height: 94
+      id: '1777368082220'
+      position:
+        x: 812.2731908672484
+        y: 169.51052265195696
+      positionAbsolute:
+        x: 812.2731908672484
+        y: 169.51052265195696
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 61e8f7db-a602-4a91-aaf2-2ea990be01c7
+          role: system
+          text: ''
+        - id: 06ea1b52-08d7-43e5-bcba-f77ca58f007d
+          role: user
+          text: 'You are an expert legal document parser.
+
+            Convert the given unstructured policy text into strictly structured JSON.
+
+            STRICT RULES:
+
+            Output ONLY valid JSON
+
+            Do NOT include explanations
+
+            NEVER use null — use "" instead
+
+            Maintain consistent schema
+
+            Classify into:
+
+            articles
+
+            appendices
+
+            revision_history
+
+            supplementary_provisions
+
+            Maintain hierarchy:
+
+            Articles → Sections → Subsections
+
+            Normalize:
+
+            Article numbers as integers ("1", "2", ...)
+
+            Paragraphs as "Paragraph X"
+
+            Separate title and content:
+
+            Do NOT merge headings into content
+
+            Extract subsection titles separately:
+
+            Example: "(1) When business activities were conducted"
+
+            → label: "(1)"
+
+            → title: "When business activities were conducted"
+
+            Structure tabular/appendix data into nested sections/subsections
+
+            Add "type" field for each section:
+
+            definition
+
+            rule
+
+            procedure
+
+            financial
+
+            Do NOT hallucinate missing data
+
+            JSON STRUCTURE:
+
+            {
+
+            "title": "",
+
+            "articles": [
+
+            {
+
+            "article_number": "",
+
+            "title": "",
+
+            "sections": [
+
+            {
+
+            "section_title": "",
+
+            "type": "",
+
+            "content": "",
+
+            "subsections": [
+
+            {
+
+            "label": "",
+
+            "title": "",
+
+            "content": ""
+
+            }
+
+            ]
+
+            }
+
+            ]
+
+            }
+
+            ],
+
+            "appendices": [],
+
+            "revision_history": [],
+
+            "supplementary_provisions": []
+
+            }
+
+            TEXT:
+
+            {{{#1777368082220.text#}}'
+        selected: false
+        structured_output_enabled: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1777368132716'
+      position:
+        x: 1094.5884723423246
+        y: 234.74577726156943
+      positionAbsolute:
+        x: 1094.5884723423246
+        y: 234.74577726156943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777368132716'
+          - text
+          value_type: string
+          variable: data
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1777368293086'
+      position:
+        x: 1416.2073061438255
+        y: 229.14349859549787
+      positionAbsolute:
+        x: 1416.2073061438255
+        y: 229.14349859549787
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(file_name: str) -> dict:\n    name = file_name.lower()\n\n\
+          \    if name.endswith(\".pdf\"):\n        file_type = \"pdf\"\n    elif\
+          \ name.endswith(\".docx\"):\n        file_type = \"docx\"\n    elif name.endswith(\"\
+          .csv\"):\n        file_type = \"csv\"\n    elif name.endswith(\".xlsx\"\
+          ):\n        file_type = \"excel\"\n    elif name.endswith((\".png\", \"\
+          .jpg\", \".jpeg\")):\n        file_type = \"image\"\n    else:\n       \
+          \ file_type = \"unknown\"\n\n    return {\n        \"file_type\": file_type\n\
+          \    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1777368043818'
+          - file
+          - extension
+          value_type: file
+          variable: file_name
+      height: 53
+      id: '1777370993719'
+      position:
+        x: 191.54812309129977
+        y: 234.74577726156943
+      positionAbsolute:
+        x: 191.54812309129977
+        y: 234.74577726156943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 8a46d166-5e22-4679-b920-3fe3f9669bfc
+            value: pdf/docx
+            varType: string
+            variable_selector:
+            - '1777370993719'
+            - result
+          id: 'true'
+          logical_operator: and
+        - case_id: 19fc6f2a-ae01-4386-a95b-413e534d0fbe
+          conditions:
+          - comparison_operator: contains
+            id: e2a009a2-c762-452b-ac89-7101e42424c5
+            value: csv/xlsx
+            varType: string
+            variable_selector:
+            - '1777370993719'
+            - result
+          id: 19fc6f2a-ae01-4386-a95b-413e534d0fbe
+          logical_operator: and
+        - case_id: 87b63a7d-521e-4d0a-b088-05070c8f7871
+          conditions:
+          - comparison_operator: contains
+            id: 0ea7adb5-4d1d-49db-a9d4-13bcb73b95b5
+            value: unknown
+            varType: string
+            variable_selector:
+            - '1777370993719'
+            - result
+          id: 87b63a7d-521e-4d0a-b088-05070c8f7871
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 221
+      id: '1777371165793'
+      position:
+        x: 469.7975198429526
+        y: 215.77164855226107
+      positionAbsolute:
+        x: 469.7975198429526
+        y: 215.77164855226107
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(file_path: str) -> dict:\n    import pandas as pd\n\n    if\
+          \ file_path.endswith(\".csv\"):\n        df = pd.read_csv(file_path)\n \
+          \   else:\n        df = pd.read_excel(file_path)\n\n    return {\n     \
+          \   \"raw_data\": df.to_dict(orient=\"records\")\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: csv_content_reader
+        type: code
+        variables:
+        - value_selector:
+          - '1777368043818'
+          - file
+          - extension
+          value_type: file
+          variable: file_path
+      height: 53
+      id: '1777371304258'
+      position:
+        x: 812.2731908672484
+        y: 368.9199731345367
+      positionAbsolute:
+        x: 812.2731908672484
+        y: 368.9199731345367
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 4e4177db-076a-4a9a-a853-3ddfccb30260
+          role: system
+          text: ''
+        - id: 76b25e2d-0d2f-4a6a-ad57-54996af3fc5c
+          role: user
+          text: 'You are an expert data parser for structured and semi-structured
+            tabular data.
+
+            Convert the given CSV/Excel table data into strictly structured JSON.
+
+            STRICT RULES:
+
+            Output ONLY valid JSON
+
+            Do NOT include explanations
+
+            NEVER use null — use "" instead
+
+            Maintain consistent schema
+
+            Do NOT hallucinate missing data
+
+            Preserve ALL rows and column relationships
+
+            INTERPRETATION RULES:
+
+            Treat each row as a meaningful data record
+
+            Use column names to determine meaning (e.g., Category, Amount, Type)
+
+            Group related rows logically into:
+
+            articles
+
+            appendices
+
+            revision_history
+
+            supplementary_provisions
+
+            If the table represents financial data:
+
+            → map into appendices with structured sections/subsections
+
+            If the table represents rules or descriptions:
+
+            → map into articles with sections/subsections
+
+            If structure is unclear:
+
+            → place data under "articles" with generic titles
+
+            Normalize repeated values into grouped sections
+
+            HIERARCHY RULES:
+
+            Articles → Sections → Subsections
+
+            Do NOT create more than 2 nesting levels
+
+            Use:
+
+            section_title for grouping
+
+            label for row identifiers
+
+            title only if meaningful heading exists
+
+            COLUMN HANDLING:
+
+            Preserve column names as labels where applicable
+
+            Convert each row into:
+
+            {
+
+            "label": "",
+
+            "title": "",
+
+            "content": ""
+
+            }
+
+            DATA TRANSFORMATION:
+
+            Combine multiple columns into readable sentences when needed
+
+            Keep numeric values and units intact
+
+            Do NOT lose important data during transformation
+
+            TYPE CLASSIFICATION:
+
+            Assign "type" based on content:
+
+            "financial" → amounts, costs, expenses
+
+            "definition" → explanations
+
+            "rule" → policies or conditions
+
+            "procedure" → steps or processes
+
+            JSON STRUCTURE:
+
+            {
+
+            "title": "",
+
+            "articles": [
+
+            {
+
+            "article_number": "",
+
+            "title": "",
+
+            "sections": [
+
+            {
+
+            "section_title": "",
+
+            "type": "",
+
+            "content": "",
+
+            "subsections": [
+
+            {
+
+            "label": "",
+
+            "title": "",
+
+            "content": ""
+
+            }
+
+            ]
+
+            }
+
+            ]
+
+            }
+
+            ],
+
+            "appendices": [],
+
+            "revision_history": [],
+
+            "supplementary_provisions": []
+
+            }
+
+            INPUT DATA:
+
+            {{#1777371304258.result#}}'
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1777371588069'
+      position:
+        x: 1094.5884723423246
+        y: 368.9199731345367
+      positionAbsolute:
+        x: 1094.5884723423246
+        y: 368.9199731345367
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777371588069'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: End 2
+        type: end
+      height: 90
+      id: '1777371596600'
+      position:
+        x: 1398.5884723423246
+        y: 368.9199731345367
+      positionAbsolute:
+        x: 1398.5884723423246
+        y: 368.9199731345367
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main() -> dict:\n    return {\n        \"status\": \"error\",\n\
+          \        \"message\": \"Unsupported file type. Please upload PDF, DOCX,\
+          \ CSV, XLSX, or image files.\"\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: error_message_display
+        type: code
+        variables: []
+      height: 53
+      id: '1777371951993'
+      position:
+        x: 812.2731908672484
+        y: 460.9199731345367
+      positionAbsolute:
+        x: 812.2731908672484
+        y: 460.9199731345367
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 351.06403555282225
+      y: 243.84724012033237
+      zoom: 0.5352069428657826
