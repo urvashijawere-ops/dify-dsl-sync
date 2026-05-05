@@ -1,0 +1,2592 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: FI-024 - GLJAI-869 - Published - Old
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: ff69b282-af36-4ffd-ab0a-eee0558c27a4
+    name: japanese_option
+    selector:
+    - conversation
+    - japanese_option
+    value: {}
+    value_type: object
+  - description: ''
+    id: e66aadcf-0792-403f-a5e2-ef51f9332b37
+    name: file_prev_bu_hearing_name
+    selector:
+    - conversation
+    - file_prev_bu_hearing_name
+    value: ''
+    value_type: string
+  - description: ''
+    id: 90b0c82e-a3e1-4e66-85f7-40e7dd2f18ef
+    name: file_number_table_name
+    selector:
+    - conversation
+    - file_number_table_name
+    value: ''
+    value_type: string
+  - description: ''
+    id: fa83cb8a-03d0-45d9-bb69-61daf234d2f4
+    name: file_performance_variance_name
+    selector:
+    - conversation
+    - file_performance_variance_name
+    value: ''
+    value_type: string
+  - description: ''
+    id: f6bc0cda-b979-42d8-9271-9a04426932aa
+    name: file_bu_hearing_name
+    selector:
+    - conversation
+    - file_bu_hearing_name
+    value: ''
+    value_type: string
+  - description: ''
+    id: ad011688-f110-4c0e-a943-cf90ed49c491
+    name: conversion_rate
+    selector:
+    - conversation
+    - conversion_rate
+    value: '0'
+    value_type: string
+  - description: ''
+    id: 0c4c121f-bb88-4361-95d8-f1a9e201f7bb
+    name: choose_language_first
+    selector:
+    - conversation
+    - choose_language_first
+    value: 'Sorry, I''m unable to response for this query. Please `Choose Language`
+      To Start The Conversation.
+
+
+      申し訳ございませんが、この質問にはお答えできません。会話を始めるには言語を選択してください。
+
+
+      ***
+
+
+      <button type="button" data-message="English">English</button> <button type="button"
+      data-message="日本語">日本語</button>'
+    value_type: string
+  - description: ''
+    id: 61fe55bd-c30e-497f-bbe5-414167af91e0
+    name: choose_session_ja
+    selector:
+    - conversation
+    - choose_session_ja
+    value: '開始するセッションを選択してください。
+
+
+      1. <button type="button" data-message="1">セッション 1</button>&emsp;&emsp;2. <button
+      type="button" data-message="2">セッション 2</button>'
+    value_type: string
+  - description: ''
+    id: 4b260ce1-7bdb-4670-97ba-0b7657c543d3
+    name: choose_session_en
+    selector:
+    - conversation
+    - choose_session_en
+    value: 'Please choose the session from where you want to start with.
+
+
+      1. <button type="button" data-message="1">Session 1</button>&emsp;&emsp;2. <button
+      type="button" data-message="2">Session 2</button>'
+    value_type: string
+  - description: ''
+    id: 32e135c6-35f8-4818-91ba-c7c739c41ad4
+    name: reset_upload_message
+    selector:
+    - conversation
+    - reset_upload_message
+    value:
+      '1':
+        en: 'Please upload the *`current month’s BU-A Hearing`* file in **PDF** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: "当月のBU-AヒアリングファイルをPDF形式でアップロードしてください。  \nアップロードの際、月と年を次の形式で入力してください: MM/YYYY\
+          \ \n例: 11/2025"
+      '2':
+        en: Thanks for choosing the `Session 2`.
+        ja: セッション2をお選びいただきありがとうございます。
+    value_type: object
+  - description: ''
+    id: 219d22d5-9df4-409c-9cba-6d73e302d9a8
+    name: file_prev_bu_hearing
+    selector:
+    - conversation
+    - file_prev_bu_hearing
+    value: ''
+    value_type: string
+  - description: ''
+    id: cac3f2f9-1e15-4491-96d1-dff65df9745c
+    name: file_number_table
+    selector:
+    - conversation
+    - file_number_table
+    value: ''
+    value_type: string
+  - description: ''
+    id: 44660743-c0b1-417f-991d-9b903f6cf571
+    name: file_performance_variance
+    selector:
+    - conversation
+    - file_performance_variance
+    value: ''
+    value_type: string
+  - description: ''
+    id: c52218d0-c2b6-4439-8ce6-4d8c8ae3d450
+    name: file_bu_hearing
+    selector:
+    - conversation
+    - file_bu_hearing
+    value: ''
+    value_type: string
+  - description: ''
+    id: 57f2cb7a-0736-42b6-a787-1c3b27305dbd
+    name: session_config
+    selector:
+    - conversation
+    - session_config
+    value:
+      '1':
+        en: 'Thanks for choosing the `Session 1`.
+
+
+          ***
+
+
+          Please upload the *`current month’s BU-A Hearing`* file in **PDF** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: セッション1をお選びいただきありがとうございます。
+      '2':
+        en: Thanks for choosing the `Session 2`.
+        ja: セッション2をお選びいただきありがとうございます。
+    value_type: object
+  - description: ''
+    id: a02167ad-dddf-4007-ba82-f367438eb14c
+    name: user_guide
+    selector:
+    - conversation
+    - user_guide
+    value:
+      en:
+        btn_s1: Session 1
+        btn_s2: Session 2
+        result: English
+        text: "Thanks for choosing your preferred language as `English`.\n\n***\n\n\
+          Quick User Guide for Session 1 (**Pre-Hearing Preparation**):\n*Goal: Generate\
+          \ the \"Analysis & BU Hearing questions\" (Summary, Data, & Questions).*\n\
+          \n1. **Upload Documents with ease:**\n    * **BU Docs:** Current & Previous\
+          \ month (Excel & PPT/PDF).\n    * **Financial Data:** Official **Hi-Tree**\
+          \ export (Excel).\n    * **Reference:** Past Hearing MOM & Question List.\n\
+          \n2. **Unify Currency:**\n    * Confirm the Agent's prompt to convert figures\
+          \ (e.g., USD → JPY) using real-time rates.\n\n3. **Review Outputs:**\n \
+          \   * **Qualitative Summary:** Summary in the required template, extracted\
+          \ from the BU Documents.\n    * **Number Table:** Standardized financial\
+          \ table compiled from Hi-Tree/BU performance Excel.\n    * **Draft Questions:**\
+          \ Generated based on data gaps & historical patterns.\n\n***\n\nQuick User\
+          \ Guide for Session 2 (**Post-Hearing Synthesis**):\n*Goal: Generate the\
+          \ draft for Final Report in Minutes format (MOM).*\n\n1. **Upload Hearing\
+          \ Data with BU performance inputs:**\n    * **Transcript:** Text file of\
+          \ the hearing conversation.\n    * **BU Docs:** Current & Previous month\
+          \ (Excel & PPT/PDF).\n    * **Financial Data:** Official **Hi-Tree** export\
+          \ (Excel).\n    * **Reference:** Past Hearing MOM & Question List.\n   \
+          \ * **Session 1 Outputs:** The Questions, Number Table, & Summary generated\
+          \ previously.\n\n2. **Synthesize:**\n    * Agent extracts **Spoken Commitments**,\
+          \ **Future Actions**, and **Verbal Clarifications**.\n\n3. **Finalize Report:**\n\
+          \    * Review the **Final Report Draft** which merges financial tables with\
+          \ transcript insights.\n    * Use the chat to request specific text edits\
+          \ before closure.\n\n***\n\n**Now, please choose the session from where\
+          \ you want to start with.**"
+      ja:
+        btn_s1: セッション 1
+        btn_s2: セッション 2
+        result: Japanese
+        text: "希望言語として`日本語`を選択していただき、ありがとうございます。\n\n***\n\nセッション 1 クイックユーザーガイド (**事前準備：ヒアリング前**):\n\
+          *目的：分析 & BUヒアリング質問を生成する。（サマリー、データ、質問）*\n\n1. **ドキュメントのアップロード:**\n    * **BU資料:**\
+          \ 当月・前月分 (Excel & PPT/PDF)。\n    * **財務データ:** **Hi-Tree** エクスポート (Excel)。\n\
+          \    * **参考資料:** 過去ヒアリング会議の議事録および質問リスト。\n\n2. **通貨の統一:**\n    * Agentのプロンプトを確認し、数値をリアルタイムレートで変換（例:\
+          \ USD → JPY）します。\n\n3. **アウトプットの確認:**\n    * **定性サマリー:** BU資料から抽出し、特定テンプレートにまとめたサマリー。\n\
+          \    * **数値表:** Hi-Tree/BU業績Excelから用意された財務表。\n    * **質問案:** データの不足や過去の履歴パターンに基づき生成。\n\
+          \n***\n\nセッション 2 クイックユーザーガイド (**事後整理：ヒアリング後**):\n*目的：最終報告書（議事録形式）のドラフト版を生成する。*\n\
+          \n1. **ヒアリングデータのアップロード:**\n    * **文字起こし:** ヒアリング会話のテキストファイル。\n    * **BU資料:**\
+          \ 当月・前月分 (Excel & PPT/PDF)。\n    * **財務データ:** **Hi-Tree** エクスポート (Excel)。\n\
+          \    * **参考資料:** 過去ヒアリングMOMおよび質問リスト。\n    * **セッション 1 のアウトプット:** 質問、数値表、サマリー。\n\
+          \n2. **統合・整理:**\n    * Agentが発言内容から**口頭での約束事項、補足説明**、**今後のアクション**を抽出します。\n\
+          \n3. **最終報告書の完成:**\n    * 財務表とトランスクリプトの洞察を統合した**ドラフト**を確認します。\n    * 最後に、テキスト修正がありましたらチャット機能を用いて依頼してください。\n\
+          \n***\n\n**開始したいセッションを選択してください。**"
+    value_type: object
+  - description: ''
+    id: 8c1e6a2b-9f19-4d67-9dc4-deaa0e144c31
+    name: file_upload_success_message
+    selector:
+    - conversation
+    - file_upload_success_message
+    value:
+      '1':
+        en: 'Now, Please upload the *`current month''s BU Performance Variance Data`*
+          file in **EXCEL** format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: '次に*`当月のBU業績差異データ`*を**Excel**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '2':
+        en: 'Now, Please upload the *`current month''s BU Template Data`* in **Excel**
+          format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: '次に*`当月のBUテンプレートデータ`*を**Excel**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '3':
+        en: 'Now, Please upload the *`previous month''s BU Hearing Data`* in **PDF**
+          format.
+
+          While uploading, mention the month and year in the following format: **MM/YYYY**
+
+          For example: **11/2025**'
+        ja: '次に*`前月の*BUヒアリングデータ`*を**PDF**形式でアップロードしてください。
+
+          アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+          例: **11/2025**'
+      '4':
+        en: 'All files uploaded successfully.
+
+
+          Do you want to reupload all files?
+
+          1. <button type="button" data-message="1">Yes</button>&emsp;&emsp;2. <button
+          type="button" data-message="2">No</button>'
+        ja: 'すべてのファイルのアップロードが完了しました。
+
+
+          すべてのファイルを再アップロードしますか？
+
+          1. <button type="button" data-message="1">はい</button>&emsp;&emsp;2. <button
+          type="button" data-message="2">いいえ</button>'
+    value_type: object
+  - description: ''
+    id: 432e0799-8f1f-443e-ab90-1d479071f496
+    name: file_error_message
+    selector:
+    - conversation
+    - file_error_message
+    value:
+      '1':
+        file_size:
+          en: "File size exceeds 10MB limit!!!\nPlease upload the *`current month’s\
+            \ BU-A Hearing`* file in **PDF** format only. \nWhile uploading, mention\
+            \ the month and year in the following format: **MM/YYYY**\nFor example:\
+            \ **11/2025**"
+          ja: 'ファイルサイズが10MBを超えています！！！
+
+            *`今月のBU-Aヒアリング`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+        file_type:
+          en: 'Invalid Format!!!
+
+            Please upload the *`current month’s BU-A Hearing`* file in **PDF** format
+            only.
+
+            While uploading, mention the month and year in the following format: **MM/YYYY**
+
+            For example: **11/2025**'
+          ja: '不正な形式！！！
+
+            *`今月のBU-Aヒアリング`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+        month_format:
+          en: "Invalid Text!!!\nPlease upload the *`current month’s BU-A Hearing`*\
+            \ file in **PDF** format only. \nWhile uploading, mention the month and\
+            \ year in the following format: **MM/YYYY**\nFor example: **11/2025**"
+          ja: '不正な月形式！！！
+
+            *`今月のBU-Aヒアリング`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+      '2':
+        file_size:
+          en: "File size exceeds 10MB limit!!!\nPlease upload the *`current month’s\
+            \ BU-Performance Variance Data`* file in **EXCEL** format only. \nWhile\
+            \ uploading, mention the month and year in the following format: **MM/YYYY**\n\
+            For example: **11/2025**"
+          ja: 'ファイルサイズが10MBを超えています！！！
+
+            *`今月の当月のBU業績差異データ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+        file_type:
+          en: "Invalid Format!!!\nPlease upload the *`current month’s BU-Performance\
+            \ Variance Data`* file in **EXCEL** format only. \nWhile uploading, mention\
+            \ the month and year in the following format: **MM/YYYY**\nFor example:\
+            \ **11/2025**"
+          ja: '不正な形式！！！
+
+            *`当月のBU業績差異データ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+        month_format:
+          en: "Invalid Text!!!\nPlease upload the *`current month’s BU-Performance\
+            \ Variance Data`* file in **EXCEL** format only. \nWhile uploading, mention\
+            \ the month and year in the following format: **MM/YYYY**\nFor example:\
+            \ **11/2025**"
+          ja: '不正な月形式！！！
+
+            *`当月のBU業績差異データ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+      '3':
+        file_size:
+          en: "File size exceeds 10MB limit!!!\nPlease upload the *`current month’s\
+            \ Number Table Data`* file in **EXCEL** format only. \nWhile uploading,\
+            \ mention the month and year in the following format: **MM/YYYY**\nFor\
+            \ example: **11/2025**"
+          ja: 'ファイルサイズが10MBを超えています！！！
+
+            *`今月の数値テーブルデータ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+        file_type:
+          en: "Invalid Format!!!\nPlease upload the *`current month’s Number Table\
+            \ Data`* file in **EXCEL** format only. \nWhile uploading, mention the\
+            \ month and year in the following format: **MM/YYYY**\nFor example: **11/2025**"
+          ja: '不正な形式！！！
+
+            *`今月の数値テーブルデータ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+        month_format:
+          en: "Invalid Text!!!\nPlease upload the *`current month’s Number Table Data`*\
+            \ file in **EXCEL** format only. \nWhile uploading, mention the month\
+            \ and year in the following format: **MM/YYYY**\nFor example: **11/2025**"
+          ja: '不正な形式！！！
+
+            *`今月の数値テーブルデータ`*ファイルは**EXCEL**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: excel
+      '4':
+        file_size:
+          en: "File size exceeds 10MB limit!!!\nPlease upload the *`previous month’s\
+            \ BU-A Hearing`* file in **PDF** format only. \nWhile uploading, mention\
+            \ the month and year in the following format: **MM/YYYY**\nFor example:\
+            \ **11/2025**"
+          ja: 'ファイルサイズが10MBを超えています！！！
+
+            *`前月の数値テーブルデータ`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+        file_type:
+          en: "Invalid Format!!!\nPlease upload the *`previous month’s BU-A Hearing`*\
+            \ file in **PDF** format only. \nWhile uploading, mention the month and\
+            \ year in the following format: **MM/YYYY**\nFor example: **11/2025**"
+          ja: '不正な形式！！！
+
+            *`前月の数値テーブルデータ`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+        month_format:
+          en: "Invalid Text!!!\nPlease upload the *`current month’s BU-A Hearing`*\
+            \ file in **PDF** format only. \nWhile uploading, mention the month and\
+            \ year in the following format: **MM/YYYY**\nFor example: **11/2025**"
+          ja: '不正な月形式！！！
+
+            *`前月の数値テーブルデータ`*ファイルは**PDF**形式のみでアップロードしてください。
+
+            アップロードの際、月と年を次の形式で入力してください: **MM/YYYY**
+
+            例: **11/2025**'
+          type: pdf
+    value_type: object
+  - description: ''
+    id: bb96b3c6-cfd1-45a3-8192-28ffda911b7f
+    name: upload_step
+    selector:
+    - conversation
+    - upload_step
+    value: '0'
+    value_type: string
+  - description: ''
+    id: 57112dee-17e6-46be-b0a8-83c52d0fdedc
+    name: selected_language
+    selector:
+    - conversation
+    - selected_language
+    value: ''
+    value_type: string
+  - description: ''
+    id: 2690bf8e-eacf-4ee9-a5f7-8d268c5434b9
+    name: selected_session
+    selector:
+    - conversation
+    - selected_session
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: 'Hi there, I am your BU performance hearing assistant.
+
+
+      Please select your Preferred language.
+
+
+      ***
+
+      こんにちは。BU パフォーマンス聴覚アシスタントです。
+
+
+      ご希望の言語を選択してください。
+
+      ***'
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - English
+    - 日本語
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-true-1770961638356-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 'true'
+      target: '1770961638356'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-0f1ac98a-eba8-489b-bf1a-4c8634661bb2-1770961638356-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 0f1ac98a-eba8-489b-bf1a-4c8634661bb2
+      target: '1770961638356'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-17701c18-6743-4349-8e46-a0343658e03d-1770961764200-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 17701c18-6743-4349-8e46-a0343658e03d
+      target: '1770961764200'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-59048238-bb85-4fae-ac86-0c12dbd0830d-1770961764200-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 59048238-bb85-4fae-ac86-0c12dbd0830d
+      target: '1770961764200'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1770961638356-source-1770961899709-target
+      selected: false
+      source: '1770961638356'
+      sourceHandle: source
+      target: '1770961899709'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1770961764200-source-1770961996414-target
+      selected: false
+      source: '1770961764200'
+      sourceHandle: source
+      target: '1770961996414'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1770961996414-source-1770962030651-target
+      selected: false
+      source: '1770961996414'
+      sourceHandle: source
+      target: '1770962030651'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: answer
+        targetType: assigner
+      id: 1770962030651-source-1770962080077-target
+      selected: false
+      source: '1770962030651'
+      sourceHandle: source
+      target: '1770962080077'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770961019005-false-1770962482069-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 'false'
+      target: '1770962482069'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: if-else
+      id: 1770961019005-b0432e17-bfc3-4fb7-b09d-63ce79156765-1770962665994-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: b0432e17-bfc3-4fb7-b09d-63ce79156765
+      target: '1770962665994'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770962665994-true-1770962588359-target
+      selected: false
+      source: '1770962665994'
+      sourceHandle: 'true'
+      target: '1770962588359'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770962665994-678b4e6a-8c0f-4a3a-b67c-0cf4d3d8b8f7-1770962737408-target
+      selected: false
+      source: '1770962665994'
+      sourceHandle: 678b4e6a-8c0f-4a3a-b67c-0cf4d3d8b8f7
+      target: '1770962737408'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1770961899709-source-answer-target
+      selected: false
+      source: '1770961899709'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771401586624-true-1771401641682-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: 'true'
+      target: '1771401641682'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1771401641682-source-1771401719495-target
+      selected: false
+      source: '1771401641682'
+      sourceHandle: source
+      target: '1771401719495'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-a628f2d4-e8ed-443d-bd1b-7dd5814a4f41-1771490895856-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: a628f2d4-e8ed-443d-bd1b-7dd5814a4f41
+      target: '1771490895856'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1771490895856-source-1770963388580-target
+      selected: false
+      source: '1771490895856'
+      sourceHandle: source
+      target: '1770963388580'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f-1771491738462-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f
+      target: '1771491738462'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1771491738462-source-1771491747321-target
+      selected: false
+      source: '1771491738462'
+      sourceHandle: source
+      target: '1771491747321'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-d9cda55a-2893-470e-9257-d87951aa1493-1771491738462-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: d9cda55a-2893-470e-9257-d87951aa1493
+      target: '1771491738462'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-5c1f1a47-e49f-46f4-a58e-0ec06130d6a3-1771491738462-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: 5c1f1a47-e49f-46f4-a58e-0ec06130d6a3
+      target: '1771491738462'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1770961019005-b8cef663-35c6-41a3-922c-855a74c51580-1771491738462-target
+      selected: false
+      source: '1770961019005'
+      sourceHandle: b8cef663-35c6-41a3-922c-855a74c51580
+      target: '1771491738462'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771491747321-false-17714919546840-target
+      selected: false
+      source: '1771491747321'
+      sourceHandle: 'false'
+      target: '17714919546840'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1771491747321-09eae6cb-912c-45df-89b0-2105df00270a-17715003232610-target
+      selected: false
+      source: '1771491747321'
+      sourceHandle: 09eae6cb-912c-45df-89b0-2105df00270a
+      target: '17715003232610'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 17715003232610-source-1771401586624-target
+      selected: false
+      source: '17715003232610'
+      sourceHandle: source
+      target: '1771401586624'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771401586624-cde25911-a8e2-4650-8597-51a2a3bf65e7-17714034194010-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: cde25911-a8e2-4650-8597-51a2a3bf65e7
+      target: '17714034194010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771401586624-810f57a9-4f1e-44dd-b066-a37d780eb56b-17714078066020-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: 810f57a9-4f1e-44dd-b066-a37d780eb56b
+      target: '17714078066020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1771401586624-803ef967-b25d-4e50-8b4c-1879ba6d6165-17714084762600-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: 803ef967-b25d-4e50-8b4c-1879ba6d6165
+      target: '17714084762600'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771401586624-false-1771401685782-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: 'false'
+      target: '1771401685782'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17714034194010-source-1771401719495-target
+      source: '17714034194010'
+      sourceHandle: source
+      target: '1771401719495'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17714078066020-source-1771401719495-target
+      source: '17714078066020'
+      sourceHandle: source
+      target: '1771401719495'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 17714084762600-source-1771401719495-target
+      source: '17714084762600'
+      sourceHandle: source
+      target: '1771401719495'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1770961019005-834e124c-59da-465c-ab9c-089886099008-17718284481690-target
+      source: '1770961019005'
+      sourceHandle: 834e124c-59da-465c-ab9c-089886099008
+      target: '17718284481690'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: code
+      id: 17718284481690-source-1771828947423-target
+      source: '17718284481690'
+      sourceHandle: source
+      target: '1771828947423'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: answer
+      id: 1771828947423-source-1771508373780-target
+      source: '1771828947423'
+      sourceHandle: source
+      target: '1771508373780'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770962665994-false-1771916518829-target
+      source: '1770962665994'
+      sourceHandle: 'false'
+      target: '1771916518829'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1770961002414-source-1770961019005-target
+      source: '1770961002414'
+      sourceHandle: source
+      target: '1770961019005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1770961019005-5509f003-7e2c-477b-8313-3ae5c4c527ce-1771836083467-target
+      source: '1770961019005'
+      sourceHandle: 5509f003-7e2c-477b-8313-3ae5c4c527ce
+      target: '1771836083467'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1771401586624-4c5ae5bb-87c5-4176-85eb-b482d906a179-1771401685782-target
+      selected: false
+      source: '1771401586624'
+      sourceHandle: 4c5ae5bb-87c5-4176-85eb-b482d906a179
+      target: '1771401685782'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1770961002414'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1770961638356.message#}}'
+        desc: Sends the localized message and interactive buttons to the user interface,
+          allowing them to see the instructions and select a session in their preferred
+          language.
+        selected: false
+        title: Show User Guide
+        type: answer
+        variables: []
+      height: 197
+      id: answer
+      position:
+        x: 2057
+        y: 104
+      positionAbsolute:
+        x: 2057
+        y: 104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 11bc3b2d-2c75-4fb8-a77a-708fdc810e2d
+            value: English
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: 0774e84a-06c9-4e8a-9936-1e404aaec43e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: ba5789e1-538f-411a-a388-a821ea104b1d
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 'true'
+          logical_operator: and
+        - case_id: 0f1ac98a-eba8-489b-bf1a-4c8634661bb2
+          conditions:
+          - comparison_operator: is
+            id: 010dc0a9-31c7-4c1f-90c6-ba4b6aacec06
+            value: 日本語
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: empty
+            id: 5ef3f82a-cc0d-426f-b94f-d131941d2af6
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 2080da2b-86bb-4281-bb04-0d76d2a0c0ca
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 0f1ac98a-eba8-489b-bf1a-4c8634661bb2
+          logical_operator: and
+        - case_id: 17701c18-6743-4349-8e46-a0343658e03d
+          conditions:
+          - comparison_operator: is
+            id: cbd17c0a-c58e-49e6-b3be-62ebb2d1dd63
+            value: '1'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: not empty
+            id: 7648a6cb-44d4-453f-a9ad-1c603132c673
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: bc5d2bb2-dd92-4be9-a6de-fff54c09e2c7
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 17701c18-6743-4349-8e46-a0343658e03d
+          logical_operator: and
+        - case_id: 59048238-bb85-4fae-ac86-0c12dbd0830d
+          conditions:
+          - comparison_operator: is
+            id: f9e3d27e-ca15-4a5c-aac2-11b039b99f36
+            value: '2'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: not empty
+            id: 3358a2b6-f527-46cf-b624-48bbf29c7789
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 5914e5f9-87e0-4889-a313-281680fb0712
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          id: 59048238-bb85-4fae-ac86-0c12dbd0830d
+          logical_operator: and
+        - case_id: f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f
+          conditions:
+          - comparison_operator: not empty
+            id: 5253d5e6-c3cf-4bd0-a506-3c363b4ac67e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: f0f0577f-cbd9-462f-b06d-3b4efd5750c6
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 8a80bb3c-4294-4efb-88ee-345dda517156
+            value: '1'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: 341dfa8d-f7a8-48fc-96c9-d42f2d547287
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: f6dd0c6d-b91d-4ab4-82d8-7daed3a7d91f
+          logical_operator: and
+        - case_id: d9cda55a-2893-470e-9257-d87951aa1493
+          conditions:
+          - comparison_operator: not empty
+            id: 5d275e8a-9695-49db-a6f9-b9cdadca829e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 42f9017f-43ff-4dc2-ab61-55f78a2d331c
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 3458d838-1422-49dd-8f81-fc23b0433df4
+            value: '2'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: c2e7203c-1802-463e-8281-800ba78a783a
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: d9cda55a-2893-470e-9257-d87951aa1493
+          logical_operator: and
+        - case_id: 5c1f1a47-e49f-46f4-a58e-0ec06130d6a3
+          conditions:
+          - comparison_operator: not empty
+            id: 9df5ff72-9ee2-484c-8cd4-73aa0ea32d60
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 115411c5-8c5b-4871-8fb3-a165df88dd90
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 8a73a0f2-da9e-4d39-a2a7-a372ef3457a5
+            value: '3'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: f4bf51e0-2d5d-4206-aada-6d162e00f837
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: 5c1f1a47-e49f-46f4-a58e-0ec06130d6a3
+          logical_operator: and
+        - case_id: b8cef663-35c6-41a3-922c-855a74c51580
+          conditions:
+          - comparison_operator: not empty
+            id: 0dc7911e-dd4f-4c81-a0f9-15eef79ed056
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 4c089663-75f0-4f56-9f61-5594197eee2e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: f812a3bc-dfe5-4b37-b9be-15aa343e05f8
+            value: '4'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: not empty
+            id: 02626e18-0401-4d58-a502-7ac1cd05276d
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - sys
+            - files
+          id: b8cef663-35c6-41a3-922c-855a74c51580
+          logical_operator: and
+        - case_id: 834e124c-59da-465c-ab9c-089886099008
+          conditions:
+          - comparison_operator: not empty
+            id: df7be8b3-cc28-44ac-827e-fb600ba7cbb3
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: b8dcee05-68f0-4539-b11d-cd2e6439253a
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: 557d353f-3542-4913-b0ea-faf12e36f811
+            value: '5'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: is
+            id: 4d3e07ea-3637-494a-88db-0fb7ae28e608
+            value: '1'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 834e124c-59da-465c-ab9c-089886099008
+          logical_operator: and
+        - case_id: 5509f003-7e2c-477b-8313-3ae5c4c527ce
+          conditions:
+          - comparison_operator: not empty
+            id: 9bb3e078-7b4d-4c36-981c-561a309642b2
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: fee37c7c-6295-48e1-b0f4-491357ff8ac4
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: is
+            id: eb0519a6-c462-41d9-8ea2-dec32273f798
+            value: '5'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          - comparison_operator: is
+            id: 129c9105-eb4a-4510-8473-6ead3c3634d6
+            value: '2'
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 5509f003-7e2c-477b-8313-3ae5c4c527ce
+          logical_operator: and
+        - case_id: b0432e17-bfc3-4fb7-b09d-63ce79156765
+          conditions:
+          - comparison_operator: not empty
+            id: d26a78b8-a109-4dea-ae64-5f53e85188ec
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: empty
+            id: 6bdfaaa1-03b4-4a6c-81ea-1db0322abd1d
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 059f6a31-1a7b-4623-a8fe-82d1fb252301
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: b0432e17-bfc3-4fb7-b09d-63ce79156765
+          logical_operator: and
+        - case_id: a628f2d4-e8ed-443d-bd1b-7dd5814a4f41
+          conditions:
+          - comparison_operator: not empty
+            id: 602d7c97-70f8-4fb4-bad5-6836f7703d2e
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          - comparison_operator: not empty
+            id: 80a38b7a-2264-41db-b325-70b88385a9f3
+            value: ''
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_session
+          - comparison_operator: not empty
+            id: 89d90d73-cc7a-4bb1-9954-f2a28ccdb782
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: a628f2d4-e8ed-443d-bd1b-7dd5814a4f41
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 1434
+      id: '1770961019005'
+      position:
+        x: 1014.5631236584372
+        y: 282
+      positionAbsolute:
+        x: 1014.5631236584372
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(select_language: str, selected_language: str, user_guide:\
+          \ dict):\n    lang_key = \"ja\" if select_language.lower() == \"日本語\" else\
+          \ \"en\"\n\n    content = user_guide.get(lang_key, user_guide[\"en\"])\n\
+          \n    btn_s1 = f'1. <button type=\"button\" data-message=\"1\">{content[\"\
+          btn_s1\"]}</button>'\n    btn_s2 = f'2. <button type=\"button\" data-message=\"\
+          2\">{content[\"btn_s2\"]}</button>'\n\n    final_message = f\"{content['text']}\\\
+          n\\n{btn_s1}&emsp;&emsp;{btn_s2}\\n\\n\"\n\n    return {\n        \"selected_language\"\
+          : lang_key,\n        \"result\": content[\"result\"],\n        \"message\"\
+          : final_message\n    }"
+        code_language: python3
+        desc: Sets the workflow language to English or Japanese, retrieves localized
+          content from the user_guide, and generates a formatted message with interactive
+          buttons for session selection.
+        outputs:
+          message:
+            children: null
+            type: string
+          result:
+            children: null
+            type: string
+          selected_language:
+            children: null
+            type: string
+        selected: false
+        title: Choose Language
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: select_language
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: selected_language
+        - value_selector:
+          - conversation
+          - user_guide
+          value_type: object
+          variable: user_guide
+      height: 162
+      id: '1770961638356'
+      position:
+        x: 1419
+        y: 104
+      positionAbsolute:
+        x: 1419
+        y: 104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(select_session: str, lang: str, session_config: dict):\n \
+          \   session_data = session_config.get(select_session)\n    \n    if not\
+          \ session_data:\n        return {\n            \"selected_session\": select_session,\n\
+          \            \"message\": \"Error: Session not found.\"\n        }\n   \
+          \ \n    message = session_data.get(lang, \"Error: Language content not found.\"\
+          )\n\n    return {\n        \"selected_session\": select_session,\n     \
+          \   \"message\": message\n    }"
+        code_language: python3
+        desc: Retrieves localized session content by mapping the user's button selection
+          (1 or 2) against the session configuration and the previously selected language.
+        outputs:
+          message:
+            children: null
+            type: string
+          selected_session:
+            children: null
+            type: string
+        selected: false
+        title: Choose Session
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: select_session
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: lang
+        - value_selector:
+          - conversation
+          - session_config
+          value_type: object
+          variable: session_config
+      height: 146
+      id: '1770961764200'
+      position:
+        x: 1419
+        y: 356.95640567746943
+      positionAbsolute:
+        x: 1419
+        y: 356.95640567746943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Updates the global selected_language variable with the output from the
+          Choose Language node to maintain the user's preference throughout the session.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1770961638356'
+          - selected_language
+          variable_selector:
+          - conversation
+          - selected_language
+          write_mode: over-write
+        selected: false
+        title: Update Language
+        type: assigner
+        version: '2'
+      height: 178
+      id: '1770961899709'
+      position:
+        x: 1737.5963788289578
+        y: 104
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 104
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Saves the user's session choice to the global selected_session variable,
+          marking the session selection as complete and providing context for the
+          rest of the flow.
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1770961764200'
+          - selected_session
+          variable_selector:
+          - conversation
+          - selected_session
+          write_mode: over-write
+        selected: false
+        title: Update Session
+        type: assigner
+        version: '2'
+      height: 178
+      id: '1770961996414'
+      position:
+        x: 1737.5963788289578
+        y: 356.95640567746943
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 356.95640567746943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1770961764200.message#}}'
+        desc: Outputs the final localized session content to the user, displaying
+          the specific guide or information requested during the session selection
+          step.
+        selected: false
+        title: Ask User To Upload Files
+        type: answer
+        variables: []
+      height: 197
+      id: '1770962030651'
+      position:
+        x: 2057
+        y: 356.95640567746943
+      positionAbsolute:
+        x: 2057
+        y: 356.95640567746943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Initializes the upload sequence by setting the upload_step variable
+          to 1, signaling the start of the data collection phase.
+        items:
+        - input_type: constant
+          operation: set
+          value: '1'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        selected: false
+        title: upload_step = 1 (start)
+        type: assigner
+        version: '2'
+      height: 162
+      id: '1770962080077'
+      position:
+        x: 2376.4490308160575
+        y: 356.95640567746943
+      positionAbsolute:
+        x: 2376.4490308160575
+        y: 356.95640567746943
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#conversation.choose_language_first#}}'
+        desc: ''
+        selected: false
+        title: Answer 3
+        type: answer
+        variables: []
+      height: 106
+      id: '1770962482069'
+      position:
+        x: 1419
+        y: 2165.9946838286737
+      positionAbsolute:
+        x: 1419
+        y: 2165.9946838286737
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#conversation.choose_session_en#}}'
+        desc: ''
+        selected: false
+        title: Please Choose Session
+        type: answer
+        variables: []
+      height: 106
+      id: '1770962588359'
+      position:
+        x: 1737.5963788289578
+        y: 1846.2115291142188
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 1846.2115291142188
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 8465f2c7-b581-4aa8-82eb-b442117da367
+            value: en
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          id: 'true'
+          logical_operator: and
+        - case_id: 678b4e6a-8c0f-4a3a-b67c-0cf4d3d8b8f7
+          conditions:
+          - comparison_operator: is
+            id: 439c687d-da13-471c-9a90-5e9f5f04da38
+            value: ja
+            varType: string
+            variable_selector:
+            - conversation
+            - selected_language
+          id: 678b4e6a-8c0f-4a3a-b67c-0cf4d3d8b8f7
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 174
+      id: '1770962665994'
+      position:
+        x: 1419
+        y: 1846.2115291142188
+      positionAbsolute:
+        x: 1419
+        y: 1846.2115291142188
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#conversation.choose_session_ja#}}'
+        desc: ''
+        selected: false
+        title: Please Choose Session
+        type: answer
+        variables: []
+      height: 106
+      id: '1770962737408'
+      position:
+        x: 2057
+        y: 1918.2812399635066
+      positionAbsolute:
+        x: 2057
+        y: 1918.2812399635066
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1771490895856.result#}}'
+        desc: ''
+        selected: false
+        title: Answer 6
+        type: answer
+        variables: []
+      height: 105
+      id: '1770963388580'
+      position:
+        x: 1737.5963788289578
+        y: 2071.016399577317
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 2071.016399577317
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 16047162-d510-4e0d-91ab-155ea088e4c6
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '17715003232610'
+            - is_valid
+          - comparison_operator: is
+            id: df4563c3-9afe-4eda-8184-c8fb77dd7f49
+            value: '1'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          id: 'true'
+          logical_operator: and
+        - case_id: cde25911-a8e2-4650-8597-51a2a3bf65e7
+          conditions:
+          - comparison_operator: is
+            id: b23d80da-b97f-46af-9072-043445d645b0
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '17715003232610'
+            - is_valid
+          - comparison_operator: is
+            id: e1fe871a-88f8-4b56-ac81-96d9ee004f85
+            value: '2'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          id: cde25911-a8e2-4650-8597-51a2a3bf65e7
+          logical_operator: and
+        - case_id: 810f57a9-4f1e-44dd-b066-a37d780eb56b
+          conditions:
+          - comparison_operator: is
+            id: d6382729-6af9-4e21-89e1-2985471c6006
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '17715003232610'
+            - is_valid
+          - comparison_operator: is
+            id: 3ad7cc9d-7f43-4fdc-a464-8fdd174a265b
+            value: '3'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          id: 810f57a9-4f1e-44dd-b066-a37d780eb56b
+          logical_operator: and
+        - case_id: 803ef967-b25d-4e50-8b4c-1879ba6d6165
+          conditions:
+          - comparison_operator: is
+            id: ce367bdf-4aa0-419b-945b-1a0999f51e5a
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '17715003232610'
+            - is_valid
+          - comparison_operator: is
+            id: 4bffa590-2938-49fd-a4c2-fe0a49218363
+            value: '4'
+            varType: string
+            variable_selector:
+            - conversation
+            - upload_step
+          id: 803ef967-b25d-4e50-8b4c-1879ba6d6165
+          logical_operator: and
+        - case_id: 4c5ae5bb-87c5-4176-85eb-b482d906a179
+          conditions:
+          - comparison_operator: is
+            id: 6bb140bc-0e68-4a49-adde-3127818b0d81
+            value: 'false'
+            varType: string
+            variable_selector:
+            - '17715003232610'
+            - is_valid
+          logical_operator: and
+        desc: Determines the next phase of the workflow by checking if the current
+          file upload is valid and identifying which step (1-4) was just completed
+          to trigger the appropriate state update.
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 530
+      id: '1771401586624'
+      position:
+        x: 2657
+        y: 567.9872226485688
+      positionAbsolute:
+        x: 2657
+        y: 567.9872226485688
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 'Saves the validated Excel metadata into the variable file_bu_hearing.
+
+          Increments the upload_step variable from 1 to 2.
+
+          Marks the "Current Month’s BU-A Hearing" task as complete and signals the
+          workflow to start requesting the next document.
+
+          '
+        items:
+        - input_type: constant
+          operation: set
+          value: '2'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_url
+          variable_selector:
+          - conversation
+          - file_bu_hearing
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_name
+          variable_selector:
+          - conversation
+          - file_bu_hearing_name
+          write_mode: over-write
+        selected: false
+        title: upload_step = 2 (PDF)
+        type: assigner
+        version: '2'
+      height: 278
+      id: '1771401641682'
+      position:
+        x: 2915.8010819142764
+        y: 289.0741546835609
+      positionAbsolute:
+        x: 2915.8010819142764
+        y: 289.0741546835609
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#17715003232610.message#}}'
+        desc: Informs the user of specific file-related errors, such as incorrect
+          extensions or multiple file uploads, and prompts them to try again with
+          the correct document.
+        selected: false
+        title: File Upload Error
+        type: answer
+        variables: []
+      height: 197
+      id: '1771401685782'
+      position:
+        x: 3593.9455124093315
+        y: 895.7367472344013
+      positionAbsolute:
+        x: 3593.9455124093315
+        y: 895.7367472344013
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 'File Uploaded Successfully!!
+
+
+          **Number of files uploaded so far:**
+
+          {{#conversation.file_bu_hearing_name#}}
+
+          {{#conversation.file_performance_variance_name#}}
+
+          {{#conversation.file_number_table_name#}}
+
+          {{#conversation.file_prev_bu_hearing_name#}}
+
+
+          ***
+
+
+          {{#17715003232610.message#}}
+
+          '
+        desc: Displays a success confirmation to the user, showing the name of the
+          uploaded file and the localized success message before proceeding to the
+          next upload requirement.
+        selected: false
+        title: Files Uploaded Succesfully
+        type: answer
+        variables: []
+      height: 309
+      id: '1771401719495'
+      position:
+        x: 3328.0733626831898
+        y: 699.9102641159185
+      positionAbsolute:
+        x: 3328.0733626831898
+        y: 699.9102641159185
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 'Saves the validated Excel metadata into the variable file_performance_variance.
+
+          Increments the upload_step variable to 3.
+
+          Marks the "BU-Performance Variance Data" task as complete.'
+        items:
+        - input_type: constant
+          operation: set
+          value: '3'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_url
+          variable_selector:
+          - conversation
+          - file_performance_variance
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_name
+          variable_selector:
+          - conversation
+          - file_performance_variance_name
+          write_mode: over-write
+        selected: false
+        title: upload_step = 3 (Excel)
+        type: assigner
+        version: '2'
+      height: 262
+      id: '17714034194010'
+      position:
+        x: 2915.8010819142764
+        y: 567.9872226485688
+      positionAbsolute:
+        x: 2915.8010819142764
+        y: 567.9872226485688
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 'Saves the validated metadata into the variable file_number_table.
+
+          Increments the upload_step variable to 4.
+
+          Marks the "Number Table Data" task as complete.
+
+          '
+        items:
+        - input_type: constant
+          operation: set
+          value: '4'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_url
+          variable_selector:
+          - conversation
+          - file_number_table
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_name
+          variable_selector:
+          - conversation
+          - file_number_table_name
+          write_mode: over-write
+        selected: false
+        title: upload_step = 4 (Excel)
+        type: assigner
+        version: '2'
+      height: 246
+      id: '17714078066020'
+      position:
+        x: 2915.8010819142764
+        y: 809.2415814751159
+      positionAbsolute:
+        x: 2915.8010819142764
+        y: 809.2415814751159
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 'Saves the final validated file into file_prev_bu_hearing.
+
+          Sets the upload_step variable to 5.
+
+          Marks the "Previous Month’s BU-A Hearing" task as complete and signals that
+          all four required documents have been successfully collected.
+
+          Message to reupload Yes/ No'
+        items:
+        - input_type: constant
+          operation: set
+          value: '5'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_url
+          variable_selector:
+          - conversation
+          - file_prev_bu_hearing
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value:
+          - '17715003232610'
+          - file_name
+          variable_selector:
+          - conversation
+          - file_prev_bu_hearing_name
+          write_mode: over-write
+        selected: false
+        title: upload_step = 5 (PDF)
+        type: assigner
+        version: '2'
+      height: 294
+      id: '17714084762600'
+      position:
+        x: 2915.8010819142764
+        y: 1054.1286662201878
+      positionAbsolute:
+        x: 2915.8010819142764
+        y: 1054.1286662201878
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(step: str, file_error_message: dict, selected_language: str)\
+          \ -> dict:\n    if step in file_error_message:\n        msg = file_error_message[step].get(selected_language,\
+          \ file_error_message[step].get(\"en\"))\n    else:\n        msg = \"Not\
+          \ Allowed.\"\n\n    return {\n        \"result\": msg\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Code 9
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - upload_step
+          value_type: string
+          variable: step
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: selected_language
+        - value_selector:
+          - conversation
+          - japanese_option
+          value_type: string
+          variable: file_error_message
+      height: 54
+      id: '1771490895856'
+      position:
+        x: 1419
+        y: 2071.016399577317
+      positionAbsolute:
+        x: 1419
+        y: 2071.016399577317
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\nimport json\n\ndef main(inputs: str, current_step: str,\
+          \ file_error_message: object, selected_language: str):\n    pattern = r\"\
+          ^(0[1-9]|1[0-2])\\/\\d{4}$\"\n    is_valid = bool(re.match(pattern, str(inputs).strip()))\n\
+          \    \n    step_rule = file_error_message[current_step]\n    month_format_rule\
+          \ = step_rule.get(\"month_format\", {})\n    \n    error_val = month_format_rule.get(selected_language,\
+          \ \"Invalid text format.\")\n    error_text = error_val if isinstance(error_val,\
+          \ str) else str(error_val.get(\"error\", error_val))\n\n    return {\n \
+          \       \"is_valid\": str(is_valid).lower(),\n        \"step\": str(current_step),\n\
+          \        \"error_message\": str(error_text)\n    }"
+        code_language: python3
+        desc: Validates that the user's input follows the MM/YYYY format and retrieves
+          the appropriate localized error message from the configuration for the current
+          upload step.
+        outputs:
+          error_message:
+            children: null
+            type: string
+          is_valid:
+            children: null
+            type: string
+          step:
+            children: null
+            type: string
+        selected: false
+        title: Validation Code
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: inputs
+        - value_selector:
+          - conversation
+          - upload_step
+          value_type: string
+          variable: current_step
+        - value_selector:
+          - conversation
+          - file_error_message
+          value_type: string
+          variable: file_error_message
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: selected_language
+      height: 146
+      id: '1771491738462'
+      position:
+        x: 1439.6029817035383
+        y: 895.7367472344013
+      positionAbsolute:
+        x: 1439.6029817035383
+        y: 895.7367472344013
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 09eae6cb-912c-45df-89b0-2105df00270a
+          conditions:
+          - comparison_operator: is
+            id: 4bf3b887-913e-4d78-8951-bf670c5df900
+            value: 'true'
+            varType: string
+            variable_selector:
+            - '1771491738462'
+            - is_valid
+          id: 09eae6cb-912c-45df-89b0-2105df00270a
+          logical_operator: and
+        desc: 'Evaluates the validation results from the code node: routes the user
+          to the next step if the input is correct, or triggers an error response
+          if the format is invalid'
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 218
+      id: '1771491747321'
+      position:
+        x: 1737.5963788289578
+        y: 567.9872226485688
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 567.9872226485688
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1771491738462.error_message#}}'
+        desc: If validation fails, the workflow routes the user back to an Answer
+          node that displays the specific error_message retrieved from the configuration.
+        selected: false
+        title: MM/YYYY Error
+        type: answer
+        variables: []
+      height: 181
+      id: '17714919546840'
+      position:
+        x: 2057
+        y: 895.7367472344013
+      positionAbsolute:
+        x: 2057
+        y: 895.7367472344013
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(files: list, current_step: str, lang: str, file_error_message:\
+          \ dict, file_upload_success_message: dict) -> dict:\n    output = {\n  \
+          \      \"is_valid\": \"false\",\n        \"message\": \"\", \n        \"\
+          is_pdf\": \"false\",\n        \"is_excel\": \"false\",\n        \"file_id\"\
+          : \"\",\n        \"file_name\": \"\",\n        \"file_url\": \"\",\n   \
+          \     \"mime_type\": \"\",\n        \"file_size\": 0,\n        \"step\"\
+          : str(current_step)\n    }\n\n    MAX_SIZE = 10 * 1024 * 1024\n\n    if\
+          \ not files or len(files) != 1:\n        output[\"message\"] = \"Please\
+          \ upload exactly one file.\" if lang == \"en\" else \"ファイルを1つだけアップロードしてください。\"\
+          \n        return output\n\n    file = files[0]\n    file_id = str(file.get(\"\
+          related_id\") or file.get(\"id\") or \"\")\n    file_name = str(file.get(\"\
+          filename\") or file.get(\"name\") or \"\")\n    file_url = str(file.get(\"\
+          url\") or file.get(\"remote_url\") or \"\")\n    mime_type = str(file.get(\"\
+          mime_type\", \"\")).lower()\n    file_size = file.get(\"size\", 0)\n   \
+          \ \n    ext = (file.get(\"extension\") or \"\").lower()\n    if not ext\
+          \ and \".\" in file_name:\n        ext = \".\" + file_name.split(\".\")[-1].lower()\n\
+          \n    if current_step not in file_error_message:\n        output[\"message\"\
+          ] = f\"Invalid step: {current_step}\"\n        return output\n\n    # Get\
+          \ the parent rule for this step\n    step_rule = file_error_message[current_step]\n\
+          \    \n    # Access nested blocks\n    type_rule = step_rule.get(\"file_type\"\
+          , {})\n    size_rule = step_rule.get(\"file_size\", {})\n    \n    # Extract\
+          \ the file type (pdf/excel) from the file_type block\n    expected_type\
+          \ = type_rule.get(\"type\", \"\").lower()\n    \n    # Validation Logic\n\
+          \    is_pdf = (expected_type == \"pdf\" and (ext == \".pdf\" or \"pdf\"\
+          \ in mime_type))\n    is_excel = (expected_type == \"excel\" and (ext in\
+          \ [\".xlsx\", \".xls\"] or \"spreadsheet\" in mime_type or \"excel\" in\
+          \ mime_type))\n    is_size_valid = file_size <= MAX_SIZE\n\n    # 1. Success\
+          \ Case\n    if (is_pdf or is_excel) and is_size_valid:\n        success_data\
+          \ = file_upload_success_message.get(current_step, {})\n        raw_msg =\
+          \ success_data.get(lang, \"Upload successful\")\n        output[\"message\"\
+          ] = raw_msg if isinstance(raw_msg, str) else str(raw_msg.get(\"message\"\
+          , raw_msg))\n        output[\"is_valid\"] = \"true\"\n        output[\"\
+          is_pdf\"] = \"true\" if is_pdf else \"false\"\n        output[\"is_excel\"\
+          ] = \"true\" if is_excel else \"false\"\n        output[\"file_id\"] = file_id\n\
+          \        output[\"file_name\"] = file_name\n        output[\"file_url\"\
+          ] = file_url\n        output[\"mime_type\"] = mime_type\n        output[\"\
+          file_size\"] = file_size\n        \n    # 2. Size Error Case\n    elif not\
+          \ is_size_valid:\n        error_val = size_rule.get(lang, \"File size exceeds\
+          \ 10MB limit.\")\n        output[\"message\"] = error_val if isinstance(error_val,\
+          \ str) else str(error_val.get(\"error\", error_val))\n        output[\"\
+          file_size\"] = file_size\n        \n    # 3. Type/Format Error Case\n  \
+          \  else:\n        error_val = type_rule.get(lang, \"Invalid file format.\"\
+          )\n        output[\"message\"] = error_val if isinstance(error_val, str)\
+          \ else str(error_val.get(\"error\", error_val))\n\n    return output"
+        code_language: python3
+        desc: Performs deep validation on uploaded files by checking the count, extension,
+          and mime-type against the step-specific configuration (PDF or Excel), returning
+          localized success or error messages.
+        outputs:
+          file_id:
+            children: null
+            type: string
+          file_name:
+            children: null
+            type: string
+          file_size:
+            children: null
+            type: number
+          file_url:
+            children: null
+            type: string
+          is_excel:
+            children: null
+            type: string
+          is_pdf:
+            children: null
+            type: string
+          is_valid:
+            children: null
+            type: string
+          message:
+            children: null
+            type: string
+          mime_type:
+            children: null
+            type: string
+          step:
+            children: null
+            type: string
+        selected: false
+        title: File Upload
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - files
+          value_type: array[file]
+          variable: files
+        - value_selector:
+          - conversation
+          - upload_step
+          value_type: string
+          variable: current_step
+        - value_selector:
+          - conversation
+          - file_error_message
+          value_type: object
+          variable: file_error_message
+        - value_selector:
+          - conversation
+          - file_upload_success_message
+          value_type: object
+          variable: file_upload_success_message
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: lang
+      height: 162
+      id: '17715003232610'
+      position:
+        x: 2057
+        y: 567.9872226485688
+      positionAbsolute:
+        x: 2057
+        y: 567.9872226485688
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1771828947423.message#}}'
+        desc: Sends the reset instructions to the user, prompting them to start the
+          upload process again.
+        selected: false
+        title: Message to reupload
+        type: answer
+        variables: []
+      height: 165
+      id: '1771508373780'
+      position:
+        x: 2057
+        y: 1217.2234155964134
+      positionAbsolute:
+        x: 2057
+        y: 1217.2234155964134
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: Clears all previously stored file variables and resets the upload_step
+          counter, allowing the user to start the upload process over.
+        items:
+        - input_type: constant
+          operation: set
+          value: '1'
+          variable_selector:
+          - conversation
+          - upload_step
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_prev_bu_hearing
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_number_table
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_performance_variance
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_bu_hearing
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_bu_hearing_name
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_performance_variance_name
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_number_table_name
+          write_mode: over-write
+        - input_type: variable
+          operation: clear
+          value: ''
+          variable_selector:
+          - conversation
+          - file_prev_bu_hearing_name
+          write_mode: over-write
+        selected: false
+        title: upload_step = RESET
+        type: assigner
+        version: '2'
+      height: 370
+      id: '17718284481690'
+      position:
+        x: 1419
+        y: 1217.2234155964134
+      positionAbsolute:
+        x: 1419
+        y: 1217.2234155964134
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(selected_session: str, selected_lang: str, reset_upload_message:\
+          \ dict):\n    data = reset_upload_message.get(selected_session)\n    \n\
+          \    if not data:\n        return {\n            \"message\": \"Error: Session\
+          \ not found.\"\n        }\n    \n    message = data.get(selected_lang, \"\
+          Error: Language content not found.\")\n\n    return {\n        \"message\"\
+          : message\n    }"
+        code_language: python3
+        desc: It prepares the message output that re-explains the required file format
+          (MM/YYYY) and document type to ensure the user can restart correctly.
+        outputs:
+          message:
+            children: null
+            type: string
+        selected: false
+        title: Reset File Upload
+        type: code
+        variables:
+        - value_selector:
+          - conversation
+          - selected_language
+          value_type: string
+          variable: selected_lang
+        - value_selector:
+          - conversation
+          - selected_session
+          value_type: string
+          variable: selected_session
+        - value_selector:
+          - conversation
+          - reset_upload_message
+          value_type: object
+          variable: reset_upload_message
+      height: 130
+      id: '1771828947423'
+      position:
+        x: 1737.5963788289578
+        y: 1217.2234155964134
+      positionAbsolute:
+        x: 1737.5963788289578
+        y: 1217.2234155964134
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Currnecy Detection & Coversion Work Will Come Here !!!
+        desc: ''
+        selected: false
+        title: Answer 11
+        type: answer
+        variables: []
+      height: 118
+      id: '1771836083467'
+      position:
+        x: 1419
+        y: 1641.3686702626821
+      positionAbsolute:
+        x: 1419
+        y: 1641.3686702626821
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Something is wrong. Please try again
+        desc: ''
+        selected: false
+        title: Answer 12
+        type: answer
+        variables: []
+      height: 118
+      id: '1771916518829'
+      position:
+        x: 2376.4490308160575
+        y: 1965.0824533510859
+      positionAbsolute:
+        x: 2376.4490308160575
+        y: 1965.0824533510859
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -149.32868125701748
+      y: 10.783025304305681
+      zoom: 0.3425139419962864
