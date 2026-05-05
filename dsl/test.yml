@@ -1,12 +1,8 @@
 app:
-  description: 'A smart chatbot helps the person incharge to resolve pc inspection
-    error.
-
-
-    version 3 added client selection, llm.'
+  description: extract required details from excel file.
   icon: 🤖
   icon_background: '#FFEAD5'
-  mode: advanced-chat
+  mode: workflow
   name: test
   use_icon_as_answer_icon: false
 dependencies:
@@ -14,100 +10,23 @@ dependencies:
   type: marketplace
   value:
     marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: sawyer-shi/file_converter:0.0.2@2268454bf73a9aadbdb2c7576e1197ba1d479da1ce1950b48dafd3365d2f9615
 kind: app
 version: 0.3.1
 workflow:
-  conversation_variables:
-  - description: ''
-    id: 0b655c6f-e87f-4035-a242-d1e7d19ddd77
-    name: sheet_data
+  conversation_variables: []
+  environment_variables:
+  - description: fall back message if sheet is not found
+    id: c86bb19d-5bc3-48f8-9aad-3695cc804df7
+    name: fall_back_message
     selector:
-    - conversation
-    - sheet_data
-    value: []
-    value_type: array[object]
-  - description: ''
-    id: 89b4d59f-72c3-4c20-80fc-5e3553c7bd60
-    name: uploaded_file_config
-    selector:
-    - conversation
-    - uploaded_file_config
-    value:
-      list_of_columns: Client Name,  Procurement Department in Charge,  Confirmation
-        Form Submission Date,error
-      number_of_rows: '10'
-      sheet_name: ' FY2025 Confirmation'
-    value_type: object
-  - description: ''
-    id: 851397a6-d70a-4d43-b3c5-e37c451f5c9b
-    name: pms_counter
-    selector:
-    - conversation
-    - pms_counter
-    value: 0
-    value_type: integer
-  - description: this variable stores all static data in both language English and
-      Japanese
-    id: bd9e5317-80d2-40b1-b034-1fb17ccd21ea
-    name: static_data
-    selector:
-    - conversation
-    - static_data
-    value:
-      button_template: '{index}. <button type="button" data-message="{id}">{label}</button>'
-      document_received_msg:
-        en: Document received. Processing records...Please wait while we retrieve
-          the client list for your selection.
-        jp: 書類を受領しました。記録を処理中です。お客様が選択されたクライアントリストを取得するまでしばらくお待ちください。
-      error_message_document_received:
-        en: Something went wrong. Could you please upload the document again?
-        jp: 何らかの問題が発生しました。もう一度ドキュメントをアップロードしていただけますか？
-      error_message_file_extractor:
-        en: We could not process your file, could you please upload the document again?
-        jp: ファイルを処理できませんでした。もう一度ファイルをアップロードしていただけますか？
-      error_message_file_missing:
-        en: A file is required for this process. Please upload it.
-        jp: この処理にはファイルが必要です。アップロードしてください。
-      error_message_language:
-        buttons:
-        - id: English
-          label: English
-        - id: 日本語
-          label: 日本語
-        en_jp: "Sorry, we could not update your preference, could you re-select your\
-          \ preferred langauge.\n\n 申し訳ありませんが、お客様の設定を更新できませんでした。もう一度ご希望の言語を選択してください。"
-      request_file_msg:
-        en: A file is required for this process. Please upload it.
-        jp: この処理にはファイルが必要です。アップロードしてください。
-      user_guide:
-        en: "Your preferred language is now English. \n\n **Operating Procedure**:\n\
-          \n  **Interface Configuration:** Select your preferred language (Japanese\
-          \ or English) to initialize the localized interface.\n**Requisition Input:**\
-          \ Submit your requirements by describing them in the natural language chat\
-          \ and by uploading supporting documentation  (Excel Format). \n**Client\
-          \ Selection:** Please select one client from the list.  \n**Recommendation:**\
-          \ Recommends how to correct errors, address omissions, and fix other deficiencies.\
-          \  \n**Review and Confirm:** BPO Staff/Person in charge can review and confirm\
-          \ whether he wants to rectify the data or send a notification(email) to\
-          \ the Business User/Vendor.  \n**Email Draft:** Generates a professional\
-          \ notification email based on the findings.  \n\nPlease upload the document\
-          \ - Progress Management Sheet"
-        jp: "ご希望の言語は日本語です。  \n\n**操作手順**: \n\n**インターフェース設定:** ご希望の言語（日本語または英語）を選択して、ローカライズされたインターフェースを初期化してください。\
-          \ \n**依頼内容の入力:** 自然言語チャットで要件を説明し、関連資料（Excel形式）をアップロードして送信してください。 \n**クライアントの選択:**\
-          \ リストからクライアントを1社選択してください。 \n**推奨事項:** エラーの修正方法、漏れへの対応、その他の不備の修正方法を提案します。\
-          \ \n**確認と承認:** BPO担当者/担当者は、データ修正を行うか、ビジネスユーザー/ベンダーに通知（メール）を送信するかを確認できます。\
-          \ \n**メール下書き:** 結果に基づいて、プロフェッショナルな通知メールを作成します。  \n\n進捗管理シートをアップロードしてください"
-    value_type: object
-  - description: This variable stores user's preferred language, the default one is
-      None
-    id: 1527706c-6116-450d-a31b-12822812709f
-    name: preferred_lang
-    selector:
-    - conversation
-    - preferred_lang
-    value: ''
+    - env
+    - fall_back_message
+    value: sheet not found
     value_type: string
-  environment_variables: []
   features:
     file_upload:
       allowed_file_extensions:
@@ -118,10 +37,11 @@ workflow:
       - .WEBP
       - .SVG
       allowed_file_types:
-      - document
+      - image
       allowed_file_upload_methods:
       - local_file
-      enabled: true
+      - remote_url
+      enabled: false
       fileUploadConfig:
         audio_file_size_limit: 50
         batch_count_limit: 5
@@ -135,30 +55,15 @@ workflow:
         transfer_methods:
         - local_file
         - remote_url
-      number_limits: 1
-    opening_statement: 'Hi there, welcome to Annual PC inspection data evaluation.
-
-
-      Please select your Preferred language.
-
-
-      ***
-
-      こんにちは。年間PC点検データの評価へようこそ。
-
-
-      ご希望の言語を選択してください。
-
-      ***'
+      number_limits: 3
+    opening_statement: ''
     retriever_resource:
-      enabled: false
+      enabled: true
     sensitive_word_avoidance:
       enabled: false
     speech_to_text:
       enabled: false
-    suggested_questions:
-    - English
-    - 日本語
+    suggested_questions: []
     suggested_questions_after_answer:
       enabled: false
     text_to_speech:
@@ -169,217 +74,106 @@ workflow:
     edges:
     - data:
         isInLoop: false
-        sourceType: start
-        targetType: if-else
-      id: 1775796563709-source-1775804011997-target
-      source: '1775796563709'
-      sourceHandle: source
-      target: '1775804011997'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: code
-      id: 1775804011997-2ebab099-635c-4eae-ad45-2be7a7d26078-1776188847640-target
-      source: '1775804011997'
-      sourceHandle: 2ebab099-635c-4eae-ad45-2be7a7d26078
-      target: '1776188847640'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: answer
-      id: 1776188847640-source-1776189352854-target
-      source: '1776188847640'
-      sourceHandle: source
-      target: '1776189352854'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: code
-        targetType: code
-      id: 1776188847640-fail-branch-1776326940664-target
+        sourceType: list-operator
+        targetType: document-extractor
+      id: 1776155619214-source-1776158967276-target
       selected: false
-      source: '1776188847640'
-      sourceHandle: fail-branch
-      target: '1776326940664'
+      source: '1776155619214'
+      sourceHandle: source
+      target: '1776158967276'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: answer
-      id: 1776326940664-source-1776331413831-target
-      source: '1776326940664'
-      sourceHandle: source
-      target: '1776331413831'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: if-else
-      id: 1776940676228-source-1776942451624-target
-      source: '1776940676228'
-      sourceHandle: source
-      target: '1776942451624'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
         isInLoop: false
         sourceType: if-else
-        targetType: assigner
-      id: 1776942451624-true-1776153517859-target
-      source: '1776942451624'
+        targetType: end
+      id: 1776247459644-true-1776247527015-target
+      source: '1776247459644'
       sourceHandle: 'true'
-      target: '1776153517859'
+      target: '1776247527015'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
-        isInIteration: false
         isInLoop: false
         sourceType: if-else
-        targetType: answer
-      id: 1776942451624-false-1776942497647-target
-      source: '1776942451624'
+        targetType: tool
+      id: 1776247459644-false-1776161188600-target
+      source: '1776247459644'
       sourceHandle: 'false'
-      target: '1776942497647'
+      target: '1776161188600'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
         isInLoop: false
-        sourceType: assigner
+        sourceType: tool
         targetType: code
-      id: 1776153517859-source-1776942555536-target
-      source: '1776153517859'
+      id: 1776161188600-source-1776249025771-target
+      source: '1776161188600'
       sourceHandle: source
-      target: '1776942555536'
+      target: '1776249025771'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
+        isInIteration: false
         isInLoop: false
         sourceType: code
-        targetType: answer
-      id: 1776942555536-source-1775811952263-target
-      source: '1776942555536'
+        targetType: if-else
+      id: 1776249025771-source-1776249609583-target
+      source: '1776249025771'
       sourceHandle: source
-      target: '1775811952263'
+      target: '1776249609583'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInLoop: false
         sourceType: if-else
-        targetType: tool
-      id: 1775804011997-true-1776947959501-target
-      source: '1775804011997'
+        targetType: list-operator
+      id: 1776249609583-true-1776155619214-target
+      source: '1776249609583'
       sourceHandle: 'true'
-      target: '1776947959501'
+      target: '1776155619214'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
-        isInLoop: false
-        sourceType: tool
-        targetType: code
-      id: 1776947959501-source-1776940676228-target
-      source: '1776947959501'
-      sourceHandle: source
-      target: '1776940676228'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: tool
-        targetType: code
-      id: 1776947959501-fail-branch-1776326940664-target
-      source: '1776947959501'
-      sourceHandle: fail-branch
-      target: '1776326940664'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: code
-        targetType: answer
-      id: 1776947739078-source-1776948841588-target
-      source: '1776947739078'
-      sourceHandle: source
-      target: '1776948841588'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
+        isInIteration: false
         isInLoop: false
         sourceType: if-else
-        targetType: assigner
-      id: 1777363112681-true-1776335961015-target
-      source: '1777363112681'
-      sourceHandle: 'true'
-      target: '1776335961015'
+        targetType: end
+      id: 1776249609583-false-1776249687665-target
+      source: '1776249609583'
+      sourceHandle: 'false'
+      target: '1776249687665'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInLoop: false
-        sourceType: assigner
-        targetType: answer
-      id: 1776335961015-source-1777363204052-target
-      source: '1776335961015'
+        sourceType: document-extractor
+        targetType: llm
+      id: 1776158967276-source-1776162110411-target
+      source: '1776158967276'
       sourceHandle: source
-      target: '1777363204052'
+      target: '1776162110411'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
+        isInIteration: false
         isInLoop: false
-        sourceType: if-else
+        sourceType: start
         targetType: code
-      id: 1775804011997-628168fc-d129-4914-9c82-5f9b5f4b8c2b-1776947739078-target
-      source: '1775804011997'
-      sourceHandle: 628168fc-d129-4914-9c82-5f9b5f4b8c2b
-      target: '1776947739078'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: answer
-        targetType: code
-      id: 1776948841588-source-1777360627990-target
-      source: '1776948841588'
+      id: 1776117453924-source-1776285834699-target
+      source: '1776117453924'
       sourceHandle: source
-      target: '1777360627990'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: code
-        targetType: code
-      id: 1776947739078-fail-branch-1776326940664-target
-      source: '1776947739078'
-      sourceHandle: fail-branch
-      target: '1776326940664'
+      target: '1776285834699'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -387,34 +181,11 @@ workflow:
         isInIteration: false
         isInLoop: false
         sourceType: code
-        targetType: tool
-      id: 1777360627990-source-1777459508996-target
-      source: '1777360627990'
-      sourceHandle: source
-      target: '1777459508996'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInLoop: false
-        sourceType: tool
         targetType: code
-      id: 1777459508996-fail-branch-1776326940664-target
-      source: '1777459508996'
-      sourceHandle: fail-branch
-      target: '1776326940664'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: tool
-        targetType: code
-      id: 1777459508996-source-1777460030833-target
-      source: '1777459508996'
+      id: 1776285834699-source-1777289909903-target
+      source: '1776285834699'
       sourceHandle: source
-      target: '1777460030833'
+      target: '1777289909903'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -422,46 +193,10 @@ workflow:
         isInLoop: false
         sourceType: code
         targetType: if-else
-      id: 1777460030833-source-1777363112681-target
-      source: '1777460030833'
+      id: 1777289909903-source-1776247459644-target
+      source: '1777289909903'
       sourceHandle: source
-      target: '1777363112681'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: if-else
-        targetType: code
-      id: 1775804011997-0e4390ee-b075-4261-9012-4c44af56cac5-1777498691372-target
-      source: '1775804011997'
-      sourceHandle: 0e4390ee-b075-4261-9012-4c44af56cac5
-      target: '1777498691372'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: answer
-      id: 1777498691372-source-1777498194542-target
-      source: '1777498691372'
-      sourceHandle: source
-      target: '1777498194542'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: answer
-        targetType: llm
-      id: 1777498194542-source-1777499708949-target
-      source: '1777498194542'
-      sourceHandle: source
-      target: '1777499708949'
+      target: '1776247459644'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -469,11 +204,11 @@ workflow:
         isInIteration: false
         isInLoop: false
         sourceType: llm
-        targetType: answer
-      id: 1777499708949-source-1777500045243-target
-      source: '1777499708949'
+        targetType: code
+      id: 1776162110411-source-1777361376042-target
+      source: '1776162110411'
       sourceHandle: source
-      target: '1777500045243'
+      target: '1777361376042'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -481,1133 +216,217 @@ workflow:
         isInIteration: false
         isInLoop: false
         sourceType: code
-        targetType: answer
-      id: 1777460030833-fail-branch-1777525364604-target
-      source: '1777460030833'
-      sourceHandle: fail-branch
-      target: '1777525364604'
+        targetType: end
+      id: 1777361376042-source-1776117489427-target
+      source: '1777361376042'
+      sourceHandle: source
+      target: '1776117489427'
       targetHandle: target
       type: custom
       zIndex: 0
     nodes:
     - data:
+        desc: ''
         selected: false
-        title: User Input
+        title: Start
         type: start
-        variables: []
-      height: 53
-      id: '1775796563709'
-      position:
-        x: 67.27980756230033
-        y: 139.01613465764967
-      positionAbsolute:
-        x: 67.27980756230033
-        y: 139.01613465764967
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: not empty
-            id: f36afb4e-ce99-451a-9d95-3b8349d428f8
-            value: ''
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: empty
-            id: a7ecdd21-ff37-41a6-acc3-a9b4824331fc
-            value: None
-            varType: string
-            variable_selector:
-            - conversation
-            - preferred_lang
-          id: 'true'
-          logical_operator: and
-        - case_id: 2ebab099-635c-4eae-ad45-2be7a7d26078
-          conditions:
-          - comparison_operator: not empty
-            id: d23faeb0-3329-4254-84de-8cdae048b6b5
-            value: ''
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: empty
-            id: 39c870d2-4b02-45e8-9024-712f0a0d7b52
-            value: ''
-            varType: array[file]
-            variable_selector:
-            - sys
-            - files
-          - comparison_operator: not empty
-            id: 07c71801-74b7-4323-bd87-50e122ceab88
-            value: ''
-            varType: string
-            variable_selector:
-            - conversation
-            - preferred_lang
-          - comparison_operator: '='
-            id: aa903e5b-5fe3-4ba6-a27c-fa4c55ba7ab3
-            value: '0'
-            varType: number
-            variable_selector:
-            - conversation
-            - pms_counter
-          id: 2ebab099-635c-4eae-ad45-2be7a7d26078
-          logical_operator: and
-        - case_id: 628168fc-d129-4914-9c82-5f9b5f4b8c2b
-          conditions:
-          - comparison_operator: not empty
-            id: 431110da-0e65-4b3d-8ec3-d95a588a35de
-            value: ''
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: not empty
-            id: 2e8e17db-70e4-4da7-9da7-4744c96d35cb
-            value: ''
-            varType: array[file]
-            variable_selector:
-            - sys
-            - files
-          - comparison_operator: not empty
-            id: 27a9ccb3-e833-4f0f-9307-73006ff32bd7
-            value: ''
-            varType: string
-            variable_selector:
-            - conversation
-            - preferred_lang
-          id: 628168fc-d129-4914-9c82-5f9b5f4b8c2b
-          logical_operator: and
-        - case_id: 0e4390ee-b075-4261-9012-4c44af56cac5
-          conditions:
-          - comparison_operator: start with
-            id: 7af95ee2-7f06-4a3c-a0fc-37a0f80be090
-            value: '0'
-            varType: string
-            variable_selector:
-            - sys
-            - query
-          - comparison_operator: '>'
-            id: 457d31ae-b55d-4e31-a63d-e9d3d0d80976
-            value: '0'
-            varType: number
-            variable_selector:
-            - conversation
-            - pms_counter
-          id: 0e4390ee-b075-4261-9012-4c44af56cac5
-          logical_operator: and
-        desc: This node handle input traffics coming from user across downstream node.
-        selected: false
-        title: Orchestrator
-        type: if-else
-      height: 495
-      id: '1775804011997'
-      position:
-        x: 371.1369229199727
-        y: 139.01613465764967
-      positionAbsolute:
-        x: 371.1369229199727
-        y: 139.01613465764967
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1776942555536.result#}}
-
-          '
-        desc: This node display the user guide based on preferred language
-        selected: false
-        title: User guide output
-        type: answer
-        variables: []
-      height: 147
-      id: '1775811952263'
-      position:
-        x: 2268.725588330158
-        y: 51.851920906672234
-      positionAbsolute:
-        x: 2268.725588330158
-        y: 51.851920906672234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: This node updates user preferred language to the variable preferred_lang
-          as en or jp
-        items:
-        - input_type: variable
-          operation: over-write
-          value:
-          - '1776940676228'
-          - result
-          variable_selector:
-          - conversation
-          - preferred_lang
-          write_mode: over-write
-        selected: false
-        title: Update preferred language
-        type: assigner
-        version: '2'
-      height: 145
-      id: '1776153517859'
-      position:
-        x: 1646.3482442381523
-        y: 51.851920906672234
-      positionAbsolute:
-        x: 1646.3482442381523
-        y: 51.851920906672234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "def main(static_data: dict, preferred_lang: str):\n    \n    # Access\
-          \ the nested object using the new structure\n    msg = static_data.get(\"\
-          request_file_msg\", {}).get(preferred_lang)\n\n    return {\n        \"\
-          result\": msg\n    }"
-        code_language: python3
-        desc: This node handles missing input file from the user and request them
-          to upload to get started.
-        error_strategy: fail-branch
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: Code_request_file
-        type: code
         variables:
-        - value_selector:
-          - conversation
-          - static_data
-          value_type: object
-          variable: static_data
-        - value_selector:
-          - conversation
-          - preferred_lang
-          value_type: string
-          variable: preferred_lang
-      height: 149
-      id: '1776188847640'
-      position:
-        x: 693.0274621045346
-        y: 250.71931523142655
-      positionAbsolute:
-        x: 693.0274621045346
-        y: 250.71931523142655
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1776188847640.result#}}'
-        desc: Thid node display file missing output to request the user to upload
-          the same
-        selected: false
-        title: file missing output
-        type: answer
-        variables: []
-      height: 147
-      id: '1776189352854'
-      position:
-        x: 995.5922351832951
-        y: 250.71931523142655
-      positionAbsolute:
-        x: 995.5922351832951
-        y: 250.71931523142655
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(preferred_lang_error: str, missing_file_error: str,doc_rcv_error:str,\
-          \ preferred_lang:str,file_extractor_error:str,static_data:dict):\n\n   \
-          \ # execute if handling preferred language code node failed.\n    if preferred_lang_error:\n\
-          \        button_template = static_data.get(\"button_template\", \"\")\n\
-          \        lang_msg_data = static_data.get(\"error_message_language\", {})\n\
-          \        message = lang_msg_data.get(\"en_jp\", \"\")\n        buttons_list\
-          \ = lang_msg_data.get(\"buttons\", [])\n\n        formatted_buttons = []\n\
-          \        for idx, btn in enumerate(buttons_list, start=1):\n           \
-          \ btn_html = button_template.format(\n                index=idx,\n     \
-          \           id=btn[\"id\"],\n                label=btn[\"label\"]\n    \
-          \        )\n            formatted_buttons.append(btn_html)\n\n        final_output\
-          \ = f\"{message}\\n\\n\" + \"\\n\".join(formatted_buttons)\n\n        return{\n\
-          \            \"result\": final_output\n        }\n\n    elif missing_file_error:\n\
-          \        msg = static_data.get(\"error_message_file_missing\",{}).get(preferred_lang)\n\
-          \        return{\n            \"result\": msg\n        }\n    elif doc_rcv_error:\n\
-          \        msg = static_data.get(\"error_message_document_received\",{}).get(preferred_lang)\n\
-          \        return{\n            \"result\": msg\n        }\n    elif file_extractor_error:\n\
-          \        msg = static_data.get(\"error_message_file_extractor\",{}).get(preferred_lang)\n\
-          \        return{\n            \"result\": msg\n        }\n    else:\n  \
-          \      return{\n            \"result\": \"All code node is working fine.\"\
-          \n        }"
-        code_language: python3
-        desc: This node handle errors in case of failure of connected code node and
-          return the respective message based on fail branch.
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: Code_Global_Error_handler
-        type: code
-        variables:
-        - value_selector:
-          - '1776947959501'
-          - error_message
-          value_type: string
-          variable: preferred_lang_error
-        - value_selector:
-          - '1776188847640'
-          - error_message
-          value_type: string
-          variable: missing_file_error
-        - value_selector:
-          - '1776947739078'
-          - error_message
-          value_type: string
-          variable: doc_rcv_error
-        - value_selector:
-          - '1777459508996'
-          - error_message
-          value_type: string
-          variable: file_extractor_error
-        - value_selector:
-          - conversation
-          - static_data
-          value_type: object
-          variable: static_data
-        - value_selector:
-          - conversation
-          - preferred_lang
-          value_type: string
-          variable: preferred_lang
-      height: 129
-      id: '1776326940664'
-      position:
-        x: 2230.3475426198747
-        y: -313.7189391171833
-      positionAbsolute:
-        x: 2230.3475426198747
-        y: -313.7189391171833
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1776326940664.result#}}'
-        desc: This node display message based on failed branch
-        selected: false
-        title: Message for different fail branch
-        type: answer
-        variables: []
-      height: 147
-      id: '1776331413831'
-      position:
-        x: 2694.2693149675843
-        y: -318.9969707602749
-      positionAbsolute:
-        x: 2694.2693149675843
-        y: -318.9969707602749
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        author: kumar_vi@itg.hitachi.co.jp
-        desc: ''
-        height: 88
-        selected: false
-        showAuthor: true
-        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"This
-          code node captures global errors in case of failure of any connect node
-          with it and return the message associated with it.","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
-        theme: blue
-        title: ''
-        type: ''
-        width: 469
-      height: 88
-      id: '1776334653462'
-      position:
-        x: 2268.725588330158
-        y: -442.8165166248832
-      positionAbsolute:
-        x: 2268.725588330158
-        y: -442.8165166248832
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom-note
-      width: 469
-    - data:
-        desc: This node assign 1 to file_uploaded variable to maintain global records
-          that file has been successfully received.
-        items:
-        - input_type: variable
-          operation: over-write
-          value:
-          - '1776947739078'
-          - file_counter
-          variable_selector:
-          - conversation
-          - pms_counter
-          write_mode: over-write
-        - input_type: variable
-          operation: over-write
-          value:
-          - '1777460030833'
-          - result
-          variable_selector:
-          - conversation
-          - sheet_data
-          write_mode: over-write
-        selected: false
-        title: Assign 1 to file_uploaded
-        type: assigner
-        version: '2'
-      height: 171
-      id: '1776335961015'
-      position:
-        x: 2769.789995757494
-        y: 443.4586136178641
-      positionAbsolute:
-        x: 2769.789995757494
-        y: 443.4586136178641
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(lang_result:list):\n    lang_obj = lang_result[0]\n    return\
-          \ {\n        \"result\": lang_obj.get(\"result\", \"\")\n    }\n"
-        code_language: python3
-        desc: This code node format response received from bilingual workflow so that
-          downstream node can use it to display respective message related to language
-          preference.
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: code_format_response
-        type: code
-        variables:
-        - value_selector:
-          - '1776947959501'
-          - json
-          value_type: array[object]
-          variable: lang_result
-      height: 145
-      id: '1776940676228'
-      position:
-        x: 977.717107108858
-        y: 27.767036083312234
-      positionAbsolute:
-        x: 977.717107108858
-        y: 27.767036083312234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: is
-            id: 4cdb2d7a-ce84-410c-8b86-1142c6c12d17
-            value: en
-            varType: string
-            variable_selector:
-            - '1776940676228'
-            - result
-          - comparison_operator: is
-            id: ee9c61b5-5091-44e8-849a-52dacfc0e1cf
-            value: jp
-            varType: string
-            variable_selector:
-            - '1776940676228'
-            - result
-          id: 'true'
-          logical_operator: or
-        desc: This node checks if the user has selected their preferred language if
-          yes it will return language code like "en" else prompt the user to select
-          language first.
-        selected: false
-        title: Yes/No
-        type: if-else
-      height: 227
-      id: '1776942451624'
-      position:
-        x: 1306.5821048670932
-        y: 27.767036083312234
-      positionAbsolute:
-        x: 1306.5821048670932
-        y: 27.767036083312234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1776940676228.result#}}'
-        desc: This node request the user to enter the language if preferred language
-          is not selected.
-        selected: false
-        title: Request Language
-        type: answer
-        variables: []
-      height: 163
-      id: '1776942497647'
-      position:
-        x: 1654.0659641439952
-        y: 209.97088362006681
-      positionAbsolute:
-        x: 1654.0659641439952
-        y: 209.97088362006681
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "\ndef main(preferred_lang: str, static_data: dict):\n    return {\n\
-          \        \"result\": static_data.get(\"user_guide\",{}).get(preferred_lang)\n\
-          \    }\n"
-        code_language: python3
-        desc: This code node fetch user guide based on preferred language from static
-          data and pass to next node to display the same message.
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: code_fetch_user_guide
-        type: code
-        variables:
-        - value_selector:
-          - conversation
-          - preferred_lang
-          value_type: string
-          variable: preferred_lang
-        - value_selector:
-          - conversation
-          - static_data
-          value_type: object
-          variable: static_data
-      height: 129
-      id: '1776942555536'
-      position:
-        x: 1931.0782547756387
-        y: 51.851920906672234
-      positionAbsolute:
-        x: 1931.0782547756387
-        y: 51.851920906672234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "def main(static_data:dict, preferred_lang:str):\n    msg = static_data.get(\"\
-          document_received_msg\", {}).get(preferred_lang)\n\n    return{\n      \
-          \  \"result\": msg,\n        \"file_counter\": 1\n    }\n"
-        code_language: python3
-        desc: This node returns the message as document received as per preferred
-          language.
-        error_strategy: fail-branch
-        outputs:
-          file_counter:
-            children: null
-            type: number
-          result:
-            children: null
-            type: string
-        selected: false
-        title: code_doc_received
-        type: code
-        variables:
-        - value_selector:
-          - conversation
-          - static_data
-          value_type: object
-          variable: static_data
-        - value_selector:
-          - conversation
-          - preferred_lang
-          value_type: string
-          variable: preferred_lang
-      height: 149
-      id: '1776947739078'
-      position:
-        x: 693.0274621045346
-        y: 408.22299050740094
-      positionAbsolute:
-        x: 693.0274621045346
-        y: 408.22299050740094
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: This workflow validate the user input if they have selected their preferred
-          language or not and return preferred language as key such "en" for English
-          and in case no language selected, request the user to choose language first.
-        error_strategy: fail-branch
-        is_team_authorization: true
-        output_schema: null
-        paramSchemas:
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: this receives user's query to validate language preference
-            ja_JP: this receives user's query to validate language preference
-            pt_BR: this receives user's query to validate language preference
-            zh_Hans: this receives user's query to validate language preference
-          label:
-            en_US: User input
-            ja_JP: User input
-            pt_BR: User input
-            zh_Hans: User input
-          llm_description: this receives user's query to validate language preference
-          max: null
-          min: null
-          name: user_query
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: xl_file
+          max_length: 5
           options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
           required: true
-          scope: null
-          template: null
-          type: string
-        params:
-          user_query: ''
-        provider_id: 7fb8ca4f-fc35-415e-94d5-48edc65fcf26
-        provider_name: COM_Bilingual_Workflow
-        provider_type: workflow
-        selected: false
-        title: COM_Bilingual_Workflow
-        tool_configurations: {}
-        tool_description: This workflow automate the language validation as per requirement
-          and return user's preferred language. Currently it supports English and
-          Japanese.
-        tool_label: COM_Bilingual_Workflow
-        tool_name: comBilingualWorkflow
-        tool_node_version: '2'
-        tool_parameters:
-          user_query:
-            type: mixed
-            value: '{{#sys.query#}}'
-        type: tool
-      height: 213
-      id: '1776947959501'
-      position:
-        x: 693.0274621045346
-        y: 27.767036083312234
-      positionAbsolute:
-        x: 693.0274621045346
-        y: 27.767036083312234
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: '{{#1776947739078.result#}}'
-        desc: This node display output to the user in case file validation failed
-          such wrong extensions, larger file size, etc..
-        selected: false
-        title: validation output.
-        type: answer
-        variables: []
-      height: 163
-      id: '1776948841588'
-      position:
-        x: 1005.6168252904874
-        y: 408.22299050740094
-      positionAbsolute:
-        x: 1005.6168252904874
-        y: 408.22299050740094
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        code: "def main(file_config_obj: dict) -> dict:\n    # Use .get(key, default_value)\
-          \ to safely extract data\n    sheet = file_config_obj.get(\"sheet_name\"\
-          , \"\")\n    columns = file_config_obj.get(\"list_of_columns\", \"\")\n\
-          \    return {\n        \"sheet_name\": sheet,\n        \"columns\": columns\n\
-          \    }"
-        code_language: python3
-        desc: This node reads the file config such as sheet name, number of rows,
-          and columns and return the same to the next node.
-        outputs:
-          columns:
-            children: null
-            type: string
-          sheet_name:
-            children: null
-            type: string
-        selected: false
-        title: File Config
-        type: code
-        variables:
-        - value_selector:
-          - conversation
-          - uploaded_file_config
-          value_type: object
-          variable: file_config_obj
-      height: 129
-      id: '1777360627990'
-      position:
-        x: 1366.332155185936
-        y: 408.22299050740094
-      positionAbsolute:
-        x: 1366.332155185936
-        y: 408.22299050740094
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: is
-            id: cb34a4e3-cebd-47af-8027-5093476686ad
-            value: 'True'
-            varType: string
-            variable_selector:
-            - '1777460030833'
-            - clients_available
-          id: 'true'
-          logical_operator: and
-        desc: ''
-        selected: false
-        title: IF/ELSE 4
-        type: if-else
-      height: 125
-      id: '1777363112681'
-      position:
-        x: 2428.3344395963795
-        y: 408.22299050740094
-      positionAbsolute:
-        x: 2428.3344395963795
-        y: 408.22299050740094
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        answer: "\nPlease enter the number corresponding to the client you want to\
-          \ proceed with. For example, to proceed with Client 1, enter 1. \n\n{{#1777460030833.client_selection#}}"
-        desc: ''
-        selected: false
-        title: CLIENT DETAILS OUTPUT
-        type: answer
-        variables: []
-      height: 167
-      id: '1777363204052'
-      position:
-        x: 3110.696178858576
-        y: 443.4586136178641
-      positionAbsolute:
-        x: 3110.696178858576
-        y: 443.4586136178641
-      selected: false
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
-        desc: ''
-        error_strategy: fail-branch
-        is_team_authorization: true
-        output_schema: null
-        paramSchemas:
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: xl_file
-            ja_JP: xl_file
-            pt_BR: xl_file
-            zh_Hans: xl_file
-          llm_description: ''
-          max: null
-          min: null
-          name: xl_file
+          type: file-list
+          variable: xl_file
+        - label: sheet_name
+          max_length: 256
           options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
           required: true
-          scope: null
-          template: null
-          type: files
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: sheet_name
-            ja_JP: sheet_name
-            pt_BR: sheet_name
-            zh_Hans: sheet_name
-          llm_description: ''
-          max: null
-          min: null
-          name: sheet_name
+          type: text-input
+          variable: sheet_name
+        - label: list_of_column
+          max_length: 1000
           options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
           required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: list_of_column
-            ja_JP: list_of_column
-            pt_BR: list_of_column
-            zh_Hans: list_of_column
-          llm_description: ''
-          max: null
-          min: null
-          name: list_of_column
+          type: paragraph
+          variable: list_of_column
+        - label: number_of_rows
+          max_length: 48
           options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
           required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: number_of_rows
-            ja_JP: number_of_rows
-            pt_BR: number_of_rows
-            zh_Hans: number_of_rows
-          llm_description: ''
-          max: null
-          min: null
-          name: number_of_rows
-          options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
-          required: true
-          scope: null
-          template: null
           type: number
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: lang
-            ja_JP: lang
-            pt_BR: lang
-            zh_Hans: lang
-          llm_description: ''
-          max: null
-          min: null
-          name: lang
+          variable: number_of_rows
+        - label: lang
+          max_length: 48
           options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
           required: true
-          scope: null
-          template: null
-          type: string
-        - auto_generate: null
-          default: null
-          form: llm
-          human_description:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          label:
-            en_US: max_file_size
-            ja_JP: max_file_size
-            pt_BR: max_file_size
-            zh_Hans: max_file_size
-          llm_description: ''
-          max: null
-          min: null
-          name: max_file_size
-          options: []
-          placeholder:
-            en_US: ''
-            ja_JP: ''
-            pt_BR: ''
-            zh_Hans: ''
-          precision: null
-          required: true
-          scope: null
-          template: null
-          type: number
-        params:
-          lang: ''
-          list_of_column: ''
-          max_file_size: ''
-          number_of_rows: ''
-          sheet_name: ''
-          xl_file: ''
-        provider_id: ad54b86e-248c-4c9f-87d8-4cef6f0f1a5b
-        provider_name: excel extractor (WF) v3
-        provider_type: workflow
-        selected: false
-        title: excel extractor (WF) v3
-        tool_configurations: {}
-        tool_description: extract required details from excel file.
-        tool_label: excel extractor (WF) v3
-        tool_name: v3_excel_exctractor
-        tool_node_version: '2'
-        tool_parameters:
-          lang:
-            type: mixed
-            value: '{{#conversation.preferred_lang#}}'
-          list_of_column:
-            type: mixed
-            value: '{{#1777360627990.columns#}}'
-          max_file_size:
-            type: constant
-            value: 10
-          number_of_rows:
-            type: constant
-            value: 3
-          sheet_name:
-            type: mixed
-            value: '{{#1777360627990.sheet_name#}}'
-          xl_file:
-            type: variable
-            value:
-            - sys
-            - files
-        type: tool
-      height: 89
-      id: '1777459508996'
+          type: text-input
+          variable: lang
+      height: 193
+      id: '1776117453924'
       position:
-        x: 1670.332155185936
-        y: 408.22299050740094
+        x: -876.6296724735505
+        y: -1264.9180836792034
       positionAbsolute:
-        x: 1670.332155185936
-        y: 408.22299050740094
+        x: -876.6296724735505
+        y: -1264.9180836792034
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "import re\nfrom typing import List, Dict, Any\n\ndef main(input_data:\
-          \ str) -> dict:\n    \"\"\"\n    Extracts objects, adds client_id, and creates\
-          \ client_selection text format\n    \"\"\"\n    try:\n        # Handle input\
-          \ from Dify\n        if isinstance(input_data, str):\n            try:\n\
-          \                import json\n                data = json.loads(input_data)\n\
-          \            except:\n                data = [{\"text\": input_data}]\n\
-          \        else:\n            data = input_data\n\n        # Extract text\n\
-          \        if isinstance(data, list) and len(data) > 0:\n            text\
-          \ = data[0].get(\"text\", \"\") if isinstance(data[0], dict) else str(data[0])\n\
-          \        else:\n            text = str(data)\n\n        # Extract content\
-          \ inside {data: [...]}\n        match = re.search(r'\\{data:\\s*\\[(.*?)\\\
-          ]\\s*\\}', text, re.DOTALL)\n        if not match:\n            return {\"\
-          result\": [], \"client_selection\": \"\", \"error\": \"No data list found\"\
-          }\n\n        content = match.group(1).strip()\n\n        object_matches\
-          \ = re.findall(r'\\{[^}]*\\}', content)\n        \n        result: List[Dict[str,\
-          \ Any]] = []\n        client_selection_lines = [\"Client No | Client name\
-          \ | Business Unit | Submission date\"]\n\n        for i, obj_str in enumerate(object_matches,\
-          \ start=1):\n            inner = obj_str[1:-1].strip()\n\n            #\
-          \ Parse key-value pairs\n            pairs = re.findall(r'([^,]+?)\\s*:\\\
-          s*([^,]+?)(?=,|$)', inner)\n            \n            obj_dict: Dict[str,\
-          \ Any] = {}\n            \n            for key, value in pairs:\n      \
-          \          cleaned_key = key.strip()\n                cleaned_value = value.strip().strip('\"\
-          \\'')\n                obj_dict[cleaned_key] = cleaned_value\n\n       \
-          \     # Add client_id\n            client_id = f\"{i:02d}\"\n          \
-          \  obj_dict[\"client_id\"] = client_id\n\n            # Reorder - client_id\
-          \ first\n            ordered_obj = {\"client_id\": client_id}\n        \
-          \    ordered_obj.update(obj_dict)\n            \n            result.append(ordered_obj)\n\
-          \            # Create client_selection line\n            # Format: 01 |\
-          \ Client A Remark 1 | 1/2/2025\n            client_name = obj_dict.get(\"\
-          Client Name\", \"\").strip()\n            dept = obj_dict.get(\"Procurement\
-          \ Department in Charge\", \"\").strip()\n            submission_date = obj_dict.get(\"\
-          Confirmation Form Submission Date\", \"No date found\").strip()\n      \
-          \      selection_line = f\"{client_id} | {client_name} | {dept} | {submission_date}\"\
-          \n            client_selection_lines.append(selection_line)\n        client_selection_text\
-          \ = \"\\n\".join(client_selection_lines)\n\n        return {\n         \
-          \   \"result\": result,\n            \"client_selection\": client_selection_text,\n\
-          \            \"clients_available\": str(len(result) > 0),\n            \"\
-          error\" : \"\"\n        }\n\n    except Exception as e:\n        return\
-          \ {\n            \"result\": [],\n            \"client_selection\": \"\"\
-          ,\n            \"error\": f\"Processing failed: {str(e)}\",\n          \
-          \  \"clients_available\": \"False\"\n        }"
-        code_language: python3
         desc: ''
-        error_strategy: fail-branch
         outputs:
-          client_selection:
-            children: null
-            type: string
-          clients_available:
-            children: null
-            type: string
-          error:
-            children: null
-            type: string
-          result:
-            children: null
-            type: array[object]
-        selected: false
-        title: Client Details Extractor
-        type: code
-        variables:
         - value_selector:
-          - '1777459508996'
-          - json
-          value_type: array[object]
-          variable: input_data
-      height: 89
-      id: '1777460030833'
+          - '1776162110411'
+          - text
+          value_type: string
+          variable: text
+        - value_selector:
+          - '1777361376042'
+          - result
+          value_type: string
+          variable: result
+        selected: false
+        title: End
+        type: end
+      height: 116
+      id: '1776117489427'
       position:
-        x: 2032.9307818007032
-        y: 408.22299050740094
+        x: 2881.86057762254
+        y: -1153.4149228101176
       positionAbsolute:
-        x: 2032.9307818007032
-        y: 408.22299050740094
+        x: 2881.86057762254
+        y: -1153.4149228101176
       selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: client selected {{#1777498691372.client_name#}}
         desc: ''
+        extract_by:
+          enabled: false
+          serial: '2'
+        filter_by:
+          conditions:
+          - comparison_operator: is
+            key: name
+            value: '{{#1777289909903.new_filename#}}'
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
         selected: false
-        title: Answer 7
-        type: answer
-        variables: []
-      height: 119
-      id: '1777498194542'
+        title: List Operator
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - '1776161188600'
+        - files
+      height: 94
+      id: '1776155619214'
       position:
-        x: 993.0274621045346
-        y: 597.2229905074009
+        x: 1586.5035180348752
+        y: -1153.4149228101176
       positionAbsolute:
-        x: 993.0274621045346
-        y: 597.2229905074009
+        x: 1586.5035180348752
+        y: -1153.4149228101176
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        code: "\ndef main(selected_id: str, sheet_data: list) -> dict:\n    client_map\
-          \ = {item['client_id']: item for item in sheet_data}\n    return {\n   \
-          \     \"client_name\": client_map.get(selected_id).get(\"Client Name\"),\n\
-          \        \"error\": client_map.get(selected_id).get(\"error\",\"\")\n  \
-          \  }\n"
-        code_language: python3
         desc: ''
-        outputs:
-          client_name:
-            children: null
-            type: string
-          error:
-            children: null
-            type: string
+        is_array_file: true
         selected: false
-        title: Code 8
-        type: code
-        variables:
-        - value_selector:
-          - sys
-          - query
-          value_type: string
-          variable: selected_id
-        - value_selector:
-          - conversation
-          - sheet_data
-          value_type: array[object]
-          variable: sheet_data
-      height: 53
-      id: '1777498691372'
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1776155619214'
+        - result
+      height: 94
+      id: '1776158967276'
       position:
-        x: 693.0274621045346
-        y: 597.2229905074009
+        x: 1912.5395799655516
+        y: -1153.4149228101176
       positionAbsolute:
-        x: 693.0274621045346
-        y: 597.2229905074009
+        x: 1912.5395799655516
+        y: -1153.4149228101176
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Upload the Excel file you want to convert to CSV format
+            ja_JP: Upload the Excel file you want to convert to CSV format
+            pt_BR: Upload the Excel file you want to convert to CSV format
+            zh_Hans: 上传您想要转换为CSV格式的Excel文件
+          label:
+            en_US: Input Excel File
+            ja_JP: Input Excel File
+            pt_BR: Input Excel File
+            zh_Hans: 输入Excel文件
+          llm_description: ''
+          max: null
+          min: null
+          name: input_file
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: file
+        params:
+          input_file: ''
+        provider_id: sawyer-shi/file_converter/file_converter
+        provider_name: sawyer-shi/file_converter/file_converter
+        provider_type: builtin
+        selected: false
+        title: Excel to CSV Converter
+        tool_configurations: {}
+        tool_description: Convert Excel (.xlsx, .xls) files to CSV format. Each worksheet
+          will be converted to a separate CSV file with automatic filename sanitization.
+        tool_label: Excel to CSV Converter
+        tool_name: excel_2_csv
+        tool_node_version: '2'
+        tool_parameters:
+          input_file:
+            type: variable
+            value:
+            - '1776117453924'
+            - xl_file
+        type: tool
+      height: 53
+      id: '1776161188600'
+      position:
+        x: 660.2578002780272
+        y: -1183.9253850568507
+      positionAbsolute:
+        x: 660.2578002780272
+        y: -1183.9253850568507
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -1615,54 +434,42 @@ workflow:
       width: 244
     - data:
         context:
-          enabled: false
-          variable_selector: []
+          enabled: true
+          variable_selector:
+          - '1776158967276'
+          - text
         desc: ''
         model:
           completion_params:
-            temperature: 0.7
+            temperature: 0.8
           mode: chat
           name: gemini-2.5-pro
           provider: langgenius/gemini/google
         prompt_template:
-        - id: 868391b5-e681-4839-9a5e-51ece6743c3e
+        - id: 6c9a1efa-e4bf-4a4c-a2bd-676ba0b0e1b7
           role: system
-          text: "user query (error) : {{#1777498691372.error#}}\nask user in the end:\n\
-            1. Do you want to rectify the errors manually? \n2. Generate an email\
-            \ notification for Vendor / Trading Partner."
-        - id: b56f1f19-6401-4f83-b7b6-f7e4869ca1b6
+          text: "### ROLE\nNote : strict Note: You are a Precise Data Extractor. Output\
+            \ only pure dictionary i will pass the output to python code and i will\
+            \ use eval() or dict() to convert into python dictionary i wll use it\
+            \ in code, nothing else.\n\n### INPUTS\n- File Content: {{#context#}}\n\
+            - Columns to Extract: {{#1776117453924.list_of_column#}}\n- Number of\
+            \ Rows: {{#1776117453924.number_of_rows#}}   (if not specified or empty,\
+            \ extract all)\n\n### EXTRACTION RULES\n- Skip any row where ALL requested\
+            \ columns are empty or \"0\".\n- Empty cells must be returned as \"\"\
+            \ (empty string). Never use \"N/A\", \"None\", or any text.\n- Extract\
+            \ only the exact columns specified.\n\n### TASK\nExtract the data and\
+            \ return it strictly in this dictionary format strictly Note: no backslash,\
+            \ no markdown, only key value pairs:\nexample dictionary below i will\
+            \ pass this to python code directoy and i will use eval():\n{ \"data\"\
+            : [{\"Column Name 1\": \"value1\",\"Column Name 2\": \"value2\"}]}\n\n\
+            ### CONSTRAINTS\n- Return ONLY dictionary. No markdown, no code blocks,\
+            \ no explanations, no extra text. \n- If no data is found or File Content\
+            \ is empty, return exactly: {\"error\": \"Data Not Found\"}\n- Use exact\
+            \ column names as they appear in the header (case sensitive).\n- Respect\
+            \ the Number of Rows if specified.\n\nNow extract the data."
+        - id: 31e06cf2-129b-4b4a-a955-717535d55d6f
           role: user
-          text: "you are an useful assistant. who is professional at resolving errors\n\
-            based on : \n\n1\nA file other than the designated submission file was\
-            \ stored\nCheck the submission folder for the relevant vendor.\nIf the\
-            \ required .xlsx file is stored there, it is OK (it is highly likely that\
-            \ Power Automate processed it successfully. If it failed, an error would\
-            \ have been generated).\n→ If an error occurs even though the file is\
-            \ stored, download the file from the submission folder, open it, and verify\
-            \ the matching code. If it is not the vendor’s matching code, request\
-            \ that the vendor resubmit the file in the correct format.(Since HISOL\
-            \ and HSC group companies use the same format, there are rare cases where\
-            \ a client submits a file from another company. In such cases, the matching\
-            \ code does not match, resulting in an error.)\nIf the target file is\
-            \ missing, contact the client and ask them to resubmit it in .xlsx format.\
-            \ (If the target file is stored in PDF or another format, it is acceptable\
-            \ to manually transcribe and save it. Refer to #4 for storage rules.)\n\
-            2\nScript Error\nFailed in the Power Automate check section.\n・Check the\
-            \ management sheet. If the processing results are not reflected, download\
-            \ the relevant file from the client’s submission folder, log in with your\
-            \ business ID, and store the file in the “0000000001_For Management” folder\
-            \ within the submission folder. (Visual check + manual entry; file storage\
-            \ is also acceptable)\n・Open the attached file to verify its contents.\
-            \ If a correction deadline is specified, share the information with the\
-            \ front-end buyer. Manually transcribe the information into the management\
-            \ table and store the file. (See #4 for storage rules)\n3\nFailed to write\
-            \ file to the working folder\nFailed to copy files from the submission\
-            \ folder to the working folder.\n① When processing via Power Automate\n\
-            Download the relevant file from the client’s submission folder, log in\
-            \ with your business ID, and store the file in the “0000000001_Management”\
-            \ folder within the submission folder.\n② When handling manually\nManually\
-            \ transcribe the response details into the management table and store\
-            \ the file manually (see #4 for storage rules)"
+          text: you are an helpful assistant
         selected: false
         title: LLM
         type: llm
@@ -1670,62 +477,416 @@ workflow:
         vision:
           enabled: false
       height: 89
-      id: '1777499708949'
+      id: '1776162110411'
       position:
-        x: 1297.0274621045346
-        y: 597.2229905074009
+        x: 2245.8222408264246
+        y: -1153.4149228101176
       positionAbsolute:
-        x: 1297.0274621045346
-        y: 597.2229905074009
+        x: 2245.8222408264246
+        y: -1153.4149228101176
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: '
-
-
-          {{#1777499708949.text#}}'
+        author: rishabh.gupta4
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"add
+          code node to check the empty file + invalid file type","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1776238272428'
+      position:
+        x: -59.12672788172483
+        y: -1520.696385620722
+      positionAbsolute:
+        x: -59.12672788172483
+        y: -1520.696385620722
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: rishabh.gupta4
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"code
+          node ","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"figure
+          out the data coming from file convertedr","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1776238360225'
+      position:
+        x: 734.0087148561964
+        y: -982.2274138536466
+      positionAbsolute:
+        x: 734.0087148561964
+        y: -982.2274138536466
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: rishabh.gupta4
+        desc: ''
+        height: 88
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"prompt
+          optimise","type":"text","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"remove
+          code + if/else","type":"text","version":1},{"type":"linebreak","version":1},{"type":"linebreak","version":1},{"detail":0,"format":0,"mode":"normal","style":"","text":"done.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 88
+      id: '1776238638442'
+      position:
+        x: 903.1307394919172
+        y: -1429.380915855013
+      positionAbsolute:
+        x: 903.1307394919172
+        y: -1429.380915855013
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: b62aed20-54aa-4815-8af5-433f893b5ded
+            value: 'false'
+            varType: string
+            variable_selector:
+            - '1777289909903'
+            - valid
+          id: 'true'
+          logical_operator: and
         desc: ''
         selected: false
-        title: Answer 8
-        type: answer
-        variables: []
-      height: 103
-      id: '1777500045243'
+        title: IF/ELSE
+        type: if-else
+      height: 125
+      id: '1776247459644'
       position:
-        x: 1601.0274621045346
-        y: 597.2229905074009
+        x: 268.3067171670158
+        y: -1264.9180836792034
       positionAbsolute:
-        x: 1601.0274621045346
-        y: 597.2229905074009
+        x: 268.3067171670158
+        y: -1264.9180836792034
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: '{{#1777459508996.text#}}'
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777289909903'
+          - error
+          value_type: string
+          variable: error
+        selected: false
+        title: End 2
+        type: end
+      height: 90
+      id: '1776247527015'
+      position:
+        x: 660.2578002780272
+        y: -1283.5054423110228
+      positionAbsolute:
+        x: 660.2578002780272
+        y: -1283.5054423110228
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(sheet_data: dict, new_filename: str,sheet_name: str, lang:\
+          \ str):\n    # Ensure we are looking at the 'files' list\n    # We check\
+          \ if arg1 is actually the list itself or the parent dict\n    if isinstance(sheet_data,\
+          \ list):\n        files_list = sheet_data\n    else:\n        files_list\
+          \ = sheet_data.get(\"files\", [])\n    fall_back_message = sheet_name +\
+          \ (\" Not existed\" if lang.lower() == \"eng\" else \" 提供されたExcelには存在しませんでした。\"\
+          )\n    target_filename = new_filename.strip()\n    \n    # Check if any\
+          \ file matches the target name\n    # Added a .strip() to handle potential\
+          \ whitespace issues in filenames\n    found_file = next(\n        (f for\
+          \ f in files_list if isinstance(f, dict) and f.get(\"filename\") == target_filename),\
+          \ \n        None\n    )\n\n    file_exists = found_file is not None\n\n\
+          \    return {\n        \"exists\": str(file_exists),\n        \"found_filename\"\
+          : found_file.get(\"filename\") if found_file else fall_back_message,\n \
+          \       \"file_url\": str(found_file.get(\"url\")) if found_file else \"\
+          None\"\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          exists:
+            children: null
+            type: string
+          file_url:
+            children: null
+            type: string
+          found_filename:
+            children: null
+            type: string
+        selected: false
+        title: sheet validator
+        type: code
+        variables:
+        - value_selector:
+          - '1776161188600'
+          - files
+          value_type: array[file]
+          variable: sheet_data
+        - value_selector:
+          - '1777289909903'
+          - new_filename
+          value_type: string
+          variable: new_filename
+        - value_selector:
+          - '1776117453924'
+          - sheet_name
+          value_type: string
+          variable: sheet_name
+        - value_selector:
+          - '1776117453924'
+          - lang
+          value_type: string
+          variable: lang
+      height: 53
+      id: '1776249025771'
+      position:
+        x: 988.2401179538167
+        y: -1183.9253850568507
+      positionAbsolute:
+        x: 988.2401179538167
+        y: -1183.9253850568507
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 1b6ed187-ef7f-4b87-8ac2-661d7bd63c7b
+            value: 'True'
+            varType: string
+            variable_selector:
+            - '1776249025771'
+            - exists
+          id: 'true'
+          logical_operator: and
         desc: ''
         selected: false
-        title: Answer 9
-        type: answer
-        variables: []
-      height: 103
-      id: '1777525364604'
+        title: IF/ELSE 2
+        type: if-else
+      height: 125
+      id: '1776249609583'
       position:
-        x: 2409.324717805213
-        y: 682.5288908066077
+        x: 1293.691537913432
+        y: -1183.9253850568507
       positionAbsolute:
-        x: 2409.324717805213
-        y: 682.5288908066077
+        x: 1293.691537913432
+        y: -1183.9253850568507
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1776249025771'
+          - found_filename
+          value_type: string
+          variable: found_filename
+        selected: false
+        title: End 3
+        type: end
+      height: 90
+      id: '1776249687665'
+      position:
+        x: 1586.5035180348752
+        y: -1025.4156073957627
+      positionAbsolute:
+        x: 1586.5035180348752
+        y: -1025.4156073957627
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main():\n    return {\n        \"static_dict\": {\n           \
+          \ \"upload_file_message\": {\n                \"en\": \"File is Missing\"\
+          ,\n                \"ja\": \"ファイルが見つかりません\"\n            },\n          \
+          \  \"upload_file_size_error_message\": {\n                \"en\": \"please\
+          \ provide a file less than 10mb\",\n                \"ja\": \"10MB未満のファイルを提供してください\"\
+          \n            },\n            \"upload_file_type_error_message\": {\n  \
+          \              \"en\": \"Please Provide Excel File\",\n                \"\
+          ja\": \"Excelファイルを提供してください\"\n            },\n            \"upload_invalid_language_message\"\
+          : {\n                \"en\": \"Please select language eng or ja\",\n   \
+          \             \"ja\": \"言語は eng または ja を選択してください\"\n            },\n   \
+          \         \"file_not_exist_message\": {\n                \"en\": \"Not existed\"\
+          ,\n                \"ja\": \"提供されたExcelには存在しませんでした。\"\n            }\n \
+          \       }\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          static_dict:
+            children: null
+            type: object
+        selected: false
+        title: static_data_variable
+        type: code
+        variables: []
+      height: 53
+      id: '1776285834699'
+      position:
+        x: -492.4357393611816
+        y: -1264.9180836792034
+      positionAbsolute:
+        x: -492.4357393611816
+        y: -1264.9180836792034
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(xl_file: list, sheet_name: str, lang: str, static_data: dict)\
+          \ -> dict:\n    # 1. Constants & Input Normalization\n    MAX_SIZE = 10\
+          \ * 1024 * 1024\n    lang = lang.lower().strip()\n    \n    # Template for\
+          \ error responses to avoid repetition\n    def error_res(msg, filename=None):\n\
+          \        return {\n            \"valid\": \"false\",\n            \"error\"\
+          : msg,\n            \"new_filename\": \"None\",\n            \"file_name\"\
+          : filename\n        }\n\n    # 2. Language Validation\n    # Use 'get' to\
+          \ safely check if the language exists in the static_data keys\n    if lang\
+          \ not in static_data.get(\"upload_invalid_language_message\", {}):\n   \
+          \     # Fallback to English for the error message itself\n        err =\
+          \ static_data[\"upload_invalid_language_message\"].get(\"en\", \"Invalid\
+          \ Language\")\n        return error_res(err)\n\n    # 3. File Presence Check\n\
+          \    if not xl_file:\n        return error_res(static_data[\"upload_file_message\"\
+          ][lang])\n\n    file_obj = xl_file[0]\n    # Use .get() with a single fallback\
+          \ chain\n    original = file_obj.get(\"filename\") or file_obj.get(\"name\"\
+          ) or \"unknown.xlsx\"\n    \n    # 4. File Type Validation\n    # Sets provide\
+          \ O(1) lookup time\n    if file_obj.get(\"extension\", \"\").lower() not\
+          \ in {\".xlsx\", \".xls\"}:\n        return error_res(static_data[\"upload_file_type_error_message\"\
+          ][lang], original)\n\n    # 5. File Size Validation\n    if file_obj.get(\"\
+          size\", 0) > MAX_SIZE:\n        return error_res(static_data[\"upload_file_size_error_message\"\
+          ][lang], original)\n\n    # 6. Success Logic\n    # Optimized string splitting\
+          \ and naming\n    base_name = original.rsplit(\".\", 1)[0]\n    new_filename\
+          \ = f\"{base_name}_{sheet_name.strip()}.csv\"\n\n    return {\n        \"\
+          valid\": \"true\",\n        \"error\": \"None\",\n        \"new_filename\"\
+          : new_filename,\n        \"file_name\": original\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          error:
+            children: null
+            type: string
+          file_name:
+            children: null
+            type: string
+          new_filename:
+            children: null
+            type: string
+          valid:
+            children: null
+            type: string
+        selected: false
+        title: File_name_extractor
+        type: code
+        variables:
+        - value_selector:
+          - '1776117453924'
+          - xl_file
+          value_type: array[file]
+          variable: xl_file
+        - value_selector:
+          - '1776117453924'
+          - sheet_name
+          value_type: string
+          variable: sheet_name
+        - value_selector:
+          - '1776117453924'
+          - lang
+          value_type: string
+          variable: lang
+        - value_selector:
+          - '1776285834699'
+          - static_dict
+          value_type: object
+          variable: static_data
+      height: 53
+      id: '1777289909903'
+      position:
+        x: -125.66153011456646
+        y: -1264.9180836792034
+      positionAbsolute:
+        x: -125.66153011456646
+        y: -1264.9180836792034
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(extracted_file: str) -> dict:\n    return {\n        \"result\"\
+          : str(extracted_file.replace('\"', \"\")),\n        \"is_error\" : \"false\"\
+          \n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: string converter
+        type: code
+        variables:
+        - value_selector:
+          - '1776162110411'
+          - text
+          value_type: string
+          variable: extracted_data
+      height: 53
+      id: '1777361376042'
+      position:
+        x: 2581.86057762254
+        y: -1153.4149228101176
+      positionAbsolute:
+        x: 2581.86057762254
+        y: -1153.4149228101176
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: -223.64407967879123
-      y: -132.11173015082278
-      zoom: 0.6380319527693911
+      x: 142.58418295820772
+      y: 1129.1424100352122
+      zoom: 0.6858666442952984
