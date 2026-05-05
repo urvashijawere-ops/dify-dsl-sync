@@ -1,0 +1,1519 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: HR Report-Line v2
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 33d006d2-df62-4214-8e34-4723d0602c3e
+    name: manager_ldap
+    selector:
+    - conversation
+    - manager_ldap
+    value: 0
+    value_type: integer
+  - description: ''
+    id: c47f1f77-bc27-4d20-a6aa-353940d8f655
+    name: date
+    selector:
+    - conversation
+    - date
+    value: None
+    value_type: string
+  - description: ''
+    id: f5c92435-6c5c-406e-ab81-8a8076100632
+    name: current_manager
+    selector:
+    - conversation
+    - current_manager
+    value: ''
+    value_type: string
+  - description: ''
+    id: 784918ca-8044-4eef-806e-da18d03d1a51
+    name: current_data
+    selector:
+    - conversation
+    - current_data
+    value: ''
+    value_type: string
+  - description: ''
+    id: c9dc88a1-314d-4ccd-9148-6b981a09f813
+    name: transferee_ids
+    selector:
+    - conversation
+    - transferee_ids
+    value: []
+    value_type: array[number]
+  - description: ''
+    id: 08c0067d-24c0-4288-bb3f-a4f8fb5aad97
+    name: user_info
+    selector:
+    - conversation
+    - user_info
+    value: []
+    value_type: array[string]
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'Welcome to the Report Line Change Assistant.
+
+
+      I am here to help you manage your team’s structure with ease. Use this interface
+      to update reporting lines for non-salaried employees instantly, ensuring your
+      site''s organizational chart remains accurate and up to date.'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: llm
+      id: 1772536222440-2-1772537005890-target
+      selected: false
+      source: '1772536222440'
+      sourceHandle: '2'
+      target: '1772537005890'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 1772532942904-source-1772715715231-target
+      selected: false
+      source: '1772532942904'
+      sourceHandle: source
+      target: '1772715715231'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: code
+      id: 1772536222440-1-1773056094185-target
+      selected: false
+      source: '1772536222440'
+      sourceHandle: '1'
+      target: '1773056094185'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1773056094185-source-1773058458782-target
+      selected: false
+      source: '1773056094185'
+      sourceHandle: source
+      target: '1773058458782'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773058458782-true-1773058477418-target
+      selected: false
+      source: '1773058458782'
+      sourceHandle: 'true'
+      target: '1773058477418'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1773058458782-false-1773058171268-target
+      selected: false
+      source: '1773058458782'
+      sourceHandle: 'false'
+      target: '1773058171268'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: question-classifier
+        targetType: answer
+      id: 1772536222440-1773084412804-1773084442753-target
+      selected: false
+      source: '1772536222440'
+      sourceHandle: '1773084412804'
+      target: '1773084442753'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1772537005890-source-1773086606642-target
+      selected: false
+      source: '1772537005890'
+      sourceHandle: source
+      target: '1773086606642'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1772532942904-source-1773119023511-target
+      selected: false
+      source: '1772532942904'
+      sourceHandle: source
+      target: '1773119023511'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1773119023511-source-1773119699795-target
+      selected: false
+      source: '1773119023511'
+      sourceHandle: source
+      target: '1773119699795'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773119699795-true-1772533014164-target
+      selected: false
+      source: '1773119699795'
+      sourceHandle: 'true'
+      target: '1772533014164'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773119699795-false-1773119717399-target
+      selected: false
+      source: '1773119699795'
+      sourceHandle: 'false'
+      target: '1773119717399'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1772088532495-source-1773120152167-target
+      source: '1772088532495'
+      sourceHandle: source
+      target: '1773120152167'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: question-classifier
+      id: 1773120152167-false-1772536222440-target
+      selected: false
+      source: '1773120152167'
+      sourceHandle: 'false'
+      target: '1772536222440'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1773120152167-true-1773120243119-target
+      selected: false
+      source: '1773120152167'
+      sourceHandle: 'true'
+      target: '1773120243119'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1773120243119-source-1773120281106-target
+      selected: false
+      source: '1773120243119'
+      sourceHandle: source
+      target: '1773120281106'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1773120281106-source-1773120343727-target
+      selected: false
+      source: '1773120281106'
+      sourceHandle: source
+      target: '1773120343727'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773120343727-78dabb25-84d8-4504-ab92-59e0f46d444a-1773120491243-target
+      selected: false
+      source: '1773120343727'
+      sourceHandle: 78dabb25-84d8-4504-ab92-59e0f46d444a
+      target: '1773120491243'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773120343727-2233068f-0d25-4c71-8bd0-759d60672a6e-1773120597167-target
+      selected: false
+      source: '1773120343727'
+      sourceHandle: 2233068f-0d25-4c71-8bd0-759d60672a6e
+      target: '1773120597167'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: answer
+      id: 1773120448630-source-1773120662491-target
+      selected: false
+      source: '1773120448630'
+      sourceHandle: source
+      target: '1773120662491'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1773120152167-3c97f110-4366-4e28-8286-5938b9f3ba5a-1773130189415-target
+      source: '1773120152167'
+      sourceHandle: 3c97f110-4366-4e28-8286-5938b9f3ba5a
+      target: '1773130189415'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1773130189415-source-1773130483982-target
+      selected: false
+      source: '1773130189415'
+      sourceHandle: source
+      target: '1773130483982'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1773130483982-true-1773130558516-target
+      source: '1773130483982'
+      sourceHandle: 'true'
+      target: '1773130558516'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773130483982-true-1773130589326-target
+      source: '1773130483982'
+      sourceHandle: 'true'
+      target: '1773130589326'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 1773130483982-false-1773130614686-target
+      source: '1773130483982'
+      sourceHandle: 'false'
+      target: '1773130614686'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: tool
+      id: 1773058458782-false-1773132886707-target
+      source: '1773058458782'
+      sourceHandle: 'false'
+      target: '1773132886707'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: tool
+        targetType: code
+      id: 1773132886707-source-1772532942904-target
+      source: '1773132886707'
+      sourceHandle: source
+      target: '1772532942904'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: assigner
+      id: 1773120343727-true-1773120448630-target
+      source: '1773120343727'
+      sourceHandle: 'true'
+      target: '1773120448630'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables: []
+      height: 54
+      id: '1772088532495'
+      position:
+        x: -40.28976768045942
+        y: 159.05959823050515
+      positionAbsolute:
+        x: -40.28976768045942
+        y: 159.05959823050515
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(arg1: list) -> dict:\n    return {\n        \"result\":\
+          \ list(arg1[0].get(\"result\")),\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: array[string]
+        selected: false
+        title: HiNext response formatting
+        type: code
+        variables:
+        - value_selector:
+          - '1773132886707'
+          - json
+          value_type: array[object]
+          variable: arg1
+      height: 54
+      id: '1772532942904'
+      position:
+        x: 1911.218720405321
+        y: 410.9945988666227
+      positionAbsolute:
+        x: 1911.218720405321
+        y: 410.9945988666227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 'Employee LDAP is: {{#1773056094185.id#}}
+
+
+          Respective organization :{{#1772532942904.result#}}
+
+
+          Are there any other people you''d like to transfer?
+
+          Please enter your employee LDAP or Confirm for Registration.'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 188
+      id: '1772533014164'
+      position:
+        x: 3071.4624709750033
+        y: 277.5379121561571
+      positionAbsolute:
+        x: 3071.4624709750033
+        y: 277.5379121561571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        classes:
+        - id: '1'
+          name: 'if its employee code that contains numeric only of length 8 digits.
+            Eg : 12345678'
+        - id: '2'
+          name: 'generic chat message like : ok you can proceed.'
+        - id: '1773084412804'
+          name: if user confirms to register
+        desc: This node classify the user input as Employee LDAP or general chat messages.
+        instructions: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}
+
+
+            {{#sys.files#}}'
+          window:
+            enabled: true
+            size: 75
+        model:
+          completion_params:
+            temperature: 0.5
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        query_variable_selector:
+        - '1772088532495'
+        - sys.query
+        selected: false
+        title: Orchestrator
+        topics: []
+        type: question-classifier
+        vision:
+          enabled: false
+      height: 318
+      id: '1772536222440'
+      position:
+        x: 668.1368087607418
+        y: 410.9945988666227
+      positionAbsolute:
+        x: 668.1368087607418
+        y: 410.9945988666227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 64e11bd7-86f3-428a-8ac1-7408a497f5b6
+          role: system
+          text: 'user_query {{#sys.query#}}
+
+            employee_details_if_available: {{#conversation.user_info#}}
+
+            # ROLE You are the Hitachi HR Reporting Line Change Assistant (AI Agent).
+            Your goal is to assist DSS Managers and General Affairs in registering
+            reporting line changes for non-salaried employees in HiNext. # BUSINESS
+            LOGIC & CONSTRAINTS - Target Audience: Non-salaried employees only. -
+            Access Control: If a manager attempts an out-of-scope operation (e.g.,
+            a department head changing a section manager''s line), notify them that
+            the action is not permitted. - Blackout Periods: If the current date is
+            within a General Affairs bulk registration period, inform the user that
+            changes are currently disabled. # CONVERSATIONAL FLOW Step 1: Initiation
+            - Greet: "Starting input of reporting line changes (non-salaried employees)."
+            - Check availability and user authority immediately. Step 2: Transfer
+            Date - Ask: "When is the transfer date?" - Validation: Reject past dates
+            or non-existent dates (e.g., 2026/02/29). If invalid, say: "This is a
+            past date. Please enter a valid date." Step 3: Destination Organization
+            (SVO) - Ask for the new destination manager''s LDAP. - If the manager
+            has multiple roles, ask: "There are multiple transfer destination organizations.
+            Which one would you like?" and provide a numbered list. - Display the
+            SVO ID and Japanese organization name for confirmation. Step 4: Transferee
+            Selection - Ask: "Who are you transferring? Enter your employee''s LDAP."
+            - Retrieve name and current organization from LDAP. - Conflict Rule: If
+            the employee belongs to multiple organizations, notify the user that registration
+            via the bot is not possible and they must contact HR. - Multi-entry: Ask
+            "Are there any other people you''d like to transfer?" until the user says
+            "No" or "not present." Step 5: Review & Registration - Display Summary:
+            Date, New Organization, and a list of all Transferees. - Confirm: "Are
+            you sure you want to register?" - If "No," ask: "Where do you want to
+            fix it?" and allow editing specific fields. - On "OK": Register in HiNext
+            via API, update the registration list file, and email the results to the
+            new manager, old manager, and General Affairs. # ERROR HANDLING - LDAP
+            Typos: If the server cannot find the ID, prompt for correction. - Confirmation
+            Screen: Always display the final summary before performing any system
+            writes to prevent incorrect entries.
+
+            details of employee:  {{#context#}}
+
+
+            '
+        selected: false
+        title: HR Agent
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1772537005890'
+      position:
+        x: 995.0292480065111
+        y: 531.318887853749
+      positionAbsolute:
+        x: 995.0292480065111
+        y: 531.318887853749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: extend
+          value:
+          - '1772532942904'
+          - result
+          variable_selector:
+          - conversation
+          - user_info
+          write_mode: over-write
+        selected: false
+        title: Variable Assigner
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1772715715231'
+      position:
+        x: 2221.153752084443
+        y: 596.7108967692602
+      positionAbsolute:
+        x: 2221.153752084443
+        y: 596.7108967692602
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\nimport re\ndef main(user_input:str,transferee_ids:list ):\n    extracted\
+          \ = re.findall(r'\\d+', user_input)\n    if len(extracted) != 1:\n     \
+          \   return {\n            \"result\": \"please enter each transferee at\
+          \ once\", \n            \"id\": -1\n        }\n    user_id = extracted[0]\n\
+          \    if len(user_id) != 8:\n        return {\n            \"result\": \"\
+          user id is invalid, please enter valid 8 digit ldap\", \n            \"\
+          id\": -1\n        }\n    user_id_int = int(user_id)\n    if user_id_int\
+          \ in transferee_ids:\n        return {\n            \"result\": \"user already\
+          \ existed\",\n            \"id\": -1\n        }\n    return {\n        \"\
+          result\": \"Success\",\n        \"id\": user_id_int\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          id:
+            children: null
+            type: number
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Employee LDAP extractor.
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: user_input
+        - value_selector:
+          - conversation
+          - transferee_ids
+          value_type: array[number]
+          variable: transferee_ids
+      height: 54
+      id: '1773056094185'
+      position:
+        x: 995.0292480065111
+        y: 347.3425558286927
+      positionAbsolute:
+        x: 995.0292480065111
+        y: 347.3425558286927
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: This node append employee LDAP in the list
+        items:
+        - input_type: variable
+          operation: append
+          value:
+          - '1773056094185'
+          - id
+          variable_selector:
+          - conversation
+          - transferee_ids
+          write_mode: over-write
+        selected: false
+        title: Append Employee LDAP
+        type: assigner
+        version: '2'
+      height: 130
+      id: '1773058171268'
+      position:
+        x: 1602.1802547578707
+        y: 531.318887853749
+      positionAbsolute:
+        x: 1602.1802547578707
+        y: 531.318887853749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: '='
+            id: 919db810-2eb1-4c73-be80-1d2e370db8c6
+            value: '-1'
+            varType: number
+            variable_selector:
+            - '1773056094185'
+            - id
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 126
+      id: '1773058458782'
+      position:
+        x: 1296.6951348354883
+        y: 354.3188878537489
+      positionAbsolute:
+        x: 1296.6951348354883
+        y: 354.3188878537489
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1773056094185.result#}}'
+        desc: ''
+        selected: false
+        title: Answer 3
+        type: answer
+        variables: []
+      height: 105
+      id: '1773058477418'
+      position:
+        x: 1602.1802547578707
+        y: 254.95290662469336
+      positionAbsolute:
+        x: 1602.1802547578707
+        y: 254.95290662469336
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: congratulations  registration done successfully
+        desc: ''
+        selected: false
+        title: Answer 4
+        type: answer
+        variables: []
+      height: 118
+      id: '1773084442753'
+      position:
+        x: 995.0292480065111
+        y: 681.5625869976095
+      positionAbsolute:
+        x: 995.0292480065111
+        y: 681.5625869976095
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1772537005890.text#}}'
+        desc: ''
+        selected: false
+        title: Answer 4
+        type: answer
+        variables: []
+      height: 105
+      id: '1773086606642'
+      position:
+        x: 1296.6951348354883
+        y: 531.318887853749
+      positionAbsolute:
+        x: 1296.6951348354883
+        y: 531.318887853749
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(ldap_id:list) -> dict:\n    if len(ldap_id)>1:\n       \
+          \ return {\n            \"result\": \"MULTIPLE ID FOUND\"\n        }\n \
+          \   else:\n\n        return {\n            \"result\": \"SINGLE ID FOUND\"\
+          ,\n        }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Single vs Multiple Organization
+        type: code
+        variables:
+        - value_selector:
+          - '1772532942904'
+          - result
+          value_type: string
+          variable: ldap_id
+      height: 54
+      id: '1773119023511'
+      position:
+        x: 2299.4722761062426
+        y: 410.9945988666227
+      positionAbsolute:
+        x: 2299.4722761062426
+        y: 410.9945988666227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 3f07066e-ec56-48e8-a745-c5e3e0f9be6c
+            value: SINGLE ID FOUND
+            varType: string
+            variable_selector:
+            - '1773119023511'
+            - result
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 126
+      id: '1773119699795'
+      position:
+        x: 2638.5741233196645
+        y: 410.9945988666227
+      positionAbsolute:
+        x: 2638.5741233196645
+        y: 410.9945988666227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: 'Employee LDAP is: {{#1773056094185.id#}}
+
+
+          Respective organisation :{{#1772532942904.result#}}. This belongs to multiple
+          organisation. Please connect with HR department'
+        desc: ''
+        selected: false
+        title: Answer 5
+        type: answer
+        variables: []
+      height: 172
+      id: '1773119717399'
+      position:
+        x: 3071.4624709750033
+        y: 544.405101585131
+      positionAbsolute:
+        x: 3071.4624709750033
+        y: 544.405101585131
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: 6e28af2b-0b6b-4ab1-945e-09d2e8a4eced
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: is
+            id: cc02ba31-9327-4136-a7ee-49e9e79a43a1
+            value: None
+            varType: string
+            variable_selector:
+            - conversation
+            - date
+          id: 'true'
+          logical_operator: and
+        - case_id: 3c97f110-4366-4e28-8286-5938b9f3ba5a
+          conditions:
+          - comparison_operator: not empty
+            id: 04e300b4-2ab6-4988-86b3-7b7c12bfdb25
+            value: ''
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          - comparison_operator: '='
+            id: 3d690320-8396-4739-afd4-ba1544926b20
+            value: '0'
+            varType: number
+            variable_selector:
+            - conversation
+            - manager_ldap
+          id: 3c97f110-4366-4e28-8286-5938b9f3ba5a
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: DATE vs LDAP
+        type: if-else
+      height: 226
+      id: '1773120152167'
+      position:
+        x: 335.2286401821886
+        y: 159.05959823050515
+      positionAbsolute:
+        x: 335.2286401821886
+        y: 159.05959823050515
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.2
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 00f1f6f3-6bae-4cce-ae56-0bd6cc51b08c
+          role: system
+          text: 'You are an HR ReportLine change assistance and you sole purpose is
+            to extract date from the user query : {{#sys.query#}} and return in the
+            format $YYYY-MM-DD$. If user enters any other query than date, please
+            ask the user to provide transfer date of the employee.
+
+
+            # Example input
+
+            user : April 1st 2026
+
+            return : 2026-04-01
+
+            user : 2026/04/01
+
+            return : 2026-04-01
+
+
+            # You must request the user to enter the clear date in case input is ambiguous
+            such next Friday.
+
+
+            # Expected Output
+
+            2026-03-09'
+        selected: false
+        title: Date Extractor
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1773120243119'
+      position:
+        x: 754.2914410616354
+        y: -395.0609412901341
+      positionAbsolute:
+        x: 754.2914410616354
+        y: -395.0609412901341
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import datetime\nimport re\n\ndef main(model_output: str):\n    \"\"\
+          \"\n    1. Checks if the input is a date (YYYY-MM-DD).\n    2. If it is\
+          \ a date, validates calendar existence (leap year) and +/- 1 year range.\n\
+          \    3. If it is not a date (just text), returns the text as is.\n    \"\
+          \"\"\n    # Clean the input\n    text = model_output.strip()\n    \n   \
+          \ # Regex to check if the string looks like YYYY-MM-DD\n    date_pattern\
+          \ = r\"^\\d{4}-\\d{2}-\\d{2}$\"\n    \n    if re.match(date_pattern, text):\n\
+          \        try:\n            # Validate calendar existence (e.g., handles\
+          \ Feb 29)\n            input_date = datetime.datetime.strptime(text, \"\
+          %Y-%m-%d\").date()\n            \n            # Reference Date (March 9,\
+          \ 2026)\n            today = datetime.date(2026, 3, 9)\n            \n \
+          \           # Business Rule: +/- 1 Year\n            one_year_ago = today.replace(year=today.year\
+          \ - 1)\n            one_year_future = today.replace(year=today.year + 1)\n\
+          \            \n            if one_year_ago <= input_date <= one_year_future:\n\
+          \                return {\n                    \"status\": \"PASS\"\n  \
+          \                  }\n            else:\n                return {\n    \
+          \                \"status\": \"FAIL\"\n                    }\n         \
+          \       \n        except ValueError:\n            # Handles non-existent\
+          \ dates like 2027-02-29\n            return {\n                \"status\"\
+          : \"FAIL\"\n                }\n    \n    # If it's not a date format, return\
+          \ the text as it is\n    return {\n        \"status\": \"TEXT\"\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          status:
+            children: null
+            type: string
+        selected: false
+        title: DATE VALIDATOR
+        type: code
+        variables:
+        - value_selector:
+          - '1773120243119'
+          - text
+          value_type: string
+          variable: model_output
+      height: 54
+      id: '1773120281106'
+      position:
+        x: 1093.9678692077202
+        y: -395.0609412901341
+      positionAbsolute:
+        x: 1093.9678692077202
+        y: -395.0609412901341
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: ad2ae22d-7ab1-493b-b531-63529c45321f
+            value: PASS
+            varType: string
+            variable_selector:
+            - '1773120281106'
+            - status
+          id: 'true'
+          logical_operator: and
+        - case_id: 78dabb25-84d8-4504-ab92-59e0f46d444a
+          conditions:
+          - comparison_operator: contains
+            id: 6c2b9e31-9a0a-473b-a512-d57e296b811a
+            value: FAIL
+            varType: string
+            variable_selector:
+            - '1773120281106'
+            - status
+          id: 78dabb25-84d8-4504-ab92-59e0f46d444a
+          logical_operator: and
+        - case_id: 2233068f-0d25-4c71-8bd0-759d60672a6e
+          conditions:
+          - comparison_operator: contains
+            id: 18fc1771-958d-4a9a-84e1-03a582240bf1
+            value: TEXT
+            varType: string
+            variable_selector:
+            - '1773120281106'
+            - status
+          id: 2233068f-0d25-4c71-8bd0-759d60672a6e
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: DATE PASS VS FAIL
+        type: if-else
+      height: 222
+      id: '1773120343727'
+      position:
+        x: 1459.380653761749
+        y: -507.84899801554917
+      positionAbsolute:
+        x: 1459.380653761749
+        y: -507.84899801554917
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1773120243119'
+          - text
+          variable_selector:
+          - conversation
+          - date
+          write_mode: over-write
+        selected: false
+        title: UPDATE DATE
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1773120448630'
+      position:
+        x: 1836.4231547925135
+        y: -464.4839067962672
+      positionAbsolute:
+        x: 1836.4231547925135
+        y: -464.4839067962672
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: Please Enter the Correct date. Either date does not exist in the calendar
+          or date is out of the allowed 1-year range.
+        desc: ''
+        selected: false
+        title: INCORRECT DATE
+        type: answer
+        variables: []
+      height: 150
+      id: '1773120491243'
+      position:
+        x: 1845.7928707938993
+        y: -348.04330301589556
+      positionAbsolute:
+        x: 1845.7928707938993
+        y: -348.04330301589556
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1773120243119.text#}}'
+        desc: ''
+        selected: false
+        title: Answer 7
+        type: answer
+        variables: []
+      height: 105
+      id: '1773120597167'
+      position:
+        x: 1891.0798314672636
+        y: -139.88656260252918
+      positionAbsolute:
+        x: 1891.0798314672636
+        y: -139.88656260252918
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: "Your entered date is : {{#1773120243119.text#}}. \n\nWhat is your\
+          \ new supervisory organization?\nPlease enter your LDAP."
+        desc: ''
+        selected: false
+        title: DATE CONFIRMATION MESSAGE
+        type: answer
+        variables: []
+      height: 153
+      id: '1773120662491'
+      position:
+        x: 2221.153752084443
+        y: -410.70556619277147
+      positionAbsolute:
+        x: 2221.153752084443
+        y: -410.70556619277147
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(manager_id: str):\n    \"\"\"\n    Consolidated validation\
+          \ for Manager LDAP.\n    Returns a single FAIL for any format or database\
+          \ error.\n    \"\"\"\n    # 1. Sanitize input\n    clean_id = str(manager_id).strip()\n\
+          \    manager_id_int = int(clean_id)\n    \n    # 2. Authorized Manager Database\n\
+          \    authorized_managers = {\n        \"20001001\", \"20001002\", \"20001003\"\
+          , \"20001004\", \"20001005\"\n    }\n    \n    # 3. Merged Logic: Format\
+          \ -> Length -> Existence\n    if not clean_id.isdigit():\n        msg =\
+          \ \"Please enter an LDAP entry containing only numbers.\"\n    elif len(clean_id)\
+          \ != 8:\n        msg = \"Please enter the 8-digit LDAP.\"\n    elif clean_id\
+          \ not in authorized_managers:\n        msg = \"The Manager LDAP you entered\
+          \ is invalid. Please enter your own LDAP.\"\n    else:\n        # All checks\
+          \ passed\n        return {\n            \"status\": \"PASS\",\n        \
+          \    \"message\": \"Manager LDAP is verified. Now proceed with transferee\
+          \ LDAP.\",\n            \"id\" : manager_id_int\n        }\n    \n    #\
+          \ Unified return for all failed cases\n    return {\n        \"status\"\
+          : \"FAIL\",\n        \"message\": msg,\n        \"id\": -1\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          id:
+            children: null
+            type: number
+          message:
+            children: null
+            type: string
+          status:
+            children: null
+            type: string
+        selected: false
+        title: VALIDATE MANAGER LDAP
+        type: code
+        variables:
+        - value_selector:
+          - sys
+          - query
+          value_type: string
+          variable: manager_id
+      height: 54
+      id: '1773130189415'
+      position:
+        x: 668.1368087607418
+        y: 66.74944473023893
+      positionAbsolute:
+        x: 668.1368087607418
+        y: 66.74944473023893
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: e0fc71cc-eb8f-4a58-85f6-19a079fddd01
+            value: PASS
+            varType: string
+            variable_selector:
+            - '1773130189415'
+            - status
+          id: 'true'
+          logical_operator: and
+        - case_id: 41e2b2b6-06eb-4d10-8e44-d4371d64fb84
+          conditions:
+          - comparison_operator: is
+            id: 85cfc420-6859-430b-b697-fb6f51ad9e3f
+            value: FAIL
+            varType: string
+            variable_selector:
+            - '1773130189415'
+            - status
+          id: 41e2b2b6-06eb-4d10-8e44-d4371d64fb84
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 5
+        type: if-else
+      height: 174
+      id: '1773130483982'
+      position:
+        x: 995.0292480065111
+        y: 66.74944473023893
+      positionAbsolute:
+        x: 995.0292480065111
+        y: 66.74944473023893
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        items:
+        - input_type: variable
+          operation: over-write
+          value:
+          - '1773130189415'
+          - id
+          variable_selector:
+          - conversation
+          - manager_ldap
+          write_mode: over-write
+        selected: false
+        title: udpate manager ldap
+        type: assigner
+        version: '2'
+      height: 86
+      id: '1773130558516'
+      position:
+        x: 1296.6951348354883
+        y: 20.835496255204276
+      positionAbsolute:
+        x: 1296.6951348354883
+        y: 20.835496255204276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1773130189415.message#}}'
+        desc: ''
+        selected: false
+        title: manager ldap verified
+        type: answer
+        variables: []
+      height: 105
+      id: '1773130589326'
+      position:
+        x: 1303.2187204053205
+        y: 124.23470541160825
+      positionAbsolute:
+        x: 1303.2187204053205
+        y: 124.23470541160825
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1773130189415.message#}}'
+        desc: ''
+        selected: false
+        title: manager ldap failed
+        type: answer
+        variables: []
+      height: 105
+      id: '1773130614686'
+      position:
+        x: 1296.6951348354883
+        y: 228.6286002116468
+      positionAbsolute:
+        x: 1296.6951348354883
+        y: 228.6286002116468
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: true
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: it takes Employee ID as string to fetch record of employee
+            ja_JP: it takes Employee ID as string to fetch record of employee
+            pt_BR: it takes Employee ID as string to fetch record of employee
+            zh_Hans: it takes Employee ID as string to fetch record of employee
+          label:
+            en_US: Employee_id
+            ja_JP: Employee_id
+            pt_BR: Employee_id
+            zh_Hans: Employee_id
+          llm_description: it takes Employee ID as string to fetch record of employee
+          max: null
+          min: null
+          name: Employee_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: ''
+            ja_JP: ''
+            pt_BR: ''
+            zh_Hans: ''
+          label:
+            en_US: manager_id
+            ja_JP: manager_id
+            pt_BR: manager_id
+            zh_Hans: manager_id
+          llm_description: ''
+          max: null
+          min: null
+          name: manager_id
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        params:
+          Employee_id: ''
+          manager_id: ''
+        provider_id: hinext-mock
+        provider_name: HiNext-server
+        provider_type: mcp
+        selected: false
+        title: test-hr-reportline
+        tool_configurations: {}
+        tool_description: This connects with database to fetch employee records
+        tool_label: test-hr-reportline
+        tool_name: test-hr-reportline
+        tool_node_version: '2'
+        tool_parameters:
+          Employee_id:
+            type: mixed
+            value: '{{#1773056094185.id#}}'
+          manager_id:
+            type: mixed
+            value: '{{#conversation.manager_ldap#}}'
+        type: tool
+      height: 86
+      id: '1773132886707'
+      position:
+        x: 1602.1802547578707
+        y: 410.9945988666227
+      positionAbsolute:
+        x: 1602.1802547578707
+        y: 410.9945988666227
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -399.9046729335819
+      y: 269.47463327211176
+      zoom: 0.7265864639923669
