@@ -1,1 +1,707 @@
-{"data": "app:\n  description: ''\n  icon: \ud83e\udd16\n  icon_background: '#FFEAD5'\n  mode: workflow\n  name: Travel Expense Template_Language\n  use_icon_as_answer_icon: false\ndependencies: []\nkind: app\nversion: 0.3.1\nworkflow:\n  conversation_variables: []\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 50\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: true\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: start\n        targetType: code\n      id: 1777378680414-source-1777399453547-target\n      source: '1777378680414'\n      sourceHandle: source\n      target: '1777399453547'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: code\n      id: 1777399453547-source-1777399644955-target\n      source: '1777399453547'\n      sourceHandle: source\n      target: '1777399644955'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: if-else\n      id: 1777399644955-source-1777399863331-target\n      source: '1777399644955'\n      sourceHandle: source\n      target: '1777399863331'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: if-else\n        targetType: end\n      id: 1777399863331-true-1777399969496-target\n      source: '1777399863331'\n      sourceHandle: 'true'\n      target: '1777399969496'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: end\n      id: 1777401295388-source-1777402816086-target\n      source: '1777401295388'\n      sourceHandle: source\n      target: '1777402816086'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: if-else\n        targetType: document-extractor\n      id: 1777399863331-false-1777380933093-target\n      source: '1777399863331'\n      sourceHandle: 'false'\n      target: '1777380933093'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: document-extractor\n        targetType: code\n      id: 1777380933093-source-1777897878726-target\n      source: '1777380933093'\n      sourceHandle: source\n      target: '1777897878726'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: if-else\n        targetType: code\n      id: 1777898579936-true-1777401295388-target\n      source: '1777898579936'\n      sourceHandle: 'true'\n      target: '1777401295388'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: if-else\n        targetType: code\n      id: 1777898579936-c2bbe219-8805-40cc-bd7f-4265fa6d51c5-1777898317887-target\n      source: '1777898579936'\n      sourceHandle: c2bbe219-8805-40cc-bd7f-4265fa6d51c5\n      target: '1777898317887'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInIteration: false\n        isInLoop: false\n        sourceType: code\n        targetType: end\n      id: 1777898317887-source-1777898796970-target\n      source: '1777898317887'\n      sourceHandle: source\n      target: '1777898796970'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    - data:\n        isInLoop: false\n        sourceType: code\n        targetType: if-else\n      id: 1777897878726-source-1777898579936-target\n      source: '1777897878726'\n      sourceHandle: source\n      target: '1777898579936'\n      targetHandle: target\n      type: custom\n      zIndex: 0\n    nodes:\n    - data:\n        desc: ''\n        selected: false\n        title: Start\n        type: start\n        variables:\n        - allowed_file_extensions: []\n          allowed_file_types:\n          - document\n          allowed_file_upload_methods:\n          - local_file\n          - remote_url\n          label: file\n          max_length: 5\n          options: []\n          required: true\n          type: file-list\n          variable: file\n        - label: lang\n          max_length: 48\n          options: []\n          required: true\n          type: text-input\n          variable: lang\n      height: 115\n      id: '1777378680414'\n      position:\n        x: 119.91909791505577\n        y: 282\n      positionAbsolute:\n        x: 119.91909791505577\n        y: 282\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        is_array_file: false\n        selected: false\n        title: Doc Extractor\n        type: document-extractor\n        variable_selector:\n        - '1777378680414'\n        - file\n      height: 94\n      id: '1777380933093'\n      position:\n        x: 1495.5351392237192\n        y: 264.5316608586707\n      positionAbsolute:\n        x: 1495.5351392237192\n        y: 264.5316608586707\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"def main():\\n    return {\\n        \\\"static_dict\\\": {\\n           \\\n          \\ \\\"upload_file_message\\\": {\\n                \\\"en\\\": \\\"File is Missing\\\"\\\n          ,\\n                \\\"jp\\\": \\\"\u30d5\u30a1\u30a4\u30eb\u304c\u898b\u3064\u304b\u308a\u307e\u305b\u3093\\\"\\n            },\\n          \\\n          \\  \\\"upload_file_size_error_message\\\": {\\n                \\\"en\\\": \\\"please\\\n          \\ provide a file less than 10mb\\\",\\n                \\\"jp\\\": \\\"10MB\u672a\u6e80\u306e\u30d5\u30a1\u30a4\u30eb\u3092\u63d0\u4f9b\u3057\u3066\u304f\u3060\u3055\u3044\\\"\\\n          \\n            },\\n            \\\"upload_file_type_error_message\\\": {\\n  \\\n          \\              \\\"en\\\": \\\"Please Provide Excel File\\\",\\n                \\\"\\\n          jp\\\": \\\"Excel\u30d5\u30a1\u30a4\u30eb\u3092\u63d0\u4f9b\u3057\u3066\u304f\u3060\u3055\u3044\\\"\\n            },\\n            \\\"upload_invalid_language_message\\\"\\\n          : {\\n                \\\"en\\\": \\\"Please select language eng or jp\\\",\\n   \\\n          \\             \\\"jp\\\": \\\"\u8a00\u8a9e\u306f eng \u307e\u305f\u306f jp \u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044\\\"\\n            },\\n   \\\n          \\         \\\"file_not_exist_message\\\": {\\n                \\\"en\\\": \\\"Not existed\\\"\\\n          ,\\n                \\\"jp\\\": \\\"\u63d0\u4f9b\u3055\u308c\u305fExcel\u306b\u306f\u5b58\u5728\u3057\u307e\u305b\u3093\u3067\u3057\u305f\u3002\\\"\\n            }\\n \\\n          \\       }\\n    }\"\n        code_language: python3\n        desc: ''\n        outputs:\n          static_dict:\n            children: null\n            type: object\n        selected: false\n        title: static_data_variable\n        type: code\n        variables: []\n      height: 53\n      id: '1777399453547'\n      position:\n        x: 455.2841034197422\n        y: 238.21542351903923\n      positionAbsolute:\n        x: 455.2841034197422\n        y: 238.21542351903923\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"def main(xl_file: list, lang: str, static_data: dict) -> dict:\\n  \\\n          \\  \\n    MAX_SIZE = 10 * 1024 * 1024\\n    lang = lang.lower().strip()\\n\\n\\\n          \\    def error_res(msg, filename=None):\\n        return {\\n            \\\"\\\n          valid\\\": \\\"false\\\",\\n            \\\"error\\\": msg,\\n            \\\"new_filename\\\"\\\n          : \\\"None\\\",\\n            \\\"file_name\\\": filename if filename else \\\"None\\\"\\\n          \\n        }\\n\\n    # 1. Language Validation\\n    if lang not in static_data.get(\\\"\\\n          upload_invalid_language_message\\\", {}):\\n        err = static_data[\\\"upload_invalid_language_message\\\"\\\n          ].get(\\n            \\\"en\\\", \\n            \\\"Please select a preferred language\\\n          \\ (eng or jp)\\\"\\n        )\\n        return error_res(err)\\n\\n    # 2. File\\\n          \\ Presence Check\\n    if not xl_file:\\n        return error_res(static_data[\\\"\\\n          upload_file_message\\\"][lang])\\n\\n    file_obj = xl_file[0]\\n    original\\\n          \\ = file_obj.get(\\\"filename\\\") or file_obj.get(\\\"name\\\") or \\\"unknown.xlsx\\\"\\\n          \\n\\n    # 3. File Type Validation\\n    if file_obj.get(\\\"extension\\\", \\\"\\\n          \\\").lower() not in {\\\".xlsx\\\", \\\".xls\\\"}:\\n        return error_res(static_data[\\\"\\\n          upload_file_type_error_message\\\"][lang], original)\\n\\n    # 4. File Size\\\n          \\ Validation\\n    if file_obj.get(\\\"size\\\", 0) > MAX_SIZE:\\n        return\\\n          \\ error_res(static_data[\\\"upload_file_size_error_message\\\"][lang], original)\\n\\\n          \\n    # \u2705 SUCCESS (IMPORTANT: return ALL fields)\\n    return {\\n       \\\n          \\ \\\"valid\\\": \\\"true\\\",\\n        \\\"error\\\": \\\"None\\\",\\n        \\\"new_filename\\\"\\\n          : original,\\n        \\\"file_name\\\": original\\n    }\"\n        code_language: python3\n        desc: ''\n        outputs:\n          error:\n            children: null\n            type: string\n          file_name:\n            children: null\n            type: string\n          new_filename:\n            children: null\n            type: string\n          valid:\n            children: null\n            type: string\n        selected: false\n        title: File Validation\n        type: code\n        variables:\n        - value_selector:\n          - '1777378680414'\n          - file\n          value_type: array[file]\n          variable: xl_file\n        - value_selector:\n          - '1777378680414'\n          - lang\n          value_type: string\n          variable: lang\n        - value_selector:\n          - '1777399453547'\n          - static_dict\n          value_type: object\n          variable: static_data\n      height: 53\n      id: '1777399644955'\n      position:\n        x: 739.3245544622143\n        y: 141.26904286818967\n      positionAbsolute:\n        x: 739.3245544622143\n        y: 141.26904286818967\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        cases:\n        - case_id: 'true'\n          conditions:\n          - comparison_operator: contains\n            id: 2abbe1ec-cc95-42ba-ace5-989d2ef06951\n            value: 'false'\n            varType: string\n            variable_selector:\n            - '1777399644955'\n            - valid\n          id: 'true'\n          logical_operator: and\n        desc: ''\n        selected: false\n        title: IF/ELSE\n        type: if-else\n      height: 125\n      id: '1777399863331'\n      position:\n        x: 1031.9190979150555\n        y: 10.106292575864018\n      positionAbsolute:\n        x: 1031.9190979150555\n        y: 10.106292575864018\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777399644955'\n          - error\n          value_type: string\n          variable: error\n        selected: false\n        title: End 2\n        type: end\n      height: 90\n      id: '1777399969496'\n      position:\n        x: 1341.621826188635\n        y: -44.0696260231401\n      positionAbsolute:\n        x: 1341.621826188635\n        y: -44.0696260231401\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"import re\\nfrom typing import List, Dict, Tuple, Optional\\n\\n\\n# -----------------------------\\n\\\n          # Metadata Extraction\\n# -----------------------------\\ndef extract_metadata(text:\\\n          \\ str) -> Dict[str, str]:\\n    date_match = re.search(r\\\"([A-Z][a-z]+ \\\\\\\n          d{1,2}, \\\\d{4})\\\", text)\\n    company_match = re.search(r\\\"Company Name:\\\\\\\n          s*(.*?) \\\\|\\\", text)\\n    supplier_match = re.search(r\\\"\\\\(1\\\\) Supplier\\\n          \\ Code \\\\| (\\\\d+)\\\", text)\\n\\n    return {\\n        \\\"date\\\": date_match.group(1)\\\n          \\ if date_match else \\\"\\\",\\n        \\\"company\\\": company_match.group(1).strip()\\\n          \\ if company_match else \\\"\\\",\\n        \\\"supplier_code\\\": supplier_match.group(1)\\\n          \\ if supplier_match else \\\"\\\"\\n    }\\n\\n\\n# -----------------------------\\n\\\n          # Metadata Validation\\n# -----------------------------\\n# def validate_metadata(metadata:\\\n          \\ Dict[str, str]) -> List[str]:\\n#     errors = []\\n\\n#     if not metadata[\\\"\\\n          date\\\"]:\\n#         errors.append(\\\"Missing or invalid date\\\")\\n\\n#    \\\n          \\ if not metadata[\\\"company\\\"]:\\n#         errors.append(\\\"Missing company\\\n          \\ name\\\")\\n\\n#     if not metadata[\\\"supplier_code\\\"]:\\n#         errors.append(\\\"\\\n          Missing supplier code\\\")\\n\\n#     if metadata[\\\"supplier_code\\\"] and not\\\n          \\ re.match(r\\\"^\\\\d{11}$\\\", metadata[\\\"supplier_code\\\"]):\\n#         errors.append(\\\"\\\n          Supplier code must be 11 digits\\\")\\n\\n#     return errors\\n\\n\\n# -----------------------------\\n\\\n          # Helpers\\n# -----------------------------\\ndef clean_value(val: str) ->\\\n          \\ str:\\n    val = val.strip()\\n    return \\\"\\\" if val.lower() in [\\\"nan\\\"\\\n          , \\\"-\\\", \\\"\uff0d\\\"] else val\\n\\n\\ndef parse_allowance(val: str) -> Tuple[Optional[int],\\\n          \\ bool]:\\n    val = val.strip()\\n\\n    if val.lower() == \\\"actual expenses\\\"\\\n          :\\n        return None, True\\n\\n    if val.isdigit():\\n        return int(val),\\\n          \\ False\\n\\n    return None, False\\n\\n\\n# -----------------------------\\n\\\n          # Row Parsing\\n# -----------------------------\\ndef parse_rows(lines: List[str])\\\n          \\ -> List[Dict]:\\n    valid_categories = {\\n        \\\"No Change\\\",\\n   \\\n          \\     \\\"New Addition\\\",\\n        \\\"Deletion\\\",\\n        \\\"Daily Allowance\\\n          \\ Amount Change\\\"\\n    }\\n\\n    rows = []\\n    start_table = False\\n\\n \\\n          \\   for line in lines:\\n        if \\\"Category 1\\\" in line and \\\"Category\\\n          \\ 2\\\" in line:\\n            start_table = True\\n            continue\\n\\n\\\n          \\        if not start_table or \\\"|\\\" not in line:\\n            continue\\n\\\n          \\n        parts = [p.strip() for p in line.split(\\\"|\\\")]\\n\\n        if len(parts)\\\n          \\ < 6:\\n            continue\\n\\n        revision = parts[1].strip()\\n  \\\n          \\      class_1 = clean_value(parts[2])\\n        class_2 = clean_value(parts[3])\\n\\\n          \\        holiday = clean_value(parts[4])\\n        allowance_raw = parts[5].strip()\\n\\\n          \\n        # Skip invalid rows early\\n        if (\\n            revision\\\n          \\ not in valid_categories or\\n            revision == \\\"Revision/Abolition\\\n          \\ Category\\\" or\\n            all(x.lower() == \\\"nan\\\" for x in [class_1,\\\n          \\ class_2, holiday, allowance_raw])\\n        ):\\n            continue\\n\\n\\\n          \\        allowance_amount, is_actual = parse_allowance(allowance_raw)\\n\\n\\\n          \\        rows.append({\\n            \\\"revision_category\\\": revision,\\n \\\n          \\           \\\"class_1\\\": class_1,\\n            \\\"class_2\\\": class_2,\\n \\\n          \\           \\\"holiday_class\\\": holiday,\\n            \\\"daily_allowance_amount\\\"\\\n          : allowance_amount,\\n            \\\"is_actual_expense\\\": is_actual\\n    \\\n          \\    })\\n\\n    return rows\\n\\n\\n# -----------------------------\\n# Main\\\n          \\ Orchestrator\\n# -----------------------------\\n# \\ndef main(arg1) -> dict:\\n\\\n          \\    # Handle Doc Extractor output:\\n    # Doc Extractors often return a\\\n          \\ list of strings (one per page).\\n    # We join them with newlines to treat\\\n          \\ it as one continuous document.\\n    if isinstance(arg1, list):\\n     \\\n          \\   text = \\\"\\\\n\\\".join(map(str, arg1))\\n    elif arg1 is None:\\n      \\\n          \\  text = \\\"\\\"\\n    else:\\n        text = str(arg1)\\n\\n    if not text.strip():\\n\\\n          \\        return {\\n            \\\"result_metadata\\\": {},\\n            \\\"\\\n          result_rows\\\": [],\\n            \\\"error\\\": \\\"Input text from Doc Extractor\\\n          \\ was empty\\\"\\n        }\\n\\n    lines = text.split(\\\"\\\\n\\\")\\n\\n    metadata\\\n          \\ = extract_metadata(text)\\n    rows = parse_rows(lines)\\n\\n    if not rows:\\n\\\n          \\        return {\\n            \\\"result_metadata\\\": metadata,\\n        \\\n          \\    \\\"result_rows\\\": [],\\n            \\\"warning\\\": \\\"Metadata found, but\\\n          \\ no table rows were parsed.\\\"\\n        }\\n\\n    return {\\n        \\\"result_metadata\\\"\\\n          : metadata,\\n        \\\"result_rows\\\": rows\\n    }\"\n        code_language: python3\n        desc: ''\n        outputs:\n          result_metadata:\n            children: null\n            type: object\n          result_rows:\n            children: null\n            type: array[object]\n        selected: false\n        title: EnglishParser\n        type: code\n        variables:\n        - value_selector:\n          - '1777380933093'\n          - text\n          value_type: string\n          variable: arg1\n      height: 53\n      id: '1777401295388'\n      position:\n        x: 2457.2818751265872\n        y: 213.60070503460835\n      positionAbsolute:\n        x: 2457.2818751265872\n        y: 213.60070503460835\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777401295388'\n          - result_metadata\n          value_type: object\n          variable: result_metadata\n        - value_selector:\n          - '1777401295388'\n          - result_rows\n          value_type: array[object]\n          variable: result_rows\n        - value_selector: []\n          variable: ''\n        selected: false\n        title: End 2\n        type: end\n      height: 116\n      id: '1777402816086'\n      position:\n        x: 2853.4370730810106\n        y: -23.29845957952989\n      positionAbsolute:\n        x: 2853.4370730810106\n        y: -23.29845957952989\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"def main(lang: str):\\n    return {\\n        \\\"normalized_lang\\\": lang.lower().strip()\\n\\\n          \\    }\"\n        code_language: python3\n        desc: ''\n        outputs:\n          normalized_lang:\n            children: null\n            type: string\n        selected: false\n        title: NormalizeCode\n        type: code\n        variables:\n        - value_selector:\n          - '1777378680414'\n          - lang\n          value_type: string\n          variable: lang\n      height: 53\n      id: '1777897878726'\n      position:\n        x: 1801.7982494615067\n        y: 238.21542351903923\n      positionAbsolute:\n        x: 1801.7982494615067\n        y: 238.21542351903923\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        code: \"import re\\nfrom typing import List, Dict, Tuple, Optional\\n\\n\\n# -----------------------------\\n\\\n          # Metadata Extraction (JP)\\n# -----------------------------\\ndef extract_metadata(text:\\\n          \\ str) -> Dict[str, str]:\\n\\n    date_match = re.search(r\\\"([A-Z][a-z]+\\\n          \\ \\\\d{1,2}, \\\\d{4})\\\", text)\\n    company_match = re.search(r\\\"\u4f1a\u793e\u540d[:\uff1a]\\\\\\\n          s*(.*?)\\\\s*\\\\|\\\", text)\\n    supplier_match = re.search(r\\\"[\uff08(]1[\uff09)]\\\\s*\u30b5\u30d7\u30e9\u30a4\u30e4\u30fc\u30b3\u30fc\u30c9\\\\\\\n          s*\\\\|\\\\s*(\\\\d+)\\\", text)\\n\\n    return {\\n        \\\"date\\\": date_match.group(1)\\\n          \\ if date_match else \\\"\\\",\\n        \\\"company\\\": company_match.group(1).strip()\\\n          \\ if company_match else \\\"\\\",\\n        \\\"supplier_code\\\": supplier_match.group(1)\\\n          \\ if supplier_match else \\\"\\\"\\n    }\\n\\n\\n# -----------------------------\\n\\\n          # Helpers\\n# -----------------------------\\ndef clean_value(val: str) ->\\\n          \\ str:\\n    val = val.strip()\\n    return \\\"\\\" if val.lower() in [\\\"nan\\\"\\\n          , \\\"-\\\", \\\"\uff0d\\\"] else val\\n\\n\\ndef parse_allowance(val: str) -> Tuple[Optional[int],\\\n          \\ bool]:\\n    val = val.strip()\\n\\n    if val in [\\\"\u5b9f\u8cbb\\\", \\\"actual expenses\\\"\\\n          ]:\\n        return None, True\\n\\n    if val.isdigit():\\n        return int(val),\\\n          \\ False\\n\\n    return None, False\\n\\n\\n# -----------------------------\\n\\\n          # Row Parsing (JP)\\n# -----------------------------\\ndef parse_rows(lines:\\\n          \\ List[str]) -> List[Dict]:\\n\\n    category_map = {\\n        \\\"\u5909\u66f4\u306a\u3057\\\": \\\"\\\n          No Change\\\",\\n        \\\"\u65b0\u898f\u8ffd\u52a0\\\": \\\"New Addition\\\",\\n        \\\"\u524a\u9664\\\": \\\"Deletion\\\"\\\n          ,\\n        \\\"\u65e5\u5f53\u5909\u66f4\\\": \\\"Daily Allowance Amount Change\\\"\\n    }\\n\\n    rows\\\n          \\ = []\\n    start_table = False\\n\\n    for line in lines:\\n\\n        if\\\n          \\ \\\"\u30ab\u30c6\u30b4\u30ea1\\\" in line and \\\"\u30ab\u30c6\u30b4\u30ea2\\\" in line:\\n            start_table = True\\n\\\n          \\            continue\\n\\n        if not start_table or \\\"|\\\" not in line:\\n\\\n          \\            continue\\n\\n        parts = [p.strip() for p in line.split(\\\"\\\n          |\\\")]\\n\\n        if len(parts) < 6:\\n            continue\\n\\n        revision_raw\\\n          \\ = parts[1].strip()\\n        revision = category_map.get(revision_raw,\\\n          \\ \\\"\\\")\\n\\n        class_1 = clean_value(parts[2])\\n        class_2 = clean_value(parts[3])\\n\\\n          \\        holiday = clean_value(parts[4])\\n        allowance_raw = parts[5].strip()\\n\\\n          \\n        if (\\n            revision == \\\"\\\" or\\n            all(x.lower()\\\n          \\ == \\\"nan\\\" for x in [class_1, class_2, holiday, allowance_raw])\\n    \\\n          \\    ):\\n            continue\\n\\n        allowance_amount, is_actual = parse_allowance(allowance_raw)\\n\\\n          \\n        rows.append({\\n            \\\"revision_category\\\": revision,\\n\\\n          \\            \\\"class_1\\\": class_1,\\n            \\\"class_2\\\": class_2,\\n\\\n          \\            \\\"holiday_class\\\": holiday,\\n            \\\"daily_allowance_amount\\\"\\\n          : allowance_amount,\\n            \\\"is_actual_expense\\\": is_actual\\n    \\\n          \\    })\\n\\n    return rows\\n\\n\\n# -----------------------------\\n# Main\\\n          \\ Orchestrator (DIFY SAFE)\\n# -----------------------------\\ndef main(arg1)\\\n          \\ -> dict:\\n\\n    # Normalize input\\n    if isinstance(arg1, list):\\n  \\\n          \\      text = \\\"\\\\n\\\".join(map(str, arg1))\\n    elif arg1 is None:\\n   \\\n          \\     text = \\\"\\\"\\n    else:\\n        text = str(arg1)\\n\\n    # ALWAYS return\\\n          \\ same structure\\n    result_metadata = {}\\n    result_rows = []\\n\\n   \\\n          \\ if not text.strip():\\n        return {\\n            \\\"result_metadata\\\"\\\n          : result_metadata,\\n            \\\"result_rows\\\": result_rows\\n        }\\n\\\n          \\n    lines = text.split(\\\"\\\\n\\\")\\n\\n    result_metadata = extract_metadata(text)\\n\\\n          \\    result_rows = parse_rows(lines)\\n\\n    return {\\n        \\\"result_metadata\\\"\\\n          : result_metadata,\\n        \\\"result_rows\\\": result_rows\\n    }\"\n        code_language: python3\n        desc: ''\n        outputs:\n          result_metadata:\n            children: null\n            type: object\n          result_rows:\n            children: null\n            type: array[object]\n        selected: false\n        title: JapaneseLangParser\n        type: code\n        variables:\n        - value_selector:\n          - '1777380933093'\n          - text\n          value_type: string\n          variable: arg1\n      height: 53\n      id: '1777898317887'\n      position:\n        x: 2489.347116111118\n        y: 399.58180523575845\n      positionAbsolute:\n        x: 2489.347116111118\n        y: 399.58180523575845\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        cases:\n        - case_id: 'true'\n          conditions:\n          - comparison_operator: contains\n            id: b13945c9-fc8b-4350-8004-41222f679449\n            value: en\n            varType: string\n            variable_selector:\n            - '1777897878726'\n            - normalized_lang\n          id: 'true'\n          logical_operator: and\n        - case_id: c2bbe219-8805-40cc-bd7f-4265fa6d51c5\n          conditions:\n          - comparison_operator: contains\n            id: ab37ae82-ca5d-4d42-87ac-3b462d2201d0\n            value: jp\n            varType: string\n            variable_selector:\n            - '1777897878726'\n            - normalized_lang\n          id: c2bbe219-8805-40cc-bd7f-4265fa6d51c5\n          logical_operator: and\n        desc: ''\n        selected: false\n        title: IF/ELSE 2\n        type: if-else\n      height: 173\n      id: '1777898579936'\n      position:\n        x: 2120.065742059164\n        y: 270.40151935940276\n      positionAbsolute:\n        x: 2120.065742059164\n        y: 270.40151935940276\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    - data:\n        desc: ''\n        outputs:\n        - value_selector:\n          - '1777898317887'\n          - result_metadata\n          value_type: object\n          variable: result_metadata\n        - value_selector:\n          - '1777898317887'\n          - result_rows\n          value_type: array[object]\n          variable: result_rows\n        selected: false\n        title: End 3\n        type: end\n      height: 116\n      id: '1777898796970'\n      position:\n        x: 2793.347116111118\n        y: 399.58180523575845\n      positionAbsolute:\n        x: 2793.347116111118\n        y: 399.58180523575845\n      selected: false\n      sourcePosition: right\n      targetPosition: left\n      type: custom\n      width: 244\n    viewport:\n      x: -19.241929926617882\n      y: 278.6932080619715\n      zoom: 0.47871765939469174\n"}
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Travel Expense Template_Language
+  use_icon_as_answer_icon: false
+dependencies: []
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1777378680414-source-1777399453547-target
+      source: '1777378680414'
+      sourceHandle: source
+      target: '1777399453547'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1777399453547-source-1777399644955-target
+      source: '1777399453547'
+      sourceHandle: source
+      target: '1777399644955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1777399644955-source-1777399863331-target
+      source: '1777399644955'
+      sourceHandle: source
+      target: '1777399863331'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: end
+      id: 1777399863331-true-1777399969496-target
+      source: '1777399863331'
+      sourceHandle: 'true'
+      target: '1777399969496'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1777401295388-source-1777402816086-target
+      source: '1777401295388'
+      sourceHandle: source
+      target: '1777402816086'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1777399863331-false-1777380933093-target
+      source: '1777399863331'
+      sourceHandle: 'false'
+      target: '1777380933093'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: code
+      id: 1777380933093-source-1777897878726-target
+      source: '1777380933093'
+      sourceHandle: source
+      target: '1777897878726'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1777898579936-true-1777401295388-target
+      source: '1777898579936'
+      sourceHandle: 'true'
+      target: '1777401295388'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: code
+      id: 1777898579936-c2bbe219-8805-40cc-bd7f-4265fa6d51c5-1777898317887-target
+      source: '1777898579936'
+      sourceHandle: c2bbe219-8805-40cc-bd7f-4265fa6d51c5
+      target: '1777898317887'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1777898317887-source-1777898796970-target
+      source: '1777898317887'
+      sourceHandle: source
+      target: '1777898796970'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 1777897878726-source-1777898579936-target
+      source: '1777897878726'
+      sourceHandle: source
+      target: '1777898579936'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: file
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: file
+        - label: lang
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: lang
+      height: 115
+      id: '1777378680414'
+      position:
+        x: 119.91909791505577
+        y: 282
+      positionAbsolute:
+        x: 119.91909791505577
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: false
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1777378680414'
+        - file
+      height: 94
+      id: '1777380933093'
+      position:
+        x: 1495.5351392237192
+        y: 264.5316608586707
+      positionAbsolute:
+        x: 1495.5351392237192
+        y: 264.5316608586707
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main():\n    return {\n        \"static_dict\": {\n           \
+          \ \"upload_file_message\": {\n                \"en\": \"File is Missing\"\
+          ,\n                \"jp\": \"ファイルが見つかりません\"\n            },\n          \
+          \  \"upload_file_size_error_message\": {\n                \"en\": \"please\
+          \ provide a file less than 10mb\",\n                \"jp\": \"10MB未満のファイルを提供してください\"\
+          \n            },\n            \"upload_file_type_error_message\": {\n  \
+          \              \"en\": \"Please Provide Excel File\",\n                \"\
+          jp\": \"Excelファイルを提供してください\"\n            },\n            \"upload_invalid_language_message\"\
+          : {\n                \"en\": \"Please select language eng or jp\",\n   \
+          \             \"jp\": \"言語は eng または jp を選択してください\"\n            },\n   \
+          \         \"file_not_exist_message\": {\n                \"en\": \"Not existed\"\
+          ,\n                \"jp\": \"提供されたExcelには存在しませんでした。\"\n            }\n \
+          \       }\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          static_dict:
+            children: null
+            type: object
+        selected: false
+        title: static_data_variable
+        type: code
+        variables: []
+      height: 53
+      id: '1777399453547'
+      position:
+        x: 455.2841034197422
+        y: 238.21542351903923
+      positionAbsolute:
+        x: 455.2841034197422
+        y: 238.21542351903923
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(xl_file: list, lang: str, static_data: dict) -> dict:\n  \
+          \  \n    MAX_SIZE = 10 * 1024 * 1024\n    lang = lang.lower().strip()\n\n\
+          \    def error_res(msg, filename=None):\n        return {\n            \"\
+          valid\": \"false\",\n            \"error\": msg,\n            \"new_filename\"\
+          : \"None\",\n            \"file_name\": filename if filename else \"None\"\
+          \n        }\n\n    # 1. Language Validation\n    if lang not in static_data.get(\"\
+          upload_invalid_language_message\", {}):\n        err = static_data[\"upload_invalid_language_message\"\
+          ].get(\n            \"en\", \n            \"Please select a preferred language\
+          \ (eng or jp)\"\n        )\n        return error_res(err)\n\n    # 2. File\
+          \ Presence Check\n    if not xl_file:\n        return error_res(static_data[\"\
+          upload_file_message\"][lang])\n\n    file_obj = xl_file[0]\n    original\
+          \ = file_obj.get(\"filename\") or file_obj.get(\"name\") or \"unknown.xlsx\"\
+          \n\n    # 3. File Type Validation\n    if file_obj.get(\"extension\", \"\
+          \").lower() not in {\".xlsx\", \".xls\"}:\n        return error_res(static_data[\"\
+          upload_file_type_error_message\"][lang], original)\n\n    # 4. File Size\
+          \ Validation\n    if file_obj.get(\"size\", 0) > MAX_SIZE:\n        return\
+          \ error_res(static_data[\"upload_file_size_error_message\"][lang], original)\n\
+          \n    # ✅ SUCCESS (IMPORTANT: return ALL fields)\n    return {\n       \
+          \ \"valid\": \"true\",\n        \"error\": \"None\",\n        \"new_filename\"\
+          : original,\n        \"file_name\": original\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          error:
+            children: null
+            type: string
+          file_name:
+            children: null
+            type: string
+          new_filename:
+            children: null
+            type: string
+          valid:
+            children: null
+            type: string
+        selected: false
+        title: File Validation
+        type: code
+        variables:
+        - value_selector:
+          - '1777378680414'
+          - file
+          value_type: array[file]
+          variable: xl_file
+        - value_selector:
+          - '1777378680414'
+          - lang
+          value_type: string
+          variable: lang
+        - value_selector:
+          - '1777399453547'
+          - static_dict
+          value_type: object
+          variable: static_data
+      height: 53
+      id: '1777399644955'
+      position:
+        x: 739.3245544622143
+        y: 141.26904286818967
+      positionAbsolute:
+        x: 739.3245544622143
+        y: 141.26904286818967
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: 2abbe1ec-cc95-42ba-ace5-989d2ef06951
+            value: 'false'
+            varType: string
+            variable_selector:
+            - '1777399644955'
+            - valid
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 125
+      id: '1777399863331'
+      position:
+        x: 1031.9190979150555
+        y: 10.106292575864018
+      positionAbsolute:
+        x: 1031.9190979150555
+        y: 10.106292575864018
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777399644955'
+          - error
+          value_type: string
+          variable: error
+        selected: false
+        title: End 2
+        type: end
+      height: 90
+      id: '1777399969496'
+      position:
+        x: 1341.621826188635
+        y: -44.0696260231401
+      positionAbsolute:
+        x: 1341.621826188635
+        y: -44.0696260231401
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\nfrom typing import List, Dict, Tuple, Optional\n\n\n# -----------------------------\n\
+          # Metadata Extraction\n# -----------------------------\ndef extract_metadata(text:\
+          \ str) -> Dict[str, str]:\n    date_match = re.search(r\"([A-Z][a-z]+ \\\
+          d{1,2}, \\d{4})\", text)\n    company_match = re.search(r\"Company Name:\\\
+          s*(.*?) \\|\", text)\n    supplier_match = re.search(r\"\\(1\\) Supplier\
+          \ Code \\| (\\d+)\", text)\n\n    return {\n        \"date\": date_match.group(1)\
+          \ if date_match else \"\",\n        \"company\": company_match.group(1).strip()\
+          \ if company_match else \"\",\n        \"supplier_code\": supplier_match.group(1)\
+          \ if supplier_match else \"\"\n    }\n\n\n# -----------------------------\n\
+          # Metadata Validation\n# -----------------------------\n# def validate_metadata(metadata:\
+          \ Dict[str, str]) -> List[str]:\n#     errors = []\n\n#     if not metadata[\"\
+          date\"]:\n#         errors.append(\"Missing or invalid date\")\n\n#    \
+          \ if not metadata[\"company\"]:\n#         errors.append(\"Missing company\
+          \ name\")\n\n#     if not metadata[\"supplier_code\"]:\n#         errors.append(\"\
+          Missing supplier code\")\n\n#     if metadata[\"supplier_code\"] and not\
+          \ re.match(r\"^\\d{11}$\", metadata[\"supplier_code\"]):\n#         errors.append(\"\
+          Supplier code must be 11 digits\")\n\n#     return errors\n\n\n# -----------------------------\n\
+          # Helpers\n# -----------------------------\ndef clean_value(val: str) ->\
+          \ str:\n    val = val.strip()\n    return \"\" if val.lower() in [\"nan\"\
+          , \"-\", \"－\"] else val\n\n\ndef parse_allowance(val: str) -> Tuple[Optional[int],\
+          \ bool]:\n    val = val.strip()\n\n    if val.lower() == \"actual expenses\"\
+          :\n        return None, True\n\n    if val.isdigit():\n        return int(val),\
+          \ False\n\n    return None, False\n\n\n# -----------------------------\n\
+          # Row Parsing\n# -----------------------------\ndef parse_rows(lines: List[str])\
+          \ -> List[Dict]:\n    valid_categories = {\n        \"No Change\",\n   \
+          \     \"New Addition\",\n        \"Deletion\",\n        \"Daily Allowance\
+          \ Amount Change\"\n    }\n\n    rows = []\n    start_table = False\n\n \
+          \   for line in lines:\n        if \"Category 1\" in line and \"Category\
+          \ 2\" in line:\n            start_table = True\n            continue\n\n\
+          \        if not start_table or \"|\" not in line:\n            continue\n\
+          \n        parts = [p.strip() for p in line.split(\"|\")]\n\n        if len(parts)\
+          \ < 6:\n            continue\n\n        revision = parts[1].strip()\n  \
+          \      class_1 = clean_value(parts[2])\n        class_2 = clean_value(parts[3])\n\
+          \        holiday = clean_value(parts[4])\n        allowance_raw = parts[5].strip()\n\
+          \n        # Skip invalid rows early\n        if (\n            revision\
+          \ not in valid_categories or\n            revision == \"Revision/Abolition\
+          \ Category\" or\n            all(x.lower() == \"nan\" for x in [class_1,\
+          \ class_2, holiday, allowance_raw])\n        ):\n            continue\n\n\
+          \        allowance_amount, is_actual = parse_allowance(allowance_raw)\n\n\
+          \        rows.append({\n            \"revision_category\": revision,\n \
+          \           \"class_1\": class_1,\n            \"class_2\": class_2,\n \
+          \           \"holiday_class\": holiday,\n            \"daily_allowance_amount\"\
+          : allowance_amount,\n            \"is_actual_expense\": is_actual\n    \
+          \    })\n\n    return rows\n\n\n# -----------------------------\n# Main\
+          \ Orchestrator\n# -----------------------------\n# \ndef main(arg1) -> dict:\n\
+          \    # Handle Doc Extractor output:\n    # Doc Extractors often return a\
+          \ list of strings (one per page).\n    # We join them with newlines to treat\
+          \ it as one continuous document.\n    if isinstance(arg1, list):\n     \
+          \   text = \"\\n\".join(map(str, arg1))\n    elif arg1 is None:\n      \
+          \  text = \"\"\n    else:\n        text = str(arg1)\n\n    if not text.strip():\n\
+          \        return {\n            \"result_metadata\": {},\n            \"\
+          result_rows\": [],\n            \"error\": \"Input text from Doc Extractor\
+          \ was empty\"\n        }\n\n    lines = text.split(\"\\n\")\n\n    metadata\
+          \ = extract_metadata(text)\n    rows = parse_rows(lines)\n\n    if not rows:\n\
+          \        return {\n            \"result_metadata\": metadata,\n        \
+          \    \"result_rows\": [],\n            \"warning\": \"Metadata found, but\
+          \ no table rows were parsed.\"\n        }\n\n    return {\n        \"result_metadata\"\
+          : metadata,\n        \"result_rows\": rows\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result_metadata:
+            children: null
+            type: object
+          result_rows:
+            children: null
+            type: array[object]
+        selected: false
+        title: EnglishParser
+        type: code
+        variables:
+        - value_selector:
+          - '1777380933093'
+          - text
+          value_type: string
+          variable: arg1
+      height: 53
+      id: '1777401295388'
+      position:
+        x: 2457.2818751265872
+        y: 213.60070503460835
+      positionAbsolute:
+        x: 2457.2818751265872
+        y: 213.60070503460835
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777401295388'
+          - result_metadata
+          value_type: object
+          variable: result_metadata
+        - value_selector:
+          - '1777401295388'
+          - result_rows
+          value_type: array[object]
+          variable: result_rows
+        - value_selector: []
+          variable: ''
+        selected: false
+        title: End 2
+        type: end
+      height: 116
+      id: '1777402816086'
+      position:
+        x: 2853.4370730810106
+        y: -23.29845957952989
+      positionAbsolute:
+        x: 2853.4370730810106
+        y: -23.29845957952989
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "def main(lang: str):\n    return {\n        \"normalized_lang\": lang.lower().strip()\n\
+          \    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          normalized_lang:
+            children: null
+            type: string
+        selected: false
+        title: NormalizeCode
+        type: code
+        variables:
+        - value_selector:
+          - '1777378680414'
+          - lang
+          value_type: string
+          variable: lang
+      height: 53
+      id: '1777897878726'
+      position:
+        x: 1801.7982494615067
+        y: 238.21542351903923
+      positionAbsolute:
+        x: 1801.7982494615067
+        y: 238.21542351903923
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import re\nfrom typing import List, Dict, Tuple, Optional\n\n\n# -----------------------------\n\
+          # Metadata Extraction (JP)\n# -----------------------------\ndef extract_metadata(text:\
+          \ str) -> Dict[str, str]:\n\n    date_match = re.search(r\"([A-Z][a-z]+\
+          \ \\d{1,2}, \\d{4})\", text)\n    company_match = re.search(r\"会社名[:：]\\\
+          s*(.*?)\\s*\\|\", text)\n    supplier_match = re.search(r\"[（(]1[）)]\\s*サプライヤーコード\\\
+          s*\\|\\s*(\\d+)\", text)\n\n    return {\n        \"date\": date_match.group(1)\
+          \ if date_match else \"\",\n        \"company\": company_match.group(1).strip()\
+          \ if company_match else \"\",\n        \"supplier_code\": supplier_match.group(1)\
+          \ if supplier_match else \"\"\n    }\n\n\n# -----------------------------\n\
+          # Helpers\n# -----------------------------\ndef clean_value(val: str) ->\
+          \ str:\n    val = val.strip()\n    return \"\" if val.lower() in [\"nan\"\
+          , \"-\", \"－\"] else val\n\n\ndef parse_allowance(val: str) -> Tuple[Optional[int],\
+          \ bool]:\n    val = val.strip()\n\n    if val in [\"実費\", \"actual expenses\"\
+          ]:\n        return None, True\n\n    if val.isdigit():\n        return int(val),\
+          \ False\n\n    return None, False\n\n\n# -----------------------------\n\
+          # Row Parsing (JP)\n# -----------------------------\ndef parse_rows(lines:\
+          \ List[str]) -> List[Dict]:\n\n    category_map = {\n        \"変更なし\": \"\
+          No Change\",\n        \"新規追加\": \"New Addition\",\n        \"削除\": \"Deletion\"\
+          ,\n        \"日当変更\": \"Daily Allowance Amount Change\"\n    }\n\n    rows\
+          \ = []\n    start_table = False\n\n    for line in lines:\n\n        if\
+          \ \"カテゴリ1\" in line and \"カテゴリ2\" in line:\n            start_table = True\n\
+          \            continue\n\n        if not start_table or \"|\" not in line:\n\
+          \            continue\n\n        parts = [p.strip() for p in line.split(\"\
+          |\")]\n\n        if len(parts) < 6:\n            continue\n\n        revision_raw\
+          \ = parts[1].strip()\n        revision = category_map.get(revision_raw,\
+          \ \"\")\n\n        class_1 = clean_value(parts[2])\n        class_2 = clean_value(parts[3])\n\
+          \        holiday = clean_value(parts[4])\n        allowance_raw = parts[5].strip()\n\
+          \n        if (\n            revision == \"\" or\n            all(x.lower()\
+          \ == \"nan\" for x in [class_1, class_2, holiday, allowance_raw])\n    \
+          \    ):\n            continue\n\n        allowance_amount, is_actual = parse_allowance(allowance_raw)\n\
+          \n        rows.append({\n            \"revision_category\": revision,\n\
+          \            \"class_1\": class_1,\n            \"class_2\": class_2,\n\
+          \            \"holiday_class\": holiday,\n            \"daily_allowance_amount\"\
+          : allowance_amount,\n            \"is_actual_expense\": is_actual\n    \
+          \    })\n\n    return rows\n\n\n# -----------------------------\n# Main\
+          \ Orchestrator (DIFY SAFE)\n# -----------------------------\ndef main(arg1)\
+          \ -> dict:\n\n    # Normalize input\n    if isinstance(arg1, list):\n  \
+          \      text = \"\\n\".join(map(str, arg1))\n    elif arg1 is None:\n   \
+          \     text = \"\"\n    else:\n        text = str(arg1)\n\n    # ALWAYS return\
+          \ same structure\n    result_metadata = {}\n    result_rows = []\n\n   \
+          \ if not text.strip():\n        return {\n            \"result_metadata\"\
+          : result_metadata,\n            \"result_rows\": result_rows\n        }\n\
+          \n    lines = text.split(\"\\n\")\n\n    result_metadata = extract_metadata(text)\n\
+          \    result_rows = parse_rows(lines)\n\n    return {\n        \"result_metadata\"\
+          : result_metadata,\n        \"result_rows\": result_rows\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          result_metadata:
+            children: null
+            type: object
+          result_rows:
+            children: null
+            type: array[object]
+        selected: false
+        title: JapaneseLangParser
+        type: code
+        variables:
+        - value_selector:
+          - '1777380933093'
+          - text
+          value_type: string
+          variable: arg1
+      height: 53
+      id: '1777898317887'
+      position:
+        x: 2489.347116111118
+        y: 399.58180523575845
+      positionAbsolute:
+        x: 2489.347116111118
+        y: 399.58180523575845
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: b13945c9-fc8b-4350-8004-41222f679449
+            value: en
+            varType: string
+            variable_selector:
+            - '1777897878726'
+            - normalized_lang
+          id: 'true'
+          logical_operator: and
+        - case_id: c2bbe219-8805-40cc-bd7f-4265fa6d51c5
+          conditions:
+          - comparison_operator: contains
+            id: ab37ae82-ca5d-4d42-87ac-3b462d2201d0
+            value: jp
+            varType: string
+            variable_selector:
+            - '1777897878726'
+            - normalized_lang
+          id: c2bbe219-8805-40cc-bd7f-4265fa6d51c5
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE 2
+        type: if-else
+      height: 173
+      id: '1777898579936'
+      position:
+        x: 2120.065742059164
+        y: 270.40151935940276
+      positionAbsolute:
+        x: 2120.065742059164
+        y: 270.40151935940276
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1777898317887'
+          - result_metadata
+          value_type: object
+          variable: result_metadata
+        - value_selector:
+          - '1777898317887'
+          - result_rows
+          value_type: array[object]
+          variable: result_rows
+        selected: false
+        title: End 3
+        type: end
+      height: 116
+      id: '1777898796970'
+      position:
+        x: 2793.347116111118
+        y: 399.58180523575845
+      positionAbsolute:
+        x: 2793.347116111118
+        y: 399.58180523575845
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -19.241929926617882
+      y: 278.6932080619715
+      zoom: 0.47871765939469174
