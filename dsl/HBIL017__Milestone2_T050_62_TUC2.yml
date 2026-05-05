@@ -9297,7 +9297,7 @@ workflow:
           wrong_input_count:
             children: null
             type: number
-        selected: false
+        selected: true
         title: Button 3 State Manager
         type: code
         variables:
