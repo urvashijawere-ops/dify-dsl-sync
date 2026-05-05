@@ -70,6 +70,24 @@ workflow:
     - GITHUB_BRANCH
     value: main
     value_type: string
+  - description: Max apps to process per run. Keep <=40 to stay within iteration queue
+      limits.
+    id: env-batch-size
+    name: BATCH_SIZE
+    selector:
+    - env
+    - BATCH_SIZE
+    value: '40'
+    value_type: string
+  - description: Starting index for this run. Set 0,40,80,120... across multiple cron
+      schedules to cover all apps.
+    id: env-batch-offset
+    name: BATCH_OFFSET
+    selector:
+    - env
+    - BATCH_OFFSET
+    value: '0'
+    value_type: string
   features:
     file_upload:
       allowed_file_extensions: []
@@ -133,30 +151,6 @@ workflow:
       type: custom
       zIndex: 0
     - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: code
-      id: e-compile-export
-      source: compile_and_validate
-      sourceHandle: source
-      target: '1777541001585'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
-        targetType: iteration
-      id: 1777541001585-source-1777946437156-target
-      source: '1777541001585'
-      sourceHandle: source
-      target: '1777946437156'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
         isInLoop: false
         sourceType: iteration
         targetType: end
@@ -168,28 +162,37 @@ workflow:
       type: custom
       zIndex: 0
     - data:
-        isInIteration: true
-        isInLoop: false
-        iteration_id: '1777946437156'
-        sourceType: iteration-start
-        targetType: code
-      id: iter-start-fetch
-      source: 1777946437156start
-      sourceHandle: source
-      target: iter_fetch_dsl
-      targetHandle: target
-      type: custom
-      zIndex: 1002
-    - data:
-        isInIteration: true
-        isInLoop: false
-        iteration_id: '1777946437156'
+        isInIteration: false
         sourceType: code
         targetType: code
-      id: iter-fetch-push
-      source: iter_fetch_dsl
+      id: e-compile-apps
+      source: compile_and_validate
       sourceHandle: source
-      target: iter_git_push
+      target: get_apps
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: e-apps-iter
+      source: get_apps
+      sourceHandle: source
+      target: '1777946437156'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        isInLoop: false
+        iteration_id: '1777946437156'
+        sourceType: iteration-start
+        targetType: code
+      id: iter-start-sync
+      source: 1777946437156start
+      sourceHandle: source
+      target: iter_sync_one_app
       targetHandle: target
       type: custom
       zIndex: 1002
@@ -199,10 +202,10 @@ workflow:
         iteration_id: '1777946437156'
         sourceType: iteration-start
         targetType: code
-      id: 1777946437156start0-source-iter_fetch_dsl-target
+      id: 1777946437156start0-source-iter_sync_one_app-target
       source: 1777946437156start0
       sourceHandle: source
-      target: iter_fetch_dsl
+      target: iter_sync_one_app
       targetHandle: target
       type: custom
       zIndex: 1002
@@ -569,90 +572,25 @@ workflow:
       type: custom
       width: 244
     - data:
-        code: "import httpx\n\ndef main(DIFY_ACCESS_TOKEN: str, DIFY_HOST: str):\n\
-          \    host    = DIFY_HOST.rstrip('/')\n    headers = {\n        'Authorization':\
-          \ f'Bearer {DIFY_ACCESS_TOKEN}',\n        'Content-Type':  'application/json'\n\
-          \    }\n\n    # Dify console API max page size is 30 (matches what the Dify\
-          \ UI itself uses).\n    # Requesting 50 or 100 causes a validation error.\n\
-          \    PAGE_SIZE = 30\n    MAX_PAGES = 50   # safety cap: handles up to 1500\
-          \ apps, prevents infinite loop\n\n    all_apps = []\n    page     = 1\n\n\
-          \    try:\n        with httpx.Client(timeout=30.0) as client:\n        \
-          \    while page <= MAX_PAGES:\n                url  = f'{host}/console/api/apps?page={page}&limit={PAGE_SIZE}'\n\
-          \                resp = client.get(url, headers=headers)\n             \
-          \   resp.raise_for_status()\n                body  = resp.json()\n     \
-          \           batch = body.get('data', [])\n                all_apps.extend(batch)\n\
-          \n                # Stop when the API signals no more pages or returns an\
-          \ empty batch\n                if not body.get('has_more', False) or not\
-          \ batch:\n                    break\n                page += 1\n\n     \
-          \   return {\n            'apps_list':               all_apps,\n       \
-          \     'total_apps_in_workspace': len(all_apps),\n            'status': 'Success'\
-          \ if all_apps else 'No Apps Found'\n        }\n\n    except Exception as\
-          \ e:\n        error_detail = f' | Details: {e.response.text}' if hasattr(e,\
-          \ 'response') else ''\n        return {\n            'apps_list':      \
-          \         [],\n            'total_apps_in_workspace': 0,\n            'status':\
-          \ f'Error: {str(e)}{error_detail}'\n        }\n"
-        code_language: python3
-        desc: Paginates all apps from Dify Console API using PAGE_SIZE=30 (confirmed
-          max the API accepts — matches what the Dify UI itself sends). Loops until
-          has_more=False with a MAX_PAGES=50 safety cap (handles up to 1500 apps).
-          Requesting 50 or 100 causes a validation error on the Dify API.
-        outputs:
-          apps_list:
-            children: null
-            type: array[object]
-          status:
-            children: null
-            type: string
-          total_apps_in_workspace:
-            children: null
-            type: number
-        selected: false
-        title: EXPORT_DSL_FILE
-        type: code
-        variables:
-        - value_selector:
-          - env
-          - DIFY_ACCESS_TOKEN
-          value_type: secret
-          variable: DIFY_ACCESS_TOKEN
-        - value_selector:
-          - env
-          - DIFY_HOST
-          value_type: string
-          variable: DIFY_HOST
-      height: 210
-      id: '1777541001585'
-      position:
-        x: 1280
-        y: 300
-      positionAbsolute:
-        x: 1280
-        y: 300
-      selected: true
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
-    - data:
         desc: ''
         error_handle_mode: continue-on-error
-        height: 295
-        is_parallel: true
+        height: 314
+        is_parallel: false
         iterator_input_type: array[object]
         iterator_selector:
-        - '1777541001585'
-        - apps_list
+        - get_apps
+        - apps_batch
         output_selector:
-        - iter_git_push
+        - iter_sync_one_app
         - result
-        output_type: array[string]
-        parallel_nums: 3
+        output_type: array[object]
+        parallel_nums: 1
         selected: false
         start_node_id: 1777946437156start0
         title: Iteration
         type: iteration
-        width: 630
-      height: 295
+        width: 359
+      height: 314
       id: '1777946437156'
       position:
         x: 1580
@@ -664,7 +602,7 @@ workflow:
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 630
+      width: 359
       zIndex: 1
     - data:
         desc: ''
@@ -702,10 +640,10 @@ workflow:
       height: 90
       id: '1777539540092'
       position:
-        x: 2316.6666666666665
+        x: 2000
         y: 300
       positionAbsolute:
-        x: 2316.6666666666665
+        x: 2000
         y: 300
       selected: false
       sourcePosition: right
@@ -713,50 +651,58 @@ workflow:
       type: custom
       width: 244
     - data:
-        code: "import httpx\n\ndef main(DIFY_ACCESS_TOKEN: str, DIFY_HOST: str, app_item:\
-          \ dict):\n    actual_id   = app_item.get('id', '')\n    actual_name = app_item.get('name',\
-          \ 'unknown')\n\n    # Timeout must stay well under Dify sandbox 15s wall-clock\
-          \ limit\n    try:\n        with httpx.Client(timeout=10.0) as client:\n\
-          \            url  = f'{DIFY_HOST.rstrip(\"/\")}/console/api/apps/{actual_id}/export'\n\
-          \            resp = client.get(url, headers={'Authorization': f'Bearer {DIFY_ACCESS_TOKEN}'})\n\
-          \n            if resp.status_code == 401:\n                return {\n  \
-          \                  'app_id':   actual_id,\n                    'app_name':\
-          \ actual_name,\n                    'dsl':      '',\n                  \
-          \  'status':   'TOKEN_EXPIRED'\n                }\n\n            resp.raise_for_status()\n\
-          \n            # Dify export returns JSON: {\"data\": \"<yaml string>\"}\n\
-          \            # Fall back to raw text if content-type is not JSON\n     \
-          \       ct = resp.headers.get('content-type', '')\n            if 'json'\
-          \ in ct:\n                dsl_content = resp.json().get('data', '')\n  \
-          \          else:\n                dsl_content = resp.text\n\n          \
-          \  return {\n                'app_id':   actual_id,\n                'app_name':\
-          \ actual_name,\n                'dsl':      dsl_content,\n             \
-          \   'status':   'OK'\n            }\n\n    except httpx.TimeoutException:\n\
-          \        return {'app_id': actual_id, 'app_name': actual_name, 'dsl': '',\
-          \ 'status': 'DIFY_TIMEOUT'}\n    except Exception as e:\n        return\
-          \ {'app_id': actual_id, 'app_name': actual_name, 'dsl': '', 'status': f'DIFY_ERROR:{str(e)[:80]}'}\n"
+        code: "import httpx\n\ndef main(DIFY_ACCESS_TOKEN: str, DIFY_HOST: str, BATCH_SIZE:\
+          \ str, BATCH_OFFSET: str):\n    PAGE_SIZE   = 30\n    MAX_PAGES   = 50\n\
+          \    batch_size  = int(BATCH_SIZE)   if str(BATCH_SIZE).isdigit()  else\
+          \ 40\n    batch_offset= int(BATCH_OFFSET) if str(BATCH_OFFSET).isdigit()\
+          \ else 0\n    host        = DIFY_HOST.rstrip('/')\n    headers     = {'Authorization':\
+          \ f'Bearer {DIFY_ACCESS_TOKEN}'}\n    all_apps    = []\n    page       \
+          \ = 1\n\n    try:\n        with httpx.Client(timeout=10.0) as client:\n\
+          \            while page <= MAX_PAGES:\n                url  = f'{host}/console/api/apps?page={page}&limit={PAGE_SIZE}'\n\
+          \                resp = client.get(url, headers=headers)\n             \
+          \   resp.raise_for_status()\n                body  = resp.json()\n     \
+          \           batch = body.get('data', [])\n                # Collect only\
+          \ id + name — minimal payload\n                all_apps.extend({'id': a['id'],\
+          \ 'name': a['name']} for a in batch)\n                if not body.get('has_more',\
+          \ False) or not batch:\n                    break\n                page\
+          \ += 1\n\n        # Slice to current batch window\n        batch_apps =\
+          \ all_apps[batch_offset : batch_offset + batch_size]\n\n        return {\n\
+          \            'apps_batch':    batch_apps,\n            'batch_count':  \
+          \ len(batch_apps),\n            'total_apps':    len(all_apps),\n      \
+          \      'batch_offset':  batch_offset,\n            'batch_size':    batch_size,\n\
+          \            'status':        'OK' if batch_apps else 'Empty batch — offset\
+          \ may exceed total apps'\n        }\n\n    except Exception as e:\n    \
+          \    detail = f' | {e.response.text}' if hasattr(e, 'response') else ''\n\
+          \        return {\n            'apps_batch':   [],\n            'batch_count':\
+          \  0,\n            'total_apps':   0,\n            'batch_offset': batch_offset,\n\
+          \            'batch_size':   batch_size,\n            'status':       f'Error:\
+          \ {str(e)}{detail}'\n        }\n"
         code_language: python3
-        desc: Step 1 of 2 inside iteration. Exports one app DSL from Dify. Timeout=10s
-          (safe within Dify sandbox 15s wall-clock limit). Parses JSON response correctly
-          to extract the YAML string. Returns app_id, app_name, dsl, status to GIT_PUSH
-          node.
-        isInIteration: true
-        isInLoop: false
-        iteration_id: '1777946437156'
+        desc: 'Paginates Dify API (page_size=30) to collect all app IDs+names. Slices
+          result to [BATCH_OFFSET : BATCH_OFFSET+BATCH_SIZE]. Outputs apps_batch —
+          always <=BATCH_SIZE items. Keeps iteration array small regardless of total
+          workspace size.'
         outputs:
-          app_id:
+          apps_batch:
             children: null
-            type: string
-          app_name:
+            type: array[object]
+          batch_count:
             children: null
-            type: string
-          dsl:
+            type: number
+          batch_offset:
             children: null
-            type: string
+            type: number
+          batch_size:
+            children: null
+            type: number
           status:
             children: null
             type: string
+          total_apps:
+            children: null
+            type: number
         selected: false
-        title: FETCH_DSL
+        title: GET_APPS
         type: code
         variables:
         - value_selector:
@@ -770,67 +716,89 @@ workflow:
           value_type: string
           variable: DIFY_HOST
         - value_selector:
-          - '1777946437156'
-          - item
-          value_type: object
-          variable: app_item
+          - env
+          - BATCH_SIZE
+          value_type: string
+          variable: BATCH_SIZE
+        - value_selector:
+          - env
+          - BATCH_OFFSET
+          value_type: string
+          variable: BATCH_OFFSET
       height: 178
-      id: iter_fetch_dsl
-      parentId: '1777946437156'
+      id: get_apps
       position:
-        x: 94
-        y: 65
+        x: 1280
+        y: 300
       positionAbsolute:
-        x: 1674
-        y: 365
+        x: 1280
+        y: 300
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
-      zIndex: 1002
     - data:
-        code: "import httpx\nimport base64\n\ndef main(\n    GITHUB_TOKEN: str, GITHUB_REPO:\
-          \ str,\n    GITHUB_OWNER: str, GITHUB_BRANCH: str,\n    app_name: str, app_id:\
-          \ str,\n    dsl: str, fetch_status: str\n):\n    # Propagate upstream errors\
-          \ without touching GitHub\n    if fetch_status != 'OK' or not dsl:\n   \
-          \     return {'result': {'app': app_name, 'status': fetch_status or 'EMPTY_DSL',\
-          \ 'commit_id': 'N/A'}}\n\n    clean_name = ''.join(c for c in app_name if\
-          \ c.isalnum() or c in (' ', '_')).strip().replace(' ', '_')\n    file_path\
-          \  = f'dsl/{clean_name}.yml'\n    api_url    = f'https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/{file_path}'\n\
-          \    headers    = {\n        'Authorization':        f'Bearer {GITHUB_TOKEN}',\n\
+        code: "import httpx\nimport base64\n\ndef main(\n    DIFY_ACCESS_TOKEN: str,\
+          \ DIFY_HOST: str,\n    GITHUB_TOKEN: str, GITHUB_REPO: str,\n    GITHUB_OWNER:\
+          \ str, GITHUB_BRANCH: str,\n    app: dict\n):\n    app_id   = app.get('id',\
+          \ '')\n    app_name = app.get('name', 'unknown')\n    host     = DIFY_HOST.rstrip('/')\n\
+          \n    dify_headers   = {'Authorization': f'Bearer {DIFY_ACCESS_TOKEN}'}\n\
+          \    github_headers = {\n        'Authorization':        f'Bearer {GITHUB_TOKEN}',\n\
           \        'Accept':               'application/vnd.github+json',\n      \
-          \  'X-GitHub-Api-Version': '2022-11-28'\n    }\n\n    # Both GET and PUT\
-          \ share one 10s timeout — total budget ~12s worst case.\n    # Sandbox hard\
-          \ limit is ~15s. No retries, no sleep — they consume budget.\n    try:\n\
-          \        with httpx.Client(timeout=10.0) as client:\n\n            # STEP\
-          \ 1: Get existing file SHA\n            sha      = None\n            get_resp\
-          \ = client.get(api_url, headers=headers)\n\n            if get_resp.status_code\
-          \ == 200:\n                data    = get_resp.json()\n                sha\
-          \     = data.get('sha')\n                # GitHub base64 has embedded newlines\
-          \ — strip before decode\n                raw_b64 = data.get('content', '').replace('\\\
-          n', '')\n                remote  = base64.b64decode(raw_b64).decode('utf-8')\n\
-          \                if remote.strip() == dsl.strip():\n                   \
-          \ return {'result': {'app': app_name, 'status': 'Skipped', 'commit_id':\
-          \ 'N/A'}}\n\n            elif get_resp.status_code not in (200, 404):\n\
-          \                return {'result': {'app': app_name, 'status': 'Error',\
-          \ 'commit_id': f'GitHub GET {get_resp.status_code}'}}\n\n            # STEP\
-          \ 2: Push DSL\n            payload = {\n                'message': f'sync:\
+          \  'X-GitHub-Api-Version': '2022-11-28'\n    }\n    clean  = ''.join(c for\
+          \ c in app_name if c.isalnum() or c in (' ','_')).strip().replace(' ','_')\n\
+          \    gh_url = f'https://api.github.com/repos/{GITHUB_OWNER}/{GITHUB_REPO}/contents/dsl/{clean}.yml'\n\
+          \n    # Timeout strategy:\n    # Dify is on LAN — DSL YAMLs are small. Realistic:\
+          \ <2s. Cap: 7s.\n    # GitHub API — small payload. Realistic: <1s. Cap:\
+          \ 7s.\n    # Dify(7s) + GitHub_GET(7s) + GitHub_PUT(7s) = 21s absolute worst\
+          \ case.\n    # Actual p99: ~3-5s total. Sandbox limit 15s gives large real\
+          \ headroom.\n    # If Dify or GitHub consistently hit 7s, the issue is network\
+          \ not sandbox.\n    T = 7.0\n\n    # ── Step 1: Export DSL from Dify ─────────────────────────────────────\n\
+          \    try:\n        with httpx.Client(timeout=T) as client:\n           \
+          \ dr = client.get(f'{host}/console/api/apps/{app_id}/export', headers=dify_headers)\n\
+          \            if dr.status_code == 401:\n                return {'result':\
+          \ {'app': app_name, 'status': 'Error', 'commit_id': 'TOKEN_EXPIRED'}}\n\
+          \            dr.raise_for_status()\n            ct  = dr.headers.get('content-type',\
+          \ '')\n            dsl = dr.json().get('data', '') if 'json' in ct else\
+          \ dr.text\n    except httpx.TimeoutException:\n        return {'result':\
+          \ {'app': app_name, 'status': 'Error', 'commit_id': 'Dify export timeout\
+          \ (7s)'}}\n    except Exception as e:\n        return {'result': {'app':\
+          \ app_name, 'status': 'Error', 'commit_id': f'Dify error: {str(e)[:60]}'}}\n\
+          \n    # ── Step 2: GitHub GET — check existing SHA ───────────────────────────\n\
+          \    try:\n        with httpx.Client(timeout=T) as client:\n           \
+          \ sha      = None\n            get_resp = client.get(gh_url, headers=github_headers)\n\
+          \            if get_resp.status_code == 200:\n                data    =\
+          \ get_resp.json()\n                sha     = data.get('sha')\n         \
+          \       raw_b64 = data.get('content', '').replace('\\n', '')\n         \
+          \       remote  = base64.b64decode(raw_b64).decode('utf-8')\n          \
+          \      if remote.strip() == dsl.strip():\n                    return {'result':\
+          \ {'app': app_name, 'status': 'Skipped', 'commit_id': 'N/A'}}\n        \
+          \    elif get_resp.status_code not in (200, 404):\n                return\
+          \ {'result': {'app': app_name, 'status': 'Error', 'commit_id': f'GitHub\
+          \ GET {get_resp.status_code}'}}\n    except httpx.TimeoutException:\n  \
+          \      return {'result': {'app': app_name, 'status': 'Error', 'commit_id':\
+          \ 'GitHub GET timeout (7s)'}}\n    except Exception as e:\n        return\
+          \ {'result': {'app': app_name, 'status': 'Error', 'commit_id': f'GitHub\
+          \ GET error: {str(e)[:60]}'}}\n\n    # ── Step 3: GitHub PUT — push DSL\
+          \ ────────────────────────────────────\n    try:\n        with httpx.Client(timeout=T)\
+          \ as client:\n            payload = {\n                'message': f'sync:\
           \ {app_name}',\n                'content': base64.b64encode(dsl.encode('utf-8')).decode('utf-8'),\n\
           \                'branch':  GITHUB_BRANCH\n            }\n            if\
-          \ sha:\n                payload['sha'] = sha\n\n            put_resp = client.put(api_url,\
-          \ headers=headers, json=payload)\n            put_resp.raise_for_status()\n\
+          \ sha:\n                payload['sha'] = sha\n            put_resp = client.put(gh_url,\
+          \ headers=github_headers, json=payload)\n            put_resp.raise_for_status()\n\
           \            commit_sha = put_resp.json().get('commit', {}).get('sha', 'unknown')[:7]\n\
           \            return {'result': {'app': app_name, 'status': 'Success', 'commit_id':\
-          \ commit_sha}}\n\n    except httpx.TimeoutException:\n        return {'result':\
-          \ {'app': app_name, 'status': 'Error', 'commit_id': 'GitHub timeout (10s)'}}\n\
-          \    except Exception as e:\n        return {'result': {'app': app_name,\
-          \ 'status': 'Error', 'commit_id': f'GitHub error: {str(e)[:80]}'}}\n"
+          \ commit_sha}}\n    except httpx.TimeoutException:\n        return {'result':\
+          \ {'app': app_name, 'status': 'Error', 'commit_id': 'GitHub PUT timeout\
+          \ (7s)'}}\n    except Exception as e:\n        return {'result': {'app':\
+          \ app_name, 'status': 'Error', 'commit_id': f'GitHub PUT error: {str(e)[:60]}'}}\n"
         code_language: python3
-        desc: Step 2 of 2 inside iteration. Receives DSL from FETCH_DSL node. Checks
-          existing file SHA on GitHub, skips if content unchanged, otherwise pushes
-          updated DSL. Timeout=10s per operation. Fixes GitHub base64 newline stripping
-          bug. Propagates FETCH_DSL errors without making any GitHub calls.
+        desc: 'Processes exactly ONE app per invocation (serial iteration). Three
+          separate httpx clients: Dify export (7s), GitHub GET (7s), GitHub PUT (7s).
+          Each client is independent — a skip on diff check exits before GitHub PUT.
+          Realistic p99 total: 3-5s. Sandbox limit 15s. is_parallel=False on iteration
+          = 1 thread always = zero thread ceiling pressure.'
         isInIteration: true
         isInLoop: false
         iteration_id: '1777946437156'
@@ -839,9 +807,19 @@ workflow:
             children: null
             type: object
         selected: false
-        title: GIT_PUSH
+        title: SYNC_ONE_APP
         type: code
         variables:
+        - value_selector:
+          - env
+          - DIFY_ACCESS_TOKEN
+          value_type: secret
+          variable: DIFY_ACCESS_TOKEN
+        - value_selector:
+          - env
+          - DIFY_HOST
+          value_type: string
+          variable: DIFY_HOST
         - value_selector:
           - env
           - GITHUB_TOKEN
@@ -863,34 +841,19 @@ workflow:
           value_type: string
           variable: GITHUB_BRANCH
         - value_selector:
-          - iter_fetch_dsl
-          - app_name
-          value_type: string
-          variable: app_name
-        - value_selector:
-          - iter_fetch_dsl
-          - app_id
-          value_type: string
-          variable: app_id
-        - value_selector:
-          - iter_fetch_dsl
-          - dsl
-          value_type: string
-          variable: dsl
-        - value_selector:
-          - iter_fetch_dsl
-          - status
-          value_type: string
-          variable: fetch_status
-      height: 210
-      id: iter_git_push
+          - '1777946437156'
+          - item
+          value_type: object
+          variable: app
+      height: 226
+      id: iter_sync_one_app
       parentId: '1777946437156'
       position:
-        x: 364
-        y: 65
+        x: 94
+        y: 68
       positionAbsolute:
-        x: 1944
-        y: 365
+        x: 1674
+        y: 368
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -920,6 +883,6 @@ workflow:
       width: 44
       zIndex: 1002
     viewport:
-      x: -731.1999999999998
-      y: 135
+      x: -541.2
+      y: 59.5
       zoom: 0.6
