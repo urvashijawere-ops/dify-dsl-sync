@@ -1,0 +1,470 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: Doc-regenerator
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 9a68da58-ac7f-47ae-aad5-f3d535d14447
+    name: mom
+    selector:
+    - conversation
+    - mom
+    value: ''
+    value_type: string
+  - description: ''
+    id: de996e9b-7e70-48e7-bc53-fb6ddae807fb
+    name: doc_session1
+    selector:
+    - conversation
+    - doc_session1
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: 1772699876492-source-1772699309490-target
+      selected: false
+      source: '1772699876492'
+      sourceHandle: source
+      target: '1772699309490'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: if-else
+      id: 1772098416565-source-1774001851432-target
+      selected: false
+      source: '1772098416565'
+      sourceHandle: source
+      target: '1774001851432'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1774001851432-true-1774002160734-target
+      selected: false
+      source: '1774001851432'
+      sourceHandle: 'true'
+      target: '1774002160734'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: document-extractor
+      id: 1774001851432-true-1774002169274-target
+      source: '1774001851432'
+      sourceHandle: 'true'
+      target: '1774002169274'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1774002160734-source-1772699876492-target
+      source: '1774002160734'
+      sourceHandle: source
+      target: '1772699876492'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: document-extractor
+        targetType: llm
+      id: 1774002169274-source-1772699876492-target
+      source: '1774002169274'
+      sourceHandle: source
+      target: '1772699876492'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: session_1_summary
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: session_1_summary
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          label: MOM_transcriptMOM_transcript
+          max_length: 5
+          options: []
+          required: true
+          type: file-list
+          variable: MOM_transcript
+      height: 116
+      id: '1772098416565'
+      position:
+        x: 774.6260216373789
+        y: 252.5
+      positionAbsolute:
+        x: 774.6260216373789
+        y: 252.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1772699876492.text#}}'
+        desc: ''
+        selected: false
+        title: Answer 5
+        type: answer
+        variables: []
+      height: 105
+      id: '1772699309490'
+      position:
+        x: 2446
+        y: 252.5
+      positionAbsolute:
+        x: 2446
+        y: 252.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 5347325c-2bcf-49d7-a6ed-8ea7c8f6ded4
+          role: system
+          text: 'Role: You are a High-Precision Document Editor. Your task is to rewrite
+            "Doc 1" by incorporating verified updates from "Doc 2" while maintaining
+            100% of the original structure and non-conflicting text.
+
+            ##########
+
+            Inputs:
+
+            Doc1: {{#1774002160734.text#}}
+
+            Doc2: {{#1774002160734.text#}}
+
+            Instructions:
+
+            Direct Replacement: You must output the entire content of Doc 1 from the
+            very first line to the very last line.
+
+            Verbatim Requirement: Do not summarize. Do not change the wording of sentences
+            in Doc 1 unless Doc 2 specifically provides a correction for that specific
+            point. If Doc 2 does not mention a section, copy that section from Doc
+            1 word-for-word.
+
+            The "Source of Truth" (Doc 2): Scan Doc 2 for every figure, date, status,
+            or reason. If Doc 2 contains a more recent or corrected version of a fact
+            found in Doc 1, "inject" that change into the corresponding sentence in
+            your output.
+
+            Formatting: Keep all Markdown/Document formatting (headers, bolding, bullet
+            points, tables) exactly as they appear in Doc 1.
+
+
+            Citations: You MUST append a source tag `` to every factual claim or updated
+            value, using the source numbers provided in the input text.
+
+
+            Output Format:
+
+            1. REGENERATED SESSION SUMMARY
+
+            [The full, original text of Doc 1 with the Doc 2 updates integrated seamlessly
+            into the flow.]
+
+            2. UNANSWERED QUESTIONS
+
+            [A bulleted list of questions from Doc 1 or Doc 2 that remain unresolved.]
+
+            3. AUDIT CHANGE LOG
+
+            [A table with: Category | Original Doc 1 Data | New Doc 2 Data | Logical
+            Reason for Change]'
+        - id: 44353576-b781-44f3-8892-ffc62c7d7dce
+          role: user
+          text: '{{#sys.query#}}
+
+            {{#1772098416565.session_1_summary#}}
+
+            {{#1772098416565.MOM_transcript#}}'
+        selected: false
+        title: LLM 3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1772699876492'
+      position:
+        x: 2144.050479633597
+        y: 252.5
+      positionAbsolute:
+        x: 2144.050479633597
+        y: 252.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        extract_by:
+          enabled: false
+          serial: '1'
+        filter_by:
+          conditions:
+          - comparison_operator: contains
+            key: name
+            value: 総括表
+          enabled: true
+        item_var_type: file
+        limit:
+          enabled: false
+          size: 10
+        order_by:
+          enabled: false
+          key: ''
+          value: asc
+        selected: false
+        title: List Operator (File Filter)
+        type: list-operator
+        var_type: array[file]
+        variable:
+        - '1772699300901'
+        - files
+      height: 95
+      id: '1772700796946'
+      position:
+        x: 462.22990905555434
+        y: -11.155136416668526
+      positionAbsolute:
+        x: 462.22990905555434
+        y: -11.155136416668526
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1772700796946.result#}}'
+        desc: ''
+        selected: false
+        title: Answer 2
+        type: answer
+        variables: []
+      height: 106
+      id: '1772706763735'
+      position:
+        x: 906.845981811111
+        y: 52.761260290402646
+      positionAbsolute:
+        x: 906.845981811111
+        y: 52.761260290402646
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: not empty
+            id: eac04d07-0c53-453d-b511-0fd0f002ddfa
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - '1772098416565'
+            - session_1_summary
+          - comparison_operator: not empty
+            id: 4109d738-a353-4e64-bfb5-74b886afb101
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - '1772098416565'
+            - MOM_transcript
+          id: 'true'
+          logical_operator: and
+        - case_id: 9dae2837-bb75-4710-957d-ef01177452d9
+          conditions: []
+          id: 9dae2837-bb75-4710-957d-ef01177452d9
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 176
+      id: '1774001851432'
+      position:
+        x: 1349.884887936674
+        y: 193.03609062568142
+      positionAbsolute:
+        x: 1349.884887936674
+        y: 193.03609062568142
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: Doc Extractor
+        type: document-extractor
+        variable_selector:
+        - '1772098416565'
+        - session_1_summary
+      height: 94
+      id: '1774002160734'
+      position:
+        x: 1698.995439875812
+        y: 268.90383706877753
+      positionAbsolute:
+        x: 1698.995439875812
+        y: 268.90383706877753
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_array_file: true
+        selected: false
+        title: Doc Extractor 2
+        type: document-extractor
+        variable_selector:
+        - '1772098416565'
+        - MOM_transcript
+      height: 94
+      id: '1774002169274'
+      position:
+        x: 1704.1181007607722
+        y: 382.51670201791416
+      positionAbsolute:
+        x: 1704.1181007607722
+        y: 382.51670201791416
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{'
+        desc: ''
+        selected: false
+        title: Answer 3
+        type: answer
+        variables: []
+      height: 102
+      id: '1774002353296'
+      position:
+        x: 2172.67627941325
+        y: 124.57186365325217
+      positionAbsolute:
+        x: 2172.67627941325
+        y: 124.57186365325217
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -1189.6267448291364
+      y: -1.9958921288248348
+      zoom: 1.0822885608462198
