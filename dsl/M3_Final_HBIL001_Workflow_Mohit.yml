@@ -298,21 +298,9 @@ workflow:
         isInIteration: false
         isInLoop: false
         sourceType: code
-        targetType: code
-      id: 1771407984030-source-1772107724107-target
-      source: '1771407984030'
-      sourceHandle: source
-      target: '1772107724107'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
-        isInLoop: false
-        sourceType: code
         targetType: end
-      id: 1772107724107-source-1771408182603-target
-      source: '1772107724107'
+      id: 1771407984030-source-1771408182603-target
+      source: '1771407984030'
       sourceHandle: source
       target: '1771408182603'
       targetHandle: target
@@ -1407,7 +1395,7 @@ workflow:
       positionAbsolute:
         x: 5109.200000000001
         y: 313.99999999999983
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -1426,47 +1414,17 @@ workflow:
       height: 90
       id: '1771408182603'
       position:
-        x: 5712.200000000001
+        x: 5412.200000000001
         y: 313.99999999999983
       positionAbsolute:
-        x: 5712.200000000001
+        x: 5412.200000000001
         y: 313.99999999999983
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
-    - data:
-        code: 'def main(result: str) -> dict:'
-        code_language: python3
-        desc: ''
-        outputs:
-          result:
-            children: null
-            type: string
-        selected: false
-        title: Structured Output Code
-        type: code
-        variables:
-        - value_selector:
-          - '1771407984030'
-          - result
-          value_type: array[object]
-          variable: result
-      height: 54
-      id: '1772107724107'
-      position:
-        x: 5412.200000000001
-        y: 313.99999999999983
-      positionAbsolute:
-        x: 5412.200000000001
-        y: 313.99999999999983
-      selected: true
-      sourcePosition: right
-      targetPosition: left
-      type: custom
-      width: 244
     viewport:
-      x: -5130.381453324935
-      y: -59.24331282728417
-      zoom: 1.0629822331697065
+      x: -2169.3854581628316
+      y: 180.91125818892044
+      zoom: 0.5696380743294287
