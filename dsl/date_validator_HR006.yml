@@ -1,0 +1,348 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: date_validator_HR006
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.4@5faf411e694e0da130a337347a625a3812b1b7502a0183382d66d92c841bf05a
+kind: app
+version: 0.3.1
+workflow:
+  conversation_variables:
+  - description: ''
+    id: 33d006d2-df62-4214-8e34-4723d0602c3e
+    name: manager_ldap
+    selector:
+    - conversation
+    - manager_ldap
+    value: 0
+    value_type: integer
+  - description: ''
+    id: c47f1f77-bc27-4d20-a6aa-353940d8f655
+    name: date
+    selector:
+    - conversation
+    - date
+    value: None
+    value_type: string
+  - description: ''
+    id: f5c92435-6c5c-406e-ab81-8a8076100632
+    name: current_manager
+    selector:
+    - conversation
+    - current_manager
+    value: ''
+    value_type: string
+  - description: ''
+    id: 784918ca-8044-4eef-806e-da18d03d1a51
+    name: current_data
+    selector:
+    - conversation
+    - current_data
+    value: ''
+    value_type: string
+  - description: ''
+    id: c9dc88a1-314d-4ccd-9148-6b981a09f813
+    name: transferee_ids
+    selector:
+    - conversation
+    - transferee_ids
+    value: []
+    value_type: array[number]
+  - description: ''
+    id: 08c0067d-24c0-4288-bb3f-a4f8fb5aad97
+    name: user_info
+    selector:
+    - conversation
+    - user_info
+    value: []
+    value_type: array[string]
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 50
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 'Welcome to the Report Line Change Assistant.
+
+
+      I am here to help you manage your team’s structure with ease. Use this interface
+      to update reporting lines for non-salaried employees instantly, ensuring your
+      site''s organizational chart remains accurate and up to date.'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1773120281106-source-1773221513242-target
+      source: '1773120281106'
+      sourceHandle: source
+      target: '1773221513242'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1772088532495-source-1773221767444-target
+      source: '1772088532495'
+      sourceHandle: source
+      target: '1773221767444'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1773221767444-source-1773120281106-target
+      source: '1773221767444'
+      sourceHandle: source
+      target: '1773120281106'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: date_text
+          max_length: 256
+          options: []
+          required: true
+          type: text-input
+          variable: date_text
+        - label: default_lang
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: default_lang
+      height: 116
+      id: '1772088532495'
+      position:
+        x: 268.66513504318596
+        y: -225.30902875885195
+      positionAbsolute:
+        x: 268.66513504318596
+        y: -225.30902875885195
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "import datetime\nimport re\n\ndef main(model_output: str, default_lang:\
+          \ str = \"English\"):\n    \"\"\"\n    Dify Workflow Code Block\n    Validates\
+          \ date: YYYY-MM-DD.\n    Window: [Today - 1 Year] to [Today + 1 Year].\n\
+          \    \"\"\"\n    \n    # 1. Configuration & Localization\n    text_input\
+          \ = model_output.strip()\n    # Normalize input: \"English\" -> \"english\"\
+          , \"日本語\" stays \"日本語\"\n    lang_input = str(default_lang).strip().lower()\
+          \ if default_lang else \"english\"\n    \n    # Map \"日本語\" specifically\
+          \ since .lower() doesn't affect it but helps with \"Japanese\"\n    if \"\
+          日本語\" in lang_input:\n        lang_key = \"ja\"\n    else:\n        lang_key\
+          \ = \"en\"\n    \n    messages = {\n        \"en\": {\n            \"pass\"\
+          : f\"Your entered date is : {text_input}.\\nWhat is your new supervisory\
+          \ organization?\\nPlease enter your LDAP.\",\n            \"out_of_range\"\
+          : \"The date must be within 1 year (past or future) from today. Please enter\
+          \ a valid date.\",\n            \"invalid_date\": \"That date doesn't exist\
+          \ in the calendar. Please check and try again.\"\n        },\n        \"\
+          ja\": {\n            \"pass\": f\"入力された日付は {text_input} です。\\n新しい上位組織（Supervisory\
+          \ Organization）は何ですか？\\nLDAPを入力してください。\",\n            \"out_of_range\"\
+          : \"日付は本日より1年以内（過去または未来）で指定してください。有効な日付を入力してください。\",\n            \"invalid_date\"\
+          : \"その日付はカレンダーに存在しません。確認して再度入力してください。\"\n        }\n    }\n\n    msg = messages[lang_key]\n\
+          \    \n    # 2. Setup Dates\n    today = datetime.date.today() \n    date_pattern\
+          \ = r\"^\\d{4}-\\d{2}-\\d{2}$\"\n    \n    # Calculate Range: -1 Year and\
+          \ +1 Year\n    try:\n        one_year_future = today.replace(year=today.year\
+          \ + 1)\n        one_year_past = today.replace(year=today.year - 1)\n   \
+          \ except ValueError: \n        # Leap year fallback (e.g., if today is Feb\
+          \ 29)\n        one_year_future = today + datetime.timedelta(days=365)\n\
+          \        one_year_past = today - datetime.timedelta(days=365)\n\n    # 3.\
+          \ Validation Logic\n    if re.match(date_pattern, text_input):\n       \
+          \ try:\n            input_date = datetime.datetime.strptime(text_input,\
+          \ \"%Y-%m-%d\").date()\n            \n            # Check Business Rule:\
+          \ Today-1yr <= input_date <= Today+1yr\n            if one_year_past <=\
+          \ input_date <= one_year_future:\n                return {\n           \
+          \         \"state\": \"PASS\",\n                    \"date\": text_input,\n\
+          \                    \"text\": msg[\"pass\"]\n                }\n      \
+          \      else:\n                return {\n                    \"state\": \"\
+          FAIL\",\n                    \"date\": text_input,\n                   \
+          \ \"text\": msg[\"out_of_range\"]\n                }\n                \n\
+          \        except ValueError:\n            return {\n                \"state\"\
+          : \"FAIL\",\n                \"date\": text_input,\n                \"text\"\
+          : msg[\"invalid_date\"]\n            }\n    \n    # 4. Fallback for non-date\
+          \ formats\n    return {\n        \"state\": \"PENDING\",\n        \"date\"\
+          : \"\",\n        \"text\": text_input\n    }"
+        code_language: python3
+        desc: ''
+        outputs:
+          date:
+            children: null
+            type: string
+          state:
+            children: null
+            type: string
+          text:
+            children: null
+            type: string
+        selected: false
+        title: DATE VALIDATOR
+        type: code
+        variables:
+        - value_selector:
+          - '1773221767444'
+          - text
+          value_type: string
+          variable: model_output
+        - value_selector:
+          - '1772088532495'
+          - default_lang
+          value_type: string
+          variable: default_lang
+      height: 54
+      id: '1773120281106'
+      position:
+        x: 972.3732244730747
+        y: -225.30902875885195
+      positionAbsolute:
+        x: 972.3732244730747
+        y: -225.30902875885195
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1773120281106'
+          - state
+          value_type: string
+          variable: state
+        - value_selector:
+          - '1773120281106'
+          - date
+          value_type: string
+          variable: date
+        - value_selector:
+          - '1773120281106'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: End
+        type: end
+      height: 142
+      id: '1773221513242'
+      position:
+        x: 1292.2324409464802
+        y: -225.30902875885195
+      positionAbsolute:
+        x: 1292.2324409464802
+        y: -225.30902875885195
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1772088532495'
+          - date_text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.3
+          mode: chat
+          name: gemini-2.5-pro
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: ecf9070a-7939-475c-bbb6-59021259c1d6
+          role: system
+          text: "You are an HR ReportLine change assistance and you sole purpose is\
+            \ to extract date from the user query : {{#context#}} and return in the\
+            \ format $YYYY-MM-DD$. If user enters any other query than date, please\
+            \ ask the user to provide transfer date of the employee.\npreferred language\
+            \ : \n# Example input\nuser : April 1st 2026\nreturn : 2026-04-01\nuser\
+            \ : 2026/04/01\nreturn : 2026-04-01\n\n# You must request the user to\
+            \ enter the clear date in case input is ambiguous such next Friday in\
+            \ the preferred language : {{#1772088532495.default_lang#}} only.\n\n\
+            # Expected Output\n2026-03-09"
+        - id: 0569e332-8990-4ddc-b105-2e87ef76b1ea
+          role: user
+          text: '{{#1772088532495.date_text#}}'
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1773221767444'
+      position:
+        x: 627.9546215130571
+        y: -225.30902875885195
+      positionAbsolute:
+        x: 627.9546215130571
+        y: -225.30902875885195
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -220.74730744178282
+      y: 301.40627251666194
+      zoom: 0.7000493318411879
